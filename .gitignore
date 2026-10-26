@@ -5,6 +5,8 @@ __pycache__/
 *.pyc
 .env
 .env.local
+.env.production
+.env.aliyun
 data/papermind.db-wal
 data/papermind.db-shm
 data/papermind.db-journal

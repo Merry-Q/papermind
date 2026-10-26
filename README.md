@@ -1,5 +1,7 @@
 # paperMind
 
+阿里云完整版入口：https://papermind.47.237.109.221.sslip.io/ ，打开即可使用。部署结构与备份操作见 [阿里云部署说明](deploy/README.md)。
+
 专业 PDF 本地阅读工作台：阿里千问生成整篇交互讲解，支持来源回查、图表/区域提问、递归知识补充、Copilot、个人概念库及可撤回的页面补充。React + TypeScript + Vite / FastAPI / SQLite。
 
 当前交互页面的实际后端实现见[交互生成链路](docs/INTERACTIVE-GENERATION-BACKEND.md)；测试资产清理范围、保留摘要与待执行清单见[清理记录](docs/maintenance/2026-10-26/README.md)。
@@ -76,7 +78,7 @@ npm run build
 - ready 表示正文生成完成；交互页面任务另有 queued/running/completed/failed/cancelled 状态。有引用不等于支持；不足的回答显示提示并禁止加入页面。
 - 跨文档概念复用目前基于领域/标题/层级键，尚无完整语义等价和适用条件推理。
 - 长文可能生成数分钟并产生 API 费用。支持取消、保留阶段产物、重试及用量审计；文档用量累计包含早期迭代，不能当最终账单。
-- 当前无账号、多人隔离、云部署或计费系统，服务只绑定本机。
+- 当前无应用内账号、多人隔离或计费系统。阿里云部署公开访问，所有访问者可查看和操作同一份文档、阅读记录与概念库。
 
 详见 [边界报告](docs/LIVE-BOUNDARY-REPORT.md)、[首轮问题账本](docs/FIRST-PASS-ISSUES.md)、[10 篇语料与固定版本](docs/CORPUS-SOURCES.md)。首轮测试与集中修复复测分开保存。
 

@@ -1,0 +1,30 @@
+services:
+  papermind:
+    image: papermind:${PAPERMIND_RELEASE:-latest}
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      network: host
+    restart: unless-stopped
+    init: true
+    env_file:
+      - ../.env.production
+    ports:
+      - "127.0.0.1:18001:8000"
+    volumes:
+      - ../data:/var/lib/papermind
+    read_only: true
+    tmpfs:
+      - /tmp:size=128m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 512m
+    memswap_limit: 1536m
+    pids_limit: 128
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

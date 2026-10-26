@@ -1,0 +1,8 @@
+[Unit]
+Description=Renew paperMind HTTPS certificate
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh /opt/papermind/deploy/renew-cert.sh
