@@ -1,0 +1,3910 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-24T13:50:47.943146+00:00",
+  "scope": "10 independent publicly accessible papers/reports plus one derived scanned regression PDF",
+  "limits": {
+    "max_download_bytes": 52428800,
+    "max_pages": 250
+  },
+  "observations_note": "Object/caption counts are PDF extraction clues only. They do not prove chart, table, formula or scientific correctness. No LLM, OCR or scholarly verification is run by this preparation script.",
+  "papers": [
+    {
+      "id": "attention",
+      "title": "Attention Is All You Need",
+      "authors": [
+        "Ashish Vaswani",
+        "Noam Shazeer",
+        "Niki Parmar",
+        "Jakob Uszkoreit",
+        "Llion Jones",
+        "Aidan N. Gomez",
+        "Łukasz Kaiser",
+        "Illia Polosukhin"
+      ],
+      "year": 2017,
+      "domain": "AI",
+      "language": "en",
+      "original_url": "https://arxiv.org/abs/1706.03762",
+      "download_urls": [
+        "https://arxiv.org/pdf/1706.03762v7"
+      ],
+      "version": "arXiv v7",
+      "boundaries": [
+        "双栏阅读顺序",
+        "注意力公式/矩阵维度",
+        "BLEU表格与训练设置",
+        "机制演示不冒充训练复现"
+      ],
+      "download_url": "https://arxiv.org/pdf/1706.03762v7",
+      "downloaded_at": "2026-10-24T13:46:24.466399+00:00",
+      "file": "data/test-corpus/attention.pdf",
+      "bytes": 2215244,
+      "sha256": "bdfaa68d8984f0dc02beaca527b76f207d99b666d31d1da728ee0728182df697",
+      "download_status": "ok",
+      "page_count": 15,
+      "length_band": "medium",
+      "text_chars": 44684,
+      "numeric_tokens": 593,
+      "image_objects": 3,
+      "vector_paths": 2710,
+      "low_text_pages": [],
+      "figure_caption_pages": [
+        3,
+        4,
+        13,
+        14,
+        15
+      ],
+      "table_caption_pages": [
+        6,
+        8,
+        9,
+        10
+      ],
+      "first_page_excerpt": "                     Provided proper attribution is provided, Google hereby grants permission to\n                     reproduce the tables and figures in this paper solely for use in journalistic or\n                                                     scholarly works.\n\n\n                          Attention Is All You Need\n\n\n\n\n\n                         Ashish Vaswani∗      Noam Shazeer∗       Niki Parmar∗     Jakob Uszkoreit∗2023                     Google Brain          Google Brain       Google Research     Google Research\nAug               avaswani@google.comLlion Jones∗      noam@google.comAidan N. Gomez∗†nikip@google.comŁukaszusz@google.comKaiser∗\n2                    Google Research          University of Toronto              Google Brain\n                      llion@google.com     aidan@cs.toronto.edu     lukaszkaiser@google.com\n\n                                                                           Illia Polosukhin∗‡\n                                           illia.polosukhin@gmail.com[cs.CL]\n\n                                                 Abstract\n\n\n                         The dominant sequence transduction models are based on complex recurrent or\n                               convolutional neural networks that include an encoder and a decoder. The best\n                             performing models also connect the encoder and decoder through an attention\n                           mechanism. We propose a new simple network architecture, the Transformer,\n                              based solely on attention mechanisms, dispensing with recurrence and convolutions\n                                    entirely. Experiments on two machine translation tasks show these models to\n                            be superior in quality while being more parallelizable",
+      "version_number_clues": {
+        "5,179": 0,
+        "5,172": 0,
+        "5179": 0,
+        "5172": 0
+      },
+      "pages": [
+        {
+          "page": 1,
+          "text_chars": 4089,
+          "numeric_tokens": 14,
+          "image_objects": 0,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 2,
+          "text_chars": 4312,
+          "numeric_tokens": 41,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 3,
+          "text_chars": 1902,
+          "numeric_tokens": 10,
+          "image_objects": 1,
+          "vector_paths": 0,
+          "figure_caption_clues": [
+            "                        Figure 1: The Transformer - model architecture."
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 4,
+          "text_chars": 2691,
+          "numeric_tokens": 16,
+          "image_objects": 2,
+          "vector_paths": 8,
+          "figure_caption_clues": [
+            "\n\n\n\n\nFigure 2: (left) Scaled Dot-Product Attention.  (right) Multi-Head Attention consists of several"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 5,
+          "text_chars": 3458,
+          "numeric_tokens": 22,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 6,
+          "text_chars": 3794,
+          "numeric_tokens": 26,
+          "image_objects": 0,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": [
+            "Table 1: Maximum path lengths, per-layer complexity and minimum number of sequential operations"
+          ]
+        },
+        {
+          "page": 7,
+          "text_chars": 3407,
+          "numeric_tokens": 42,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 8,
+          "text_chars": 3687,
+          "numeric_tokens": 98,
+          "image_objects": 0,
+          "vector_paths": 8,
+          "figure_caption_clues": [],
+          "table_caption_clues": [
+            "Table 2: The Transformer achieves better BLEU scores than previous state-of-the-art models on the",
+            "\nTable 2 summarizes our results and compares our translation quality and training costs to other model"
+          ]
+        },
+        {
+          "page": 9,
+          "text_chars": 4411,
+          "numeric_tokens": 118,
+          "image_objects": 0,
+          "vector_paths": 53,
+          "figure_caption_clues": [],
+          "table_caption_clues": [
+            "Table 3: Variations on the Transformer architecture. Unlisted values are identical to those of the base"
+          ]
+        },
+        {
+          "page": 10,
+          "text_chars": 3585,
+          "numeric_tokens": 63,
+          "image_objects": 0,
+          "vector_paths": 33,
+          "figure_caption_clues": [],
+          "table_caption_clues": [
+            "Table 4: The Transformer generalizes well to English constituency parsing (Results are on Section 23"
+          ]
+        },
+        {
+          "page": 11,
+          "text_chars": 3400,
+          "numeric_tokens": 63,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 12,
+          "text_chars": 3401,
+          "numeric_tokens": 63,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 13,
+          "text_chars": 849,
+          "numeric_tokens": 6,
+          "image_objects": 0,
+          "vector_paths": 624,
+          "figure_caption_clues": [
+            "\n\n\nFigure 3: An example of the attention mechanism following long-distance dependencies in the"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 14,
+          "text_chars": 842,
+          "numeric_tokens": 7,
+          "image_objects": 0,
+          "vector_paths": 1030,
+          "figure_caption_clues": [
+            "\n\n\n\nFigure 4: Two attention heads, also in layer 5 of 6, apparently involved in anaphora resolution. Top:"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 15,
+          "text_chars": 842,
+          "numeric_tokens": 4,
+          "image_objects": 0,
+          "vector_paths": 947,
+          "figure_caption_clues": [
+            "\nFigure 5: Many of the attention heads exhibit behaviour that seems related to the structure of the"
+          ],
+          "table_caption_clues": []
+        }
+      ]
+    },
+    {
+      "id": "rag",
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "authors": [
+        "Patrick Lewis",
+        "Ethan Perez",
+        "Aleksandra Piktus",
+        "Fabio Petroni",
+        "Vladimir Karpukhin",
+        "Naman Goyal",
+        "Heinrich Küttler",
+        "Mike Lewis",
+        "Wen-tau Yih",
+        "Tim Rocktäschel",
+        "Sebastian Riedel",
+        "Douwe Kiela"
+      ],
+      "year": 2020,
+      "domain": "AI",
+      "language": "en",
+      "original_url": "https://arxiv.org/abs/2005.11401",
+      "download_urls": [
+        "https://arxiv.org/pdf/2005.11401v4"
+      ],
+      "version": "arXiv v4",
+      "boundaries": [
+        "概率分解与检索生成关系",
+        "主文与附录区分",
+        "跨论文概念复用",
+        "检索准确不等于生成事实正确"
+      ],
+      "download_url": "https://arxiv.org/pdf/2005.11401v4",
+      "downloaded_at": "2026-10-24T13:46:26.993984+00:00",
+      "file": "data/test-corpus/rag.pdf",
+      "bytes": 885323,
+      "sha256": "23e3249e9a1e75418d82efecab0ea8c4d033b89c93742f63208d47ce01f21233",
+      "download_status": "ok",
+      "page_count": 19,
+      "length_band": "medium",
+      "text_chars": 78885,
+      "numeric_tokens": 1036,
+      "image_objects": 2,
+      "vector_paths": 308,
+      "low_text_pages": [],
+      "figure_caption_pages": [
+        2,
+        7,
+        8,
+        17
+      ],
+      "table_caption_pages": [
+        5,
+        6,
+        7,
+        8,
+        19
+      ],
+      "first_page_excerpt": "                   Retrieval-Augmented Generation for\n                      Knowledge-Intensive NLP Tasks\n\n\n\n\n                                                   Patrick Lewis†‡, Ethan Perez⋆,\n\n                     Aleksandra Piktus†, Fabio Petroni†, Vladimir Karpukhin†, Naman Goyal†, Heinrich Küttler†,\n\n                      Mike Lewis†, Wen-tau Yih†, Tim Rocktäschel†‡, Sebastian Riedel†‡, Douwe Kiela†2021\n\n                              †Facebook AI Research; ‡University College London; ⋆New York University;Apr                                             plewis@fb.com\n12\n                                                 Abstract\n\n                            Large pre-trained language models have been shown to store factual knowledge\n                                  in their parameters, and achieve state-of-the-art results when ﬁne-tuned on down-\n                               stream NLP tasks. However, their ability to access and precisely manipulate knowl-[cs.CL]                      edge is still limited, and hence on knowledge-intensive tasks, their performance\n                                  lags behind task-speciﬁc architectures. Additionally, providing provenance for their\n                                 decisions and updating their world knowledge remain open research problems. Pre-\n                                  trained models with a differentiable access mechanism to explicit non-parametric\n                        memory have so far been only investigated for extractive downstream tasks. We\n                               explore a general-purpose ﬁne-tuning recipe for retrieval-augmented generation\n                         (RAG) — models which combine pre-trained parametric and non-parametric mem-\n                             ory for language generation. ",
+      "version_number_clues": {
+        "5,179": 0,
+        "5,172": 0,
+        "5179": 0,
+        "5172": 0
+      },
+      "pages": [
+        {
+          "page": 1,
+          "text_chars": 4006,
+          "numeric_tokens": 18,
+          "image_objects": 0,
+          "vector_paths": 2,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 2,
+          "text_chars": 5891,
+          "numeric_tokens": 37,
+          "image_objects": 0,
+          "vector_paths": 72,
+          "figure_caption_clues": [
+            "\nFigure 1: Overview of our approach. We combine a pre-trained retriever (Query Encoder + Document"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 3,
+          "text_chars": 3960,
+          "numeric_tokens": 26,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 4,
+          "text_chars": 4277,
+          "numeric_tokens": 43,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 5,
+          "text_chars": 4606,
+          "numeric_tokens": 23,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": [
+            "\nTable 1 shows results for RAG along with state-of-the-art models. On all four open-domain QA"
+          ]
+        },
+        {
+          "page": 6,
+          "text_chars": 4586,
+          "numeric_tokens": 88,
+          "image_objects": 0,
+          "vector_paths": 98,
+          "figure_caption_clues": [],
+          "table_caption_clues": [
+            "Table 1: Open-Domain QA Test Scores. For TQA, Table 2: Generation and classiﬁcation Test Scores.",
+            "\nTable 2 shows that RAG-Token performs better than RAG-Sequence on Jeopardy question generation,",
+            "\nTable 2 shows our results on FEVER. For 3-way classiﬁcation, RAG scores are within 4.3% of"
+          ]
+        },
+        {
+          "page": 7,
+          "text_chars": 4793,
+          "numeric_tokens": 44,
+          "image_objects": 1,
+          "vector_paths": 39,
+          "figure_caption_clues": [
+            "Figure 2: RAG-Token document posterior p(zi|x, yi, y−i) for each generated token for input “Hem-"
+          ],
+          "table_caption_clues": [
+            "\n\nTable 3: Examples from generation tasks. RAG models generate more speciﬁc and factually accurate"
+          ]
+        },
+        {
+          "page": 8,
+          "text_chars": 6971,
+          "numeric_tokens": 151,
+          "image_objects": 0,
+          "vector_paths": 93,
+          "figure_caption_clues": [
+            "Figure 3: Left: NQ performance as more documents are retrieved. Center: Retrieval recall perfor-"
+          ],
+          "table_caption_clues": [
+            "Table 4: Human assessments for the Jeopardy  Table 5: Ratio of distinct to total tri-grams for",
+            "\n\n\nTable 6: Ablations on the dev set. As FEVER is a classiﬁcation task, both RAG models are equivalent."
+          ]
+        },
+        {
+          "page": 9,
+          "text_chars": 4176,
+          "numeric_tokens": 29,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 10,
+          "text_chars": 3938,
+          "numeric_tokens": 57,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 11,
+          "text_chars": 3991,
+          "numeric_tokens": 96,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 12,
+          "text_chars": 4308,
+          "numeric_tokens": 72,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 13,
+          "text_chars": 4254,
+          "numeric_tokens": 84,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 14,
+          "text_chars": 4265,
+          "numeric_tokens": 89,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 15,
+          "text_chars": 4246,
+          "numeric_tokens": 82,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 16,
+          "text_chars": 1235,
+          "numeric_tokens": 20,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 17,
+          "text_chars": 2647,
+          "numeric_tokens": 17,
+          "image_objects": 1,
+          "vector_paths": 1,
+          "figure_caption_clues": [
+            "\n\n\n\n\nFigure 4: Annotation interface for human evaluation of factuality. A pop-out for detailed instructions",
+            "\n\nFigure 4 shows the user interface for human evaluation. To avoid any biases for screen position,"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 18,
+          "text_chars": 4304,
+          "numeric_tokens": 16,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 19,
+          "text_chars": 2413,
+          "numeric_tokens": 44,
+          "image_objects": 0,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": [
+            "Table 7: Number of instances in the datasets used. *A hidden subset of this data is used for evaluation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "adaptive-dcs-somp",
+      "title": "Adaptive DCS-SOMP for Localization Parameter Estimation in 5G Networks",
+      "authors": [
+        "Paulo Francisco da Conceição",
+        "Flávio Geraldo Coelho Rocha"
+      ],
+      "year": 2023,
+      "domain": "通信",
+      "language": "en",
+      "original_url": "https://www.mdpi.com/1424-8220/23/22/9073",
+      "download_urls": [
+        "https://mdpi-res.com/d_attachment/sensors/sensors-23-09073/article_deploy/sensors-23-09073-v2.pdf",
+        "https://www.mdpi.com/1424-8220/23/22/9073/pdf"
+      ],
+      "version": "publisher v2 if available; actual download_url and hash authoritative",
+      "boundaries": [
+        "稀疏恢复与通信前置知识",
+        "多层公式和符号",
+        "仿真曲线不等于真实部署",
+        "搜索域教学模型的边界"
+      ],
+      "download_url": "https://mdpi-res.com/d_attachment/sensors/sensors-23-09073/article_deploy/sensors-23-09073-v2.pdf",
+      "downloaded_at": "2026-10-24T13:46:31.132828+00:00",
+      "file": "data/test-corpus/adaptive-dcs-somp.pdf",
+      "bytes": 472611,
+      "sha256": "b4deafe808239771e804f2b655156d09b5711ee2e3fc361a06066b673115de77",
+      "download_status": "ok",
+      "page_count": 12,
+      "length_band": "medium",
+      "text_chars": 66841,
+      "numeric_tokens": 772,
+      "image_objects": 5,
+      "vector_paths": 1641,
+      "low_text_pages": [],
+      "figure_caption_pages": [
+        3,
+        5,
+        6,
+        7,
+        9,
+        10
+      ],
+      "table_caption_pages": [
+        2,
+        3,
+        9,
+        10,
+        11
+      ],
+      "first_page_excerpt": "    sensors\n\n\n\nCommunication\nAdaptive DCS-SOMP for Localization Parameter Estimation in\n5G Networks\n\nPaulo Francisco da Conceição *  and Flávio Geraldo Coelho Rocha\n\n\n\n                               Department of Electrical, Mechanical and Computer Engineering, Federal University of Goiás, Goiânia 74605-010,\n                                         Brazil; ﬂaviogcr@ufg.br\n                                     * Correspondence: paulofrancisco@discente.ufg.br\n\n\n                                Abstract: In this work, we model a 5G downlink channel using millimeter-wave (mmWave) and\n                            massive Multiple-Input Multiple-Output (mMIMO) technologies, considering the following local-\n                                 ization parameters: Time of Arrival (TOA), Two-Dimensional Angle of Departure (2D-AoD), and\n                           Two-Dimensional Angle of Arrival (2D-AoA), both encompassing azimuth and elevation. Our\n                                research focuses on the precise estimation of these parameters within a three-dimensional (3D) envi-\n                             ronment, which is crucial in Industry 4.0 applications such as smart warehousing. In such scenarios,\n                              determining the device localization is paramount, as products must be handled with high precision.\n                           To achieve these precise estimations, we employ an adaptive approach built upon the Distributed\n                          Compressed Sensing—Subspace Orthogonal Matching Pursuit (DCS-SOMP) algorithm. We obtain\n                                  better estimations using an adaptive approach that dynamically adapts the sensing matrix during\n                             each iteration, effectively constraining the search space. The re",
+      "version_number_clues": {
+        "5,179": 0,
+        "5,172": 0,
+        "5179": 0,
+        "5172": 0
+      },
+      "pages": [
+        {
+          "page": 1,
+          "text_chars": 5073,
+          "numeric_tokens": 44,
+          "image_objects": 5,
+          "vector_paths": 34,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 2,
+          "text_chars": 5658,
+          "numeric_tokens": 41,
+          "image_objects": 0,
+          "vector_paths": 2,
+          "figure_caption_clues": [],
+          "table_caption_clues": [
+            "                                Table 1 demonstrates aspects of some related works and our proposal. Column 2"
+          ]
+        },
+        {
+          "page": 3,
+          "text_chars": 4135,
+          "numeric_tokens": 35,
+          "image_objects": 0,
+          "vector_paths": 188,
+          "figure_caption_clues": [
+            "                                 Figure 1 illustrates a typical Industry 4.0 scenario in a smart warehouse where a forklift",
+            "\n\n\n\n\n                              Figure 1. Indoor Localization Scenario with LoS and NLoS Paths: in a smart warehouse, a forklift is"
+          ],
+          "table_caption_clues": [
+            "\n\n\n\n                             Table 1. Related work overview."
+          ]
+        },
+        {
+          "page": 4,
+          "text_chars": 4971,
+          "numeric_tokens": 76,
+          "image_objects": 0,
+          "vector_paths": 8,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 5,
+          "text_chars": 9126,
+          "numeric_tokens": 72,
+          "image_objects": 0,
+          "vector_paths": 487,
+          "figure_caption_clues": [
+            "                              Figure 2. Comparison between DCS-SOMP and Adaptive DCS-SOMP: (a) Variation in Sensing Matrix"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 6,
+          "text_chars": 5356,
+          "numeric_tokens": 40,
+          "image_objects": 0,
+          "vector_paths": 84,
+          "figure_caption_clues": [
+            "\n\n\n\n\n                              Figure 3. Adaptive Procedure for Selecting Eligible Candidates for Azimuth AoD."
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 7,
+          "text_chars": 4668,
+          "numeric_tokens": 31,
+          "image_objects": 0,
+          "vector_paths": 2,
+          "figure_caption_clues": [
+            "                               Figure 2a,b clearly demonstrates that when using the DCS-SOMP method, a small"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 8,
+          "text_chars": 5533,
+          "numeric_tokens": 114,
+          "image_objects": 0,
+          "vector_paths": 10,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 9,
+          "text_chars": 6315,
+          "numeric_tokens": 85,
+          "image_objects": 0,
+          "vector_paths": 302,
+          "figure_caption_clues": [
+            "                              Figure 4. Comparison of (a) Azimuth AoD estimation and (b) Elevation AoD estimation results using"
+          ],
+          "table_caption_clues": [
+            "\n\n                             Table 2. Actual Values Used in Simulations."
+          ]
+        },
+        {
+          "page": 10,
+          "text_chars": 5982,
+          "numeric_tokens": 74,
+          "image_objects": 0,
+          "vector_paths": 512,
+          "figure_caption_clues": [
+            "                              Figure 5. Comparison of (a) Azimuth AoA estimation and (b) Elevation AoA estimation results using",
+            "\n                              Figure 6. Comparison of ToA estimation results using DCS-SOMP and adaptive DCS-SOMP. The out-"
+          ],
+          "table_caption_clues": [
+            "\n                                Table 3 presents the execution times and the number of mathematical operations for"
+          ]
+        },
+        {
+          "page": 11,
+          "text_chars": 4665,
+          "numeric_tokens": 34,
+          "image_objects": 0,
+          "vector_paths": 10,
+          "figure_caption_clues": [],
+          "table_caption_clues": [
+            "\n\n\n\n                             Table 3. Comparison between DCS-SOMP and Adaptive DCS-SOMP.",
+            "                                Table 4 presents the RMSE for each parameter estimated, where εφaz, εφel, εθaz, εθel,",
+            "\n\n                             Table 4. Comparison of RMSE between DCS-SOMP and adaptive DCS-SOMP."
+          ]
+        },
+        {
+          "page": 12,
+          "text_chars": 5348,
+          "numeric_tokens": 126,
+          "image_objects": 0,
+          "vector_paths": 2,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        }
+      ]
+    },
+    {
+      "id": "shannon",
+      "title": "A Mathematical Theory of Communication",
+      "authors": [
+        "Claude E. Shannon"
+      ],
+      "year": 1948,
+      "domain": "通信",
+      "language": "en",
+      "original_url": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x",
+      "download_urls": [
+        "https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf"
+      ],
+      "version": "Harvard institutional reprint with corrections, combines July/October 1948 installments",
+      "boundaries": [
+        "长理论文档覆盖",
+        "定理与条件不可省略",
+        "熵公式与示意图",
+        "历史语境与后续知识分开"
+      ],
+      "download_url": "https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf",
+      "downloaded_at": "2026-10-24T13:46:35.293784+00:00",
+      "file": "data/test-corpus/shannon.pdf",
+      "bytes": 366296,
+      "sha256": "6e4e3411984f3edf99dbfe8b941cb5e8a321379ff0cae6ae5c1f592ad8882ca8",
+      "download_status": "ok",
+      "page_count": 55,
+      "length_band": "long",
+      "text_chars": 198951,
+      "numeric_tokens": 1473,
+      "image_objects": 0,
+      "vector_paths": 219,
+      "low_text_pages": [],
+      "figure_caption_pages": [
+        2,
+        4,
+        8,
+        9,
+        10,
+        11,
+        21,
+        22,
+        23,
+        25,
+        27
+      ],
+      "table_caption_pages": [],
+      "first_page_excerpt": "Reprinted with corrections from The Bell System Technical Journal,\nVol. 27, pp. 379–423, 623–656, July, October, 1948.\n\n\n            A Mathematical Theory of Communication\n\n                                    By C. E. SHANNON\n\n                                       INTRODUCTION\n        HE recent development of various methods of modulation such as PCM and PPM which exchange\n  T bandwidth for signal-to-noise ratio has intensiﬁed the interest in a general theory of communication. A\n         basis for such a theory is contained in the important papers of Nyquist1 and Hartley2 on this subject. In the\n         present paper we will extend the theory to include a number of new factors, in particular the effect of noise\n         in the channel, and the savings possible due to the statistical structure of the original message and due to the\n         nature of the ﬁnal destination of the information.\n          The fundamental problem of communication is that of reproducing at one point either exactly or ap-\n        proximately a message selected at another point. Frequently the messages have meaning; that is they refer\n         to or are correlated according to some system with certain physical or conceptual entities. These semantic\n         aspects of communication are irrelevant to the engineering problem. The signiﬁcant aspect is that the actual\n       message is one selected from a set of possible messages. The system must be designed to operate for each\n         possible selection, not just the one which will actually be chosen since this is unknown at the time of design.\n               If the number of messages in the set is ﬁnite then this number or any monotonic function of this number\n        can be regarded as a measure of the information produced when one message is c",
+      "version_number_clues": {
+        "5,179": 0,
+        "5,172": 0,
+        "5179": 0,
+        "5172": 0
+      },
+      "pages": [
+        {
+          "page": 1,
+          "text_chars": 4494,
+          "numeric_tokens": 36,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 2,
+          "text_chars": 3728,
+          "numeric_tokens": 10,
+          "image_objects": 0,
+          "vector_paths": 11,
+          "figure_caption_clues": [
+            "                           Fig. 1—Schematic diagram of a general communication system."
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 3,
+          "text_chars": 4179,
+          "numeric_tokens": 22,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 4,
+          "text_chars": 3442,
+          "numeric_tokens": 39,
+          "image_objects": 0,
+          "vector_paths": 14,
+          "figure_caption_clues": [
+            "                       Fig. 2—Graphical representation of the constraints on telegraph symbols."
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 5,
+          "text_chars": 3952,
+          "numeric_tokens": 19,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 6,
+          "text_chars": 4361,
+          "numeric_tokens": 51,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 7,
+          "text_chars": 3398,
+          "numeric_tokens": 16,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 8,
+          "text_chars": 4028,
+          "numeric_tokens": 24,
+          "image_objects": 0,
+          "vector_paths": 14,
+          "figure_caption_clues": [
+            "                              Fig. 3—A graph corresponding to the source in example B.",
+            "                              Fig. 4—A graph corresponding to the source in example C."
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 9,
+          "text_chars": 3868,
+          "numeric_tokens": 24,
+          "image_objects": 0,
+          "vector_paths": 52,
+          "figure_caption_clues": [
+            "\n                              Fig. 5—A graph corresponding to the source in example D."
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 10,
+          "text_chars": 4391,
+          "numeric_tokens": 54,
+          "image_objects": 0,
+          "vector_paths": 12,
+          "figure_caption_clues": [
+            "                              Fig. 6—Decomposition of a choice from three possibilities."
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 11,
+          "text_chars": 2810,
+          "numeric_tokens": 20,
+          "image_objects": 0,
+          "vector_paths": 2,
+          "figure_caption_clues": [
+            "                   Fig. 7—Entropy in the case of two possibilities with probabilities p and (1   p)."
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 12,
+          "text_chars": 3682,
+          "numeric_tokens": 19,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 13,
+          "text_chars": 3424,
+          "numeric_tokens": 23,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 14,
+          "text_chars": 3892,
+          "numeric_tokens": 23,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 15,
+          "text_chars": 4280,
+          "numeric_tokens": 25,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 16,
+          "text_chars": 4069,
+          "numeric_tokens": 17,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 17,
+          "text_chars": 4300,
+          "numeric_tokens": 43,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 18,
+          "text_chars": 4522,
+          "numeric_tokens": 59,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 19,
+          "text_chars": 4076,
+          "numeric_tokens": 16,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 20,
+          "text_chars": 4286,
+          "numeric_tokens": 56,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 21,
+          "text_chars": 2640,
+          "numeric_tokens": 9,
+          "image_objects": 0,
+          "vector_paths": 16,
+          "figure_caption_clues": [
+            "\n                                  Fig. 8—Schematic diagram of a correction system."
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 22,
+          "text_chars": 4040,
+          "numeric_tokens": 9,
+          "image_objects": 0,
+          "vector_paths": 3,
+          "figure_caption_clues": [
+            "                       Fig. 9—The equivocation possible for a given input entropy to a channel."
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 23,
+          "text_chars": 2780,
+          "numeric_tokens": 18,
+          "image_objects": 0,
+          "vector_paths": 32,
+          "figure_caption_clues": [
+            "\n              Fig. 10—Schematic representation of the relations between inputs and outputs in a channel."
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 24,
+          "text_chars": 4336,
+          "numeric_tokens": 18,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 25,
+          "text_chars": 2867,
+          "numeric_tokens": 24,
+          "image_objects": 0,
+          "vector_paths": 16,
+          "figure_caption_clues": [
+            "\n                                        Fig. 11—Example of a discrete channel."
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 26,
+          "text_chars": 4300,
+          "numeric_tokens": 22,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 27,
+          "text_chars": 3391,
+          "numeric_tokens": 55,
+          "image_objects": 0,
+          "vector_paths": 23,
+          "figure_caption_clues": [
+            "   Fig. 12—Examples of discrete channels with the same transition probabilities for each input and for each output."
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 28,
+          "text_chars": 2931,
+          "numeric_tokens": 34,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 29,
+          "text_chars": 3274,
+          "numeric_tokens": 14,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 30,
+          "text_chars": 3418,
+          "numeric_tokens": 22,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 31,
+          "text_chars": 2317,
+          "numeric_tokens": 5,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 32,
+          "text_chars": 3742,
+          "numeric_tokens": 20,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 33,
+          "text_chars": 4307,
+          "numeric_tokens": 33,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 34,
+          "text_chars": 4076,
+          "numeric_tokens": 24,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 35,
+          "text_chars": 2894,
+          "numeric_tokens": 16,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 36,
+          "text_chars": 2261,
+          "numeric_tokens": 25,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 37,
+          "text_chars": 3232,
+          "numeric_tokens": 45,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 38,
+          "text_chars": 3682,
+          "numeric_tokens": 22,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 39,
+          "text_chars": 4435,
+          "numeric_tokens": 37,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 40,
+          "text_chars": 3149,
+          "numeric_tokens": 63,
+          "image_objects": 0,
+          "vector_paths": 24,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 41,
+          "text_chars": 3619,
+          "numeric_tokens": 27,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 42,
+          "text_chars": 4324,
+          "numeric_tokens": 7,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 43,
+          "text_chars": 3093,
+          "numeric_tokens": 10,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 44,
+          "text_chars": 3554,
+          "numeric_tokens": 27,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 45,
+          "text_chars": 3259,
+          "numeric_tokens": 28,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 46,
+          "text_chars": 3696,
+          "numeric_tokens": 32,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 47,
+          "text_chars": 3740,
+          "numeric_tokens": 23,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 48,
+          "text_chars": 4545,
+          "numeric_tokens": 15,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 49,
+          "text_chars": 3962,
+          "numeric_tokens": 20,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 50,
+          "text_chars": 4046,
+          "numeric_tokens": 25,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 51,
+          "text_chars": 2762,
+          "numeric_tokens": 23,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 52,
+          "text_chars": 2829,
+          "numeric_tokens": 47,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 53,
+          "text_chars": 3579,
+          "numeric_tokens": 47,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 54,
+          "text_chars": 3789,
+          "numeric_tokens": 28,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 55,
+          "text_chars": 846,
+          "numeric_tokens": 3,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        }
+      ]
+    },
+    {
+      "id": "lyrics",
+      "title": "Decoding the Style and Bias of Song Lyrics",
+      "authors": [
+        "Manash Pratim Barman",
+        "Amit Awekar",
+        "Sambhav Kothari"
+      ],
+      "year": 2019,
+      "domain": "人文社科",
+      "language": "en",
+      "original_url": "https://arxiv.org/abs/1907.07818",
+      "download_urls": [
+        "https://arxiv.org/pdf/1907.07818v1"
+      ],
+      "version": "arXiv v1",
+      "boundaries": [
+        "数字人文与文化语料",
+        "WEAT偏差指标",
+        "表格统计不能替代社会因果结论",
+        "短文完整论证"
+      ],
+      "download_url": "https://arxiv.org/pdf/1907.07818v1",
+      "downloaded_at": "2026-10-24T13:46:40.711780+00:00",
+      "file": "data/test-corpus/lyrics.pdf",
+      "bytes": 755259,
+      "sha256": "66fe209b72eb93c6423a5c183ce4ae091f6e857e32804a277391698df6b5b283",
+      "download_status": "ok",
+      "page_count": 5,
+      "length_band": "short",
+      "text_chars": 29950,
+      "numeric_tokens": 302,
+      "image_objects": 9,
+      "vector_paths": 85,
+      "low_text_pages": [],
+      "figure_caption_pages": [
+        2,
+        3
+      ],
+      "table_caption_pages": [
+        4
+      ],
+      "first_page_excerpt": "              Decoding the Style and Bias of Song Lyrics\n\n           Manash Pratim Barman            Amit Awekar              Sambhav Kothari\n                Indian Institute of Information         Indian Institute of Technology               Bloomberg LP\n                       Technology                       Guwahati, India                 London, United Kingdom\n                     Guwahati, India                      awekar@iitg.ac.in                skothari44@bloomberg.net\n\n      ABSTRACT                                                problems such as personalized music recommendation [13], song\n         The central idea of this paper is to gain a deeper understanding      popularity prediction, and genre identification [8].However, prior\n            of song lyrics computationally. We focus on two aspects: style     works on style analysis and bias measurement are limited only to\n          and biases of song lyrics. All prior works to understand these two      the manual analysis of a few hundred songs. Such an approach\n           aspects are limited to manual analysis of a small corpus of song      cannot scale to the analysis of millions of songs. These works also\n             lyrics. In contrast, we analyzed more than half a million songs        fail to capitalize on recent advances in computational methods that\n           spread over five decades. We characterize the lyrics style in terms      generate a semantic representation for natural language text. Our\n            of vocabulary, length, repetitiveness, speed, and readability. We     work aims to fill this gap by applying these methods on a large2019          have observed that the style of popular songs significantly differs      corpus of song lyrics scraped from online user-generated content.\n\n         ",
+      "version_number_clues": {
+        "5,179": 0,
+        "5,172": 0,
+        "5179": 0,
+        "5172": 0
+      },
+      "pages": [
+        {
+          "page": 1,
+          "text_chars": 8650,
+          "numeric_tokens": 52,
+          "image_objects": 0,
+          "vector_paths": 2,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 2,
+          "text_chars": 5012,
+          "numeric_tokens": 57,
+          "image_objects": 4,
+          "vector_paths": 1,
+          "figure_caption_clues": [
+            "\n                                                                        Figure 2: Year-wise rank comparison",
+            "         Figure 1: Comparison of top words used"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 3,
+          "text_chars": 5899,
+          "numeric_tokens": 22,
+          "image_objects": 5,
+          "vector_paths": 0,
+          "figure_caption_clues": [
+            "\n\n                             Figure 4: Comparison of Length, Duration, and Speed of songs",
+            "          Figure 5: Comparison of repetitiveness               However, the IAT test requires human subjects to compute the bias",
+            "            Figure 6: Comparison of FK score                    to measurements on the song lyrics dataset with word2vec and"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 4,
+          "text_chars": 9922,
+          "numeric_tokens": 158,
+          "image_objects": 0,
+          "vector_paths": 82,
+          "figure_caption_clues": [],
+          "table_caption_clues": [
+            "\n\n                                         Table 1: Comparison of Effect Size"
+          ]
+        },
+        {
+          "page": 5,
+          "text_chars": 463,
+          "numeric_tokens": 13,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        }
+      ]
+    },
+    {
+      "id": "moral-machine",
+      "title": "The Moral Machine experiment",
+      "authors": [
+        "Edmond Awad",
+        "Sohan Dsouza",
+        "Richard Kim",
+        "Jonathan Schulz",
+        "Joseph Henrich",
+        "Azim Shariff",
+        "Jean-François Bonnefon",
+        "Iyad Rahwan"
+      ],
+      "year": 2018,
+      "domain": "哲学/实验伦理/人文社科",
+      "language": "en",
+      "original_url": "https://dspace.mit.edu/entities/publication/c5779012-d165-4644-b276-76ab3365ca26",
+      "download_urls": [
+        "https://dspace.mit.edu/bitstreams/750c4524-46a2-4013-916a-c8131d726b56/download",
+        "https://dspace.mit.edu/server/api/core/bitstreams/750c4524-46a2-4013-916a-c8131d726b56/content",
+        "https://dspace.mit.edu/bitstream/handle/1721.1/125065/Moral%20Machine%20Paper.pdf"
+      ],
+      "version": "MIT author final manuscript; not publisher layout",
+      "boundaries": [
+        "图示情景与偏好统计",
+        "描述性伦理不等于规范性结论",
+        "文化聚类与样本选择",
+        "人数/决策次数/地域单位区别"
+      ],
+      "download_url": "https://dspace.mit.edu/server/api/core/bitstreams/750c4524-46a2-4013-916a-c8131d726b56/content",
+      "downloaded_at": "2026-10-24T13:48:42.592276+00:00",
+      "file": "data/test-corpus/moral-machine.pdf",
+      "bytes": 758868,
+      "sha256": "59c4f6158add045bb3fbd85d9f7d4f61305583ad1441523759a88590efccf5fb",
+      "download_status": "ok",
+      "page_count": 17,
+      "length_band": "medium",
+      "text_chars": 43094,
+      "numeric_tokens": 275,
+      "image_objects": 6,
+      "vector_paths": 98,
+      "low_text_pages": [],
+      "figure_caption_pages": [
+        4,
+        6,
+        8,
+        10
+      ],
+      "table_caption_pages": [],
+      "first_page_excerpt": "                            MIT Open Access Articles\n\n                          The Moral Machine experiment\n\n  The MIT Faculty has made this article openly available. Please share how this access benefits you. Your story matters.\n\n\nCitation: Awad, E. et al. \"The Moral Machine experiment.\" Nature 563, 7729 (October 2018): 59–64 © 2018 Springer Nature\nLimited\n\nPublished Version: https://doi.org/10.1038/s41586-018-0637-6\n\nPublisher: Springer Science and Business Media LLC\n\nPermanent Link: https://hdl.handle.net/1721.1/125065\n\nVersion: Author's final manuscript\n\nTerms of use: Article is made available in accordance with the publisher's policy and may be subject to US copyright law. Please\nrefer to the publisher's site for terms of use.",
+      "version_number_clues": {
+        "5,179": 0,
+        "5,172": 0,
+        "5179": 0,
+        "5172": 0
+      },
+      "pages": [
+        {
+          "page": 1,
+          "text_chars": 742,
+          "numeric_tokens": 13,
+          "image_objects": 2,
+          "vector_paths": 5,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 2,
+          "text_chars": 3126,
+          "numeric_tokens": 24,
+          "image_objects": 0,
+          "vector_paths": 9,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 3,
+          "text_chars": 3707,
+          "numeric_tokens": 14,
+          "image_objects": 0,
+          "vector_paths": 5,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 4,
+          "text_chars": 2990,
+          "numeric_tokens": 6,
+          "image_objects": 1,
+          "vector_paths": 5,
+          "figure_caption_clues": [
+            "\n\n\n\n\nFigure 1. ​(a) World map highlighting the locations of Moral Machine visitors. Each point represents a location from which at least one visitor made a"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 5,
+          "text_chars": 3214,
+          "numeric_tokens": 9,
+          "image_objects": 0,
+          "vector_paths": 5,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 6,
+          "text_chars": 1507,
+          "numeric_tokens": 9,
+          "image_objects": 1,
+          "vector_paths": 5,
+          "figure_caption_clues": [
+            "Figure 2. (a) ​Average marginal causal effect (AMCE) for each preference. In each row, Δ Pr  is the difference between the probability of sparing char"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 7,
+          "text_chars": 2992,
+          "numeric_tokens": 21,
+          "image_objects": 0,
+          "vector_paths": 5,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 8,
+          "text_chars": 975,
+          "numeric_tokens": 7,
+          "image_objects": 1,
+          "vector_paths": 5,
+          "figure_caption_clues": [
+            "Figure 3. ​(a) ​Hierarchical Cluster of Countries based on average marginal causal effect. One hundred thirty countries with at least 100 respondents "
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 9,
+          "text_chars": 3531,
+          "numeric_tokens": 5,
+          "image_objects": 0,
+          "vector_paths": 10,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 10,
+          "text_chars": 1937,
+          "numeric_tokens": 6,
+          "image_objects": 1,
+          "vector_paths": 5,
+          "figure_caption_clues": [
+            "Figure 4. ​Association between Moral Machine preferences and other variables at the country level. Each panel shows Spearman’s ρ and"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 11,
+          "text_chars": 3938,
+          "numeric_tokens": 6,
+          "image_objects": 0,
+          "vector_paths": 8,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 12,
+          "text_chars": 4169,
+          "numeric_tokens": 10,
+          "image_objects": 0,
+          "vector_paths": 5,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 13,
+          "text_chars": 3643,
+          "numeric_tokens": 17,
+          "image_objects": 0,
+          "vector_paths": 5,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 14,
+          "text_chars": 1906,
+          "numeric_tokens": 10,
+          "image_objects": 0,
+          "vector_paths": 6,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 15,
+          "text_chars": 1899,
+          "numeric_tokens": 49,
+          "image_objects": 0,
+          "vector_paths": 5,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 16,
+          "text_chars": 1899,
+          "numeric_tokens": 44,
+          "image_objects": 0,
+          "vector_paths": 5,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 17,
+          "text_chars": 903,
+          "numeric_tokens": 25,
+          "image_objects": 0,
+          "vector_paths": 5,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        }
+      ]
+    },
+    {
+      "id": "simulation-argument",
+      "title": "Are You Living in a Computer Simulation?",
+      "authors": [
+        "Nick Bostrom"
+      ],
+      "year": 2003,
+      "domain": "哲学",
+      "language": "en",
+      "original_url": "https://simulation-argument.com/",
+      "download_urls": [
+        "https://simulation-argument.com/simulation.pdf",
+        "http://simulation-argument.com/simulation.pdf"
+      ],
+      "version": "author-hosted paper published in Philosophical Quarterly 53(211):243–255",
+      "boundaries": [
+        "纯理论哲学论证结构",
+        "三分命题不能误写成已证实生活在模拟中",
+        "概率公式的前提",
+        "没有实证图表时不得强造数值演示"
+      ],
+      "download_url": "http://simulation-argument.com/simulation.pdf",
+      "downloaded_at": "2026-10-24T13:48:44.374772+00:00",
+      "file": "data/test-corpus/simulation-argument.pdf",
+      "bytes": 245214,
+      "sha256": "be823e12764a35cdd6b36d8db0d5047eebeb2d3137801f5524cd84f1d4f297de",
+      "download_status": "ok",
+      "page_count": 14,
+      "length_band": "medium",
+      "text_chars": 37690,
+      "numeric_tokens": 155,
+      "image_objects": 0,
+      "vector_paths": 25,
+      "low_text_pages": [],
+      "figure_caption_pages": [],
+      "table_caption_pages": [],
+      "first_page_excerpt": "  ARE YOU LIVING IN A COMPUTER SIMULATION?\n\n\n                     BY NICK BOSTROM\n\n\n  [Published in Philosophical Quarterly (2003) Vol. 53, No. 211, pp. 243‐255. (First version: 2001)]\n\n\n\n      This paper argues that at least one of the following propositions is true: (1)\n      the human  species  is very  likely  to go  extinct  before  reaching a\n     “posthuman” stage; (2) any posthuman civilization is extremely unlikely\n       to run a significant number of simulations of their evolutionary history (or\n       variations thereof);  (3) we are almost certainly living in a computer\n       simulation. It follows that the belief that there is a significant chance that\n     we will one day become posthumans who run ancestor‐simulations is\n        false, unless we are currently living in a simulation. A number of other\n      consequences of this result are also discussed.\n\n\n\n                                          I. INTRODUCTION\n\n\nMany works of science fiction as well as some forecasts by serious technologists\nand futurologists predict that enormous amounts of computing power will be\navailable in the future. Let us suppose for a moment that these predictions are\ncorrect. One thing that later generations might do with their super‐powerful\ncomputers is run detailed simulations of their forebears or of people like their\nforebears. Because their computers would be so powerful, they could run a great\nmany such simulations. Suppose that these simulated people are conscious (as\nthey would be if the simulations were sufficiently fine‐grained and if a certain\nquite widely accepted position in the philosophy of mind is correct). Then it\ncould be the case that the vast majority of minds like ours do not belong to the\noriginal race but rather to people simulated by the advanced des",
+      "version_number_clues": {
+        "5,179": 0,
+        "5,172": 0,
+        "5179": 0,
+        "5172": 0
+      },
+      "pages": [
+        {
+          "page": 1,
+          "text_chars": 2372,
+          "numeric_tokens": 10,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 2,
+          "text_chars": 2939,
+          "numeric_tokens": 1,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 3,
+          "text_chars": 2965,
+          "numeric_tokens": 18,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 4,
+          "text_chars": 2989,
+          "numeric_tokens": 34,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 5,
+          "text_chars": 3023,
+          "numeric_tokens": 5,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 6,
+          "text_chars": 2262,
+          "numeric_tokens": 11,
+          "image_objects": 0,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 7,
+          "text_chars": 1705,
+          "numeric_tokens": 9,
+          "image_objects": 0,
+          "vector_paths": 13,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 8,
+          "text_chars": 2932,
+          "numeric_tokens": 9,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 9,
+          "text_chars": 2851,
+          "numeric_tokens": 15,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 10,
+          "text_chars": 2871,
+          "numeric_tokens": 15,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 11,
+          "text_chars": 3140,
+          "numeric_tokens": 3,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 12,
+          "text_chars": 2997,
+          "numeric_tokens": 3,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 13,
+          "text_chars": 2961,
+          "numeric_tokens": 12,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 14,
+          "text_chars": 1670,
+          "numeric_tokens": 10,
+          "image_objects": 0,
+          "vector_paths": 2,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        }
+      ]
+    },
+    {
+      "id": "generative-ai-work",
+      "title": "Generative AI at Work",
+      "authors": [
+        "Erik Brynjolfsson",
+        "Danielle Li",
+        "Lindsey R. Raymond"
+      ],
+      "year": 2023,
+      "domain": "经济",
+      "language": "en",
+      "original_url": "https://www.nber.org/papers/w31161",
+      "download_urls": [
+        "https://www.nber.org/system/files/working_papers/w31161/w31161.pdf",
+        "https://arxiv.org/pdf/2304.11771v1"
+      ],
+      "version": "NBER working paper or arXiv 2304.11771 v1 fallback; actual download_url authoritative; not 2025 QJE version",
+      "boundaries": [
+        "长实证论文与附录",
+        "样本人数版本差异5179/5172",
+        "平均效果与异质性",
+        "相关性/因果识别与外推边界"
+      ],
+      "download_url": "https://arxiv.org/pdf/2304.11771v1",
+      "downloaded_at": "2026-10-24T13:48:47.691831+00:00",
+      "file": "data/test-corpus/generative-ai-work.pdf",
+      "bytes": 2261596,
+      "sha256": "ac0a4e183aa6f9360d201b454c06d8077400bae6be84851574eb0f4369a6430d",
+      "download_status": "ok",
+      "page_count": 57,
+      "length_band": "long",
+      "text_chars": 191134,
+      "numeric_tokens": 1719,
+      "image_objects": 3,
+      "vector_paths": 5517,
+      "low_text_pages": [
+        48
+      ],
+      "figure_caption_pages": [
+        10,
+        12,
+        14,
+        19,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42
+      ],
+      "table_caption_pages": [
+        11,
+        13,
+        43,
+        46,
+        47
+      ],
+      "first_page_excerpt": "                                                                        ﬁll\n\n\n                            Generative AI at Work˚\n\n\n\n\n\n                       Erik Brynjolfsson           Danielle Li         Lindsey Raymond\n                      Stanford & NBER      MIT & NBER          MIT2023\nApr                                                April 25, 2023\n23                                            Please see here for latest version\n\n\n\n\n                                                  Abstract\n\n\n               We study the staggered introduction of a generative AI-based conversational assistant using[econ.GN]             data from 5,179 customer support agents. Access to the tool increases productivity, as measured\n                 by issues resolved per hour, by 14 percent on average, with the greatest impact on novice and\n                     low-skilled workers, and minimal impact on experienced and highly skilled workers. We provide\n                    suggestive evidence that the AI model disseminates the potentially tacit knowledge of more able\n                   workers and helps newer workers move down the experience curve. In addition, we show that\n                AI assistance improves customer sentiment, reduces requests for managerial intervention, and\n                  improves employee retention.\n\n\n           JEL Classiﬁcations: D80, J24, M15, M51, O33\n\n            Keywords: Generative AI, Large Language Models, Technology Adoption, Worker Productiv-\n\n                 ity, Organizational Design.arXiv:2304.11771v1\n                  ˚Correspondence to erikb@stanford.edu, d_li@mit.edu, and lraymond@mit.edu. This paper is part of the National Bureau\n                  of Economic Research (NBER)’s working paper series, #WP31161. We are grateful to Daron Acem",
+      "version_number_clues": {
+        "5,179": 3,
+        "5,172": 0,
+        "5179": 0,
+        "5172": 0
+      },
+      "pages": [
+        {
+          "page": 1,
+          "text_chars": 2406,
+          "numeric_tokens": 14,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 2,
+          "text_chars": 3527,
+          "numeric_tokens": 21,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 3,
+          "text_chars": 3034,
+          "numeric_tokens": 9,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 4,
+          "text_chars": 2812,
+          "numeric_tokens": 20,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 5,
+          "text_chars": 2960,
+          "numeric_tokens": 22,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 6,
+          "text_chars": 3086,
+          "numeric_tokens": 23,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 7,
+          "text_chars": 2794,
+          "numeric_tokens": 18,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 8,
+          "text_chars": 2936,
+          "numeric_tokens": 15,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 9,
+          "text_chars": 2984,
+          "numeric_tokens": 6,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 10,
+          "text_chars": 3539,
+          "numeric_tokens": 9,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [
+            "\n   Figure 1 illustrates sample output. In the chat window (Panel A), Alex, the customer, describes"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 11,
+          "text_chars": 2573,
+          "numeric_tokens": 16,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": [
+            "\nTable 1 provides details on sample characteristics, divided into three groups: agents who are never"
+          ]
+        },
+        {
+          "page": 12,
+          "text_chars": 2820,
+          "numeric_tokens": 12,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [
+            "\n   Figure 3 plots the raw distributions of our outcomes for each of the never, pre-, and post-"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 13,
+          "text_chars": 2999,
+          "numeric_tokens": 31,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": [
+            "\nTable 2 examines the impact of AI model deployment on our primary measure of productivity,"
+          ]
+        },
+        {
+          "page": 14,
+          "text_chars": 3017,
+          "numeric_tokens": 29,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [
+            "\n   Figure 4 shows the accompanying IW event study estimates of Sun and Abraham (2021) for the",
+            "\n   Figure 5 presents the accompanying event studies for additional outcomes. We see immediate"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 15,
+          "text_chars": 2854,
+          "numeric_tokens": 12,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 16,
+          "text_chars": 2863,
+          "numeric_tokens": 13,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 17,
+          "text_chars": 3173,
+          "numeric_tokens": 19,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 18,
+          "text_chars": 2779,
+          "numeric_tokens": 10,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 19,
+          "text_chars": 2958,
+          "numeric_tokens": 8,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [
+            "\nFigure 12, we provide suggestive evidence that AI assistance leads lower-skill agents to communicate"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 20,
+          "text_chars": 2809,
+          "numeric_tokens": 15,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 21,
+          "text_chars": 2993,
+          "numeric_tokens": 18,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 22,
+          "text_chars": 2968,
+          "numeric_tokens": 15,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 23,
+          "text_chars": 2823,
+          "numeric_tokens": 5,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 24,
+          "text_chars": 3354,
+          "numeric_tokens": 89,
+          "image_objects": 0,
+          "vector_paths": 8,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 25,
+          "text_chars": 3401,
+          "numeric_tokens": 53,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 26,
+          "text_chars": 3140,
+          "numeric_tokens": 60,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 27,
+          "text_chars": 2878,
+          "numeric_tokens": 37,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 28,
+          "text_chars": 476,
+          "numeric_tokens": 2,
+          "image_objects": 2,
+          "vector_paths": 0,
+          "figure_caption_clues": [
+            "                         Figure 1: Sample AI Output"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 29,
+          "text_chars": 666,
+          "numeric_tokens": 17,
+          "image_objects": 0,
+          "vector_paths": 37,
+          "figure_caption_clues": [
+            "                       Figure 2: Deployment Timeline"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 30,
+          "text_chars": 5226,
+          "numeric_tokens": 55,
+          "image_objects": 0,
+          "vector_paths": 181,
+          "figure_caption_clues": [
+            "          Figure 3: Raw Productivity Distributions, by AI Treatment"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 31,
+          "text_chars": 1678,
+          "numeric_tokens": 48,
+          "image_objects": 0,
+          "vector_paths": 310,
+          "figure_caption_clues": [
+            "                Figure 4: Event Studies, Resolutions Per Hour"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 32,
+          "text_chars": 5941,
+          "numeric_tokens": 87,
+          "image_objects": 0,
+          "vector_paths": 610,
+          "figure_caption_clues": [
+            "                   Figure 5: Event Studies, Additional Outcomes"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 33,
+          "text_chars": 2288,
+          "numeric_tokens": 28,
+          "image_objects": 0,
+          "vector_paths": 98,
+          "figure_caption_clues": [
+            "          Figure 6: Heterogeneity of AI Impact, by Skill and Tenure"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 34,
+          "text_chars": 5139,
+          "numeric_tokens": 44,
+          "image_objects": 0,
+          "vector_paths": 192,
+          "figure_caption_clues": [
+            "    Figure 7: Heterogeneity of AI Impact by pre-AI Worker Skill, Additional"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 35,
+          "text_chars": 4900,
+          "numeric_tokens": 54,
+          "image_objects": 0,
+          "vector_paths": 192,
+          "figure_caption_clues": [
+            "   Figure 8: Heterogeneity of AI Impact by pre-AI Worker Tenure, Additional"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 36,
+          "text_chars": 1283,
+          "numeric_tokens": 15,
+          "image_objects": 0,
+          "vector_paths": 172,
+          "figure_caption_clues": [
+            "              Figure 9: Experience Curves by Deployment Cohort"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 37,
+          "text_chars": 2152,
+          "numeric_tokens": 25,
+          "image_objects": 0,
+          "vector_paths": 75,
+          "figure_caption_clues": [
+            "           Figure 10: Heterogeneity of AI Impact, by AI Adherence"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 38,
+          "text_chars": 2530,
+          "numeric_tokens": 35,
+          "image_objects": 0,
+          "vector_paths": 150,
+          "figure_caption_clues": [
+            "                     Figure 11: AI Adherence over Time"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 39,
+          "text_chars": 2586,
+          "numeric_tokens": 22,
+          "image_objects": 0,
+          "vector_paths": 124,
+          "figure_caption_clues": [
+            "                         Figure 12: Textual Change"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 40,
+          "text_chars": 4476,
+          "numeric_tokens": 63,
+          "image_objects": 0,
+          "vector_paths": 514,
+          "figure_caption_clues": [
+            "                        Figure 13: Conversation Sentiment"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 41,
+          "text_chars": 2087,
+          "numeric_tokens": 23,
+          "image_objects": 0,
+          "vector_paths": 92,
+          "figure_caption_clues": [
+            "        Figure 14: Impact of AI Model Deployment on Worker Attrition"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 42,
+          "text_chars": 1906,
+          "numeric_tokens": 46,
+          "image_objects": 0,
+          "vector_paths": 308,
+          "figure_caption_clues": [
+            "           Figure 15: Impact of AI on Chat Escalation and Transfers"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 43,
+          "text_chars": 1612,
+          "numeric_tokens": 50,
+          "image_objects": 0,
+          "vector_paths": 7,
+          "figure_caption_clues": [],
+          "table_caption_clues": [
+            "                   Table 1: Applicant Summary Statistics"
+          ]
+        },
+        {
+          "page": 44,
+          "text_chars": 13739,
+          "numeric_tokens": 48,
+          "image_objects": 0,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 45,
+          "text_chars": 17941,
+          "numeric_tokens": 49,
+          "image_objects": 0,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 46,
+          "text_chars": 1483,
+          "numeric_tokens": 17,
+          "image_objects": 0,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": [
+            "                  Table 4: Agent and Customer Sentiment"
+          ]
+        },
+        {
+          "page": 47,
+          "text_chars": 1719,
+          "numeric_tokens": 27,
+          "image_objects": 0,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": [
+            "                     Table 5: Organizational Changes"
+          ]
+        },
+        {
+          "page": 48,
+          "text_chars": 68,
+          "numeric_tokens": 1,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 49,
+          "text_chars": 782,
+          "numeric_tokens": 2,
+          "image_objects": 1,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 50,
+          "text_chars": 2720,
+          "numeric_tokens": 55,
+          "image_objects": 0,
+          "vector_paths": 842,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 51,
+          "text_chars": 4614,
+          "numeric_tokens": 45,
+          "image_objects": 0,
+          "vector_paths": 194,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 52,
+          "text_chars": 4632,
+          "numeric_tokens": 55,
+          "image_objects": 0,
+          "vector_paths": 194,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 53,
+          "text_chars": 4607,
+          "numeric_tokens": 57,
+          "image_objects": 0,
+          "vector_paths": 700,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 54,
+          "text_chars": 5913,
+          "numeric_tokens": 43,
+          "image_objects": 0,
+          "vector_paths": 194,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 55,
+          "text_chars": 2024,
+          "numeric_tokens": 29,
+          "image_objects": 0,
+          "vector_paths": 96,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 56,
+          "text_chars": 4105,
+          "numeric_tokens": 50,
+          "image_objects": 0,
+          "vector_paths": 196,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 57,
+          "text_chars": 1305,
+          "numeric_tokens": 28,
+          "image_objects": 0,
+          "vector_paths": 5,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        }
+      ]
+    },
+    {
+      "id": "macroeconomics-ai",
+      "title": "The Simple Macroeconomics of AI",
+      "authors": [
+        "Daron Acemoglu"
+      ],
+      "year": 2024,
+      "domain": "经济",
+      "language": "en",
+      "original_url": "https://www.nber.org/papers/w32487",
+      "download_urls": [
+        "https://www.nber.org/system/files/working_papers/w32487/w32487.pdf",
+        "https://economics.mit.edu/sites/default/files/2024-05/The%20Simple%20Macroeconomics%20of%20AI.pdf",
+        "https://shapingwork.mit.edu/wp-content/uploads/2024/05/Acemoglu_Macroeconomics-of-AI_May-2024.pdf"
+      ],
+      "version": "NBER working paper or May 12 2024 MIT author-hosted fallback; actual download_url authoritative",
+      "boundaries": [
+        "长理论加数据校准",
+        "模型假设与预测区间",
+        "GDP与TFP及时间尺度",
+        "与微观生产率研究比较不能直接等同"
+      ],
+      "download_url": "https://shapingwork.mit.edu/wp-content/uploads/2024/05/Acemoglu_Macroeconomics-of-AI_May-2024.pdf",
+      "downloaded_at": "2026-10-24T13:48:53.901130+00:00",
+      "file": "data/test-corpus/macroeconomics-ai.pdf",
+      "bytes": 1284682,
+      "sha256": "b0183405d850db11dcce0ff1e82cbc217175835032497776852d6afce49b8767",
+      "download_status": "ok",
+      "page_count": 58,
+      "length_band": "long",
+      "text_chars": 178416,
+      "numeric_tokens": 1287,
+      "image_objects": 1,
+      "vector_paths": 6832,
+      "low_text_pages": [],
+      "figure_caption_pages": [
+        39,
+        40,
+        42,
+        43
+      ],
+      "table_caption_pages": [
+        40
+      ],
+      "first_page_excerpt": "The Simple\nMacroeconomics of AI\n\nDaron Acemoglu\n\n\nMay 2024\n\n\n\n\n\nMIT Shaping the Future of Work Initiative                                                               shapingwork.mit.edu30 Wadsworth St., Building E53-390 - Cambridge, MA 02142",
+      "version_number_clues": {
+        "5,179": 0,
+        "5,172": 0,
+        "5179": 0,
+        "5172": 0
+      },
+      "pages": [
+        {
+          "page": 1,
+          "text_chars": 243,
+          "numeric_tokens": 5,
+          "image_objects": 1,
+          "vector_paths": 26,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 2,
+          "text_chars": 3343,
+          "numeric_tokens": 10,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 3,
+          "text_chars": 3517,
+          "numeric_tokens": 25,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 4,
+          "text_chars": 2738,
+          "numeric_tokens": 12,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 5,
+          "text_chars": 3355,
+          "numeric_tokens": 18,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 6,
+          "text_chars": 3010,
+          "numeric_tokens": 20,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 7,
+          "text_chars": 2991,
+          "numeric_tokens": 11,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 8,
+          "text_chars": 2896,
+          "numeric_tokens": 7,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 9,
+          "text_chars": 2963,
+          "numeric_tokens": 29,
+          "image_objects": 0,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 10,
+          "text_chars": 2577,
+          "numeric_tokens": 9,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 11,
+          "text_chars": 2370,
+          "numeric_tokens": 29,
+          "image_objects": 0,
+          "vector_paths": 15,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 12,
+          "text_chars": 3472,
+          "numeric_tokens": 30,
+          "image_objects": 0,
+          "vector_paths": 9,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 13,
+          "text_chars": 2748,
+          "numeric_tokens": 18,
+          "image_objects": 0,
+          "vector_paths": 4,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 14,
+          "text_chars": 3372,
+          "numeric_tokens": 19,
+          "image_objects": 0,
+          "vector_paths": 11,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 15,
+          "text_chars": 2305,
+          "numeric_tokens": 8,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 16,
+          "text_chars": 3637,
+          "numeric_tokens": 24,
+          "image_objects": 0,
+          "vector_paths": 4,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 17,
+          "text_chars": 2576,
+          "numeric_tokens": 6,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 18,
+          "text_chars": 3660,
+          "numeric_tokens": 6,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 19,
+          "text_chars": 3854,
+          "numeric_tokens": 8,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 20,
+          "text_chars": 2378,
+          "numeric_tokens": 21,
+          "image_objects": 0,
+          "vector_paths": 2,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 21,
+          "text_chars": 2822,
+          "numeric_tokens": 19,
+          "image_objects": 0,
+          "vector_paths": 9,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 22,
+          "text_chars": 2485,
+          "numeric_tokens": 11,
+          "image_objects": 0,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 23,
+          "text_chars": 2908,
+          "numeric_tokens": 13,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 24,
+          "text_chars": 2927,
+          "numeric_tokens": 6,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 25,
+          "text_chars": 2426,
+          "numeric_tokens": 11,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 26,
+          "text_chars": 2882,
+          "numeric_tokens": 14,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 27,
+          "text_chars": 3240,
+          "numeric_tokens": 21,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 28,
+          "text_chars": 2820,
+          "numeric_tokens": 13,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 29,
+          "text_chars": 3119,
+          "numeric_tokens": 6,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 30,
+          "text_chars": 3480,
+          "numeric_tokens": 28,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 31,
+          "text_chars": 2634,
+          "numeric_tokens": 30,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 32,
+          "text_chars": 2588,
+          "numeric_tokens": 19,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 33,
+          "text_chars": 2891,
+          "numeric_tokens": 21,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 34,
+          "text_chars": 2919,
+          "numeric_tokens": 12,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 35,
+          "text_chars": 2677,
+          "numeric_tokens": 29,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 36,
+          "text_chars": 2783,
+          "numeric_tokens": 24,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 37,
+          "text_chars": 3045,
+          "numeric_tokens": 38,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 38,
+          "text_chars": 2817,
+          "numeric_tokens": 10,
+          "image_objects": 0,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 39,
+          "text_chars": 3789,
+          "numeric_tokens": 40,
+          "image_objects": 0,
+          "vector_paths": 1679,
+          "figure_caption_clues": [
+            "            Figure 1: Distribution of AI exposure across the wage distribution"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 40,
+          "text_chars": 2619,
+          "numeric_tokens": 28,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [
+            "\n   Figure 1 is the equivalent of Figure 5b in Acemoglu and Restrepo (2022) and presents"
+          ],
+          "table_caption_clues": [
+            "\n   Table 1 presents the main results. The seven rows are for the five education groups"
+          ]
+        },
+        {
+          "page": 41,
+          "text_chars": 18770,
+          "numeric_tokens": 80,
+          "image_objects": 0,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 42,
+          "text_chars": 4214,
+          "numeric_tokens": 78,
+          "image_objects": 0,
+          "vector_paths": 4931,
+          "figure_caption_clues": [
+            "Figure 2: Decomposition of productivity effects, industry shifts, direct displacement effects"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 43,
+          "text_chars": 2953,
+          "numeric_tokens": 27,
+          "image_objects": 0,
+          "vector_paths": 83,
+          "figure_caption_clues": [
+            "                Figure 3: Total wage effect of exposure to AI, by gender"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 44,
+          "text_chars": 2394,
+          "numeric_tokens": 15,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 45,
+          "text_chars": 2917,
+          "numeric_tokens": 20,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 46,
+          "text_chars": 2913,
+          "numeric_tokens": 10,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 47,
+          "text_chars": 2244,
+          "numeric_tokens": 8,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 48,
+          "text_chars": 1994,
+          "numeric_tokens": 37,
+          "image_objects": 0,
+          "vector_paths": 17,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 49,
+          "text_chars": 2062,
+          "numeric_tokens": 38,
+          "image_objects": 0,
+          "vector_paths": 4,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 50,
+          "text_chars": 2080,
+          "numeric_tokens": 30,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 51,
+          "text_chars": 1179,
+          "numeric_tokens": 19,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 52,
+          "text_chars": 2320,
+          "numeric_tokens": 15,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 53,
+          "text_chars": 3008,
+          "numeric_tokens": 39,
+          "image_objects": 0,
+          "vector_paths": 4,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 54,
+          "text_chars": 2653,
+          "numeric_tokens": 11,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 55,
+          "text_chars": 2693,
+          "numeric_tokens": 10,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 56,
+          "text_chars": 3773,
+          "numeric_tokens": 108,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 57,
+          "text_chars": 2817,
+          "numeric_tokens": 25,
+          "image_objects": 0,
+          "vector_paths": 6,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 58,
+          "text_chars": 1499,
+          "numeric_tokens": 9,
+          "image_objects": 0,
+          "vector_paths": 1,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        }
+      ]
+    },
+    {
+      "id": "cnnic55",
+      "title": "第55次中国互联网络发展状况统计报告",
+      "authors": [
+        "中国互联网络信息中心（CNNIC）"
+      ],
+      "year": 2025,
+      "domain": "人文社科/经济研报",
+      "language": "zh",
+      "original_url": "https://www.cnnic.cn/n4/2025/0117/c88-11229.html",
+      "download_urls": [
+        "https://www.cnnic.cn/NMediaFile/2025/0428/MAIN17458061595875K4FP1NEUO.pdf",
+        "https://www.cnnic.net.cn/NMediaFile/2025/0428/MAIN17458061595875K4FP1NEUO.pdf"
+      ],
+      "version": "official January 2025 report, data through December 2024",
+      "boundaries": [
+        "中文长研报与目录页码",
+        "图表单位亿/万/百分比",
+        "统计时点及地域口径",
+        "描述性数据不可伪造因果关系"
+      ],
+      "download_url": "https://www.cnnic.cn/NMediaFile/2025/0428/MAIN17458061595875K4FP1NEUO.pdf",
+      "downloaded_at": "2026-10-24T13:46:47.543410+00:00",
+      "file": "data/test-corpus/cnnic55.pdf",
+      "bytes": 6333577,
+      "sha256": "d20a33e7eb892f38245c5773919cbec4c86e0671f601b9c9acb15e7b66278c5e",
+      "download_status": "ok",
+      "page_count": 75,
+      "length_band": "long",
+      "text_chars": 98143,
+      "numeric_tokens": 3634,
+      "image_objects": 280,
+      "vector_paths": 1837,
+      "low_text_pages": [
+        1,
+        2
+      ],
+      "figure_caption_pages": [
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        34,
+        35,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        46,
+        47,
+        50,
+        51,
+        53,
+        56,
+        58,
+        59
+      ],
+      "table_caption_pages": [
+        15,
+        17,
+        18,
+        21,
+        33,
+        56
+      ],
+      "first_page_excerpt": "55\n\n\n\n\n\n                    55th",
+      "version_number_clues": {
+        "5,179": 0,
+        "5,172": 0,
+        "5179": 0,
+        "5172": 0
+      },
+      "pages": [
+        {
+          "page": 1,
+          "text_chars": 32,
+          "numeric_tokens": 2,
+          "image_objects": 4,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 2,
+          "text_chars": 0,
+          "numeric_tokens": 0,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 3,
+          "text_chars": 817,
+          "numeric_tokens": 8,
+          "image_objects": 2,
+          "vector_paths": 2,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 4,
+          "text_chars": 269,
+          "numeric_tokens": 5,
+          "image_objects": 1,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 5,
+          "text_chars": 2543,
+          "numeric_tokens": 26,
+          "image_objects": 2,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 6,
+          "text_chars": 2033,
+          "numeric_tokens": 21,
+          "image_objects": 2,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 7,
+          "text_chars": 1105,
+          "numeric_tokens": 93,
+          "image_objects": 2,
+          "vector_paths": 5,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 8,
+          "text_chars": 978,
+          "numeric_tokens": 76,
+          "image_objects": 2,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 9,
+          "text_chars": 952,
+          "numeric_tokens": 20,
+          "image_objects": 2,
+          "vector_paths": 4,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 10,
+          "text_chars": 1186,
+          "numeric_tokens": 34,
+          "image_objects": 2,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 11,
+          "text_chars": 1186,
+          "numeric_tokens": 48,
+          "image_objects": 2,
+          "vector_paths": 4,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 12,
+          "text_chars": 1580,
+          "numeric_tokens": 67,
+          "image_objects": 2,
+          "vector_paths": 4,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 13,
+          "text_chars": 707,
+          "numeric_tokens": 7,
+          "image_objects": 2,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 14,
+          "text_chars": 269,
+          "numeric_tokens": 5,
+          "image_objects": 1,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 15,
+          "text_chars": 1076,
+          "numeric_tokens": 57,
+          "image_objects": 2,
+          "vector_paths": 15,
+          "figure_caption_clues": [],
+          "table_caption_clues": [
+            "\n\n           表 1  2024.12 互联网基础资源发展状况"
+          ]
+        },
+        {
+          "page": 16,
+          "text_chars": 1520,
+          "numeric_tokens": 67,
+          "image_objects": 7,
+          "vector_paths": 49,
+          "figure_caption_clues": [
+            "\n\n                    图 1  IPv6 地址数量13",
+            "\n\n                    图 2  IPv6 活跃用户数"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 17,
+          "text_chars": 1263,
+          "numeric_tokens": 53,
+          "image_objects": 6,
+          "vector_paths": 41,
+          "figure_caption_clues": [
+            "\n\n               图 3  IPv4 地址数量14"
+          ],
+          "table_caption_clues": [
+            "\n\n                表 2 分类域名数"
+          ]
+        },
+        {
+          "page": 18,
+          "text_chars": 1694,
+          "numeric_tokens": 50,
+          "image_objects": 3,
+          "vector_paths": 40,
+          "figure_caption_clues": [
+            "\n\n                    图 4  5G 基站数量"
+          ],
+          "table_caption_clues": [
+            "                   表 3 分类“.CN”域名数"
+          ]
+        },
+        {
+          "page": 19,
+          "text_chars": 1442,
+          "numeric_tokens": 70,
+          "image_objects": 4,
+          "vector_paths": 49,
+          "figure_caption_clues": [
+            "\n\n             图 5 互联网宽带接入端口数量",
+            "\n               图 6 光缆线路总长度"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 20,
+          "text_chars": 1368,
+          "numeric_tokens": 50,
+          "image_objects": 4,
+          "vector_paths": 44,
+          "figure_caption_clues": [
+            "\n\n                     图 7 网站数量",
+            "\n\n                      图 8 网页数量"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 21,
+          "text_chars": 1661,
+          "numeric_tokens": 62,
+          "image_objects": 3,
+          "vector_paths": 38,
+          "figure_caption_clues": [
+            "\n\n               图 9 移动互联网接入流量"
+          ],
+          "table_caption_clues": [
+            "\n\n             表 4  2023.12-2024.12 网页数量对比"
+          ]
+        },
+        {
+          "page": 22,
+          "text_chars": 269,
+          "numeric_tokens": 5,
+          "image_objects": 1,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 23,
+          "text_chars": 1280,
+          "numeric_tokens": 65,
+          "image_objects": 6,
+          "vector_paths": 38,
+          "figure_caption_clues": [
+            "\n         图 10  2020.12-2024.12 网民规模和互联网普及率"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 24,
+          "text_chars": 2397,
+          "numeric_tokens": 128,
+          "image_objects": 6,
+          "vector_paths": 38,
+          "figure_caption_clues": [
+            "\n\n             图 11  2020.12-2024.12 手机网民规模及其占网民比例"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 25,
+          "text_chars": 1313,
+          "numeric_tokens": 80,
+          "image_objects": 8,
+          "vector_paths": 11,
+          "figure_caption_clues": [
+            "\n\n               图 12 网民城乡结构"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 26,
+          "text_chars": 1492,
+          "numeric_tokens": 69,
+          "image_objects": 2,
+          "vector_paths": 4,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 27,
+          "text_chars": 1354,
+          "numeric_tokens": 24,
+          "image_objects": 10,
+          "vector_paths": 24,
+          "figure_caption_clues": [
+            "\n\n             图 13 不上网带来的生活不便",
+            "\n\n               图 14 不上网原因"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 28,
+          "text_chars": 1095,
+          "numeric_tokens": 21,
+          "image_objects": 9,
+          "vector_paths": 17,
+          "figure_caption_clues": [
+            "\n\n                    图 15 上网促进因素",
+            "\n\n                    图 16 网民性别结构"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 29,
+          "text_chars": 1453,
+          "numeric_tokens": 64,
+          "image_objects": 9,
+          "vector_paths": 26,
+          "figure_caption_clues": [
+            "\n\n                  图 17 网民年龄结构",
+            "\n                 图 18 互联网接入设备使用情况"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 30,
+          "text_chars": 1143,
+          "numeric_tokens": 52,
+          "image_objects": 6,
+          "vector_paths": 27,
+          "figure_caption_clues": [
+            "\n\n                  图 19 网民人均每周上网时长"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 31,
+          "text_chars": 1151,
+          "numeric_tokens": 39,
+          "image_objects": 3,
+          "vector_paths": 98,
+          "figure_caption_clues": [
+            "\n\n               图 20 五类应用使用时段分布38"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 32,
+          "text_chars": 1721,
+          "numeric_tokens": 53,
+          "image_objects": 7,
+          "vector_paths": 23,
+          "figure_caption_clues": [
+            "\n\n               图 21 网民掌握部分数字素养与技能的情况"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 33,
+          "text_chars": 1560,
+          "numeric_tokens": 70,
+          "image_objects": 2,
+          "vector_paths": 23,
+          "figure_caption_clues": [],
+          "table_caption_clues": [
+            "\n       表 5  2023.12-2024.12 各类互联网应用用户规模和网民使用率"
+          ]
+        },
+        {
+          "page": 34,
+          "text_chars": 2148,
+          "numeric_tokens": 91,
+          "image_objects": 6,
+          "vector_paths": 53,
+          "figure_caption_clues": [
+            "\n\n             图 22  2020.12-2024.12 即时通信用户规模及使用率"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 35,
+          "text_chars": 2068,
+          "numeric_tokens": 83,
+          "image_objects": 9,
+          "vector_paths": 73,
+          "figure_caption_clues": [
+            "\n\n         图 23  2020.12-2024.12 搜索引擎用户规模及使用率",
+            "\n\n         图 24  2020.12-2024.12 线上办公用户规模及使用率"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 36,
+          "text_chars": 1921,
+          "numeric_tokens": 112,
+          "image_objects": 2,
+          "vector_paths": 4,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 37,
+          "text_chars": 1835,
+          "numeric_tokens": 113,
+          "image_objects": 2,
+          "vector_paths": 4,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 38,
+          "text_chars": 1747,
+          "numeric_tokens": 47,
+          "image_objects": 6,
+          "vector_paths": 16,
+          "figure_caption_clues": [
+            "\n\n               图 25  2024 年网民在社交网络上关注的议题占比"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 39,
+          "text_chars": 2175,
+          "numeric_tokens": 93,
+          "image_objects": 9,
+          "vector_paths": 67,
+          "figure_caption_clues": [
+            "\n\n        图 26  2020.12-2024.12 网络购物用户规模及使用率",
+            "\n\n        图 27  2020.12-2024.12 网络支付用户规模及使用率"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 40,
+          "text_chars": 1927,
+          "numeric_tokens": 71,
+          "image_objects": 6,
+          "vector_paths": 35,
+          "figure_caption_clues": [
+            "\n\n             图 28  2020.12-2024.12 网上外卖用户规模及使用率"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 41,
+          "text_chars": 1451,
+          "numeric_tokens": 52,
+          "image_objects": 2,
+          "vector_paths": 4,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 42,
+          "text_chars": 1971,
+          "numeric_tokens": 75,
+          "image_objects": 6,
+          "vector_paths": 44,
+          "figure_caption_clues": [
+            "\n\n            图 29  2020.12-2024.12 在线旅行预订用户规模及使用率"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 43,
+          "text_chars": 1951,
+          "numeric_tokens": 87,
+          "image_objects": 9,
+          "vector_paths": 66,
+          "figure_caption_clues": [
+            "\n\n         图 30  2020.12-2024.12 网络视频用户规模及使用率",
+            "\n\n         图 31  2020.12-2024.12 网络直播用户规模及使用率"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 44,
+          "text_chars": 2147,
+          "numeric_tokens": 89,
+          "image_objects": 6,
+          "vector_paths": 35,
+          "figure_caption_clues": [
+            "\n\n             图 32  2020.12-2024.12 网络文学用户规模及使用率"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 45,
+          "text_chars": 1218,
+          "numeric_tokens": 44,
+          "image_objects": 2,
+          "vector_paths": 4,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 46,
+          "text_chars": 1975,
+          "numeric_tokens": 71,
+          "image_objects": 6,
+          "vector_paths": 35,
+          "figure_caption_clues": [
+            "\n\n               图 33  2020.12-2024.12 网约车用户规模及使用率"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 47,
+          "text_chars": 1866,
+          "numeric_tokens": 85,
+          "image_objects": 6,
+          "vector_paths": 36,
+          "figure_caption_clues": [
+            "\n\n         图 34  2020.12-2024.12 互联网医疗用户规模及使用率"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 48,
+          "text_chars": 1674,
+          "numeric_tokens": 80,
+          "image_objects": 2,
+          "vector_paths": 4,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 49,
+          "text_chars": 943,
+          "numeric_tokens": 41,
+          "image_objects": 2,
+          "vector_paths": 4,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 50,
+          "text_chars": 1530,
+          "numeric_tokens": 39,
+          "image_objects": 9,
+          "vector_paths": 43,
+          "figure_caption_clues": [
+            "\n\n             图 35 各年龄段网民使用生成式人工智能产品的比例",
+            "\n             图 36 不同学历网民使用生成式人工智能产品的比例"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 51,
+          "text_chars": 1134,
+          "numeric_tokens": 23,
+          "image_objects": 6,
+          "vector_paths": 15,
+          "figure_caption_clues": [
+            "\n\n          图 37 用户使用生成式人工智能产品的目的"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 52,
+          "text_chars": 1150,
+          "numeric_tokens": 32,
+          "image_objects": 2,
+          "vector_paths": 4,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 53,
+          "text_chars": 1305,
+          "numeric_tokens": 53,
+          "image_objects": 6,
+          "vector_paths": 40,
+          "figure_caption_clues": [
+            "\n\n        图 38  2020.12-2024.12 在线政务用户规模及使用率"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 54,
+          "text_chars": 1262,
+          "numeric_tokens": 27,
+          "image_objects": 2,
+          "vector_paths": 4,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 55,
+          "text_chars": 956,
+          "numeric_tokens": 14,
+          "image_objects": 2,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 56,
+          "text_chars": 1360,
+          "numeric_tokens": 57,
+          "image_objects": 3,
+          "vector_paths": 39,
+          "figure_caption_clues": [
+            "\n\n                图 39  2020.12-2024.12 政府网站数量"
+          ],
+          "table_caption_clues": [
+            "\n               表 6  2023.12-2024.12 分省政府网站数量101"
+          ]
+        },
+        {
+          "page": 57,
+          "text_chars": 1312,
+          "numeric_tokens": 58,
+          "image_objects": 2,
+          "vector_paths": 12,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 58,
+          "text_chars": 823,
+          "numeric_tokens": 28,
+          "image_objects": 6,
+          "vector_paths": 12,
+          "figure_caption_clues": [
+            "\n\n                 图 40 各行政级别政府网站数量"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 59,
+          "text_chars": 1508,
+          "numeric_tokens": 35,
+          "image_objects": 8,
+          "vector_paths": 26,
+          "figure_caption_clues": [
+            "\n\n         图 41 各行政级别政府网站栏目数量分类占比102",
+            "\n\n          图 42 各行政级别政府网站首页文章更新量"
+          ],
+          "table_caption_clues": []
+        },
+        {
+          "page": 60,
+          "text_chars": 269,
+          "numeric_tokens": 5,
+          "image_objects": 1,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 61,
+          "text_chars": 615,
+          "numeric_tokens": 7,
+          "image_objects": 2,
+          "vector_paths": 4,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 62,
+          "text_chars": 1045,
+          "numeric_tokens": 11,
+          "image_objects": 2,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 63,
+          "text_chars": 889,
+          "numeric_tokens": 5,
+          "image_objects": 2,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 64,
+          "text_chars": 314,
+          "numeric_tokens": 4,
+          "image_objects": 2,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 65,
+          "text_chars": 1286,
+          "numeric_tokens": 71,
+          "image_objects": 2,
+          "vector_paths": 42,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 66,
+          "text_chars": 1140,
+          "numeric_tokens": 44,
+          "image_objects": 2,
+          "vector_paths": 27,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 67,
+          "text_chars": 1673,
+          "numeric_tokens": 42,
+          "image_objects": 2,
+          "vector_paths": 42,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 68,
+          "text_chars": 2313,
+          "numeric_tokens": 106,
+          "image_objects": 2,
+          "vector_paths": 115,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 69,
+          "text_chars": 723,
+          "numeric_tokens": 16,
+          "image_objects": 2,
+          "vector_paths": 19,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 70,
+          "text_chars": 2353,
+          "numeric_tokens": 134,
+          "image_objects": 2,
+          "vector_paths": 147,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 71,
+          "text_chars": 1986,
+          "numeric_tokens": 70,
+          "image_objects": 2,
+          "vector_paths": 74,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 72,
+          "text_chars": 532,
+          "numeric_tokens": 20,
+          "image_objects": 2,
+          "vector_paths": 18,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 73,
+          "text_chars": 705,
+          "numeric_tokens": 2,
+          "image_objects": 2,
+          "vector_paths": 4,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 74,
+          "text_chars": 871,
+          "numeric_tokens": 2,
+          "image_objects": 2,
+          "vector_paths": 3,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        },
+        {
+          "page": 75,
+          "text_chars": 89,
+          "numeric_tokens": 4,
+          "image_objects": 0,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        }
+      ]
+    }
+  ],
+  "derived_variants": [
+    {
+      "id": "attention-page3-scan",
+      "title": "Derived scanned page of Attention Is All You Need",
+      "derived_from": "attention",
+      "source_page": 3,
+      "purpose": "OCR path regression, not an independent paper",
+      "file": "data/test-corpus/attention-page3-scan.pdf",
+      "sha256": "1a02a680ff1cd6e01586d82544d1245d78b76e187fc72816bafac5d72fa0d76a",
+      "page_count": 1,
+      "length_band": "short",
+      "text_chars": 0,
+      "numeric_tokens": 0,
+      "image_objects": 1,
+      "vector_paths": 0,
+      "low_text_pages": [
+        1
+      ],
+      "figure_caption_pages": [],
+      "table_caption_pages": [],
+      "first_page_excerpt": "",
+      "version_number_clues": {
+        "5,179": 0,
+        "5,172": 0,
+        "5179": 0,
+        "5172": 0
+      },
+      "pages": [
+        {
+          "page": 1,
+          "text_chars": 0,
+          "numeric_tokens": 0,
+          "image_objects": 1,
+          "vector_paths": 0,
+          "figure_caption_clues": [],
+          "table_caption_clues": []
+        }
+      ]
+    }
+  ],
+  "download_failures": [
+    {
+      "url": "https://dspace.mit.edu/bitstreams/750c4524-46a2-4013-916a-c8131d726b56/download",
+      "error": "[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1006)",
+      "at": "2026-10-24T13:46:41.688839+00:00"
+    },
+    {
+      "url": "https://simulation-argument.com/simulation.pdf",
+      "error": "[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1006)",
+      "at": "2026-10-24T13:46:42.377158+00:00"
+    },
+    {
+      "url": "https://www.nber.org/system/files/working_papers/w31161/w31161.pdf",
+      "error": "[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1006)",
+      "at": "2026-10-24T13:46:42.903403+00:00"
+    },
+    {
+      "url": "https://www.nber.org/system/files/working_papers/w32487/w32487.pdf",
+      "error": "[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1006)",
+      "at": "2026-10-24T13:46:43.408061+00:00"
+    },
+    {
+      "url": "https://dspace.mit.edu/bitstreams/750c4524-46a2-4013-916a-c8131d726b56/download",
+      "error": "[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1006)",
+      "at": "2026-10-24T13:48:39.218491+00:00"
+    },
+    {
+      "url": "https://www.nber.org/system/files/working_papers/w31161/w31161.pdf",
+      "error": "Client error '403 Forbidden' for url 'https://www.nber.org/system/files/working_papers/w31161/w31161.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403",
+      "at": "2026-10-24T13:48:45.848694+00:00"
+    },
+    {
+      "url": "https://www.nber.org/system/files/working_papers/w32487/w32487.pdf",
+      "error": "Client error '403 Forbidden' for url 'https://www.nber.org/system/files/working_papers/w32487/w32487.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403",
+      "at": "2026-10-24T13:48:50.711198+00:00"
+    },
+    {
+      "url": "https://economics.mit.edu/sites/default/files/2024-05/The%20Simple%20Macroeconomics%20of%20AI.pdf",
+      "error": "Client error '403 Forbidden' for url 'https://economics.mit.edu/sites/default/files/2024-05/The%20Simple%20Macroeconomics%20of%20AI.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403",
+      "at": "2026-10-24T13:48:51.387292+00:00"
+    }
+  ]
+}

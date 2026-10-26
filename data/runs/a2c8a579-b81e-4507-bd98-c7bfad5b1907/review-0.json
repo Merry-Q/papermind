@@ -1,0 +1,1 @@
+{"items": [{"node_id": "problem-def", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "model-formulation", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "linearization-transform", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}]}

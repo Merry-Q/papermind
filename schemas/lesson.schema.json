@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://papermind.local/schemas/lesson-0.1.json",
+  "title": "LessonPackage design contract (not the Demo storage format)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["document_version", "status", "nodes", "claims", "sources", "core_gap_ids"],
+  "properties": {
+    "document_version": {"type": "string"},
+    "status": {"enum": ["draft", "incomplete", "ready"]},
+    "nodes": {"type": "array", "items": {"$ref": "#/$defs/node"}},
+    "claims": {"type": "array", "items": {"$ref": "#/$defs/claim"}},
+    "sources": {"type": "array", "items": {"$ref": "#/$defs/source"}},
+    "core_gap_ids": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "node": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "title", "body", "required", "claim_ids", "component"],
+      "properties": {
+        "id": {"type": "string"}, "title": {"type": "string"}, "body": {"type": "string"},
+        "required": {"type": "boolean"}, "claim_ids": {"type": "array", "items": {"type": "string"}},
+        "component": {"anyOf": [{"type": "null"}, {"$ref": "#/$defs/component"}]}
+      }
+    },
+    "component": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "learning_purpose", "data_origin", "assumptions", "source_ids", "fallback"],
+      "properties": {
+        "kind": {"enum": ["stepper", "candidate_explorer", "formula", "evidence_table", "argument_chain"]},
+        "learning_purpose": {"type": "string"}, "data_origin": {"enum": ["paper", "external", "synthetic"]},
+        "assumptions": {"type": "array", "items": {"type": "string"}},
+        "source_ids": {"type": "array", "items": {"type": "string"}}, "fallback": {"type": "string"}
+      }
+    },
+    "claim": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "statement", "kind", "critical", "conditions", "source_ids", "verification"],
+      "properties": {
+        "id": {"type": "string"}, "statement": {"type": "string"}, "kind": {"enum": ["paper", "external", "teaching"]},
+        "critical": {"type": "boolean"}, "conditions": {"type": "array", "items": {"type": "string"}},
+        "source_ids": {"type": "array", "items": {"type": "string"}},
+        "verification": {"enum": ["pending", "supported", "contradicted", "insufficient"]}
+      }
+    },
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "document_version", "physical_page", "quote", "url"],
+      "properties": {
+        "id": {"type": "string"}, "kind": {"enum": ["paper", "external", "teaching"]},
+        "document_version": {"type": ["string", "null"]}, "physical_page": {"type": ["integer", "null"], "minimum": 1},
+        "quote": {"type": "string"}, "url": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

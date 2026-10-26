@@ -1,0 +1,160 @@
+{
+  "schema_version": "1.0",
+  "execution_status": "live_qwen_runtime",
+  "skills": [
+    {
+      "id": "evidence-ledger",
+      "version": "0.2.0",
+      "path": "skills/evidence-ledger/SKILL.md",
+      "trigger": "document_ir_ready",
+      "required_inputs": [
+        "document_ir",
+        "document_version"
+      ],
+      "output_contract": "ClaimLedger",
+      "allowed_tools": [
+        "read_document_blocks",
+        "crop_pdf_region",
+        "locate_quote"
+      ],
+      "validation": [
+        "source_exists",
+        "quote_locates",
+        "claim_conditions_present"
+      ],
+      "failure_policy": "retain_unresolved_claims"
+    },
+    {
+      "id": "argument-plan",
+      "version": "0.2.0",
+      "path": "skills/argument-plan/SKILL.md",
+      "trigger": "ledger_ready",
+      "required_inputs": [
+        "document_ir",
+        "claim_ledger"
+      ],
+      "output_contract": "ArgumentPlan",
+      "allowed_tools": [
+        "read_document_blocks",
+        "read_claims"
+      ],
+      "validation": [
+        "whole_document_coverage",
+        "dependency_acyclic",
+        "core_gaps_explicit"
+      ],
+      "failure_policy": "incomplete_plan"
+    },
+    {
+      "id": "interactive-lesson",
+      "version": "0.2.0",
+      "path": "skills/interactive-lesson/SKILL.md",
+      "trigger": "node_planned",
+      "required_inputs": [
+        "argument_node",
+        "supported_claims",
+        "component_registry"
+      ],
+      "output_contract": "LessonNode",
+      "allowed_tools": [
+        "read_claims",
+        "evaluate_teaching_model"
+      ],
+      "validation": [
+        "lesson_schema",
+        "all_claim_refs_resolve",
+        "component_contract",
+        "teaching_origin_label"
+      ],
+      "failure_policy": "retry_node_then_gap"
+    },
+    {
+      "id": "knowledge-expansion",
+      "version": "0.2.0",
+      "path": "skills/knowledge-expansion/SKILL.md",
+      "trigger": "concept_lookup_or_user_question",
+      "required_inputs": [
+        "question",
+        "reading_anchor",
+        "concept_layer",
+        "library_matches",
+        "evidence_scope"
+      ],
+      "output_contract": "KnowledgeCard",
+      "allowed_tools": [
+        "search_attached_documents",
+        "retrieve_authoritative_background",
+        "read_source_passage"
+      ],
+      "validation": [
+        "sources_support_content",
+        "current_paper_connection",
+        "no_ability_inference"
+      ],
+      "failure_policy": "clarify_or_disclose_missing_evidence"
+    },
+    {
+      "id": "copilot-action",
+      "version": "0.2.0",
+      "path": "skills/copilot-action/SKILL.md",
+      "trigger": "user_requests_operation_or_page_change",
+      "required_inputs": [
+        "user_request",
+        "component_state",
+        "page_revision",
+        "allowed_actions"
+      ],
+      "output_contract": "ActionOrPatchProposal",
+      "allowed_tools": [
+        "propose_demo_action",
+        "propose_page_patch"
+      ],
+      "validation": [
+        "explicit_user_intent",
+        "action_allowlist",
+        "parameter_bounds",
+        "revision_match"
+      ],
+      "failure_policy": "explain_rejection_without_execution"
+    },
+    {
+      "id": "fact-review",
+      "version": "0.2.0",
+      "path": "skills/fact-review/SKILL.md",
+      "trigger": "explicit_test_run",
+      "required_inputs": [
+        "draft_node",
+        "claim_ledger",
+        "original_sources"
+      ],
+      "output_contract": "ClaimReviewReport",
+      "allowed_tools": [
+        "read_source_passage",
+        "crop_pdf_region",
+        "check_units"
+      ],
+      "validation": [
+        "every_core_claim_reviewed",
+        "source_support_not_just_presence",
+        "limitations_retained"
+      ],
+      "failure_policy": "record_test_findings_without_blocking_publication",
+      "execution_scope": "offline_test_only"
+    },
+    {
+      "id": "reading-v2-plan",
+      "path": "skills/reading-v2-plan/SKILL.md",
+      "trigger": "canonical_nodes_ready",
+      "output_contract": "ReadingPlan",
+      "publication": "automatic_on_generation_success"
+    },
+    {
+      "id": "reading-v2-author",
+      "path": "skills/reading-v2-author/SKILL.md",
+      "trigger": "whole_document_plan_ready",
+      "output_contract": "ReadingArtifact",
+      "execution": "chapter_parallel_html_css_javascript",
+      "publication": "automatic_on_generation_success"
+    }
+  ]
+}

@@ -1,0 +1,2246 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'nonce-7eXoJk59-zEp8H8PGWxmcgfQtfcsZR9T'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; frame-src 'none'; object-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'"><title>Adaptive DCS-SOMP for Localization Parameter Estimation in 5G Networks · paperMind 交互讲解</title><style>*,*::before,*::after{box-sizing:border-box}html{scroll-behavior:auto}body{margin:0;min-width:0}button,input,select{font:inherit}button{cursor:pointer}canvas,svg{max-width:100%}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid #315cc8;outline-offset:4px}#pm-local-source{position:fixed;inset:auto 12px 12px;background:#fff;color:#26364b;border:1px solid #61748c;padding:22px;z-index:99999;max-height:65vh;overflow:auto;font:15px/1.8 system-ui}#pm-local-source button{padding:8px 12px;margin-top:12px}#pm-local-source blockquote{white-space:pre-wrap;margin:12px 0}.pm-user-note{margin:24px 0;padding:20px;background:#edf2ff;color:#26364b;font:15px/1.9 system-ui}.pm-user-note h4{margin:0 0 10px}.pm-user-note p{white-space:pre-wrap}.pm-user-note button{margin:5px;padding:6px 10px}.pm-reading-tools{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:24px;padding-top:14px;border-top:1px solid #d6dcd9}.pm-reading-tools button{border:0;background:transparent;color:#265976;text-decoration:underline;text-underline-offset:4px;font-size:13px;padding:6px 0}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+:root{--ink:#233342;--muted:#596877;--accent:#265976;--warm:#ad472d;--line:#d6dcd9;--paper:#fcfbf8;--soft:#edf2f1}
+body{background:var(--paper);color:var(--ink);font-family:"Microsoft YaHei",system-ui,sans-serif;font-size:16px;line-height:1.95}
+.paper-reading{max-width:1120px;margin:auto;padding:40px clamp(18px,5vw,58px) 80px;overflow-wrap:anywhere}
+.paper-reading h1{font:normal clamp(32px,5vw,58px)/1.12 Georgia,"Noto Serif SC",serif;letter-spacing:-.025em;margin:18px 0 26px;text-wrap:balance}
+.paper-reading h2{font-size:clamp(25px,3.5vw,34px);font-weight:500;line-height:1.4;margin:0 0 20px;text-wrap:balance}
+.paper-reading h3{font-size:20px;font-weight:500;line-height:1.5}.paper-reading p{margin:12px 0 18px}
+.paper-hero{padding:16px 0 38px;border-bottom:1px solid var(--line)}
+.paper-hero .paper-thesis{font-size:18px;line-height:1.95;max-width:55ch}.paper-hero nav{display:flex;flex-wrap:wrap;gap:8px 22px;margin:26px 0 0}
+.paper-hero nav a{font-size:13px;color:var(--accent);text-decoration:underline;text-underline-offset:6px}
+.paper-chapter{padding:48px 0 34px;border-bottom:1px solid var(--line);min-width:0}
+.paper-chapter :where(section,article,div,figure,fieldset){min-width:0}
+.paper-chapter :where(table){display:block;max-width:100%;overflow:auto}
+.paper-chapter :where(pre){white-space:pre-wrap;overflow-wrap:anywhere}
+.paper-reading button{border:1px solid var(--line);background:transparent;color:var(--accent);padding:8px 14px;min-height:38px;border-radius:4px;font-size:13px;line-height:1.5}
+.paper-reading button:hover{background:var(--soft)}.paper-reading button:disabled{opacity:.5;cursor:default}
+.paper-reading input[type=range]{accent-color:var(--accent);max-width:100%;min-width:0}.paper-reading input[type=number]{width:90px}
+.paper-reading select,.paper-reading input[type=number]{padding:7px 9px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font-size:14px;border-radius:4px;max-width:100%}
+.paper-reading input[type=checkbox]{accent-color:var(--warm)}.paper-reading label{font-size:14px;line-height:1.7}
+.paper-reading svg,.paper-reading canvas{display:block;max-width:100%;height:auto}
+.paper-reading details{padding:14px 0;border-top:1px solid var(--line);margin-top:20px}.paper-reading summary{cursor:pointer;color:var(--accent);font-size:14px}
+.paper-reading table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.paper-reading th,.paper-reading td{padding:9px 7px;text-align:left;border-bottom:1px solid var(--line)}
+.paper-reading button[data-source]{font-size:12px;color:var(--accent);border:0;padding:6px 0;margin-right:16px;text-decoration:underline;text-underline-offset:4px}
+.paper-reading ::selection{background:#f3d5ac;color:#233342}.paper-reading :focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.paper-reading .reading-limitations{font-size:14px;color:var(--muted);padding-top:28px}.paper-reading .reading-limitations h2{font-size:24px}
+@media(max-width:480px){.paper-reading{padding-top:24px}.paper-chapter{padding-top:32px}.paper-hero .paper-thesis{font-size:16px}.paper-reading{font-size:15px}.paper-reading h2{font-size:25px}.paper-reading table{font-size:12px}}
+
+@scope (#chapter-chap-1-problem){:scope {
+  --ink: #2C3E50;
+  --muted: #7F8C8D;
+  --accent: #00B894;
+  --warm: #E17055;
+  --line: #BDC3C7;
+  --paper: #F5F5F7;
+  --bg-card: #FFFFFF;
+  
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background-color: var(--paper);
+  padding: 2rem;
+  line-height: 1.6;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.chapter-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.chapter-header {
+  margin-bottom: 2.5rem;
+  border-bottom: 2px solid var(--line);
+  padding-bottom: 1rem;
+}
+
+.chapter-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 0.5rem 0;
+}
+
+.chapter-lead {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 700px;
+  margin: 0;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .content-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.narrative-block {
+  background: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--ink);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.narrative-block h2 {
+  font-size: 1.25rem;
+  margin-top: 0;
+  color: var(--ink);
+}
+
+.narrative-block p {
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.source-citation {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  background: var(--paper);
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.source-btn {
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.source-btn:hover {
+  opacity: 0.9;
+}
+
+.interactive-workbench {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 3rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.workbench-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1rem;
+}
+
+.workbench-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--ink);
+}
+
+.control-panel {
+  display: flex;
+  align-items: center;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.mode-toggle {
+  appearance: none;
+  width: 40px;
+  height: 20px;
+  background: var(--line);
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.mode-toggle::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.mode-toggle:checked {
+  background: var(--accent);
+}
+
+.mode-toggle:checked::after {
+  transform: translateX(20px);
+}
+
+.label-text {
+  color: var(--muted);
+  transition: color 0.3s;
+}
+
+.label-text.active {
+  color: var(--ink);
+  font-weight: 600;
+  display: none;
+}
+
+.mode-toggle:checked + .label-text.active {
+  display: inline;
+}
+
+.mode-toggle:not(:checked) + .label-text.active {
+  display: none;
+}
+
+/* Specific fix for the first label text visibility logic */
+.toggle-label .label-text:first-of-type {
+  display: inline;
+}
+.mode-toggle:checked ~ .label-text:first-of-type {
+  display: none;
+}
+
+.visualization-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  min-height: 200px;
+}
+
+@media (max-width: 600px) {
+  .visualization-area {
+    grid-template-columns: 1fr;
+  }
+}
+
+.param-list-container h4, .status-indicator-container h4 {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.param-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.param-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: var(--paper);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  opacity: 0.3;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.param-item.active {
+  opacity: 1;
+  background: #E8F8F5;
+  border-color: var(--accent);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.param-item.missing {
+  text-decoration: line-through;
+  color: var(--warm);
+}
+
+.status-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: var(--paper);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.4s ease;
+  border: 2px solid var(--line);
+}
+
+.status-card.optimal {
+  background: #E8F8F5;
+  border-color: var(--accent);
+  transform: scale(1.02);
+}
+
+.status-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.status-text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.25rem;
+}
+
+.status-sub {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.workbench-footer {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.takeaway {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-style: italic;
+  margin: 0;
+}
+
+.limitations-section {
+  background: #FFF8F0;
+  border: 1px solid #FFE0B2;
+  padding: 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #5D4037;
+}
+
+.limitations-section h3 {
+  margin-top: 0;
+  font-size: 1rem;
+}
+
+.limitations-section ul {
+  margin: 0.5rem 0 0 1.5rem;
+  padding: 0;
+}
+@media(max-width:620px){.content-grid,.grid-layout,.interactive-stage{display:block!important}.data-row{flex-wrap:wrap}.formula-card{overflow:auto}canvas{max-width:100%;height:auto}}}
+@scope (#chapter-chap-2-model){.chapter-container {
+  --ink: #2C3E50;
+  --muted: #7F8C8D;
+  --accent: #00B894;
+  --warm: #e74c3c;
+  --paper: #F5F5F7;
+  --line: #BDC3C7;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  padding: 2rem;
+  line-height: 1.6;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.chapter-header {
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--line);
+  padding-bottom: 1rem;
+}
+
+.chapter-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  color: var(--ink);
+}
+
+.chapter-lead {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 700px;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card-visual, .card-formula {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.card-visual h3, .card-formula h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  color: var(--ink);
+  border-left: 4px solid var(--accent);
+  padding-left: 0.5rem;
+}
+
+.array-comparison {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.array-demo {
+  flex: 1;
+  text-align: center;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  opacity: 0.6;
+}
+
+.array-demo.active {
+  opacity: 1;
+  border-color: var(--accent);
+  background: rgba(0, 184, 148, 0.05);
+}
+
+.array-demo .label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.svg-diagram {
+  width: 100%;
+  height: 120px;
+  display: block;
+  margin: 0 auto 0.5rem;
+}
+
+.caption {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.interactive-formula {
+  background: #fafafa;
+  padding: 1.5rem;
+  border-radius: 6px;
+  font-family: 'Times New Roman', serif;
+  font-size: 1.3rem;
+  text-align: center;
+  margin: 1rem 0;
+  overflow-x: auto;
+}
+
+.term {
+  padding: 2px 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: inline-block;
+}
+
+.term:hover, .term.highlighted {
+  background: rgba(44, 62, 80, 0.1);
+  font-weight: bold;
+}
+
+.term-toa:hover, .term-toa.highlighted { background: rgba(231, 76, 60, 0.15); color: var(--warm); }
+.term-ar:hover, .term-ar.highlighted { background: rgba(0, 184, 148, 0.15); color: var(--accent); }
+.term-at:hover, .term-at.highlighted { background: rgba(44, 62, 80, 0.15); color: var(--ink); }
+
+.formula-legend {
+  margin-top: 1.5rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.legend-item:hover {
+  background: #f9f9f9;
+}
+
+.legend-item:last-child {
+  border-bottom: none;
+}
+
+.legend-item .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.legend-item strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.legend-item span {
+  font-size: 0.85rem;
+  color: var(--muted);
+  display: block;
+  margin-top: 2px;
+}
+
+.btn-source, .btn-source-mini {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+.btn-source:hover, .btn-source-mini:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.source-tag {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.assumptions-block {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.assumptions-block h4 {
+  margin-top: 0;
+  color: var(--ink);
+}
+
+.assumption-list {
+  padding-left: 1.2rem;
+  margin: 0;
+}
+
+.assumption-list li {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+@media(max-width:620px){.content-grid,.grid-layout,.interactive-stage{display:block!important}.data-row{flex-wrap:wrap}.formula-card{overflow:auto}canvas{max-width:100%;height:auto}}}
+@scope (#chapter-chap-3-bottleneck){
+.repair-lab{margin:24px 0;padding:24px 0;border-block:1px solid var(--line)}
+.repair-controls{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin:20px 0}
+.repair-controls label{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.repair-readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:18px;margin:20px 0}
+.repair-readout output{font-size:23px;font-variant-numeric:tabular-nums;display:block;color:var(--accent)}
+.repair-note{font-size:14px;color:var(--muted);line-height:1.8}.repair-chart{width:100%;height:auto;overflow:visible}
+.repair-bar{display:grid;grid-template-columns:minmax(90px,1fr) 3fr 75px;gap:12px;align-items:center;margin:16px 0;font-size:14px}
+.repair-track{background:var(--soft);min-width:0}.repair-fill{height:24px;background:var(--accent);max-width:100%}
+@media(max-width:480px){.repair-bar{grid-template-columns:1fr;gap:5px}.repair-controls input{max-width:100%}}
+
+@media(max-width:620px){.content-grid,.grid-layout,.interactive-stage{display:block!important}.data-row{flex-wrap:wrap}.formula-card{overflow:auto}canvas{max-width:100%;height:auto}}}
+@scope (#chapter-chap-4-mechanism){
+.repair-lab{margin:24px 0;padding:24px 0;border-block:1px solid var(--line)}
+.repair-controls{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin:20px 0}
+.repair-controls label{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.repair-readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:18px;margin:20px 0}
+.repair-readout output{font-size:23px;font-variant-numeric:tabular-nums;display:block;color:var(--accent)}
+.repair-note{font-size:14px;color:var(--muted);line-height:1.8}.repair-chart{width:100%;height:auto;overflow:visible}
+.repair-bar{display:grid;grid-template-columns:minmax(90px,1fr) 3fr 75px;gap:12px;align-items:center;margin:16px 0;font-size:14px}
+.repair-track{background:var(--soft);min-width:0}.repair-fill{height:24px;background:var(--accent);max-width:100%}
+@media(max-width:480px){.repair-bar{grid-template-columns:1fr;gap:5px}.repair-controls input{max-width:100%}}
+
+@media(max-width:620px){.content-grid,.grid-layout,.interactive-stage{display:block!important}.data-row{flex-wrap:wrap}.formula-card{overflow:auto}canvas{max-width:100%;height:auto}}}
+@scope (#chapter-chap-5-algo){.algo-workbench {
+  --ink: #2C3E50;
+  --muted: #7F8C8D;
+  --accent: #00B894;
+  --warm: #E17055;
+  --line: #BDC3C7;
+  --paper: #F5F5F7;
+  
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.algo-header h2 {
+  font-size: 1.8rem;
+  margin: 0 0 0.5rem 0;
+  color: var(--ink);
+}
+
+.algo-lead {
+  font-size: 1.1rem;
+  color: var(--muted);
+  margin: 0 0 1.5rem 0;
+  line-height: 1.6;
+}
+
+.algo-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.algo-controls button {
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--line);
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+.algo-controls button:hover:not(:disabled) {
+  background: var(--ink);
+  color: white;
+  border-color: var(--ink);
+}
+
+.algo-controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-reset {
+  border-color: var(--warm) !important;
+  color: var(--warm) !important;
+}
+
+.btn-reset:hover:not(:disabled) {
+  background: var(--warm) !important;
+  color: white !important;
+}
+
+.algo-stage {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.algo-visualizer {
+  position: relative;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+#chap-5-algo--chap-5-algo-canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.algo-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(44, 62, 80, 0.85);
+  color: white;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.algo-overlay.active {
+  opacity: 1;
+}
+
+.algo-step-indicator {
+  font-size: 0.9rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.algo-step-title {
+  font-size: 1.4rem;
+  margin: 0 0 1rem 0;
+  font-weight: 600;
+}
+
+.algo-step-desc {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
+  flex-grow: 1;
+}
+
+.algo-source-ref {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.source-btn {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.source-btn:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.algo-data-panel {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.algo-data-panel h3 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.2rem;
+  color: var(--ink);
+}
+
+.data-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.data-row:last-child {
+  border-bottom: none;
+}
+
+.data-label {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.data-value {
+  font-weight: 600;
+  color: var(--ink);
+  font-family: monospace;
+}
+
+.algo-formula-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-left: 4px solid var(--accent);
+}
+
+.algo-formula-card h4 {
+  margin: 0 0 1rem 0;
+  color: var(--ink);
+}
+
+.formula-block {
+  font-family: 'Times New Roman', serif;
+  font-size: 1.4rem;
+  text-align: center;
+  padding: 1rem;
+  background: var(--paper);
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+
+.formula-note {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin: 0 0 1rem 0;
+  line-height: 1.6;
+}
+
+.algo-steps-list {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.algo-steps-list h3 {
+  margin: 0 0 1.5rem 0;
+  color: var(--ink);
+}
+
+.algo-steps-list ol {
+  padding-left: 1.5rem;
+  margin: 0;
+}
+
+.step-item {
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.step-item strong {
+  color: var(--ink);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.step-item p {
+  margin: 0 0 0.8rem 0;
+  color: var(--muted);
+}
+
+.step-item .source-btn {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  margin-right: 0.5rem;
+}
+
+.step-item .source-btn:hover {
+  background: var(--line);
+}
+
+@media (max-width: 768px) {
+  .algo-stage {
+    grid-template-columns: 1fr;
+  }
+  
+  .algo-workbench {
+    padding: 1rem;
+  }
+  
+  .algo-controls {
+    flex-wrap: wrap;
+  }
+}
+@media(max-width:620px){.content-grid,.grid-layout,.interactive-stage{display:block!important}.data-row{flex-wrap:wrap}.formula-card{overflow:auto}canvas{max-width:100%;height:auto}}
+.algo-overlay{position:static;opacity:1;background:var(--soft);color:var(--ink);pointer-events:auto}.algo-visualizer{overflow:visible}.algo-source-ref button{color:var(--accent)}@media(max-width:620px){.algo-stage{display:block!important}.algo-controls{flex-wrap:wrap}.algo-formula-card,.algo-steps-list,.algo-data-panel{padding:12px}.formula-block{overflow:auto;font-size:17px}.algo-data-panel{margin-top:20px}}}
+@scope (#chapter-chap-6-results){
+.repair-lab{margin:24px 0;padding:24px 0;border-block:1px solid var(--line)}
+.repair-controls{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin:20px 0}
+.repair-controls label{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.repair-readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:18px;margin:20px 0}
+.repair-readout output{font-size:23px;font-variant-numeric:tabular-nums;display:block;color:var(--accent)}
+.repair-note{font-size:14px;color:var(--muted);line-height:1.8}.repair-chart{width:100%;height:auto;overflow:visible}
+.repair-bar{display:grid;grid-template-columns:minmax(90px,1fr) 3fr 75px;gap:12px;align-items:center;margin:16px 0;font-size:14px}
+.repair-track{background:var(--soft);min-width:0}.repair-fill{height:24px;background:var(--accent);max-width:100%}
+@media(max-width:480px){.repair-bar{grid-template-columns:1fr;gap:5px}.repair-controls input{max-width:100%}}
+
+@media(max-width:620px){.content-grid,.grid-layout,.interactive-stage{display:block!important}.data-row{flex-wrap:wrap}.formula-card{overflow:auto}canvas{max-width:100%;height:auto}}}
+@scope (#chapter-chap-7-limits){:scope {
+  --ink: #2C3E50;
+  --muted: #7F8C8D;
+  --accent: #00B894;
+  --warm: #E17055;
+  --paper: #F5F5F7;
+  --line: #DFE6E9;
+  --font-base: 16px;
+  --font-sm: 14px;
+  --radius: 8px;
+  --shadow: 0 4px 12px rgba(0,0,0,0.05);
+
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.6;
+  padding: 2rem;
+  box-sizing: border-box;
+  display: block;
+}
+
+:scope * {
+  box-sizing: border-box;
+}
+
+.chapter-header h1 {
+  font-size: 2rem;
+  margin: 0 0 0.5rem 0;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.chapter-lead {
+  font-size: 1.125rem;
+  color: var(--muted);
+  margin: 0 0 2rem 0;
+  max-width: 700px;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 768px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.info-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.75rem;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.tag {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tag-ideal {
+  background: #E3F2FD;
+  color: #1565C0;
+}
+
+.tag-future {
+  background: #E8F5E9;
+  color: #2E7D32;
+}
+
+.card-body p {
+  margin: 0 0 1rem 0;
+  font-size: var(--font-base);
+  color: #34495E;
+}
+
+.card-body p:last-child {
+  margin-bottom: 0;
+}
+
+.source-btn {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.8rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  cursor: pointer;
+  vertical-align: middle;
+  margin-left: 0.25rem;
+  transition: all 0.2s;
+}
+
+.source-btn:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+  background: #fff;
+}
+
+.viz-container {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.viz-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.control-btn {
+  flex: 1;
+  padding: 0.6rem;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--muted);
+  font-size: 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.control-btn.active {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+.canvas-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: #FAFAFA;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.viz-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(44, 62, 80, 0.9);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  padding: 1.5rem;
+}
+
+.viz-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.overlay-content h4 {
+  margin: 0 0 1rem 0;
+  color: var(--accent);
+  font-size: 1.2rem;
+}
+
+.overlay-content ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+}
+
+.overlay-content li {
+  margin-bottom: 0.5rem;
+}
+
+.viz-caption {
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.data-support {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.data-support h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.data-intro {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin: 0 0 1.5rem 0;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  min-width: 500px;
+}
+
+.data-table th, .data-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+
+.data-table th {
+  background: #F8F9FA;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.table-note {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-style: italic;
+}
+@media(max-width:620px){.content-grid,.grid-layout,.interactive-stage{display:block!important}.data-row{flex-wrap:wrap}.formula-card{overflow:auto}canvas{max-width:100%;height:auto}}
+.viz-overlay,.viz-overlay.visible{pointer-events:none!important}}</style></head><body><main class="paper-reading"><header class="paper-hero"><h1>Adaptive DCS-SOMP for Localization Parameter Estimation in 5G Networks</h1><p class="paper-thesis">本文提出一种自适应 DCS-SOMP 方法，通过动态调整感知矩阵的搜索空间，在三维环境中直接实现 ToA、2D-AoD 和 2D-AoA 的高精度估计，解决了传统方法依赖额外微调步骤且内存消耗巨大的问题。</p><nav aria-label="讲解章节"><a href="#problem-statement">困局：2D 局限与粗略估计的代价</a><a href="#system-model-3d">基石：UCA 阵列与 3D 信道建模</a><a href="#sensing-matrix-construction">瓶颈：全网格感知矩阵的内存爆炸</a><a href="#adaptive-mechanism">核心：动态自适应搜索空间缩减</a><a href="#parameter-estimation-algo">执行：改进的 DCS-SOMP 迭代流程</a><a href="#complexity-analysis">验证：效率跃升与精度收敛</a><a href="#limitations-scope">边界：理想假设与未来扩展</a></nav></header><div class="paper-chapter" id="chapter-chap-1-problem"><p class="repair-note">本节“传统”开关概括部分二维相关工作，并非本文使用 UCA 的标准 DCS-SOMP 基线；后者也能估计五个参数。</p><section id="problem-statement" data-node="problem-statement" class="pm-node-anchor"><section id="chap-1-problem--chap-1-problem" data-node="problem-statement" class="chapter-container">
+  <header class="chapter-header">
+    <h1 class="chapter-title">困局：2D 局限与粗略估计的代价</h1>
+    <p class="chapter-lead">现有方法要么局限于 2D 环境无法估计仰角，要么虽能估计但仅提供粗略结果，必须依赖 SAGE 等额外算法进行耗时的微调。</p>
+  </header>
+
+  <div class="content-grid">
+    <article class="narrative-block">
+      <h2>1. 维度缺失：2D 环境的物理限制</h2>
+      <p>毫米波（mmWave）和大规模 MIMO 技术是 5G 高精度定位的关键。然而，现有文献中的许多方法受限于硬件配置。例如，基于线性阵列（ULA）的系统通常只能确定方位角（Azimuth），而无法估计仰角（Elevation），导致在工业 4.0 等需要三维定位的场景中失效。</p>
+      <div class="source-citation">
+        <button type="button" class="source-btn" data-source="S035">原文 · p.2</button>
+        <span class="citation-text">"...due to the use of a linear array of antennas, the proposed approach can only determine the azimuth..."</span>
+      </div>
+    </article>
+
+    <article class="narrative-block">
+      <h2>2. 精度困境：粗略估计与微调成本</h2>
+      <p>即使部分方法尝试使用 DCS-SOMP 进行参数估计，传统实现通常只能提供“粗略”的结果。为了获得可用精度，必须引入如 SAGE（空间交替广义期望最大化）等额外算法进行后处理微调。这不仅增加了算法复杂度，还显著拉长了处理时间。</p>
+      <div class="source-citation">
+        <button type="button" class="source-btn" data-source="S028">原文 · p.1</button>
+        <span class="citation-text">"...providing only a coarse estimation of parameters which is followed by a refinement step using the... SAGE method."</span>
+      </div>
+    </article>
+  </div>
+
+  <div class="interactive-workbench" id="chap-1-problem--workbench-1">
+    <div class="workbench-header">
+      <h3>实验台：估计模式对比</h3>
+      <div class="control-panel">
+        <label class="toggle-label">
+          <span class="label-text">传统 2D / 粗略 3D 模式</span>
+          <input type="checkbox" id="chap-1-problem--mode-switch" class="mode-toggle">
+          <span class="label-text active">本文目标：3D 高精度自适应模式</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="visualization-area">
+      <div class="param-list-container">
+        <h4>可输出参数列表</h4>
+        <ul class="chap-1-problem--param-list" id="chap-1-problem--param-list">
+          <!-- JS populated -->
+        </ul>
+      </div>
+      <div class="status-indicator-container">
+        <h4>后续处理需求</h4>
+        <div class="chap-1-problem--status-card" id="chap-1-problem--status-card">
+          <div class="status-icon">⚠️</div>
+          <div class="status-text">需要 SAGE 微调</div>
+          <div class="status-sub">流程冗长，计算量大</div>
+        </div>
+      </div>
+    </div>
+    <div class="workbench-footer">
+      <p class="takeaway" id="chap-1-problem--takeaway-text">应区分部分相关工作的二维阵列限制，与本文标准 DCS-SOMP 基线的网格精度和效率问题。</p>
+    </div>
+  </div>
+
+  <div class="limitations-section">
+    <h3>局限性与说明</h3>
+    <ul>
+      <li>本交互演示基于论文 Table 1 的定性对比逻辑，未复现具体数值实验。</li>
+      <li>“一步到位”指本文提出的自适应 DCS-SOMP 无需 SAGE 后处理，但仍需迭代收敛。</li>
+      <li>现有方法的局限性主要源于天线阵列几何结构（如 ULA vs UCA）及算法搜索策略。</li>
+    </ul>
+  </div>
+</section></section></div><div class="paper-chapter" id="chapter-chap-2-model"><section id="system-model-3d" data-node="system-model-3d" class="pm-node-anchor"><section id="chap-2-model--chap-2-model" class="chapter-container" data-node="system-model-3d">
+  <header class="chapter-header">
+    <h1 class="chapter-title">基石：UCA 阵列与 3D 信道建模</h1>
+    <p class="chapter-lead">采用均匀圆形阵列 (UCA) 是获取仰角信息的硬件前提，信道矩阵显式包含了 ToA 及三维角度参数，构成了联合估计的数学基础。</p>
+  </header>
+
+  <div class="content-grid">
+    <!-- 左侧：物理模型与几何对比 -->
+    <div class="panel-left">
+      <div class="card-visual">
+        <h3>阵列几何与空间覆盖</h3>
+        <div class="array-comparison">
+          <div class="array-demo" id="chap-2-model--demo-ula">
+            <div class="label">ULA (线性阵列)</div>
+            <svg viewBox="0 0 100 100" class="svg-diagram">
+              <line x1="50" y1="20" x2="50" y2="80" stroke="#95a5a6" stroke-width="2" />
+              <circle cx="50" cy="30" r="3" fill="#2C3E50" />
+              <circle cx="50" cy="50" r="3" fill="#2C3E50" />
+              <circle cx="50" cy="70" r="3" fill="#2C3E50" />
+              <path d="M50 50 L90 30" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="4" opacity="0.5" />
+              <text x="60" y="25" font-size="8" fill="#e74c3c">盲区 (No Elevation)</text>
+            </svg>
+            <p class="caption">仅能区分方位角，仰角响应全向，无法估计 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mi>e</mi><mi>t</mi><msup><mi>a</mi><mrow><mi>e</mi><mi>l</mi></mrow></msup></mrow><annotation encoding="application/x-tex">heta^{el}</annotation></semantics></math></span>。</p>
+          </div>
+          <div class="array-demo active" id="chap-2-model--demo-uca">
+            <div class="label">UCA (圆形阵列)</div>
+            <svg viewBox="0 0 100 100" class="svg-diagram">
+              <circle cx="50" cy="50" r="30" fill="none" stroke="#2C3E50" stroke-width="2" />
+              <circle cx="50" cy="20" r="3" fill="#00B894" />
+              <circle cx="76" cy="50" r="3" fill="#00B894" />
+              <circle cx="50" cy="80" r="3" fill="#00B894" />
+              <circle cx="24" cy="50" r="3" fill="#00B894" />
+              <line x1="50" y1="50" x2="50" y2="20" stroke="#00B894" stroke-width="1" />
+              <line x1="50" y1="50" x2="76" y2="50" stroke="#00B894" stroke-width="1" />
+              <text x="60" y="45" font-size="8" fill="#2C3E50">全向 3D 响应</text>
+            </svg>
+            <p class="caption">利用圆周对称性，同时解析方位角 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mi>e</mi><mi>t</mi><msup><mi>a</mi><mrow><mi>a</mi><mi>z</mi></mrow></msup></mrow><annotation encoding="application/x-tex">heta^{az}</annotation></semantics></math></span> 与仰角 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mi>e</mi><mi>t</mi><msup><mi>a</mi><mrow><mi>e</mi><mi>l</mi></mrow></msup></mrow><annotation encoding="application/x-tex">heta^{el}</annotation></semantics></math></span>。</p>
+          </div>
+        </div>
+        <div class="source-tag">
+          <button type="button" class="btn-source" data-source="S060">原文 · p.4</button>
+          <button type="button" class="btn-source" data-source="S031">原文 · p.2</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧：数学模型与交互公式 -->
+    <div class="panel-right">
+      <div class="card-formula">
+        <h3>3D MIMO-mmWave 信道模型</h3>
+        <p class="formula-intro">第 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span> 个子载波的信道矩阵 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo stretchy="false">[</mo><mi>n</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">H[n]</annotation></semantics></math></span> 建模为 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi></mrow><annotation encoding="application/x-tex">L</annotation></semantics></math></span> 条路径的叠加：</p>
+        
+        <div class="interactive-formula" id="chap-2-model--formula-h">
+          <span class="formula-main">
+            H[n] = 
+            <span class="term term-sum" data-highlight="sum"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mo>∑</mo><mrow><mi>l</mi><mo>=</mo><mn>1</mn></mrow><mi>L</mi></msubsup></mrow><annotation encoding="application/x-tex">\sum_{l=1}^{L}</annotation></semantics></math></span></span>
+            <span class="term term-gain" data-highlight="gain"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ρ</mi><mi>l</mi></msub><msub><mi>h</mi><mi>l</mi></msub></mrow><annotation encoding="application/x-tex">\rho_l h_l</annotation></semantics></math></span></span>
+            <span class="term term-toa" data-highlight="toa"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>e</mi><mrow><mo>−</mo><mi>j</mi><mn>2</mn><mi>π</mi><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><msub><mi>τ</mi><mi>l</mi></msub><mi mathvariant="normal">/</mi><mi>N</mi><msub><mi>T</mi><mi>s</mi></msub></mrow></msup></mrow><annotation encoding="application/x-tex">e^{-j2\pi(n-1)\tau_l / N T_s}</annotation></semantics></math></span></span>
+            <span class="term term-ar" data-highlight="ar"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="bold">a</mi><mi>r</mi></msub><mo stretchy="false">(</mo><msubsup><mi>θ</mi><mi>l</mi><mrow><mi>a</mi><mi>z</mi></mrow></msubsup><mo separator="true">,</mo><msubsup><mi>θ</mi><mi>l</mi><mrow><mi>e</mi><mi>l</mi></mrow></msubsup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\mathbf{a}_r(\theta_l^{az}, \theta_l^{el})</annotation></semantics></math></span></span>
+            <span class="term term-at" data-highlight="at"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi mathvariant="bold">a</mi><mi>t</mi><mi>H</mi></msubsup><mo stretchy="false">(</mo><msubsup><mi>ϕ</mi><mi>l</mi><mrow><mi>a</mi><mi>z</mi></mrow></msubsup><mo separator="true">,</mo><msubsup><mi>ϕ</mi><mi>l</mi><mrow><mi>e</mi><mi>l</mi></mrow></msubsup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\mathbf{a}_t^H(\phi_l^{az}, \phi_l^{el})</annotation></semantics></math></span></span>
+          </span>
+        </div>
+
+        <div class="formula-legend">
+          <div class="legend-item" data-target="toa">
+            <span class="dot" style="background:#e74c3c"></span>
+            <div>
+              <strong><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>τ</mi><mi>l</mi></msub></mrow><annotation encoding="application/x-tex">\tau_l</annotation></semantics></math></span> (ToA)</strong>
+              <span>到达时间，距离估计的基础。假设完美时钟同步。</span>
+              <button type="button" class="btn-source-mini" data-source="S051">p.3</button>
+            </div>
+          </div>
+          <div class="legend-item" data-target="ar">
+            <span class="dot" style="background:#00B894"></span>
+            <div>
+              <strong><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>θ</mi><mrow><mi>e</mi><mi>l</mi></mrow></msup></mrow><annotation encoding="application/x-tex">\theta^{el}</annotation></semantics></math></span> (仰角 AoA)</strong>
+              <span>接收端仰角。ULA 无法解析此项，必须使用 UCA。</span>
+              <button type="button" class="btn-source-mini" data-source="S058">p.3</button>
+            </div>
+          </div>
+          <div class="legend-item" data-target="at">
+            <span class="dot" style="background:#2C3E50"></span>
+            <div>
+              <strong><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>ϕ</mi><mrow><mi>a</mi><mi>z</mi></mrow></msup></mrow><annotation encoding="application/x-tex">\phi^{az}</annotation></semantics></math></span> (方位角 AoD)</strong>
+              <span>发射端方位角。与仰角共同构成 2D-AoD。</span>
+              <button type="button" class="btn-source-mini" data-source="S056">p.3</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="assumptions-block">
+    <h4>关键假设与局限</h4>
+    <ul class="assumption-list">
+      <li><strong>路径模型：</strong>仅考虑 LoS 和单 bounce NLoS 路径，忽略多 bounce 路径 (mmWave 衰减大)。<button type="button" class="btn-source-mini" data-source="S051">p.3</button></li>
+      <li><strong>同步条件：</strong>假设完美时钟同步，排除时钟偏差对 ToA 的影响。<button type="button" class="btn-source-mini" data-source="S051">p.3</button></li>
+      <li><strong>阵列半径：</strong>UCA 半径 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi></mrow><annotation encoding="application/x-tex">r</annotation></semantics></math></span> 定义为 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>N</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mi>λ</mi><mi mathvariant="normal">/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">(N-1)\lambda/2</annotation></semantics></math></span> (大规模天线时)。<button type="button" class="btn-source-mini" data-source="S087">p.4</button></li>
+    </ul>
+  </div>
+</section></section></div><div class="paper-chapter" id="chapter-chap-3-bottleneck">
+<section id="sensing-matrix-construction" data-node="sensing-matrix-construction">
+<h2>网格更细，矩阵为何迅速变大？</h2>
+<p>方位角和仰角分别取 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>q</mi><mrow><mi>a</mi><mi>z</mi></mrow></msub></mrow><annotation encoding="application/x-tex">q_{az}</annotation></semantics></math></span>、<span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>q</mi><mrow><mi>e</mi><mi>l</mi></mrow></msub></mrow><annotation encoding="application/x-tex">q_{el}</annotation></semantics></math></span> 个候选点。发射与接收阵列各有 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>q</mi><mrow><mi>a</mi><mi>z</mi></mrow></msub><msub><mi>q</mi><mrow><mi>e</mi><mi>l</mi></mrow></msub></mrow><annotation encoding="application/x-tex">q_{az}q_{el}</annotation></semantics></math></span> 组方向，原文给出的感知矩阵列数是 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><msub><mi>q</mi><mrow><mi>a</mi><mi>z</mi></mrow></msub><msub><mi>q</mi><mrow><mi>e</mi><mi>l</mi></mrow></msub><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">(q_{az}q_{el})^2</annotation></semantics></math></span>。</p>
+<p>原文式 (7)：<span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>ω</mi><mrow><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo></mrow></msup><mo stretchy="false">[</mo><mi>n</mi><mo stretchy="false">]</mo><mo>=</mo><mo stretchy="false">(</mo><msubsup><mi mathvariant="bold">U</mi><mi>t</mi><mrow><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo></mrow></msubsup><msup><mi mathvariant="bold">x</mi><mrow><mo stretchy="false">(</mo><mi>g</mi><mo stretchy="false">)</mo></mrow></msup><mo stretchy="false">[</mo><mi>n</mi><mo stretchy="false">]</mo><msup><mo stretchy="false">)</mo><mi>T</mi></msup><mo>⊗</mo><msubsup><mi mathvariant="bold">U</mi><mi>r</mi><mrow><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo></mrow></msubsup></mrow><annotation encoding="application/x-tex">\omega^{(0)}[n]=(\mathbf U_t^{(0)}\mathbf x^{(g)}[n])^T\otimes\mathbf U_r^{(0)}</annotation></semantics></math></span>。括号内是矩阵乘法，括号外才是 Kronecker 积。</p>
+<p>按原文报告的维度，元素数 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>=</mo><msub><mi>N</mi><mi>t</mi></msub><msub><mi>M</mi><mi>t</mi></msub><mo stretchy="false">(</mo><msub><mi>q</mi><mrow><mi>a</mi><mi>z</mi></mrow></msub><msub><mi>q</mi><mrow><mi>e</mi><mi>l</mi></mrow></msub><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">E=N_t M_t(q_{az}q_{el})^2</annotation></semantics></math></span>。若两种角度都取 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi></mrow><annotation encoding="application/x-tex">q</annotation></semantics></math></span> 个点，则随 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>q</mi><mn>4</mn></msup></mrow><annotation encoding="application/x-tex">q^4</annotation></semantics></math></span> 增长，是四次多项式。</p>
+<div class="repair-lab"><h3>教学计算：改变候选点与存储精度</h3>
+<p class="repair-note">取 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>N</mi><mi>t</mi></msub><mo>=</mo><mn>32</mn><mo separator="true">,</mo><msub><mi>M</mi><mi>t</mi></msub><mo>=</mo><mn>20</mn></mrow><annotation encoding="application/x-tex">N_t=32,M_t=20</annotation></semantics></math></span>（原文 Figure 2 的示例设置），只算单次矩阵的元素存储，不含求解器、中间量或系统开销。不是设备内存诊断。</p>
+<div class="repair-controls"><label for="chap-3-bottleneck--memory-q">每个角度的候选点 q<input id="chap-3-bottleneck--memory-q" type="range" min="4" max="30" step="1" value="10"></label><label for="chap-3-bottleneck--memory-bytes">每个复数元素<select id="chap-3-bottleneck--memory-bytes"><option value="16">16 字节（complex128）</option><option value="8">8 字节（complex64）</option></select></label><button id="chap-3-bottleneck--memory-reset" type="button">复位</button></div>
+<svg class="repair-chart" viewBox="0 0 600 180" aria-label="在固定最大候选点30的比例尺上，列数与存储量的变化"><text x="10" y="30">矩阵列数（q⁴；零基线）</text><rect id="chap-3-bottleneck--memory-bar" x="10" y="55" width="0" height="40" fill="#265976"/><text x="10" y="140" id="chap-3-bottleneck--memory-caption"></text></svg>
+<div class="repair-readout"><div>q<output id="chap-3-bottleneck--memory-q-value"></output></div><div>列数 q⁴<output id="chap-3-bottleneck--memory-columns"></output></div><div>元素数 E<output id="chap-3-bottleneck--memory-elements"></output></div><div>元素存储<output id="chap-3-bottleneck--memory-size"></output></div></div>
+<p class="repair-note">论文在其模拟设置下指出，标准方法超过18个候选点时，内存和耗时变得不实用；这不是所有设备共有的溢出阈值。多次迭代累计处理的元素数也不等于峰值内存。</p></div>
+<button type="button" data-source="S092">原文</button><button type="button" data-source="S100">原文</button><button type="button" data-source="S101">原文</button><button type="button" data-source="S193">原文</button></section></div><div class="paper-chapter" id="chapter-chap-4-mechanism">
+<section id="adaptive-mechanism" data-node="adaptive-mechanism"><h2>自适应搜索：把网格集中到相邻候选点之间</h2>
+<p>每轮先用当前感知矩阵估计最优索引，再以它左右相邻的候选角度作为下一轮区间，在局部重新均匀采样。矩阵保持较小，但局部间隔会缩小。</p>
+<p>对于内部索引，原文式 (17) 使用上一轮的 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mover accent="true"><mi>ϕ</mi><mo>~</mo></mover><mrow><mi>ι</mi><mo>−</mo><mn>1</mn></mrow><mrow><mo stretchy="false">(</mo><mi>k</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo></mrow></msubsup></mrow><annotation encoding="application/x-tex">\tilde\phi_{\iota-1}^{(k-1)}</annotation></semantics></math></span> 与 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mover accent="true"><mi>ϕ</mi><mo>~</mo></mover><mrow><mi>ι</mi><mo>+</mo><mn>1</mn></mrow><mrow><mo stretchy="false">(</mo><mi>k</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo></mrow></msubsup></mrow><annotation encoding="application/x-tex">\tilde\phi_{\iota+1}^{(k-1)}</annotation></semantics></math></span> 作为新边界；并据式 (21)–(23) 重建矩阵。</p>
+<div class="repair-lab"><h3>一维教学演示：实际重算每轮邻域</h3><p class="repair-note">用已知教学目标的最近网格点代替论文式 (8) 的多子载波最大相关搜索，仅演示内部索引的区间更新，不是论文信道估计复现。原文边界分支使用 q 符号，上下文存在歧义，本演示不据此推断边界处理。</p>
+<div class="repair-controls"><label for="chap-4-mechanism--search-target">教学目标角度<input id="chap-4-mechanism--search-target" type="range" min="80" max="280" step="1" value="240"></label><button id="chap-4-mechanism--search-prev" type="button">上一步</button><button id="chap-4-mechanism--search-next" type="button">下一轮</button><button id="chap-4-mechanism--search-reset" type="button">复位</button></div>
+<svg viewBox="0 0 600 190" class="repair-chart" aria-label="固定0至360度坐标下的搜索区间、六个候选点和教学目标"><line x1="30" y1="130" x2="570" y2="130" stroke="#596877"/><rect id="chap-4-mechanism--search-range" x="30" y="55" width="540" height="60" fill="#edf2f1"/><g id="chap-4-mechanism--search-candidates"></g><line id="chap-4-mechanism--search-truth" x1="390" y1="35" x2="390" y2="150" stroke="#ad472d" stroke-width="3"/><text x="30" y="175">0°</text><text x="530" y="175">360°</text></svg>
+<div class="repair-readout"><div>当前轮<output id="chap-4-mechanism--search-iteration"></output></div><div>区间宽度（度）<output id="chap-4-mechanism--search-width"></output></div><div>六个候选角（度）<output id="chap-4-mechanism--search-values" style="font-size:14px"></output></div></div>
+<p>真实算法仍受噪声、初始估计和残差更新影响。局部收缩不能保证真实目标永远在区间内，不能把教学目标的收敛当成论文实验结果。</p></div>
+<button type="button" data-source="S165">原文</button><button type="button" data-source="S168">原文</button><button type="button" data-source="S192">原文</button></section></div><div class="paper-chapter" id="chapter-chap-5-algo"><section id="parameter-estimation-algo" data-node="parameter-estimation-algo" class="algo-workbench">
+  <p class="repair-note">流程教学示意：下方能量、索引和估计值为预设状态，不是重新计算真实信道或复现论文实验。</p><header class="algo-header">
+    <h2>改进的 DCS-SOMP 迭代流程</h2>
+    <p class="algo-lead">算法在每次迭代中先通过最大相关性准则估计参数，随即调用自适应步骤更新感知矩阵，最后更新残差以提取下一路径。</p>
+    <div class="algo-controls">
+      <button type="button" id="chap-5-algo--chap-5-algo-btn-reset" class="btn-reset">复位演示</button>
+      <button type="button" id="chap-5-algo--chap-5-algo-btn-prev" class="btn-nav" disabled>上一步</button>
+      <button type="button" id="chap-5-algo--chap-5-algo-btn-next" class="btn-nav">下一步</button>
+    </div>
+  </header>
+
+  <div class="algo-stage">
+    <div class="algo-visualizer">
+      <canvas id="chap-5-algo--chap-5-algo-canvas" width="600" height="400"></canvas>
+      <div id="chap-5-algo--chap-5-algo-overlay" class="algo-overlay">
+        <div class="algo-step-indicator">步骤 <span id="chap-5-algo--chap-5-algo-step-num">1</span> / 4</div>
+        <div class="algo-step-title" id="chap-5-algo--chap-5-algo-step-title">步骤 1：初始化残差</div>
+        <div class="algo-step-desc" id="chap-5-algo--chap-5-algo-step-desc">对于第一条路径 (l=1)，将残差 R1 设置为接收信号 y。</div>
+        <div class="algo-source-ref">
+          <button type="button" class="source-btn" data-source="S136">原文 · p.5</button>
+          <button type="button" class="source-btn" data-source="S196">原文 · p.8</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="algo-data-panel">
+      <h3>实时数据流</h3>
+      <div class="data-row">
+        <span class="data-label">当前路径 (l):</span>
+        <span class="data-value" id="chap-5-algo--chap-5-algo-val-l">1</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">残差能量 (||R||):</span>
+        <span class="data-value" id="chap-5-algo--chap-5-algo-val-energy">1.000</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">最佳索引 (h̃):</span>
+        <span class="data-value" id="chap-5-algo--chap-5-algo-val-index">-</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">估计角度 (φaz):</span>
+        <span class="data-value" id="chap-5-algo--chap-5-algo-val-angle">-</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">感知矩阵状态:</span>
+        <span class="data-value" id="chap-5-algo--chap-5-algo-val-matrix">初始 ω(0)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="algo-formula-card">
+    <h4>核心更新公式</h4>
+    <div class="formula-block">
+      <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mrow><mi>l</mi><mo>+</mo><mn>1</mn></mrow></msub><mo stretchy="false">[</mo><mi>n</mi><mo stretchy="false">]</mo><mo>=</mo><msub><mi>R</mi><mi>l</mi></msub><mo stretchy="false">[</mo><mi>n</mi><mo stretchy="false">]</mo><mo>−</mo><msub><mi>β</mi><mi>l</mi></msub><mo stretchy="false">[</mo><mi>n</mi><mo stretchy="false">]</mo><msub><mi>ω</mi><msub><mover accent="true"><mi>h</mi><mo>~</mo></mover><mi>l</mi></msub></msub><mo stretchy="false">[</mo><mi>n</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">R_{l+1}[n] = R_l[n] - \beta_l[n] \omega_{\tilde{h}_l}[n]</annotation></semantics></math></span>
+    </div>
+    <p class="formula-note">残差更新：从当前信号中减去已估计路径的贡献，以便提取下一条路径。</p>
+    <button type="button" class="source-btn" data-source="S139">来源：p.5 (14)</button>
+  </div>
+
+  <div class="algo-steps-list">
+    <h3>算法步骤详解</h3>
+    <ol>
+      <li class="step-item" data-step="1">
+        <strong>初始化残差</strong>
+        <p>对于第一条路径 (l=1)，将残差 R1 设置为接收信号 y。</p>
+        <button type="button" class="source-btn" data-source="S136">S136</button>
+        <button type="button" class="source-btn" data-source="S196">S196</button>
+      </li>
+      <li class="step-item" data-step="2">
+        <strong>寻找最大相关索引</strong>
+        <p>遍历所有候选列 m，计算 corr = |ω_m^H * Rl|，记录产生最大 corr 的索引 h̃l。</p>
+        <button type="button" class="source-btn" data-source="S135">S135</button>
+        <button type="button" class="source-btn" data-source="S196">S196</button>
+      </li>
+      <li class="step-item" data-step="3">
+        <strong>执行自适应搜索</strong>
+        <p>利用当前索引 h̃l 调用自适应搜索子程序，更新下一轮迭代的角度候选集和感知矩阵 ω(k)。</p>
+        <button type="button" class="source-btn" data-source="S191">S191</button>
+        <button type="button" class="source-btn" data-source="S228">S228</button>
+      </li>
+      <li class="step-item" data-step="4">
+        <strong>更新残差与 ToA</strong>
+        <p>计算系数 βl，更新残差 Rl+1 = Rl - βl * ω，并根据距离公式计算 τl。</p>
+        <button type="button" class="source-btn" data-source="S139">S139</button>
+        <button type="button" class="source-btn" data-source="S140">S140</button>
+        <button type="button" class="source-btn" data-source="S228">S228</button>
+      </li>
+    </ol>
+  </div>
+</section></div><div class="paper-chapter" id="chapter-chap-6-results">
+<section id="complexity-analysis" data-node="complexity-analysis"><h2>效率：比较论文真实报告的同一组实验</h2>
+<p>Table 3 给出估计两条路径、全部五个参数的总执行时间与运算量。自适应法用14轮、6×6候选网格，标准法为18×18网格。耗时取决于这些实验设置，不等于任意设备的固定加速比。</p>
+<div class="repair-controls"><label for="chap-6-results--efficiency-metric">比较指标<select id="chap-6-results--efficiency-metric"><option value="Time (s)">执行时间（秒）</option><option value="Number of Mathematical Operations">数学运算次数</option></select></label></div><div id="chap-6-results--efficiency-bars"></div><output id="chap-6-results--efficiency-values"></output>
+<button type="button" data-source="S271">原文</button><button type="button" data-source="S275">原文</button><button type="button" data-source="S276">原文</button></section>
+<section id="simulation-results" data-node="simulation-results"><h2>精度：逐参数查看真实 RMSE</h2><p>Table 4 的 RMSE 来自100次运行，并对所有路径平均。单位随参数变化，角度用rad，到达时间用μs；不能把它们取一个混合均值。</p><div class="repair-controls"><label for="chap-6-results--rmse-parameter">选择参数<select id="chap-6-results--rmse-parameter"></select></label><button id="chap-6-results--results-reset" type="button">复位</button></div><div id="chap-6-results--rmse-bars"></div><output id="chap-6-results--rmse-values"></output>
+<p class="repair-note">这里只呈现真实表格点值。原文 Figure 4–6 有收敛曲线，但没有逐迭代数值表，本页不生成随机曲线冒充原图。</p><table><thead id="chap-6-results--rmse-head"></thead><tbody id="chap-6-results--rmse-rows"></tbody></table>
+<button type="button" data-source="S284">原文</button></section></div><div class="paper-chapter" id="chapter-chap-7-limits"><section id="limitations-scope" data-node="limitations-scope" class="pm-node-anchor"><section id="chap-7-limits--chap-7-limits" data-node="limitations-scope" class="chapter-container">
+  <header class="chapter-header">
+    <h1>边界：理想假设与未来扩展</h1>
+    <p class="chapter-lead">本文的方法在受控的仿真环境中表现优异，但将其转化为工业级应用仍需跨越若干理论与工程的鸿沟。</p>
+  </header>
+
+  <div class="content-grid">
+    <!-- 左侧：核心假设与局限 -->
+    <div class="main-column">
+      <div class="info-card assumption-card">
+        <div class="card-header">
+          <span class="tag tag-ideal">理想假设</span>
+          <h3>系统模型的边界条件</h3>
+        </div>
+        <div class="card-body">
+          <p>当前的系统模型建立在<strong>完美时钟同步</strong>（perfect clock synchronization）的假设之上 <button type="button" class="source-btn" data-source="S051">原文 · p.3</button>。在实际的 5G 部署中，基站与移动站之间的时钟偏差是不可避免的，这将直接引入 ToA 估计的系统误差。</p>
+          <p>此外，信道模型仅包含<strong>视距（LoS）和单反射非视距（NLoS）</strong>路径。虽然毫米波频段的多反射路径能量较弱 <button type="button" class="source-btn" data-source="S051">原文 · p.3</button>，但在复杂的工业遮挡环境下，忽略多反射可能导致模型失配。</p>
+        </div>
+      </div>
+
+      <div class="info-card future-card">
+        <div class="card-header">
+          <span class="tag tag-future">未来工作</span>
+          <h3>算法与硬件的演进</h3>
+        </div>
+        <div class="card-body">
+          <p>作者指出，进一步提升自适应 DCS-SOMP 性能的关键在于<strong>细化残差（residue）的更新机制</strong> <button type="button" class="source-btn" data-source="S287">原文 · p.11</button>，这可能有助于在强干扰下更好地分离多条路径。</p>
+          <p>在硬件层面，当前研究主要基于<strong>均匀圆形阵列（UCA）</strong>。未来的计划包括探索<strong>二维天线阵列配置</strong>，以在 mmWave 场景下增强波束成形能力 <button type="button" class="source-btn" data-source="S287">原文 · p.11</button>。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧：交互可视化 -->
+    <div class="viz-column">
+      <div class="viz-container">
+        <div class="viz-controls">
+          <button id="chap-7-limits--btn-ideal" class="control-btn active" type="button">理想实验室环境</button>
+          <button id="chap-7-limits--btn-real" class="control-btn" type="button">复杂现实环境</button>
+        </div>
+        <div class="canvas-wrapper">
+          <canvas id="chap-7-limits--limit-canvas" width="400" height="300" aria-label="时钟偏差与多路径效应示意图"></canvas>
+          <div id="chap-7-limits--viz-overlay" class="viz-overlay hidden">
+            <div class="overlay-content">
+              <h4>现实因素干扰</h4>
+              <ul>
+                <li><strong>时钟偏差 (Δt):</strong> 导致 ToA 测量漂移</li>
+                <li><strong>多反射路径:</strong> 增加信道矩阵稀疏度破坏风险</li>
+                <li><strong>模型失配:</strong> 需校准或更复杂的信道模型</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="viz-caption">
+          <p>点击“复杂现实环境”查看时钟偏差与多反射路径对信号传播的影响。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部：数据支撑 -->
+  <div class="data-support">
+    <h3>性能基准与局限对照</h3>
+    <p class="data-intro">下表展示了在理想假设下（完美同步、单反射）取得的 RMSE 结果。在现实环境中，由于上述限制，实际误差可能会显著高于此基准。</p>
+    <div class="table-responsive">
+      <table class="data-table" aria-label="RMSE 对比表">
+        <thead>
+          <tr>
+            <th>方法</th>
+            <th>ε_φaz (rad)</th>
+            <th>ε_φel (rad)</th>
+            <th>ε_θaz (rad)</th>
+            <th>ε_θel (rad)</th>
+            <th>ε_τ (us)</th>
+          </tr>
+        </thead>
+        <tbody id="chap-7-limits--rmse-table-body">
+          <!-- JS 填充 -->
+        </tbody>
+      </table>
+    </div>
+    <div class="table-note">
+      <p>数据来源：Table 4 (p.11)。RMSE 基于 100 次运行的平均值。注意：这些结果依赖于完美同步假设。</p>
+    </div>
+  </div>
+</section></section></div><footer class="reading-limitations"><h2>带着边界理解这篇论文</h2><p>系统模型假设完美的时钟同步，实际环境中时钟偏差会降低 ToA 估计精度。</p><p>信道模型仅考虑 LoS 和单 bounce NLoS 路径，忽略多反射路径，可能在复杂遮挡环境下导致模型失配。</p><p>仿真结果基于特定硬件配置 (Intel i5, GTX 1650)，绝对执行时间随硬件性能变化，但相对比例趋势不变。</p><p>自适应方法的收敛性依赖于初始搜索空间包含真实值，且假设真实值位于上一轮估计的邻域内。</p><p>当前研究基于均匀圆形阵列 (UCA)，对其他天线阵列拓扑的适用性未经验证。</p></footer></main><script nonce="7eXoJk59-zEp8H8PGWxmcgfQtfcsZR9T">const PM_CONFIG={"edition": "5b4b2f49-c50c-40e0-9d93-833782eb4350", "document": "pdf-b4deafe808239771", "channel": "inspection", "data": {"tables": [{"id": "p9-Table_2", "title": "Actual Values Used in Simulations.", "population": "", "columns": ["Path", "φ^az (rad)", "φ^el (rad)", "θ^az (rad)", "θ^el (rad)", "τ (us)"], "rows": [{"id": "Row_1", "label": "1", "values": {"Path": "1", "φ^az (rad)": "1.33", "φ^el (rad)": "0.45", "θ^az (rad)": "3.50", "θ^el (rad)": "0.90", "τ (us)": "0.0615"}}, {"id": "Row_2", "label": "2", "values": {"Path": "2", "φ^az (rad)": "2.80", "φ^el (rad)": "1.15", "θ^az (rad)": "5.20", "θ^el (rad)": "1.45", "τ (us)": "0.0767"}}], "notes": ["Table 2 lists actual values used in simulations for two paths.", "In DCS-SOMP case, q_az and q_el are both set to 18; in adaptive DCS-SOMP scenario, q_az and q_el are both set to 6."], "page": 9}, {"id": "p11-Table_3", "title": "Comparison between DCS-SOMP and Adaptive DCS-SOMP.", "population": "", "columns": ["Method", "Time (s)", "Number of Mathematical Operations"], "rows": [{"id": "Row_3_1", "label": "DCS-SOMP", "values": {"Method": "DCS-SOMP", "Time (s)": "84.63", "Number of Mathematical Operations": "4.0393 × 10⁹"}}, {"id": "Row_3_2", "label": "Adaptive DCS-SOMP", "values": {"Method": "Adaptive DCS-SOMP", "Time (s)": "0.88", "Number of Mathematical Operations": "1.4697 × 10⁹"}}], "notes": ["Equation (27) defines RMSE: ε = √[ (1/Q) Σ_{i=1}^Q (p_i − p̂_i)² ]", "Q is the number of runs, p_i is the actual value of the chosen parameter at the i-th run, and p̂_i is the estimated value of the chosen parameter at the i-th run."], "page": 11}, {"id": "p11-Table_4", "title": "Comparison of RMSE between DCS-SOMP and adaptive DCS-SOMP.", "population": "", "columns": ["Method", "ε_φaz (rad)", "ε_φel (rad)", "ε_θaz (rad)", "ε_θel (rad)", "ε_τ (us)"], "rows": [{"id": "Row_4_1", "label": "DCS-SOMP", "values": {"Method": "DCS-SOMP", "ε_φaz (rad)": "0.1334", "ε_φel (rad)": "0.0454", "ε_θaz (rad)": "0.1087", "ε_θel (rad)": "0.2851", "ε_τ (us)": "0.0109"}}, {"id": "Row_4_2", "label": "Adaptive DCS-SOMP", "values": {"Method": "Adaptive DCS-SOMP", "ε_φaz (rad)": "0.0017", "ε_φel (rad)": "0.0005", "ε_θaz (rad)": "0.0089", "ε_θel (rad)": "0.0256", "ε_τ (us)": "0.0001"}}], "notes": ["ε_φᶜˢ, ε_φᶜˡ, ε_θᶜˢ, ε_θᶜˡ, and ε_τ represent the RMSE for azimuth AoD, elevation AoD, azimuth AoA, elevation AoA, and ToA, respectively.", "The RMSE was determined from 100 runs of each method, considering the average across all paths."], "page": 11}], "sources": {"S001": {"id": "pdf-b4deafe808239771-p1-b1", "page": 1, "quote": "Communication\nAdaptive DCS-SOMP for Localization Parameter Estimation in"}, "S002": {"id": "pdf-b4deafe808239771-p1-b2", "page": 1, "quote": "5G Networks"}, "S003": {"id": "pdf-b4deafe808239771-p1-b3", "page": 1, "quote": "Paulo Francisco da Conceição *\nand Flávio Geraldo Coelho Rocha"}, "S004": {"id": "pdf-b4deafe808239771-p1-b4", "page": 1, "quote": "Department of Electrical, Mechanical and Computer Engineering, Federal University of Goiás, Goiânia 74605-010,\nBrazil; ﬂaviogcr@ufg.br\n* Correspondence: paulofrancisco@discente.ufg.br"}, "S005": {"id": "pdf-b4deafe808239771-p1-b5", "page": 1, "quote": "Abstract: In this work, we model a 5G downlink channel using millimeter-wave (mmWave) and\nmassive Multiple-Input Multiple-Output (mMIMO) technologies, considering the following local-\nization parameters: Time of Arrival (TOA), Two-Dimensional Angle of Departure (2D-AoD), and\nTwo-Dimensional Angle of Arrival (2D-AoA), both encompassing azimuth and elevation. Our\nresearch focuses on the precise estimation of these parameters within a three-dimensional (3D) envi-\nronment, which is crucial in Industry 4.0 applications such as smart warehousing. In such scenarios,\ndetermining the device localization is paramount, as products must be handled with high precision.\nTo achieve these precise estimations, we employ an adaptive approach built upon the Distributed\nCompressed Sensing—Subspace Orthogonal Matching Pursuit (DCS-SOMP) algorithm. We obtain\nbetter estimations using an adaptive approach that dynamically adapts the sensing matrix during\neach iteration, effectively constraining the search space. The results demonstrate that our approach\noutperforms the traditional method in terms of accuracy, speed to convergence, and memory use."}, "S006": {"id": "pdf-b4deafe808239771-p1-b6", "page": 1, "quote": "Keywords: 5G; compressed sensing; DCS-SOMP; parameter estimation"}, "S007": {"id": "pdf-b4deafe808239771-p1-b7", "page": 1, "quote": "1. Introduction"}, "S008": {"id": "pdf-b4deafe808239771-p1-b8", "page": 1, "quote": "Citation: da Conceição, P.F.; Rocha,"}, "S009": {"id": "pdf-b4deafe808239771-p1-b9", "page": 1, "quote": "F.G.C. Adaptive DCS-SOMP for"}, "S010": {"id": "pdf-b4deafe808239771-p1-b10", "page": 1, "quote": "Localization Parameter Estimation in"}, "S011": {"id": "pdf-b4deafe808239771-p1-b11", "page": 1, "quote": "5G Networks. Sensors 2023, 23, 9073."}, "S012": {"id": "pdf-b4deafe808239771-p1-b12", "page": 1, "quote": "https://doi.org/10.3390/s23229073"}, "S013": {"id": "pdf-b4deafe808239771-p1-b13", "page": 1, "quote": "Millimeter-wave (mmWave) and massive Multiple-Input Multiple-Output (mMIMO)\ntechnologies are some of the enablers for the future deployment of 5G and beyond 5G\nnetworks, constituting essential assets for realizing the full potential of disruptive 5G ap-\nplications, especially those involving device localization, such as Industry 4.0, Unmanned\nAerial Vehicles (UAVs), and Vehicle to Everything (V2X) communications. These technolo-\ngies signiﬁcantly enhance the accuracy of localization parameter estimation, such as the\nTime of Arrival (ToA), Angle of Departure (AoD), and Angle of Arrival (AoA) of signals."}, "S014": {"id": "pdf-b4deafe808239771-p1-b14", "page": 1, "quote": "Academic Editors: Stefano Savazzi,"}, "S015": {"id": "pdf-b4deafe808239771-p1-b15", "page": 1, "quote": "Sanaz Kianoush and Vittorio"}, "S016": {"id": "pdf-b4deafe808239771-p1-b17", "page": 1, "quote": "Received: 12 September 2023"}, "S017": {"id": "pdf-b4deafe808239771-p1-b18", "page": 1, "quote": "Revised: 30 October 2023"}, "S018": {"id": "pdf-b4deafe808239771-p1-b19", "page": 1, "quote": "Accepted: 7 November 2023"}, "S019": {"id": "pdf-b4deafe808239771-p1-b20", "page": 1, "quote": "Published: 9 November 2023"}, "S020": {"id": "pdf-b4deafe808239771-p1-b21", "page": 1, "quote": "Copyright:\n© 2023 by the authors."}, "S021": {"id": "pdf-b4deafe808239771-p1-b22", "page": 1, "quote": "Licensee MDPI, Basel, Switzerland."}, "S022": {"id": "pdf-b4deafe808239771-p1-b23", "page": 1, "quote": "Localization algorithms use localization parameters that can be estimated from the\nreceived signal using techniques such as Multiple Signal Classiﬁcation (MUSIC) [1] and\nCompressed Sensing (CS) [2]. MUSIC-based methods analyze the cross-correlations among\nthe received signals to identify the angles associated with their peaks in the power spec-\ntrum [3]. On the other hand, methods based on CS exploit the sparsity of signals, i.e., instead\nof acquiring the complete signal, CS enables accurate signal reconstruction using a few\nimportant components while the rest are negligible [2]. Among the CS-based methods, we\nhighlight Distributed Compressed Sensing—Subspace Orthogonal Matching Pursuit (DCS-\nSOMP). DCS-SOMP combines the concept of CS with the Orthogonal Matching Pursuit\n(OMP) algorithm to handle sparse signals in a distributed environment or in systems with\nmultiple antennas (e.g., mMIMO systems) [4]."}, "S023": {"id": "pdf-b4deafe808239771-p1-b24", "page": 1, "quote": "This article is an open access article"}, "S024": {"id": "pdf-b4deafe808239771-p1-b25", "page": 1, "quote": "distributed\nunder\nthe\nterms\nand"}, "S025": {"id": "pdf-b4deafe808239771-p1-b26", "page": 1, "quote": "conditions of the Creative Commons"}, "S026": {"id": "pdf-b4deafe808239771-p1-b27", "page": 1, "quote": "Attribution (CC BY) license (https://"}, "S027": {"id": "pdf-b4deafe808239771-p1-b28", "page": 1, "quote": "creativecommons.org/licenses/by/"}, "S028": {"id": "pdf-b4deafe808239771-p1-b29", "page": 1, "quote": "In this work, we focus on the DCS-SOMP method, since it aligns more effectively\nwith the sparse nature of mmWave signals. In [5,6], the DCS-SOMP method is applied\nto parameter estimation in a two-dimensional (2D) environment, providing only a coarse\nestimation of parameters which is followed by a reﬁnement step using the Space-alternating\nGeneralized Expectation-maximization (SAGE) method [7]."}, "S029": {"id": "pdf-b4deafe808239771-p1-b31", "page": 1, "quote": "Sensors 2023, 23, 9073. https://doi.org/10.3390/s23229073\nhttps://www.mdpi.com/journal/sensors"}, "S030": {"id": "pdf-b4deafe808239771-p2-b0", "page": 2, "quote": "Sensors 2023, 23, 9073\n2 of 12"}, "S031": {"id": "pdf-b4deafe808239771-p2-b1", "page": 2, "quote": "Our proposal has two novelties: ﬁrst, our approach entails the dynamic adaptation\nof the sensing matrix, obtaining rapid and accurate parameter estimation through the\nDCS-SOMP method and second, we perform all parameter estimation within a three-\ndimensional (3D) environment. Our proposal relies on accurate channel modeling using\ntwo-dimensional AoD and AoA parameters coupled with Antennas’s Uniform Circular\nArrays (UCA)."}, "S032": {"id": "pdf-b4deafe808239771-p2-b2", "page": 2, "quote": "The remainder of this article is organized as follows: in Section 2, a literature review\nis presented. Section 3 outlines the system model, focusing on the channel and received\nsignal modeling. Section 4 elaborates on constructing the sensing matrix and applying the\nDCS-SOMP method, including the proposed modiﬁcation for adaptive search in the sensing\nmatrix. In Section 5, simulation results are presented and discussed. Finally, Section 6\nconcludes the article."}, "S033": {"id": "pdf-b4deafe808239771-p2-b3", "page": 2, "quote": "2. Related Works"}, "S034": {"id": "pdf-b4deafe808239771-p2-b4", "page": 2, "quote": "Localization algorithms typically consist of two fundamental steps. First, the esti-\nmation of localization parameters extracted from the received signal. Second, using the\nacquired parameters from the ﬁrst step, a localization method is employed to determine\nthe position of the mobile station (MS) [5,8,9]. Regarding the ﬁrst step, we highlight several\naspects of the literature."}, "S035": {"id": "pdf-b4deafe808239771-p2-b5", "page": 2, "quote": "In [10], the authors estimate AoA and AoD using Sparse Bayes Tensor (SBT) from\nchannel modeling using MIMO and mmWave. However, due to the use of a linear array\nof antennas, the proposed approach can only determine the azimuth of AoA and AoD\nand does not enable ToA estimation. In [8], the authors conduct indoor localization using\nchannel modeling and ray tracing. They use two Uniform Linear Arrays (ULA), one\nperpendicular to the other, to extract the elevation angle. However, the method does not\nestimate AoD, thus preventing the use of algorithms dependent on this parameter."}, "S036": {"id": "pdf-b4deafe808239771-p2-b6", "page": 2, "quote": "In [5], the authors propose a comprehensive localization algorithm using MIMO,\nmmWave, and ULA. They employ the DCS-SOMP method for parameter estimation.\nDue to the linear antenna array, the method applies to a 2D environment. Additionally,\nthe DCS-SOMP method provides only a coarse parameter estimate, demanding further\nﬁne-tuning using the SAGE method. In [11], the authors propose a 2D-AoA and 2D-AoD\nestimation using the MUSIC algorithm. The method utilizes a channel model with a\nrectangular Uniform Rectangular Array (URA). However, their proposal does not estimate\nToA and only allows coarse angle estimation. Similarly to [5], the proposal in [11] requires\nﬁne-tuning techniques to provide accurate parameter estimations. In [12], the authors\npropose a technique named spatial spectrum fusion estimation and localization (SSFEAL)\nfor performing 2D-AoA estimation using UCA in a MIMO mmWave channel."}, "S037": {"id": "pdf-b4deafe808239771-p2-b7", "page": 2, "quote": "In this work, we go beyond the related studies by proposing a joint estimation method\nof ToA, 2D-AoD, and 2D-AoA, enabling the use of these parameters in 3D localization\nalgorithms in multipath environments. Furthermore, our proposed method accurately\nestimates the parameters without additional ﬁne-tuning techniques. We employ a MIMO\nmmWave channel model with UCA to determine 2D-AoD and 2D-AoA, consistent with\nthe works in [12,13]. Table 1 compares our proposal with others discussed in this section."}, "S038": {"id": "pdf-b4deafe808239771-p2-b8", "page": 2, "quote": "Table 1 demonstrates aspects of some related works and our proposal. Column 2\nindicates the method used for parameter estimation. Column 3 displays the antenna array,\nwhile columns 4 to 6 specify whether the method estimates ToA, 2D-AoD, and 2D-AoA\nparameters, respectively. Our proposal presents the advantage of estimating all considered\nlocalization parameters (ToA, 2D-AoD, and 2D-AoA), while other methods estimate only\nsome of them, or consider only two-dimensional (2D) environments. Additionally, our\nproposal utilizes the DCS-SOMP itself to achieve high accuracy, while other methods rely\non extra algorithms for a reﬁnement step. Although estimating ﬁve parameters increases\nthe number of elements in the sensing matrix, our adaptive approach reduces execution\ntime and yields more accurate results."}, "S039": {"id": "pdf-b4deafe808239771-p3-b0", "page": 3, "quote": "Sensors 2023, 23, 9073\n3 of 12"}, "S040": {"id": "pdf-b4deafe808239771-p3-b1", "page": 3, "quote": "Article\nMethod\nArray\nToA\n2D-AoD\n2D-AoA"}, "S041": {"id": "pdf-b4deafe808239771-p3-b2", "page": 3, "quote": "[5]\nDCS-SOMP\nULA\n✓\n×\n×\n[8]\nMUSIC\nULA\n✓\n×\n✓\n[10]\nSBT\nULA\n×\n×\n×\n[11]\nMUSIC\nURA\n×\n✓\n✓\n[12]\nSSFEAL\nUCA\n×\n×\n✓\nOur\nProposal"}, "S042": {"id": "pdf-b4deafe808239771-p3-b3", "page": 3, "quote": "Table 1. Related work overview."}, "S043": {"id": "pdf-b4deafe808239771-p3-b4", "page": 3, "quote": "3. System Model"}, "S044": {"id": "pdf-b4deafe808239771-p3-b7", "page": 3, "quote": "τl is the ToA, φaz"}, "S045": {"id": "pdf-b4deafe808239771-p3-b8", "page": 3, "quote": "LoS path\nNLoS path"}, "S046": {"id": "pdf-b4deafe808239771-p3-b10", "page": 3, "quote": "−j2π(n −1)τl"}, "S047": {"id": "pdf-b4deafe808239771-p3-b14", "page": 3, "quote": "Nrar(θaz"}, "S048": {"id": "pdf-b4deafe808239771-p3-b19", "page": 3, "quote": "l ),\n(1)"}, "S049": {"id": "pdf-b4deafe808239771-p3-b21", "page": 3, "quote": "l is the elevation AoD, θaz"}, "S050": {"id": "pdf-b4deafe808239771-p3-b22", "page": 3, "quote": "Adaptive\nDCS-SOMP\nUCA\n✓\n✓\n✓"}, "S051": {"id": "pdf-b4deafe808239771-p3-b23", "page": 3, "quote": "As outlined in the 3rd Generation Partnership Project (3GPP) guidelines released in\nthe TR 38.901 V17.0.0 [14], we analyze a MIMO system with Nt transmitter antennas at\nthe base station (BS) and Nr receiver antennas at the MS. This system operates at carrier\nfrequency fc and with bandwidth B. Similarly to [5], we consider the BS to send G signals\nto the receiver, where the g-th signal is composed of Mt symbols. Furthermore, we consider\nan indoor environment where there are L paths for the signals being transmitted from a\nsingle BS to the MS, such paths can be classiﬁed as Line of Sight (LoS) and single-bounce\nNon-Line of Sight (NLoS) paths. Multiple-bounce paths are not taken into account due\nto their limited reception strength at mmWave frequencies [15]. Additionally, we assume\nperfect clock synchronization, as in [16], enabling accurate ToA estimation."}, "S052": {"id": "pdf-b4deafe808239771-p3-b24", "page": 3, "quote": "Figure 1 illustrates a typical Industry 4.0 scenario in a smart warehouse where a forklift\nmoves products from the conveyor belt to the shelves. In such a scenario, the localization\nand tracking of the forklift can be achieved using geometry-based methods, which rely on\naccurate estimation of localization parameters [5,17]."}, "S053": {"id": "pdf-b4deafe808239771-p3-b25", "page": 3, "quote": "Figure 1. Indoor Localization Scenario with LoS and NLoS Paths: in a smart warehouse, a forklift is\nconnected to a mmWave 5G network for product transport."}, "S054": {"id": "pdf-b4deafe808239771-p3-b26", "page": 3, "quote": "As in [14], we assume the channel’s dependency on the response vector. Thus, for the\nn-th subcarrier (where n = 0, ..., N −1), the channel matrix H can be represented as follows:"}, "S055": {"id": "pdf-b4deafe808239771-p3-b27", "page": 3, "quote": "where, for the l-th path, ρl represents the pathloss, hl stands for the complex channel gain,"}, "S056": {"id": "pdf-b4deafe808239771-p3-b28", "page": 3, "quote": "l\nis the azimuth AoD, φel"}, "S057": {"id": "pdf-b4deafe808239771-p3-b29", "page": 3, "quote": "l\nis the azimuth AoA,\nθel"}, "S058": {"id": "pdf-b4deafe808239771-p3-b30", "page": 3, "quote": "l is the elevation AoA, and Ts = 1/B denotes the sampling period. In order to take into"}, "S059": {"id": "pdf-b4deafe808239771-p4-b0", "page": 4, "quote": "Sensors 2023, 23, 9073\n4 of 12"}, "S060": {"id": "pdf-b4deafe808239771-p4-b1", "page": 4, "quote": "l ), we employ a Uniform Circular\nArray (UCA) as in [13], thus we deﬁne the response vectors at and ar, as follows:"}, "S061": {"id": "pdf-b4deafe808239771-p4-b2", "page": 4, "quote": "account 2D-AoD, i.e., (φaz"}, "S062": {"id": "pdf-b4deafe808239771-p4-b11", "page": 4, "quote": "2π for ar(θaz\nl , θel"}, "S063": {"id": "pdf-b4deafe808239771-p4-b12", "page": 4, "quote": "4. Proposed Method"}, "S064": {"id": "pdf-b4deafe808239771-p4-b13", "page": 4, "quote": "4.1. Sensing Matrix Construction"}, "S065": {"id": "pdf-b4deafe808239771-p4-b14", "page": 4, "quote": "duce the matrix U(0)"}, "S066": {"id": "pdf-b4deafe808239771-p4-b16", "page": 4, "quote": "l ) and 2D-AoA, i.e., (θaz"}, "S067": {"id": "pdf-b4deafe808239771-p4-b18", "page": 4, "quote": "l −sin(Nt−1))i"}, "S068": {"id": "pdf-b4deafe808239771-p4-b19", "page": 4, "quote": "1, ej 2π\nλ rsin(φel"}, "S069": {"id": "pdf-b4deafe808239771-p4-b20", "page": 4, "quote": "l −sin(1)), . . . , ej 2π"}, "S070": {"id": "pdf-b4deafe808239771-p4-b21", "page": 4, "quote": "l )cos(φaz"}, "S071": {"id": "pdf-b4deafe808239771-p4-b22", "page": 4, "quote": "l )cos(φaz"}, "S072": {"id": "pdf-b4deafe808239771-p4-b23", "page": 4, "quote": "λ rsin(φel"}, "S073": {"id": "pdf-b4deafe808239771-p4-b25", "page": 4, "quote": "l −sin(Nr−1))i"}, "S074": {"id": "pdf-b4deafe808239771-p4-b26", "page": 4, "quote": "1, ej 2π\nλ rsin(θel"}, "S075": {"id": "pdf-b4deafe808239771-p4-b27", "page": 4, "quote": "l −sin(1)), . . . , ej 2π"}, "S076": {"id": "pdf-b4deafe808239771-p4-b28", "page": 4, "quote": "l )cos(θaz"}, "S077": {"id": "pdf-b4deafe808239771-p4-b29", "page": 4, "quote": "l )cos(θaz"}, "S078": {"id": "pdf-b4deafe808239771-p4-b30", "page": 4, "quote": "λ rsin(θel"}, "S079": {"id": "pdf-b4deafe808239771-p4-b32", "page": 4, "quote": "2π for at(φaz\nl , φel"}, "S080": {"id": "pdf-b4deafe808239771-p4-b33", "page": 4, "quote": "y(g)[n] = H[n]x(g)[n] + w[n],\n(4)"}, "S081": {"id": "pdf-b4deafe808239771-p4-b34", "page": 4, "quote": "1 , . . . , ˜φ(0)\nqaz ], ˙φ(0) = [ ˙φ(0)"}, "S082": {"id": "pdf-b4deafe808239771-p4-b35", "page": 4, "quote": "1 , . . . , ˙φ(0)\nqel ]"}, "S083": {"id": "pdf-b4deafe808239771-p4-b37", "page": 4, "quote": "t\n= [at( ˜φ(0), ˙φ0)].\n(5)"}, "S084": {"id": "pdf-b4deafe808239771-p4-b39", "page": 4, "quote": "r\n= [at( ˜θ(0), ˙θ(0))].\n(6)"}, "S085": {"id": "pdf-b4deafe808239771-p4-b40", "page": 4, "quote": "t\nx(g)[n])T ⊗U(0)"}, "S086": {"id": "pdf-b4deafe808239771-p4-b41", "page": 4, "quote": "ω(0)[n] = (U(0)"}, "S087": {"id": "pdf-b4deafe808239771-p4-b43", "page": 4, "quote": "where λ is the wavelength, and r is the radius of the UCA. When a massive antenna array\nis used, as described in [13], the radius can be deﬁned as r = (Nt −1) λ/2"}, "S088": {"id": "pdf-b4deafe808239771-p4-b44", "page": 4, "quote": "l ),\nand as r = (Nr −1) λ/2"}, "S089": {"id": "pdf-b4deafe808239771-p4-b45", "page": 4, "quote": "l ).\nFinally, the received signal for subcarrier n and transmission g can be expressed as\nfollows:"}, "S090": {"id": "pdf-b4deafe808239771-p4-b46", "page": 4, "quote": "where x(g) represents the signal with the transmitted data symbols, and w denotes a\nGaussian noise vector with a zero mean and variance σ2."}, "S091": {"id": "pdf-b4deafe808239771-p4-b47", "page": 4, "quote": "For ease of understanding, we divide our proposal into two stages: (1) sensing matrix\nconstruction and (2) 3D parameter estimation using the DCS-SOMP algorithm."}, "S092": {"id": "pdf-b4deafe808239771-p4-b48", "page": 4, "quote": "According to [14], the azimuth angle belongs to the interval [0, 2π] and the elevation an-\ngle belongs to the interval [0, π]. Therefore, we have qaz candidates for azimuth angles uni-\nformly spaced within the interval [0, 2π], and qel candidates for elevation angles uniformly"}, "S093": {"id": "pdf-b4deafe808239771-p4-b49", "page": 4, "quote": "spaced within the interval [0, π]. We deﬁne ˜φ(0) = [ ˜φ(0)"}, "S094": {"id": "pdf-b4deafe808239771-p4-b50", "page": 4, "quote": "as candidates for AoD azimuth and elevation, respectively, and ˜θ(0) = [ ˜θ(0)"}, "S095": {"id": "pdf-b4deafe808239771-p4-b51", "page": 4, "quote": "1 , . . . , ˜θ(0)\nqaz ],\n˙θ(0) = [ ˙θ(0)"}, "S096": {"id": "pdf-b4deafe808239771-p4-b52", "page": 4, "quote": "1 , . . . , ˙θ(0)\nqel ] as candidates for AoA azimuth and elevation, respectively. We intro-"}, "S097": {"id": "pdf-b4deafe808239771-p4-b53", "page": 4, "quote": "t\nof dimensions Nt × qazqel containing the response vectors for each\npossible combination of azimuth and elevation for AoD:"}, "S098": {"id": "pdf-b4deafe808239771-p4-b54", "page": 4, "quote": "Similarly, we create the matrix U(0)"}, "S099": {"id": "pdf-b4deafe808239771-p4-b55", "page": 4, "quote": "r\nof dimensions Nr × qazqel containing the response\nvectors for each possible combination of azimuth and elevation for AoA:"}, "S100": {"id": "pdf-b4deafe808239771-p4-b56", "page": 4, "quote": "Finally, we obtain the sensing matrix ω(0) as follows:"}, "S101": {"id": "pdf-b4deafe808239771-p4-b57", "page": 4, "quote": "where x(g) represents the transmitted data and ⊗denotes the Kronecker product. The sens-\ning matrix ω has dimensions of (NtMt) × (qazqel)2. As a result, the number of elements in\nω is directly related and highly sensitive to the values of qaz and qel."}, "S102": {"id": "pdf-b4deafe808239771-p4-b58", "page": 4, "quote": "In Section 5, we have demonstrated that increasing the number of candidates (qaz, qel)\nfor DCS-SOMP is crucial to achieving accurate estimations of 2D-AoD and 2D-AoA. How-\never, an increased number of candidates also leads to increased memory usage, as shown\nin Figure 2. Our proposed modiﬁcation to DCS-SOMP introduces an adaptive search\napproach, dynamically adjusting the sensing matrix during each iteration, as detailed in\nSection 4.3, to address this issue."}, "S103": {"id": "pdf-b4deafe808239771-p5-b0", "page": 5, "quote": "Sensors 2023, 23, 9073\n5 of 12"}, "S104": {"id": "pdf-b4deafe808239771-p5-b3", "page": 5, "quote": "Number of Elements in !"}, "S105": {"id": "pdf-b4deafe808239771-p5-b9", "page": 5, "quote": "l ) is determined as follows:"}, "S106": {"id": "pdf-b4deafe808239771-p5-b11", "page": 5, "quote": "Similarly, the 2D-AoA (θaz"}, "S107": {"id": "pdf-b4deafe808239771-p5-b12", "page": 5, "quote": "θ = ˜hl −Il"}, "S108": {"id": "pdf-b4deafe808239771-p5-b17", "page": 5, "quote": "Execution Time (s)"}, "S109": {"id": "pdf-b4deafe808239771-p5-b20", "page": 5, "quote": "DCS-SOMP (qaz = qel = Number of Samples)\nAdaptive DCS-SOMP (K = 40; qaz = qel = 5)\nAdaptive DCS-SOMP (K = 25; qaz = qel = 8)\nAdaptive DCS-SOMP (K = 20; qaz = qel = 10)"}, "S110": {"id": "pdf-b4deafe808239771-p5-b22", "page": 5, "quote": "0\n50\n100\n150\n200\nNumber of Samples"}, "S111": {"id": "pdf-b4deafe808239771-p5-b26", "page": 5, "quote": "m[n]Rl[n]|\n∥ωm[n]∥2"}, "S112": {"id": "pdf-b4deafe808239771-p5-b27", "page": 5, "quote": "˜hl =\nargmax\nm=1,...,(qazqel)2"}, "S113": {"id": "pdf-b4deafe808239771-p5-b29", "page": 5, "quote": "l ) and (θaz"}, "S114": {"id": "pdf-b4deafe808239771-p5-b32", "page": 5, "quote": "˜hl\nqazqel"}, "S115": {"id": "pdf-b4deafe808239771-p5-b42", "page": 5, "quote": "φ mod qel,\n(9)"}, "S116": {"id": "pdf-b4deafe808239771-p5-b43", "page": 5, "quote": "l\n= ˜φ(0)"}, "S117": {"id": "pdf-b4deafe808239771-p5-b44", "page": 5, "quote": "l = ˙φ(0)"}, "S118": {"id": "pdf-b4deafe808239771-p5-b52", "page": 5, "quote": "l ) is determined as follows:"}, "S119": {"id": "pdf-b4deafe808239771-p5-b57", "page": 5, "quote": "φqazqel,\nγaz"}, "S120": {"id": "pdf-b4deafe808239771-p5-b60", "page": 5, "quote": "θ mod qel,\n(11)"}, "S121": {"id": "pdf-b4deafe808239771-p5-b62", "page": 5, "quote": "l = ˙θ(0)"}, "S122": {"id": "pdf-b4deafe808239771-p5-b63", "page": 5, "quote": "l\n= ˜θ(0)"}, "S123": {"id": "pdf-b4deafe808239771-p5-b71", "page": 5, "quote": "˜hl[n]Rl[n]"}, "S124": {"id": "pdf-b4deafe808239771-p5-b73", "page": 5, "quote": "2\n,\n(13)"}, "S125": {"id": "pdf-b4deafe808239771-p5-b74", "page": 5, "quote": "∥ω˜hl[n]∥2"}, "S126": {"id": "pdf-b4deafe808239771-p5-b75", "page": 5, "quote": "Rl+1[n] = Rl[n] −βl[n]ω˜hl[n].\n(14)"}, "S127": {"id": "pdf-b4deafe808239771-p5-b79", "page": 5, "quote": "c\n2π ,\n(15)"}, "S128": {"id": "pdf-b4deafe808239771-p5-b80", "page": 5, "quote": "distance = 1"}, "S129": {"id": "pdf-b4deafe808239771-p5-b84", "page": 5, "quote": "\u001adistance/c , if distance ≥0"}, "S130": {"id": "pdf-b4deafe808239771-p5-b85", "page": 5, "quote": "(distance + NTsc)/c , if distance \u003c 0,\n(16)"}, "S131": {"id": "pdf-b4deafe808239771-p5-b86", "page": 5, "quote": "DCS-SOMP (qaz = qel = Number of Samples)\nAdaptive DCS-SOMP (K = 40; qaz = qel = 5)\nAdaptive DCS-SOMP (K = 25; qaz = qel = 8)\nAdaptive DCS-SOMP (K = 20; qaz = qel = 10)"}, "S132": {"id": "pdf-b4deafe808239771-p5-b87", "page": 5, "quote": "0\n50\n100\n150\n200\nNumber of Samples"}, "S133": {"id": "pdf-b4deafe808239771-p5-b88", "page": 5, "quote": "Figure 2. Comparison between DCS-SOMP and Adaptive DCS-SOMP: (a) Variation in Sensing Matrix\nSize (Number of Elements) and (b) Execution Time, both regarding the number of samples."}, "S134": {"id": "pdf-b4deafe808239771-p5-b89", "page": 5, "quote": "4.2. DCS-SOMP Approach for 3D Parameter Estimation"}, "S135": {"id": "pdf-b4deafe808239771-p5-b90", "page": 5, "quote": "The DCS-SOMP method determines the index ˜hl of the maximum correlation be-\ntween (4) and (7). Therefore, for the l-th path, ˜hl is deﬁned as follows:"}, "S136": {"id": "pdf-b4deafe808239771-p5-b91", "page": 5, "quote": "where Rl represents the received signal’s residue and m represents each column in ω.\nRl = y when l = 1."}, "S137": {"id": "pdf-b4deafe808239771-p5-b92", "page": 5, "quote": "The index ˜hl is converted into a combination of (φaz"}, "S138": {"id": "pdf-b4deafe808239771-p5-b93", "page": 5, "quote": "l ). The 2D-AoD\n(φaz"}, "S139": {"id": "pdf-b4deafe808239771-p5-b94", "page": 5, "quote": "Finally, the DCS-SOMP method updates the residual for the n-th subcarrier as follows:"}, "S140": {"id": "pdf-b4deafe808239771-p5-b95", "page": 5, "quote": "Similar to [5], the estimation of ToA provides a maximum distance of NTsc (m).\nTherefore, ToA can be estimated as follows:"}, "S141": {"id": "pdf-b4deafe808239771-p6-b0", "page": 6, "quote": "Sensors 2023, 23, 9073\n6 of 12"}, "S142": {"id": "pdf-b4deafe808239771-p6-b1", "page": 6, "quote": "4.3. Adaptive Search in DCS-SOMP Approach for 3D Parameter Estimation"}, "S143": {"id": "pdf-b4deafe808239771-p6-b2", "page": 6, "quote": "where c is the speed of light."}, "S144": {"id": "pdf-b4deafe808239771-p6-b14", "page": 6, "quote": "0, if γaz\nl\n= 1"}, "S145": {"id": "pdf-b4deafe808239771-p6-b15", "page": 6, "quote": "start, ˘φaz"}, "S146": {"id": "pdf-b4deafe808239771-p6-b16", "page": 6, "quote": "end], where"}, "S147": {"id": "pdf-b4deafe808239771-p6-b20", "page": 6, "quote": "l −1 , if ιaz"}, "S148": {"id": "pdf-b4deafe808239771-p6-b21", "page": 6, "quote": "l +1 , if ιaz"}, "S149": {"id": "pdf-b4deafe808239771-p6-b23", "page": 6, "quote": "l\n\u003c qaz\nqaz, if ιaz"}, "S150": {"id": "pdf-b4deafe808239771-p6-b26", "page": 6, "quote": "and\n˘φaz"}, "S151": {"id": "pdf-b4deafe808239771-p6-b29", "page": 6, "quote": "0, if ιaz\nl\n= 1"}, "S152": {"id": "pdf-b4deafe808239771-p6-b31", "page": 6, "quote": "start, ˘φel"}, "S153": {"id": "pdf-b4deafe808239771-p6-b32", "page": 6, "quote": "end], where"}, "S154": {"id": "pdf-b4deafe808239771-p6-b36", "page": 6, "quote": "l −1 , if ιel"}, "S155": {"id": "pdf-b4deafe808239771-p6-b37", "page": 6, "quote": "l +1 , if ιel"}, "S156": {"id": "pdf-b4deafe808239771-p6-b42", "page": 6, "quote": "and\n˘φel"}, "S157": {"id": "pdf-b4deafe808239771-p6-b45", "page": 6, "quote": "qel, if ιel"}, "S158": {"id": "pdf-b4deafe808239771-p6-b46", "page": 6, "quote": "0, if ιel\nl = 1"}, "S159": {"id": "pdf-b4deafe808239771-p6-b48", "page": 6, "quote": "start, ˘θaz"}, "S160": {"id": "pdf-b4deafe808239771-p6-b49", "page": 6, "quote": "end], where"}, "S161": {"id": "pdf-b4deafe808239771-p6-b52", "page": 6, "quote": "l −1, if γaz"}, "S162": {"id": "pdf-b4deafe808239771-p6-b53", "page": 6, "quote": "l +1, if γaz"}, "S163": {"id": "pdf-b4deafe808239771-p6-b55", "page": 6, "quote": "l\n\u003c qaz\nqaz, if γaz"}, "S164": {"id": "pdf-b4deafe808239771-p6-b58", "page": 6, "quote": "and\n˘θaz"}, "S165": {"id": "pdf-b4deafe808239771-p6-b62", "page": 6, "quote": "We introduce an adaptive approach to enhance the parameters estimated in the two\naforementioned stages: (1) sensing matrix construction and (2) application of the DCS-\nSOMP approach for 3D parameter estimation. Our method dynamically adapts the search\nspace for each angle to be estimated, i.e., 2D-AoD and 2D-AoA. To illustrate how dynamic\nadaptation is performed, Figure 3 demonstrates the improvements made in each iteration\nusing our adaptive approach for the azimuth AoD angle. In summary, in iteration k,\nthe search interval ( ˜φ(k)) is dynamically adapted using the index (ιaz"}, "S166": {"id": "pdf-b4deafe808239771-p6-b63", "page": 6, "quote": "l ) of the previous search\ninterval ( ˜φ(k−1)). New parameters are estimated in each iteration. The process continues\nuntil a predetermined number of iterations (K) is reached or a pre-established threshold (ϱ)\nis exceeded."}, "S167": {"id": "pdf-b4deafe808239771-p6-b64", "page": 6, "quote": "Figure 3. Adaptive Procedure for Selecting Eligible Candidates for Azimuth AoD."}, "S168": {"id": "pdf-b4deafe808239771-p6-b65", "page": 6, "quote": "We adaptively calculate the candidates for AoD azimuth angle ( ˜φ(k)) with qaz values\nthat are uniformly spaced within a new interval [ ˘φaz"}, "S169": {"id": "pdf-b4deafe808239771-p6-b66", "page": 6, "quote": "Similarly, we adaptively calculate the candidates for AoD elevation angle ( ˙φ(k)) with\nqel values that are uniformly spaced within a new interval [ ˘φel"}, "S170": {"id": "pdf-b4deafe808239771-p6-b67", "page": 6, "quote": "For the AoA azimuth angle, we adaptively calculate the candidates ( ˜θ(k)) with qaz\nvalues that are uniformly spaced within a new interval [ ˘θaz"}, "S171": {"id": "pdf-b4deafe808239771-p7-b0", "page": 7, "quote": "Sensors 2023, 23, 9073\n7 of 12"}, "S172": {"id": "pdf-b4deafe808239771-p7-b1", "page": 7, "quote": "Similarly, we adaptively calculate the candidates for AoA elevation angle ( ˙θ(k)) with\nqel values that are uniformly spaced within a new interval [ ˘θel"}, "S173": {"id": "pdf-b4deafe808239771-p7-b2", "page": 7, "quote": "( ˙θ(k−1)"}, "S174": {"id": "pdf-b4deafe808239771-p7-b5", "page": 7, "quote": "start, ˘θel"}, "S175": {"id": "pdf-b4deafe808239771-p7-b6", "page": 7, "quote": "end], where"}, "S176": {"id": "pdf-b4deafe808239771-p7-b7", "page": 7, "quote": "( ˙θ(k−1)"}, "S177": {"id": "pdf-b4deafe808239771-p7-b8", "page": 7, "quote": "l +1, if γel"}, "S178": {"id": "pdf-b4deafe808239771-p7-b9", "page": 7, "quote": "l −1, if γel"}, "S179": {"id": "pdf-b4deafe808239771-p7-b12", "page": 7, "quote": "and\n˘θel"}, "S180": {"id": "pdf-b4deafe808239771-p7-b17", "page": 7, "quote": "qel, if γel"}, "S181": {"id": "pdf-b4deafe808239771-p7-b18", "page": 7, "quote": "0, if γel\nl = 1"}, "S182": {"id": "pdf-b4deafe808239771-p7-b21", "page": 7, "quote": "t\n= [at( ˜φ(k), ˙φk)],\n(21)"}, "S183": {"id": "pdf-b4deafe808239771-p7-b23", "page": 7, "quote": "r\n= [at( ˜θ(k), ˙θ(k))],\n(22)"}, "S184": {"id": "pdf-b4deafe808239771-p7-b24", "page": 7, "quote": "t x(g)[n])T ⊗U(k)"}, "S185": {"id": "pdf-b4deafe808239771-p7-b25", "page": 7, "quote": "ω(k)[n] = (U(k)"}, "S186": {"id": "pdf-b4deafe808239771-p7-b26", "page": 7, "quote": "r .\n(23)"}, "S187": {"id": "pdf-b4deafe808239771-p7-b28", "page": 7, "quote": "l ), (θaz"}, "S188": {"id": "pdf-b4deafe808239771-p7-b30", "page": 7, "quote": "l ), and τel"}, "S189": {"id": "pdf-b4deafe808239771-p7-b31", "page": 7, "quote": "Thus, using ˜φ(k), ˙φ(k), ˜θ(k), and ˙θ(k) we determine the new sensing matrix as follows:"}, "S190": {"id": "pdf-b4deafe808239771-p7-b32", "page": 7, "quote": "Using Rl and ω(k), we determine new values for (φaz"}, "S191": {"id": "pdf-b4deafe808239771-p7-b33", "page": 7, "quote": "l from (10), (12),\nand (16), respectively, which initiates a new iteration. Although the adaptive step enhances\nthe sensing matrix for 2D-AoD and 2D-AoA estimation, it also yields improvements in ToA\nestimation. The continual improvement of the maximum correlation with each iteration in\nthe adaptive process positively impacts the ToA estimation accuracy."}, "S192": {"id": "pdf-b4deafe808239771-p7-b34", "page": 7, "quote": "Therefore, our adaptive approach involves using a smaller number for qaz and qel, en-\nabling us to achieve a high number of samples in the overall search space while consuming\nless memory. This is due to the reduced size of the matrix ω in terms of its total number\nof elements. Additionally, our approach requires less time than the simple method while\nmaintaining greater accuracy."}, "S193": {"id": "pdf-b4deafe808239771-p7-b35", "page": 7, "quote": "Figure 2a,b clearly demonstrates that when using the DCS-SOMP method, a small\nsample space is accommodated, should memory space or execution time be constrained.\nThe simulations reveal that when using over 18 samples in the sensing matrix, the DCS-\nSOMP method becomes impractical in terms of execution time and memory. On the\nother hand, the adaptive method consumes less memory, exhibits shorter execution times,\nand is capable of accommodating larger sample spaces. Furthermore, the sample space\naccommodated by the adaptive method consistently remains close to the actual value,\nenhancing its precision. We calculate the number of elements (qω) in ω using the formula:\nqω = ((NtMt)(qazqel)2)K, where K = 1 for DCS-SOMP. To generate Figure 2a, we arbitrarily\nset the number of antennas at the transmitter to Nt = 32 and the number of transmitted\nsymbols to Mt = 20, similar results were obtained with other values."}, "S194": {"id": "pdf-b4deafe808239771-p7-b36", "page": 7, "quote": "Algorithm 1 outlines our proposal. The adaptive search step is called at line 17.\nAlgorithm 2 provides a summary of the adaptive search step."}, "S195": {"id": "pdf-b4deafe808239771-p8-b0", "page": 8, "quote": "Sensors 2023, 23, 9073\n8 of 12"}, "S196": {"id": "pdf-b4deafe808239771-p8-b1", "page": 8, "quote": "Input: y, ω(0), ˜φ(0), ˙φ(0) , ˜θ(0) , ˙θ(0), qaz, qel, K, L, N\nOutput: φaz"}, "S197": {"id": "pdf-b4deafe808239771-p8-b2", "page": 8, "quote": "l , τl\n1: R1 ←y\n2: for l ←1 to L do\n3:\n˜hl ←−1\n4:\nmaxcorr ←−1\n▷Maximum Correlation\n5:\nfor m ←1 to (qazqel)2 do\n6:\ncorr ←0\n7:\nfor n ←1 to N do"}, "S198": {"id": "pdf-b4deafe808239771-p8-b3", "page": 8, "quote": "Algorithm 1 Modiﬁed DCS-SOMP"}, "S199": {"id": "pdf-b4deafe808239771-p8-b7", "page": 8, "quote": "8:\ncorr ←corr + [ω(0)"}, "S200": {"id": "pdf-b4deafe808239771-p8-b8", "page": 8, "quote": "m [n]∥2\n9:\nend for\n10:\nif corr > maxcorr then\n11:\n˜hl ←m\n12:\nend if\n13:\nend for\n14:\nDetermine ιaz"}, "S201": {"id": "pdf-b4deafe808239771-p8-b9", "page": 8, "quote": "l\nand γel"}, "S202": {"id": "pdf-b4deafe808239771-p8-b13", "page": 8, "quote": "l ) from (10)\n16:\nDetermine (θaz"}, "S203": {"id": "pdf-b4deafe808239771-p8-b15", "page": 8, "quote": "l ) from (12)\n17:\nUsing [Rl, ιaz"}, "S204": {"id": "pdf-b4deafe808239771-p8-b19", "page": 8, "quote": "Algorithm 2 Adaptive Search"}, "S205": {"id": "pdf-b4deafe808239771-p8-b20", "page": 8, "quote": "Input: Rl, ιaz"}, "S206": {"id": "pdf-b4deafe808239771-p8-b27", "page": 8, "quote": "l , τl\n1: for k ←1 to K do\n2:\nDetermine [ ˘φaz"}, "S207": {"id": "pdf-b4deafe808239771-p8-b28", "page": 8, "quote": "start, ˘φaz"}, "S208": {"id": "pdf-b4deafe808239771-p8-b29", "page": 8, "quote": "end] from (17)\n3:\nDetermine [ ˘φel"}, "S209": {"id": "pdf-b4deafe808239771-p8-b30", "page": 8, "quote": "start, ˘φel"}, "S210": {"id": "pdf-b4deafe808239771-p8-b31", "page": 8, "quote": "end] from (18)\n4:\nDetermine [ ˘θaz"}, "S211": {"id": "pdf-b4deafe808239771-p8-b32", "page": 8, "quote": "start, ˘θaz"}, "S212": {"id": "pdf-b4deafe808239771-p8-b33", "page": 8, "quote": "end] from (19)\n5:\nDetermine [ ˘θel"}, "S213": {"id": "pdf-b4deafe808239771-p8-b34", "page": 8, "quote": "start, ˘θel"}, "S214": {"id": "pdf-b4deafe808239771-p8-b35", "page": 8, "quote": "end] from (20)\n6:\n˜φ(k) ←[ ˘φaz"}, "S215": {"id": "pdf-b4deafe808239771-p8-b36", "page": 8, "quote": "start, . . . , ˘φaz"}, "S216": {"id": "pdf-b4deafe808239771-p8-b37", "page": 8, "quote": "start, . . . , ˘φel"}, "S217": {"id": "pdf-b4deafe808239771-p8-b38", "page": 8, "quote": "start, . . . , ˘θaz"}, "S218": {"id": "pdf-b4deafe808239771-p8-b39", "page": 8, "quote": "start, . . . , ˘θel"}, "S219": {"id": "pdf-b4deafe808239771-p8-b40", "page": 8, "quote": "18:\ncorr ←corr + [ω(k)"}, "S220": {"id": "pdf-b4deafe808239771-p8-b41", "page": 8, "quote": "m [n]∥2\n19:\nend for\n20:\nif corr > maxcorr then\n21:\n˜hl ←m\n22:\nend if\n23:\nend for\n24:\nDetermine ιaz"}, "S221": {"id": "pdf-b4deafe808239771-p8-b42", "page": 8, "quote": "l\nand γel"}, "S222": {"id": "pdf-b4deafe808239771-p8-b46", "page": 8, "quote": "l ) from (10)\n26:\nDetermine (θaz"}, "S223": {"id": "pdf-b4deafe808239771-p8-b48", "page": 8, "quote": "l ) from (12)\n27:\nfor n ←1 to N do\n28:\nDetermine βl[n] from (13)\n29:\nend for\n30:\nDetermine τl from (16)\n31: end for"}, "S224": {"id": "pdf-b4deafe808239771-p8-b49", "page": 8, "quote": "m [n]]TRl[n]"}, "S225": {"id": "pdf-b4deafe808239771-p8-b51", "page": 8, "quote": "l , ˜φ(0), ˙φ(0) , ˜θ(0), K, N, qaz, qel] as input, ﬁne-tune [φaz"}, "S226": {"id": "pdf-b4deafe808239771-p8-b55", "page": 8, "quote": "m [n]]TRl[n]"}, "S227": {"id": "pdf-b4deafe808239771-p8-b57", "page": 8, "quote": "l from (9) and (11)\n15:\nDetermine (φaz"}, "S228": {"id": "pdf-b4deafe808239771-p8-b58", "page": 8, "quote": "l , τl] using\nAlgorithm 2\n18:\nfor n ←1 to N do\n19:\nDetermine βl[n] from (13)\n20:\nDetermine Rl+1[n] from (14)\n21:\nend for\n22:\nDetermine τl from (16)\n▷Execute solely if the adaptive step is not called\n23: end for"}, "S229": {"id": "pdf-b4deafe808239771-p8-b59", "page": 8, "quote": "l , ˜φ(0), ˙φ(0) , ˜θ(0), K, N, qaz, qel\nOutput: φaz"}, "S230": {"id": "pdf-b4deafe808239771-p8-b60", "page": 8, "quote": "end]\n▷qaz values uniformly spaced\n7:\n˙φ(k) ←[ ˘φel"}, "S231": {"id": "pdf-b4deafe808239771-p8-b61", "page": 8, "quote": "end]\n▷qel values uniformly spaced\n8:\n˜θ(k) ←[ ˘θaz"}, "S232": {"id": "pdf-b4deafe808239771-p8-b62", "page": 8, "quote": "end]\n▷qaz values uniformly spaced\n9:\n˜θ(k) ←[ ˘θel"}, "S233": {"id": "pdf-b4deafe808239771-p8-b63", "page": 8, "quote": "end]\n▷qel values uniformly spaced\n10:\nfor n ←1 to N do\n11:\nDetermine ω(k)[n] from (23)\n12:\nend for\n13:\n˜hl ←−1\n14:\nmaxcorr ←−1\n▷Maximum Correlation\n15:\nfor m ←1 to (qazqel)2 do\n16:\ncorr ←0\n17:\nfor n ←1 to N do"}, "S234": {"id": "pdf-b4deafe808239771-p8-b64", "page": 8, "quote": "l from (9) and (11)\n25:\nDetermine (φaz"}, "S235": {"id": "pdf-b4deafe808239771-p9-b0", "page": 9, "quote": "Sensors 2023, 23, 9073\n9 of 12"}, "S236": {"id": "pdf-b4deafe808239771-p9-b1", "page": 9, "quote": "In this article, we conducted simulations using MATLAB® software version R2012b\n(used under an academic license) installed in a computer running Windows 11 as the\noperating system and with the following hardware conﬁgurations: 2.5 GHz Intel Core\ni5-10300H processor, 16 GB RAM, and NVIDIA GTX 1650 as the dedicated video card."}, "S237": {"id": "pdf-b4deafe808239771-p9-b2", "page": 9, "quote": "5. Results"}, "S238": {"id": "pdf-b4deafe808239771-p9-b6", "page": 9, "quote": "AoD - Azimuth [rad]"}, "S239": {"id": "pdf-b4deafe808239771-p9-b12", "page": 9, "quote": "DCS-SOMP\nAdaptive DCS-SOMP\nActual Angle"}, "S240": {"id": "pdf-b4deafe808239771-p9-b16", "page": 9, "quote": "AoD - Elevation [rad]"}, "S241": {"id": "pdf-b4deafe808239771-p9-b21", "page": 9, "quote": "DCS-SOMP\nAdaptive DCS-SOMP\nActual Angle"}, "S242": {"id": "pdf-b4deafe808239771-p9-b24", "page": 9, "quote": "0\n2\n4\n6\n8\n10\n12\n14\nIterations"}, "S243": {"id": "pdf-b4deafe808239771-p9-b26", "page": 9, "quote": "We selected arbitrary actual values for two paths as described in Table 2. We set\nqaz = 18 and qel = 18 when not using the adaptive search, i.e., DCS-SOMP, as this is the\nmaximum value our simulator could process. When using the adaptive search, we set\nqaz = 6 and qel = 6. Additionally, we deﬁned the parameters as follows: fc = 28 GHz,\nB = 100 MHz, Nt = 64, Nr = 64, N = 10, and Mt = 20. To establish a maximum number\nof iterations, we determined the difference between the estimated value in iteration k and\nthe estimated value in iteration k −1, and as long as this difference is greater than the\nthreshold (ϱ = 10−6), the next iteration will be performed."}, "S244": {"id": "pdf-b4deafe808239771-p9-b27", "page": 9, "quote": "Table 2. Actual Values Used in Simulations."}, "S245": {"id": "pdf-b4deafe808239771-p9-b28", "page": 9, "quote": "Path\nφaz (rad)\nφel (rad)\nθaz (rad)\nθel (rad)\nτ (us)"}, "S246": {"id": "pdf-b4deafe808239771-p9-b29", "page": 9, "quote": "1\n1.33\n0.45\n3.50\n0.90\n0.0615\n2\n2.80\n1.15\n5.20\n1.45\n0.0767"}, "S247": {"id": "pdf-b4deafe808239771-p9-b30", "page": 9, "quote": "Figures 4a–6 display the comparison between DCS-SOMP and adaptive DCS-SOMP\nfor 2D-AoD, 2D-AoA, and ToA. The results correspond to a random run for Path 1. It’s\nevident that, for all cases, the adaptive DCS-SOMP signiﬁcantly enhances the estimation\nof the respective angle as early as the second iteration, gradually converging towards the\nactual value with each subsequent iteration."}, "S248": {"id": "pdf-b4deafe808239771-p9-b31", "page": 9, "quote": "0\n2\n4\n6\n8\n10\n12\n14\nIterations"}, "S249": {"id": "pdf-b4deafe808239771-p9-b32", "page": 9, "quote": "Figure 4. Comparison of (a) Azimuth AoD estimation and (b) Elevation AoD estimation results using\nDCS-SOMP and adaptive DCS-SOMP. The outcomes pertain to Path 1. In the DCS-SOMP case, qaz\nand qel are both set to 18, whereas in the adaptive DCS-SOMP scenario, qaz and qel are both set to 6."}, "S250": {"id": "pdf-b4deafe808239771-p9-b33", "page": 9, "quote": "We analyzed the complexity of the methods in terms of execution time and number\nof mathematical operations. Following the analysis provided in [18,19], the complexity of\nthe SOMP algorithm is O(LNtqc), where qc = qazqel denotes all possible combinations for\nthe candidates for azimuth (qaz) and elevation angles (qel). In the DCS-SOMP algorithm,\nwe perform the Kronecker product (tensor product for matrices) to estimate 2D-AoD and\n2D-AoA parameters, resulting in O(LNt(qc)2). In our adaptive DCS-SOMP approach, we\nﬁx the number of candidates and we update the values for the candidates at each iteration.\nThus, the complexity of the adaptive DCS-SOMP is O(LNtqcqit), where qit is the number of"}, "S251": {"id": "pdf-b4deafe808239771-p10-b0", "page": 10, "quote": "Sensors 2023, 23, 9073\n10 of 12"}, "S252": {"id": "pdf-b4deafe808239771-p10-b1", "page": 10, "quote": "iterations. The main mathematical operations are due to (7) and (8). We determine the total\nnumber of mathematical operations, qop, as follows:"}, "S253": {"id": "pdf-b4deafe808239771-p10-b2", "page": 10, "quote": "where qw"}, "S254": {"id": "pdf-b4deafe808239771-p10-b8", "page": 10, "quote": "AoA - Azimuth [rad]"}, "S255": {"id": "pdf-b4deafe808239771-p10-b18", "page": 10, "quote": "ToA [us]"}, "S256": {"id": "pdf-b4deafe808239771-p10-b22", "page": 10, "quote": "qop = (qw"}, "S257": {"id": "pdf-b4deafe808239771-p10-b24", "page": 10, "quote": "op)(qitL + 1),\n(24)"}, "S258": {"id": "pdf-b4deafe808239771-p10-b26", "page": 10, "quote": "op = (2NtMt)N(qc)2.\n(26)"}, "S259": {"id": "pdf-b4deafe808239771-p10-b28", "page": 10, "quote": "DCS-SOMP\nAdaptive DCS-SOMP\nActual Angle"}, "S260": {"id": "pdf-b4deafe808239771-p10-b31", "page": 10, "quote": "AoA - Elevation [rad]"}, "S261": {"id": "pdf-b4deafe808239771-p10-b37", "page": 10, "quote": "DCS-SOMP\nAdaptive DCS-SOMP\nActual Angle"}, "S262": {"id": "pdf-b4deafe808239771-p10-b39", "page": 10, "quote": "0\n2\n4\n6\n8\n10\n12\n14\nIterations"}, "S263": {"id": "pdf-b4deafe808239771-p10-b41", "page": 10, "quote": "DCS-SOMP\nAdaptive DCS-SOMP\nActual ToA"}, "S264": {"id": "pdf-b4deafe808239771-p10-b42", "page": 10, "quote": "op is the number of mathematical operations to construct the sensing matrix, (7),\ndetermined as follows:"}, "S265": {"id": "pdf-b4deafe808239771-p10-b43", "page": 10, "quote": "op = N(qcMtNt + qc(MtNt −1) + MtNt(qc)2),\n(25)"}, "S266": {"id": "pdf-b4deafe808239771-p10-b44", "page": 10, "quote": "op is the number of mathematical operations to determine the max correlation, (8),\ndetermined as follows:"}, "S267": {"id": "pdf-b4deafe808239771-p10-b45", "page": 10, "quote": "0\n2\n4\n6\n8\n10\n12\n14\nIterations"}, "S268": {"id": "pdf-b4deafe808239771-p10-b46", "page": 10, "quote": "Figure 5. Comparison of (a) Azimuth AoA estimation and (b) Elevation AoA estimation results using\nDCS-SOMP and adaptive DCS-SOMP. The outcomes pertain to Path 1. In the DCS-SOMP case, qaz\nand qel are both set to 18, whereas in the adaptive DCS-SOMP scenario, qaz and qel are both set to 6."}, "S269": {"id": "pdf-b4deafe808239771-p10-b47", "page": 10, "quote": "0\n2\n4\n6\n8\n10\n12\n14\nIterations"}, "S270": {"id": "pdf-b4deafe808239771-p10-b48", "page": 10, "quote": "Figure 6. Comparison of ToA estimation results using DCS-SOMP and adaptive DCS-SOMP. The out-\ncomes pertain to Path 1. In the DCS-SOMP case, qaz and qel are both set to 18, whereas in the adaptive\nDCS-SOMP case, qaz and qel are both set to 6."}, "S271": {"id": "pdf-b4deafe808239771-p10-b49", "page": 10, "quote": "Table 3 presents the execution times and the number of mathematical operations for\neach method. For the adaptive DCS-SOMP method, we utilized 14 iterations. These values\nrepresent the total duration required by the method to estimate all ﬁve parameters for both\npaths. Our observations indicate that the adaptive method is notably faster and involves\nfewer mathematical operations compared to the traditional method."}, "S272": {"id": "pdf-b4deafe808239771-p11-b0", "page": 11, "quote": "Sensors 2023, 23, 9073\n11 of 12"}, "S273": {"id": "pdf-b4deafe808239771-p11-b1", "page": 11, "quote": "Table 3. Comparison between DCS-SOMP and Adaptive DCS-SOMP."}, "S274": {"id": "pdf-b4deafe808239771-p11-b2", "page": 11, "quote": "Method\nTime (s)\nNumber of Mathematical Operations"}, "S275": {"id": "pdf-b4deafe808239771-p11-b3", "page": 11, "quote": "DCS-SOMP\n84.63\n4.0393 × 109"}, "S276": {"id": "pdf-b4deafe808239771-p11-b4", "page": 11, "quote": "Adaptive DCS-SOMP\n0.88\n1.4697 × 109"}, "S277": {"id": "pdf-b4deafe808239771-p11-b5", "page": 11, "quote": "We used the Root Mean Square Error (RMSE) as the Key Performance Indicator (KPI)\nfor our estimates. The RMSE ε is calculated as follows:"}, "S278": {"id": "pdf-b4deafe808239771-p11-b7", "page": 11, "quote": "|pi −ˆpi|2,\n(27)"}, "S279": {"id": "pdf-b4deafe808239771-p11-b8", "page": 11, "quote": "v\nu\nu\nt 1"}, "S280": {"id": "pdf-b4deafe808239771-p11-b11", "page": 11, "quote": "where Q is the number of runs, pi is the actual value of the chosen parameter at the i-th\nrun, and ˆpi is the estimated value of the chosen parameter at the i-th run."}, "S281": {"id": "pdf-b4deafe808239771-p11-b12", "page": 11, "quote": "Table 4 presents the RMSE for each parameter estimated, where εφaz, εφel, εθaz, εθel,\nand ετ represent the RMSE for azimuth AoD, elevation AoD, azimuth AoA, elevation\nAoA, and ToA, respectively. The RMSE was determined from 100 runs of each method,\nconsidering the average across all paths. The adaptive method exhibits higher precision\ncompared to the non-adaptive method for all analyzed parameters."}, "S282": {"id": "pdf-b4deafe808239771-p11-b13", "page": 11, "quote": "Table 4. Comparison of RMSE between DCS-SOMP and adaptive DCS-SOMP."}, "S283": {"id": "pdf-b4deafe808239771-p11-b14", "page": 11, "quote": "Method\nεφaz (rad)\nεφel (rad)\nεθaz (rad)\nεθel (rad)\nετ (us)"}, "S284": {"id": "pdf-b4deafe808239771-p11-b15", "page": 11, "quote": "DCS-SOMP\n0.1334\n0.0454\n0.1087\n0.2851\n0.0109\nAdaptive DCS-SOMP\n0.0017\n0.0005\n0.0089\n0.0256\n0.0001"}, "S285": {"id": "pdf-b4deafe808239771-p11-b16", "page": 11, "quote": "6. Conclusions"}, "S286": {"id": "pdf-b4deafe808239771-p11-b17", "page": 11, "quote": "In this work, we addressed the problem of low performance presented by traditional\nDCS-SOMP approaches, which present convergence and precision to estimate parameters\nonly at the cost of low performance. To achieve this, we proposed an adaptive DCS-SOMP\nmethod that dynamically calculates the sensing matrix, presenting high performance in\nprecisely estimating localization parameters while keeping the algorithm simple and with\nfast convergence."}, "S287": {"id": "pdf-b4deafe808239771-p11-b18", "page": 11, "quote": "This modiﬁcation transformed the DCS-SOMP method from solely a coarse estimator\nto a singular tool for precise parameter estimation. Even in a 3D environment with ﬁve\nparameters to be estimated and multiple paths to be detected, the adaptive DCS-SOMP\nmethod exhibited substantial improvements in both accuracy and speed compared to\nthe DCS-SOMP approach. Further enhancements to the adaptive DCS-SOMP could be\nexplored, such as reﬁning the way the residue was updated, potentially enabling improved\nseparation of paths. Furthermore, we plan to explore alternative antenna arrays, including\n2D conﬁgurations, to enhance beam-forming capabilities in mmWave scenarios within 5G\nand B5G networks."}, "S288": {"id": "pdf-b4deafe808239771-p11-b19", "page": 11, "quote": "Author Contributions: All authors (P.F.d.C. and F.G.C.R.) contributed equally to this article. All\nauthors have read and agreed to the published version of the manuscript."}, "S289": {"id": "pdf-b4deafe808239771-p11-b20", "page": 11, "quote": "Funding: This research received no external funding."}, "S290": {"id": "pdf-b4deafe808239771-p11-b21", "page": 11, "quote": "Institutional Review Board Statement: Not applicable."}, "S291": {"id": "pdf-b4deafe808239771-p11-b22", "page": 11, "quote": "Informed Consent Statement: Not applicable."}, "S292": {"id": "pdf-b4deafe808239771-p11-b23", "page": 11, "quote": "Data Availability Statement: Data is contained within the article."}, "S293": {"id": "pdf-b4deafe808239771-p11-b24", "page": 11, "quote": "Acknowledgments: We would like to thank the Coordenação de Aperfeiçoamento de Pessoal de\nNível Superior (CAPES) for the ﬁnancial support provided for the publication of this article. Author"}, "S294": {"id": "pdf-b4deafe808239771-p12-b0", "page": 12, "quote": "Sensors 2023, 23, 9073\n12 of 12"}, "S295": {"id": "pdf-b4deafe808239771-p12-b1", "page": 12, "quote": "Conceição, P.F. would like to express gratitude to the Instituto Federal de Goiás (IFG) for providing\nsupport during his doctoral studies, which signiﬁcantly contributed to the completion of this work."}, "S296": {"id": "pdf-b4deafe808239771-p12-b2", "page": 12, "quote": "Conﬂicts of Interest: The authors declare no conﬂict of interest."}, "S297": {"id": "pdf-b4deafe808239771-p12-b3", "page": 12, "quote": "References"}, "S298": {"id": "pdf-b4deafe808239771-p12-b4", "page": 12, "quote": "1.\nSchmidt, R. Multiple Emitter Location and Signal Parameter Estimation. IEEE Trans. Antennas Propag. 1986, 34, 276–280.\n[CrossRef]\n2.\nDonoho, D. Compressed Sensing. IEEE Trans. Inf. Theory 2006, 52, 1289–1306. [CrossRef]\n3.\nLiu, G.; Chen, H.; Sun, X.; Qiu, R.C. Modiﬁed MUSIC Algorithm for DOA Estimation with Nyström Approximation. IEEE Sens. J.\n2016, 16, 4673–4674. [CrossRef]\n4.\nDuarte, M.; Sarvotham, S.; Baron, D.; Wakin, M.; Baraniuk, R. Distributed Compressed Sensing of Jointly Sparse Signals. In\nProceedings of the Conference Record of the Thirty-Ninth Asilomar Conference on Signals, Systems and Computers, Paciﬁc\nGrove, CA, USA, 30 October–2 November 2005; pp. 1537–1541. [CrossRef]\n5.\nShahmansoori, A.; Garcia, G.E.; Destino, G.; Seco-Granados, G.; Wymeersch, H. Position and Orientation Estimation Through\nMillimeter-Wave MIMO in 5G Systems. IEEE Trans. Wirel. Commun. 2018, 17, 1822–1835. [CrossRef]\n6.\nFascista, A.; Coluccia, A.; Wymeersch, H.; Seco-Granados, G. Low-Complexity Accurate Mmwave Positioning for Single-Antenna\nUsers Based on Angle-of-Departure and Adaptive Beamforming. In Proceedings of the ICASSP 2020—2020 IEEE International\nConference on Acoustics, Speech and Signal Processing (ICASSP), Barcelona, Spain, 4–8 May 2020; pp. 4866–4870.\n7.\nFessler, J.; Hero, A. Space-alternating Generalized Expectation-maximization Algorithm. IEEE Trans. Signal Process. 1994,\n42, 2664–2677. [CrossRef]\n8.\nWang, Y.; Zhao, K.; Zheng, Z. An Improved 3D Indoor Positioning Study with Ray Tracing Modeling for 6G Systems. Mob. Netw.\nAppl. 2023. [CrossRef]\n9.\nChen, H.; Kim, H.; Ammous, M.; Seco-Granados, G.; Alexandropoulos, G.C.; Valaee, S.; Wymeersch, H. RISs and Sidelink\nCommunications in Smart Cities: The Key to Seamless Localization and Sensing. IEEE Commun. Mag. 2023, 61, 140–146.\n[CrossRef]\n10.\nLuo, K.; Zhou, X.; Wang, B.; Huang, J.; Liu, H. Sparse Bayes Tensor and DOA Tracking Inspired Channel Estimation for V2X\nMillimeter Wave Massive MIMO System. Sensors 2021, 21, 4021. [CrossRef]\n11.\nGrishin, I.; Fokin, G.; Sevidov, V.; Okuneva, D. Analysis of the Spatial Smoothing Inﬂuence on the Perfomance of 2D-MUSIC for\nUltra-Dense Networks. In Proceedings of the 2023 Wave Electronics and its Application in Information and Telecommunication\nSystems (WECONF), St. Petersburg, Russia, 30 May–3 June 2022; pp. 1–6. [CrossRef]\n12.\nHe, D.; Chen, X.; Pei, L.; Zhu, F.; Jiang, L.; Yu, W. Multi-BS Spatial Spectrum Fusion for 2-D DOA Estimation and Localization\nUsing UCA in Massive MIMO System. IEEE Trans. Instrum. Meas. 2021, 70, 5500213. [CrossRef]\n13.\nTan, W.; Ma, S. Antenna Array Topologies for mmWave Massive MIMO Systems: Spectral Efﬁciency Analysis. IEEE Trans. Veh.\nTechnol. 2022, 71, 12901–12915. [CrossRef]\n14.\n3GPP. Study on Channel Model for Frequencies from 0.5 to 100 GHz (3GPP TR 38.901 Version 17.0.0 Release 17). Technical\nSpeciﬁcation (TS) 38.901, 3rd Generation Partnership Project (3GPP), Version 17.0.0. 2022. Available online: https://portal.etsi.\norg/webapp/workprogram/Report_WorkItem.asp?WKI_ID=65119 (accessed on 10 August 2023).\n15.\nKakkavas, A.; Wymeersch, H.; Seco-Granados, G.; García, M.H.C.; Stirling-Gallacher, R.A.; Nossek, J.A. Power Allocation and\nParameter Estimation for Multipath-Based 5G Positioning. IEEE Trans. Wirel. Commun. 2021, 20, 7302–7316. [CrossRef]\n16.\nQuan, X.; Niu, K.; Dong, C.; Yu, Y. Joint Approximate Maximum Likelihood Localization Algorithm in 5G New Radio Systems.\nIn Proceedings of the 2020 IEEE 31st Annual International Symposium on Personal, Indoor and Mobile Radio Communications,\nLondon, UK, 31 August–3 September 2020; pp. 1–6. [CrossRef]\n17.\nSellami, A.; Nasraoui, L.; Najjar, L. Analysis of Localization Performance in mm-Wave 5G Network Under Channel Uncertainties.\nIEEE Internet Things J. 2023, 10, 6523–6524. [CrossRef]\n18.\nQi, C.; Wu, L. A hybrid compressed sensing algorithm for sparse channel estimation in MIMO OFDM systems. In Proceedings of\nthe 2011 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Prague, Czech Republic, 22–27\nMay 2011; pp. 3488–3491. [CrossRef]\n19.\nZhou, Y.; Tong, F.; Song, A.; Diamant, R. Exploiting Spatial–Temporal Joint Sparsity for Underwater Acoustic Multiple-\nInput–Multiple-Output Communications. IEEE J. Ocean. Eng. 2021, 46, 352–369. [CrossRef]"}, "S299": {"id": "pdf-b4deafe808239771-p12-b5", "page": 12, "quote": "Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual\nauthor(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to\npeople or property resulting from any ideas, methods, instructions or products referred to in the content."}, "S300": {"id": "web-c516d1920a780af3", "page": 0, "quote": "This book introduces the fundamental principles of antenna theory and explains how to apply them to the analysis, design, and measurements of antennas. Due to the variety of methods of analysis and design, and the different antenna structures available, the applications covered in this book are made to some of the most basic and practical antenna configurations. Among these antenna configurations are linear dipoles; loops; arrays; broadband antennas; aperture antennas; horns; microstrip antennas; and reflector antennas. The text contains sufficient mathematical detail to enable undergraduate and beginning graduate students in electrical engineering and physics to follow the flow of analysis and design. Readers should have a basic knowledge of undergraduate electromagnetic theory, including Maxwells equations and the wave equation, introductory physics, and differential and integral calculus."}, "S301": {"id": "web-6968563b3881916c", "page": 0, "quote": "[1]. Constantine A. Balanis. Antenna Theory: Analysis and Design, 4rd Edition. John Wiley & Sons, Inc. 2016.\n[2]. Warren L. Stutzman, Gary A. Thiele. Antenna theory and design. John Wiley & Sons, 2012.\nJoseph Carr, George Hippisley. Practical Antenna Handbook 5th Edition. The McGraw-Hill Companies, Inc. 2012.\n[12]. Trevor S. Bird. Fundamentals of Aperture Antennas and Arrays: From Theory to Design, Fabrication and Testing,Wiley; 1 edition. 2016"}}, "nodes": [{"id": "problem-statement", "title": "问题定义：现有 2D 及粗略估计方法的局限性", "concepts": ["concept-da75bade55426c9c", "concept-6d720f284f1322f7"]}, {"id": "system-model-3d", "title": "系统模型：基于 UCA 的 3D MIMO-mmWave 信道", "concepts": ["concept-b8e27466863cc7bc", "concept-8f5fc25dca95aa0c"]}, {"id": "sensing-matrix-construction", "title": "感知矩阵构建：克罗内克积与候选网格", "concepts": ["concept-e878ee9e2574ae50", "concept-3d0d3c80a8d385c3"]}, {"id": "adaptive-mechanism", "title": "核心机制：动态自适应搜索空间缩减", "concepts": ["concept-9e5a7281c2672eac", "concept-657ee53e5fedc757"]}, {"id": "parameter-estimation-algo", "title": "估计算法：改进的 DCS-SOMP 迭代流程", "concepts": ["concept-f4e09c0d4fdd4d28", "concept-a71342c0720d1a01"]}, {"id": "complexity-analysis", "title": "复杂度分析：内存占用与执行时间的权衡", "concepts": ["concept-f1f220e14f08e9e1", "concept-5bc49b3d2e23a756"]}, {"id": "simulation-results", "title": "仿真结果：收敛性与精度验证", "concepts": ["concept-e69252ea5448c7b8", "concept-fdd252584dfbacd1"]}, {"id": "limitations-scope", "title": "局限性与未来工作范围", "concepts": ["concept-ed64fa1188df2910", "concept-1731e09db4f2e58c"]}], "concepts": {"concept-da75bade55426c9c": {"id": "concept-da75bade55426c9c", "title": "分布式压缩感知子空间正交匹配追踪", "layer": "Algorithm", "lead": "一种结合压缩感知与正交匹配追踪的算法，用于处理稀疏信号。", "text": "DCS-SOMP 利用信号的稀疏性，在分布式环境或多天线系统（如 mMIMO）中，通过迭代选择与残差相关性最高的原子来重构信号。在传统应用中，它常作为粗略估计阶段。", "why": "理解该算法是区分本文提出的“自适应”改进与传统方法的关键，也是解释为何传统方法需要 SAGE 微调的基础。", "source_ids": ["pdf-b4deafe808239771-p1-b23", "pdf-b4deafe808239771-p1-b29"], "next": null, "domain": "Wireless Communications / 5G Localization / Compressed Sensing", "document_id": "pdf-b4deafe808239771", "node_id": "problem-statement"}, "concept-6d720f284f1322f7": {"id": "concept-6d720f284f1322f7", "title": "三维定位参数", "layer": "Domain Concept", "lead": "描述信号在三维空间传播特性的五个关键物理量。", "text": "包括到达时间（ToA）、二维出发角（方位角 φaz 和仰角 φel）以及二维到达角（方位角 θaz 和仰角 θel）。完整估计这些参数是实现高精度三维定位的前提。", "why": "这是本文试图一次性解决的核心估计目标，区别于仅估计部分参数或仅限 2D 的现有工作。", "source_ids": ["pdf-b4deafe808239771-p1-b5", "pdf-b4deafe808239771-p2-b7"], "next": null, "domain": "Wireless Communications / 5G Localization / Compressed Sensing", "document_id": "pdf-b4deafe808239771", "node_id": "problem-statement"}, "concept-b8e27466863cc7bc": {"id": "concept-b8e27466863cc7bc", "title": "均匀圆形阵列", "layer": "Hardware/Array Geometry", "lead": "一种天线排列几何结构，天线单元均匀分布在圆周上。", "text": "相比于线性阵列（ULA），UCA 能够提供全向覆盖，并且其几何对称性使得系统能够区分信号的方位角和仰角，从而支持三维空间的角度估计。其半径 r 通常与天线数量和波长有关。", "why": "这是本文系统模型区别于仅能做 2D 估计的现有工作的核心硬件假设，直接决定了能否提取仰角信息。", "source_ids": ["pdf-b4deafe808239771-p2-b1", "pdf-b4deafe808239771-p4-b1", "pdf-b4deafe808239771-p4-b43"], "next": null, "domain": "Wireless Communications / 5G Localization / Compressed Sensing", "document_id": "pdf-b4deafe808239771", "node_id": "system-model-3d"}, "concept-8f5fc25dca95aa0c": {"id": "concept-8f5fc25dca95aa0c", "title": "视距与非视距路径", "layer": "Channel Physics", "lead": "无线信号从发射端到接收端的两种主要传播机制。", "text": "LoS (Line of Sight) 指直射路径；NLoS (Non-Line of Sight) 指经过一次反射的路径。在毫米波频段，多次反射路径能量衰减极大，因此模型通常只考虑 LoS 和单 bounce NLoS 路径。", "why": "理解路径构成有助于明白信道矩阵 H[n] 中求和项 L 的物理意义，以及为何忽略多 bounce 路径。", "source_ids": ["pdf-b4deafe808239771-p3-b23", "pdf-b4deafe808239771-p3-b24"], "next": null, "domain": "Wireless Communications / 5G Localization / Compressed Sensing", "document_id": "pdf-b4deafe808239771", "node_id": "system-model-3d"}, "concept-e878ee9e2574ae50": {"id": "concept-e878ee9e2574ae50", "title": "克罗内克积", "layer": "Linear Algebra", "lead": "一种将两个任意大小的矩阵组合成一个更大的分块矩阵的运算。", "text": "在 MIMO 信道建模中，克罗内克积常用于将发射端和接收端的阵列响应特性结合起来，构建整体的信道观测矩阵或感知矩阵。", "why": "这是构建高维感知矩阵 ω(0) 的核心数学工具，直接决定了矩阵的维度爆炸问题。", "source_ids": ["pdf-b4deafe808239771-p4-b57"], "next": null, "domain": "Wireless Communications / 5G Localization / Compressed Sensing", "document_id": "pdf-b4deafe808239771", "node_id": "sensing-matrix-construction"}, "concept-3d0d3c80a8d385c3": {"id": "concept-3d0d3c80a8d385c3", "title": "候选网格", "layer": "Algorithm Parameter", "lead": "在压缩感知中预先定义的一组离散参数值，用于近似连续参数空间。", "text": "网格的密度（由 qaz 和 qel 决定）直接影响估计的分辨率和精度。网格越密，精度越高，但计算和存储开销也越大。", "why": "理解候选网格的概念是理解为何需要“自适应”方法来动态调整搜索空间的关键。", "source_ids": ["pdf-b4deafe808239771-p4-b48", "pdf-b4deafe808239771-p4-b58"], "next": null, "domain": "Wireless Communications / 5G Localization / Compressed Sensing", "document_id": "pdf-b4deafe808239771", "node_id": "sensing-matrix-construction"}, "concept-9e5a7281c2672eac": {"id": "concept-9e5a7281c2672eac", "title": "搜索空间缩减 (Search Space Reduction)", "layer": "Algorithm Strategy", "lead": "一种通过迭代缩小参数搜索范围来降低计算复杂度的策略。", "text": "在本文语境下，指不一次性遍历所有可能的角度组合，而是根据前一轮的估计结果，仅在最有可能包含真实值的局部小范围内进行精细搜索。", "why": "这是自适应 DCS-SOMP 能够在使用少量候选点（小 qaz/qel）的情况下仍能达到高精度的关键机制。", "source_ids": ["pdf-b4deafe808239771-p6-b62", "pdf-b4deafe808239771-p7-b34"], "next": null, "domain": "Wireless Communications / 5G Localization / Compressed Sensing", "document_id": "pdf-b4deafe808239771", "node_id": "adaptive-mechanism"}, "concept-657ee53e5fedc757": {"id": "concept-657ee53e5fedc757", "title": "动态区间 (Dynamic Interval)", "layer": "Implementation Detail", "lead": "随迭代过程不断变化的角度搜索范围。", "text": "该区间的起始和结束角度（如 ˘φaz_start, ˘φaz_end）完全取决于上一轮迭代选出的最佳索引位置，而非固定不变。", "why": "理解该区间的动态生成规则是掌握自适应算法如何避免陷入局部最优并保持收敛性的基础。", "source_ids": ["pdf-b4deafe808239771-p6-b65", "pdf-b4deafe808239771-p6-b15", "pdf-b4deafe808239771-p6-b16"], "next": null, "domain": "Wireless Communications / 5G Localization / Compressed Sensing", "document_id": "pdf-b4deafe808239771", "node_id": "adaptive-mechanism"}, "concept-f4e09c0d4fdd4d28": {"id": "concept-f4e09c0d4fdd4d28", "title": "残差更新 (Residual Update)", "layer": "Signal Processing", "lead": "贪婪算法中用于分离多径信号的关键步骤。", "text": "在估计出当前最强路径的参数后，从接收信号中减去该路径的重构信号，剩余的信号即为残差，用于后续路径的估计。", "why": "这是 SOMP 类算法能够逐个识别多条路径的基础，其准确性直接影响后续路径的估计效果。", "source_ids": ["pdf-b4deafe808239771-p5-b75", "pdf-b4deafe808239771-p5-b94"], "next": null, "domain": "Wireless Communications / 5G Localization / Compressed Sensing", "document_id": "pdf-b4deafe808239771", "node_id": "parameter-estimation-algo"}, "concept-a71342c0720d1a01": {"id": "concept-a71342c0720d1a01", "title": "克罗内克积 (Kronecker Product)", "layer": "Linear Algebra", "lead": "用于构建联合发射和接收阵列响应矩阵的数学运算。", "text": "在 2D-AoD 和 2D-AoA 估计中，通过将方位和仰角的导向矢量进行克罗内克积，构建高维的感知矩阵列。", "why": "该运算使得算法能够同时处理多维角度参数，但也导致了感知矩阵维度的爆炸式增长，是引入自适应机制的主要动因。", "source_ids": ["pdf-b4deafe808239771-p7-b24", "pdf-b4deafe808239771-p7-b25", "pdf-b4deafe808239771-p7-b26"], "next": null, "domain": "Wireless Communications / 5G Localization / Compressed Sensing", "document_id": "pdf-b4deafe808239771", "node_id": "parameter-estimation-algo"}, "concept-f1f220e14f08e9e1": {"id": "concept-f1f220e14f08e9e1", "title": "计算复杂度 (Computational Complexity)", "layer": "Performance Metric", "lead": "衡量算法所需计算资源随输入规模增长的速率。", "text": "在此文中，主要关注浮点运算次数（Mathematical Operations）和内存元素数量。复杂度越低，算法在实时系统中的可行性越高。", "why": "这是评估自适应机制是否成功的核心指标，直接反映了算法从“不可用”到“实用”的转变。", "source_ids": ["pdf-b4deafe808239771-p9-b33", "pdf-b4deafe808239771-p10-b49"], "next": null, "domain": "Wireless Communications / 5G Localization / Compressed Sensing", "document_id": "pdf-b4deafe808239771", "node_id": "complexity-analysis"}, "concept-5bc49b3d2e23a756": {"id": "concept-5bc49b3d2e23a756", "title": "感知矩阵规模 (Sensing Matrix Size)", "layer": "Memory Constraint", "lead": "存储感知矩阵 ω 所需的内存元素总数。", "text": "计算公式涉及天线数、符号数及角度候选数的组合。矩阵规模过大是导致标准方法在样本数增加时失效的主要原因。", "why": "理解矩阵规模的构成有助于明白为何减少 qaz/qel 能对内存产生指数级的优化效果。", "source_ids": ["pdf-b4deafe808239771-p7-b35", "pdf-b4deafe808239771-p5-b3"], "next": null, "domain": "Wireless Communications / 5G Localization / Compressed Sensing", "document_id": "pdf-b4deafe808239771", "node_id": "complexity-analysis"}, "concept-e69252ea5448c7b8": {"id": "concept-e69252ea5448c7b8", "title": "均方根误差 (RMSE)", "layer": "Performance Metric", "lead": "评估估计值与真实值偏差的关键指标。", "text": "RMSE 是预测值与观测值之间差异的平方平均数的平方根。在本研究中，用于量化 AoD、AoA 和 ToA 估计的准确性，公式为 ε = sqrt(1/Q * Σ|pi - p̂i|^2)。", "why": "理解 RMSE 有助于直观判断自适应方法为何被认为‘更精确’，因为其在所有参数上均实现了更低的误差值。", "source_ids": ["pdf-b4deafe808239771-p11-b5", "pdf-b4deafe808239771-p11-b7", "pdf-b4deafe808239771-p11-b8", "pdf-b4deafe808239771-p11-b11"], "next": null, "domain": "Wireless Communications / 5G Localization / Compressed Sensing", "document_id": "pdf-b4deafe808239771", "node_id": "simulation-results"}, "concept-fdd252584dfbacd1": {"id": "concept-fdd252584dfbacd1", "title": "计算复杂度", "layer": "Algorithm Analysis", "lead": "衡量算法效率的理论指标，通常涉及运算次数或时间复杂度。", "text": "文中通过统计执行时间（秒）和数学运算总次数来衡量复杂度。自适应方法通过将复杂度从 O(LNt(qc)^2) 降低到 O(LNtqcqit)，显著减少了资源消耗。", "why": "解释为何自适应方法能在保持精度的同时实现更快的运行速度，是评估其实用性的核心依据。", "source_ids": ["pdf-b4deafe808239771-p9-b33", "pdf-b4deafe808239771-p10-b49"], "next": null, "domain": "Wireless Communications / 5G Localization / Compressed Sensing", "document_id": "pdf-b4deafe808239771", "node_id": "simulation-results"}, "concept-ed64fa1188df2910": {"id": "concept-ed64fa1188df2910", "title": "时钟同步", "layer": "System Assumption", "lead": "确保发射端与接收端时间基准一致的技术要求。", "text": "在 ToA 估计中，发送端和接收端的时钟必须严格同步，否则时间差会被误认为是传播延迟。本文假设‘完美同步’，即无时钟偏差，这简化了模型但限制了实际适用性。", "why": "这是理解 ToA 估计精度前提的关键，若同步不完美，文中报告的低 RMSE 可能无法在现实中复现。", "source_ids": ["pdf-b4deafe808239771-p3-b23"], "next": null, "domain": "Wireless Communications / 5G Localization / Compressed Sensing", "document_id": "pdf-b4deafe808239771", "node_id": "limitations-scope"}, "concept-1731e09db4f2e58c": {"id": "concept-1731e09db4f2e58c", "title": "单反射非视距路径", "layer": "Channel Model", "lead": "信号经一次反射后到达接收端的路径类型。", "text": "在室内毫米波环境中，信号可能被墙壁或物体反射一次到达接收机。模型忽略了经过多次反射的路径，因为其能量衰减严重，对总信号贡献较小。", "why": "该假设决定了信道模型的复杂度，也是未来需要扩展以适应更复杂环境的关键点。", "source_ids": ["pdf-b4deafe808239771-p3-b23", "pdf-b4deafe808239771-p11-b18"], "next": null, "domain": "Wireless Communications / 5G Localization / Compressed Sensing", "document_id": "pdf-b4deafe808239771", "node_id": "limitations-scope"}}}};/* Trusted host bridge. Authors only access read-only evidence and local DOM. */
+(()=>{
+ const C=PM_CONFIG;
+ const deepFreeze=o=>{if(o&&typeof o==='object'){Object.values(o).forEach(deepFreeze);Object.freeze(o);}return o;};
+ Object.defineProperty(window,'paperMindData',{value:deepFreeze(C.data),writable:false,configurable:false});
+ const nodes=new Set(C.data.nodes.map(n=>n.id)),concepts=new Set(C.data.nodes.flatMap(n=>n.concepts));
+ let initialized=false,height=0,scheduled=false;
+ function emit(type,payload={}){if(parent!==window)parent.postMessage({type,edition:C.edition,document:C.document,channel:C.channel,...payload},'*');}
+ function measure(){if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;const h=Math.ceil(document.documentElement.scrollHeight);if(h!==height){height=h;emit('resize',{height:h});}});}
+ function source(id){const s=C.data.sources[id];if(!s)return;if(parent!==window){emit('cite',{id:s.id});return;}document.getElementById('pm-local-source')?.remove();const box=document.createElement('aside');box.id='pm-local-source';box.setAttribute('role','dialog');box.setAttribute('aria-label','原文出处');const title=document.createElement('strong');title.textContent='原文 · 第 '+s.page+' 页';const quote=document.createElement('blockquote');quote.textContent=s.quote;const close=document.createElement('button');close.textContent='返回讲解';close.addEventListener('click',()=>box.remove());box.append(title,quote,close);document.body.append(box);close.focus();}
+ function nodeOf(el){return el.closest('[data-node]')?.dataset.node||C.data.nodes[0]?.id;}
+ function readingTools(){for(const b of document.querySelectorAll('button[data-source]')){const s=C.data.sources[b.dataset.source];if(s)b.textContent='原文 · p.'+s.page;}if(parent===window){for(const b of document.querySelectorAll('[data-ask],[data-concept],[data-undo]'))b.hidden=true;return;}for(const n of C.data.nodes){const anchor=document.getElementById(n.id);if(!anchor||anchor.querySelector('button[data-ask]'))continue;const tools=document.createElement('div');tools.className='pm-reading-tools';tools.dataset.node=n.id;const ask=document.createElement('button');ask.dataset.ask='请解释'+n.title+'的原理、推导与成立条件';ask.textContent='沿着这里继续问';tools.append(ask);for(const id of n.concepts||[]){const b=document.createElement('button');b.dataset.concept=id;b.textContent=C.data.concepts?.[id]?.title||'查阅相关概念';tools.append(b);}anchor.append(tools);}}
+ document.addEventListener('click',event=>{
+  const button=event.target.closest('button,a');if(!button)return;
+  if(button.dataset.source){event.preventDefault();source(button.dataset.source);}
+  else if(button.dataset.concept&&concepts.has(button.dataset.concept))emit('concept',{id:button.dataset.concept,node:nodeOf(button)});
+  else if(button.dataset.ask&&event.isTrusted)emit('ask',{text:button.dataset.ask.slice(0,2000),node:nodeOf(button)});
+  else if(button.dataset.undo&&event.isTrusted)emit('undo',{id:button.dataset.undo});
+  else if(button.matches('a[href^="#"]')){event.preventDefault();const el=document.getElementById(button.getAttribute('href').slice(1));if(el){if(parent===window)el.scrollIntoView();else emit('scroll',{top:el.getBoundingClientRect().top+scrollY});}}
+ });
+ document.addEventListener('mouseup',()=>{const text=window.getSelection()?.toString().trim();if(text&&text.length>=4&&text.length<=2000)emit('selection',{text,node:nodeOf(window.getSelection()?.anchorNode?.parentElement||document.body)});});
+ function supplements(items){document.querySelectorAll('.pm-user-note').forEach(n=>n.remove());for(const item of items){if(!nodes.has(item.node_id))continue;const anchor=document.getElementById(item.node_id);if(!anchor)continue;const note=document.createElement('aside');note.className='pm-user-note';note.dataset.node=item.node_id;const h=document.createElement('h4');h.textContent='我的讲解补充';const p=document.createElement('p');p.textContent=item.text;note.append(h,p);for(const id of item.source_ids||[]){const alias=Object.keys(C.data.sources).find(k=>C.data.sources[k].id===id);if(alias){const b=document.createElement('button');b.dataset.source=alias;b.textContent='原文 · p.'+C.data.sources[alias].page;note.append(b);}}if(item.can_undo){const b=document.createElement('button');b.dataset.undo=item.id;b.textContent='撤回补充';note.append(b);}anchor.append(note);}measure();}
+ window.addEventListener('message',event=>{const d=event.data;if(event.source!==parent||!d||d.channel!==C.channel)return;
+  if(d.type==='navigate'&&nodes.has(d.node)){const el=document.getElementById(d.node);if(el){for(let p=el.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;emit('scroll',{top:el.getBoundingClientRect().top+scrollY});}}
+  if(d.type==='viewport'&&Number.isFinite(d.top)){let chosen=C.data.nodes[0]?.id;for(const n of C.data.nodes){const el=document.getElementById(n.id);if(el&&el.getBoundingClientRect().top+scrollY<=d.top+160)chosen=n.id;}if(chosen)emit('active',{node:chosen});}
+  if(d.type==='supplements'&&Array.isArray(d.items))supplements(d.items.slice(0,100));
+ });
+ window.addEventListener('pm-initialized',()=>{readingTools();initialized=true;document.body.dataset.pmReady='true';emit('ready');measure();});
+ window.addEventListener('error',event=>{document.body.dataset.pmError=String(event.message);emit('error',{message:String(event.message).slice(0,300)});});
+ new ResizeObserver(measure).observe(document.body);measure();
+})();
+</script><script nonce="7eXoJk59-zEp8H8PGWxmcgfQtfcsZR9T">try{(()=>{const root=document.getElementById("chapter-chap-1-problem");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>root.id===String(id)?root:root.querySelector('[id="'+CSS.escape(String(id))+'"]');if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  const switchEl = document.getElementById('chap-1-problem--mode-switch');
+  const paramListEl = document.getElementById('chap-1-problem--param-list');
+  const statusCardEl = document.getElementById('chap-1-problem--status-card');
+  const takeawayEl = document.getElementById('chap-1-problem--takeaway-text');
+
+  // Data derived from Table 1 logic in the paper (S038, S036)
+  const traditionalParams = [
+    { name: 'ToA', status: 'active', label: '到达时间 (ToA)' },
+    { name: '2D-AoD', status: 'partial', label: '出发角 (2D-AoD)' },
+    { name: '2D-AoA', status: 'partial', label: '到达角 (2D-AoA)' },
+    { name: 'Elevation', status: 'missing', label: '仰角 (Elevation)' }
+  ];
+
+  const adaptiveParams = [
+    { name: 'ToA', status: 'active', label: '到达时间 (ToA)' },
+    { name: '2D-AoD', status: 'active', label: '出发角 (2D-AoD)' },
+    { name: '2D-AoA', status: 'active', label: '到达角 (2D-AoA)' },
+    { name: 'Elevation', status: 'active', label: '仰角 (Elevation)' }
+  ];
+
+  function renderParams(params) {
+    paramListEl.innerHTML = '';
+    params.forEach(p => {
+      const li = document.createElement('li');
+      li.className = `param-item ${p.status}`;
+      
+      const spanName = document.createElement('span');
+      spanName.textContent = p.label;
+      
+      const spanStatus = document.createElement('span');
+      if (p.status === 'missing') spanStatus.textContent = '❌ 无法估计';
+      else if (p.status === 'partial') spanStatus.textContent = '⚠️ 仅方位角';
+      else spanStatus.textContent = '✅ 完整估计';
+      
+      li.appendChild(spanName);
+      li.appendChild(spanStatus);
+      paramListEl.appendChild(li);
+    });
+  }
+
+  function updateState(isAdaptive) {
+    if (isAdaptive) {
+      renderParams(adaptiveParams);
+      statusCardEl.className = 'status-card optimal';
+      statusCardEl.querySelector('.status-icon').textContent = '🚀';
+      statusCardEl.querySelector('.status-text').textContent = '一步到位';
+      statusCardEl.querySelector('.status-sub').textContent = '自适应 DCS-SOMP 直接输出高精度结果';
+      takeawayEl.textContent = '本文提出的自适应方法利用 UCA 阵列和动态搜索策略，在三维环境中直接实现全参数高精度估计，无需额外微调。';
+    } else {
+      renderParams(traditionalParams);
+      statusCardEl.className = 'chap-1-problem--status-card';
+      statusCardEl.querySelector('.status-icon').textContent = '⚠️';
+      statusCardEl.querySelector('.status-text').textContent = '需要 SAGE 微调';
+      statusCardEl.querySelector('.status-sub').textContent = '流程冗长，计算量大，且可能缺失仰角';
+      takeawayEl.textContent = '相关工作的二维限制来自各自阵列设置，不能据此说标准 DCS-SOMP 无法估计 ToA 或仰角。';
+    }
+  }
+
+  // Initialize
+  updateState(false);
+
+  // Event Listener
+  switchEl.addEventListener('change', function(e) {
+    updateState(e.target.checked);
+  });
+
+  // Source Button Handling (Mock for demonstration within scope)
+  const sourceBtns = document.querySelectorAll('.source-btn');
+  sourceBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const sourceId = this.getAttribute('data-source');
+      // In a real environment, this would trigger the host to show the source
+      // Here we just log or visually feedback
+      this.textContent = '已定位';
+      setTimeout(() => {
+        const originalText = this.getAttribute('data-source') === 'S035' ? '原文 · p.2' : '原文 · p.1';
+        this.textContent = originalText;
+      }, 1000);
+    });
+  });
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-chap-2-model");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>root.id===String(id)?root:root.querySelector('[id="'+CSS.escape(String(id))+'"]');if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+
+  // 状态管理
+  const state = {
+    activeTerm: null,
+    arrayType: 'uca' // 'ula' or 'uca'
+  };
+
+  // DOM 元素缓存
+  const elements = {
+    formulaTerms: document.querySelectorAll('#chap-2-model--formula-h .term'),
+    legendItems: document.querySelectorAll('.legend-item'),
+    arrayDemos: {
+      ula: document.getElementById('chap-2-model--demo-ula'),
+      uca: document.getElementById('chap-2-model--demo-uca')
+    },
+    sourceButtons: document.querySelectorAll('[data-source]')
+  };
+
+  // 初始化
+  function init() {
+    bindFormulaEvents();
+    bindLegendEvents();
+    bindSourceEvents();
+    // 默认高亮 UCA 相关项
+    highlightTerm('ar');
+  }
+
+  // 绑定公式项交互
+  function bindFormulaEvents() {
+    elements.formulaTerms.forEach(term => {
+      term.addEventListener('mouseenter', () => {
+        const target = term.dataset.highlight;
+        highlightTerm(target);
+        updateArrayVisual(target);
+      });
+      
+      term.addEventListener('mouseleave', () => {
+        // 鼠标离开公式时，保持当前 Legend 的高亮状态，不立即清除
+        // 除非用户点击了其他地方
+      });
+
+      term.addEventListener('click', () => {
+         // 点击锁定高亮
+         const target = term.dataset.highlight;
+         highlightTerm(target);
+         updateArrayVisual(target);
+      });
+    });
+  }
+
+  // 绑定图例交互
+  function bindLegendEvents() {
+    elements.legendItems.forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        const target = item.dataset.target;
+        highlightTerm(target);
+        updateArrayVisual(target);
+      });
+      
+      item.addEventListener('mouseleave', () => {
+        // 恢复默认或保持上次交互
+      });
+    });
+  }
+
+  // 绑定来源按钮 (仅做视觉反馈，实际跳转由内核处理)
+  function bindSourceEvents() {
+    elements.sourceButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const sourceId = btn.dataset.source;
+        // 内核会监听此事件或 data 属性进行跳转
+        // 此处仅做视觉反馈
+        btn.style.borderColor = 'var(--accent)';
+        setTimeout(() => {
+          btn.style.borderColor = '';
+        }, 300);
+      });
+    });
+  }
+
+  // 高亮公式项
+  function highlightTerm(target) {
+    elements.formulaTerms.forEach(t => {
+      if (t.dataset.highlight === target) {
+        t.classList.add('highlighted');
+      } else {
+        t.classList.remove('highlighted');
+      }
+    });
+    state.activeTerm = target;
+  }
+
+  // 更新阵列视觉 (ULA vs UCA)
+  function updateArrayVisual(term) {
+    // 如果是仰角相关 (ar, theta_el)，强调 UCA 的优势，ULA 显示盲区
+    if (term === 'ar' || term === 'toa') {
+      // ToA 也需要精确角度，但这里主要展示仰角差异
+      // 当鼠标悬停在 ToA 时，我们展示 UCA 能提供的完整参数
+      setArrayActive('uca');
+    } else if (term === 'at') {
+      // 发射端同样需要 2D-AoD
+      setArrayActive('uca');
+    } else {
+      // 默认状态
+      setArrayActive('uca');
+    }
+  }
+
+  function setArrayActive(type) {
+    if (type === 'ula') {
+      elements.arrayDemos.ula.classList.add('active');
+      elements.arrayDemos.uca.classList.remove('active');
+    } else {
+      elements.arrayDemos.uca.classList.add('active');
+      elements.arrayDemos.ula.classList.remove('active');
+    }
+  }
+
+  // 启动
+  init();
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-chap-3-bottleneck");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>root.id===String(id)?root:root.querySelector('[id="'+CSS.escape(String(id))+'"]');if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{
+(()=>{const q=document.getElementById('chap-3-bottleneck--memory-q'),bytes=document.getElementById('chap-3-bottleneck--memory-bytes');
+function render(){const n=Number(q.value),cols=n**4,elements=32*20*cols,size=elements*Number(bytes.value);for(const [id,v] of [['chap-3-bottleneck--memory-q-value',n],['chap-3-bottleneck--memory-columns',cols],['chap-3-bottleneck--memory-elements',elements],['chap-3-bottleneck--memory-size',size]]){const el=document.getElementById(id);el.dataset.value=String(v);el.textContent=id==='chap-3-bottleneck--memory-size'?(size/1024**2).toFixed(2)+' MiB':v.toLocaleString('en-US');}document.getElementById('chap-3-bottleneck--memory-bar').setAttribute('width',String(560*cols/30**4));document.getElementById('chap-3-bottleneck--memory-caption').textContent='当前 '+cols.toLocaleString('en-US')+' 列；比例尺上限 '+(30**4).toLocaleString('en-US')+' 列';}
+q.addEventListener('input',render);bytes.addEventListener('change',render);document.getElementById('chap-3-bottleneck--memory-reset').addEventListener('click',()=>{q.value='10';bytes.value='16';render();});render();})();
+})(d);})();
+(()=>{const root=document.getElementById("chapter-chap-4-mechanism");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>root.id===String(id)?root:root.querySelector('[id="'+CSS.escape(String(id))+'"]');if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{
+(()=>{const target=document.getElementById('chap-4-mechanism--search-target');let history=[[0,360]],i=0;const ns='http://www.w3.org/2000/svg';
+function state(){const [lo,hi]=history[i],points=Array.from({length:6},(_,j)=>lo+j*(hi-lo)/5);let best=0;points.forEach((v,j)=>{if(Math.abs(v-Number(target.value))<Math.abs(points[best]-Number(target.value)))best=j;});return {lo,hi,points,best};}
+function render(){const s=state(),x=v=>30+v/360*540;const rect=document.getElementById('chap-4-mechanism--search-range');rect.setAttribute('x',x(s.lo));rect.setAttribute('width',Math.max(0,x(s.hi)-x(s.lo)));const group=document.getElementById('chap-4-mechanism--search-candidates');group.replaceChildren();s.points.forEach((v,j)=>{const dot=document.createElementNS(ns,'circle');dot.setAttribute('cx',x(v));dot.setAttribute('cy',85);dot.setAttribute('r',j===s.best?7:4);dot.setAttribute('fill',j===s.best?'#ad472d':'#265976');group.append(dot);});const truth=document.getElementById('chap-4-mechanism--search-truth');truth.setAttribute('x1',x(Number(target.value)));truth.setAttribute('x2',x(Number(target.value)));for(const [id,value] of [['chap-4-mechanism--search-iteration',i],['chap-4-mechanism--search-width',s.hi-s.lo]]){const el=document.getElementById(id);el.dataset.value=String(value);el.textContent=Number(value.toFixed(6));}const values=document.getElementById('chap-4-mechanism--search-values');values.dataset.values=JSON.stringify(s.points);values.textContent=s.points.map(v=>v.toFixed(3)).join(', ');document.getElementById('chap-4-mechanism--search-prev').disabled=i===0;document.getElementById('chap-4-mechanism--search-next').disabled=i>=8||s.best===0||s.best===5;}
+target.addEventListener('input',()=>{history=[[0,360]];i=0;render();});document.getElementById('chap-4-mechanism--search-next').addEventListener('click',()=>{const s=state();if(i>=8||s.best===0||s.best===5)return;history=history.slice(0,i+1);history.push([s.points[s.best-1],s.points[s.best+1]]);i++;render();});document.getElementById('chap-4-mechanism--search-prev').addEventListener('click',()=>{i=Math.max(0,i-1);render();});document.getElementById('chap-4-mechanism--search-reset').addEventListener('click',()=>{target.value='240';history=[[0,360]];i=0;render();});render();})();
+})(d);})();
+(()=>{const root=document.getElementById("chapter-chap-5-algo");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>root.id===String(id)?root:root.querySelector('[id="'+CSS.escape(String(id))+'"]');if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+  
+  // 教学假设 - 明确说明这些是示例值，非真实训练权重
+  const TEACHING_ASSUMPTIONS = [
+    "本演示使用简化的教学示例数据，非论文中的真实训练权重",
+    "假设信道稀疏性成立（路径数 L 远小于候选数）",
+    "假设噪声在残差更新过程中被有效抑制",
+    "自适应步骤在每次迭代中均执行（除非特别说明）"
+  ];
+  
+  // 局限性说明
+  const LIMITATIONS = [
+    "实际实现需考虑时钟同步误差对 ToA 估计的影响",
+    "模型仅考虑单反射 NLoS 路径，忽略多反射场景",
+    "演示未展示完整的 K 次自适应迭代过程，仅展示单次主迭代",
+    "真实系统中需处理矩阵维度爆炸问题，此处已简化"
+  ];
+  
+  // 算法步骤数据
+  const STEPS = [
+    {
+      title: "步骤 1：初始化残差",
+      desc: "对于第一条路径 (l=1)，将残差 R1 设置为接收信号 y。",
+      sources: ["S136", "S196"],
+      data: { l: 1, energy: 1.000, index: "-", angle: "-", matrix: "初始 ω(0)" }
+    },
+    {
+      title: "步骤 2：寻找最大相关索引",
+      desc: "遍历所有候选列 m，计算 corr = |ω_m^H * Rl|，记录产生最大 corr 的索引 h̃l。",
+      sources: ["S135", "S196"],
+      data: { l: 1, energy: 1.000, index: "42", angle: "-", matrix: "初始 ω(0)" }
+    },
+    {
+      title: "步骤 3：执行自适应搜索",
+      desc: "利用当前索引 h̃l 调用自适应搜索子程序，更新下一轮迭代的角度候选集和感知矩阵 ω(k)。",
+      sources: ["S191", "S228"],
+      data: { l: 1, energy: 1.000, index: "42", angle: "1.35 rad", matrix: "更新 ω(1)" }
+    },
+    {
+      title: "步骤 4：更新残差与 ToA",
+      desc: "计算系数 βl，更新残差 Rl+1 = Rl - βl * ω，并根据距离公式计算 τl。",
+      sources: ["S139", "S140", "S228"],
+      data: { l: 2, energy: 0.350, index: "42", angle: "1.35 rad", matrix: "更新 ω(1)" }
+    }
+  ];
+  
+  let currentStep = 0;
+  const canvas = document.getElementById('chap-5-algo--chap-5-algo-canvas');
+  const ctx = canvas.getContext('2d');
+  const overlay = document.getElementById('chap-5-algo--chap-5-algo-overlay');
+  const stepNumEl = document.getElementById('chap-5-algo--chap-5-algo-step-num');
+  const stepTitleEl = document.getElementById('chap-5-algo--chap-5-algo-step-title');
+  const stepDescEl = document.getElementById('chap-5-algo--chap-5-algo-step-desc');
+  const btnNext = document.getElementById('chap-5-algo--chap-5-algo-btn-next');
+  const btnPrev = document.getElementById('chap-5-algo--chap-5-algo-btn-prev');
+  const btnReset = document.getElementById('chap-5-algo--chap-5-algo-btn-reset');
+  
+  // 数据面板元素
+  const valL = document.getElementById('chap-5-algo--chap-5-algo-val-l');
+  const valEnergy = document.getElementById('chap-5-algo--chap-5-algo-val-energy');
+  const valIndex = document.getElementById('chap-5-algo--chap-5-algo-val-index');
+  const valAngle = document.getElementById('chap-5-algo--chap-5-algo-val-angle');
+  const valMatrix = document.getElementById('chap-5-algo--chap-5-algo-val-matrix');
+  
+  // 绘制画布内容
+  function drawCanvas(step) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // 背景
+    ctx.fillStyle = '#F5F5F7';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // 绘制信号路径
+    ctx.strokeStyle = '#2C3E50';
+    ctx.lineWidth = 2;
+    
+    // 绘制多条路径示意
+    const paths = [
+      { x1: 50, y1: 200, x2: 550, y2: 100, alpha: step >= 3 ? 0.3 : 1.0 },
+      { x1: 50, y1: 200, x2: 550, y2: 200, alpha: step >= 3 ? 0.3 : 1.0 },
+      { x1: 50, y1: 200, x2: 550, y2: 300, alpha: step >= 3 ? 0.3 : 1.0 }
+    ];
+    
+    paths.forEach(path => {
+      ctx.globalAlpha = path.alpha;
+      ctx.beginPath();
+      ctx.moveTo(path.x1, path.y1);
+      ctx.lineTo(path.x2, path.y2);
+      ctx.stroke();
+      
+      // 绘制端点
+      ctx.fillStyle = '#00B894';
+      ctx.beginPath();
+      ctx.arc(path.x2, path.y2, 6, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    
+    ctx.globalAlpha = 1.0;
+    
+    // 绘制当前高亮路径
+    if (step >= 1) {
+      ctx.strokeStyle = '#E17055';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(50, 200);
+      ctx.lineTo(550, 200);
+      ctx.stroke();
+      
+      // 绘制高亮端点
+      ctx.fillStyle = '#E17055';
+      ctx.beginPath();
+      ctx.arc(550, 200, 10, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // 绘制相关性计算示意
+      if (step === 1) {
+        ctx.fillStyle = 'rgba(0, 184, 148, 0.2)';
+        ctx.fillRect(300, 150, 200, 100);
+        ctx.strokeStyle = '#00B894';
+        ctx.strokeRect(300, 150, 200, 100);
+        
+        ctx.fillStyle = '#2C3E50';
+        ctx.font = '14px system-ui';
+        ctx.textAlign = 'center';
+        ctx.fillText('相关性计算', 400, 200);
+      }
+      
+      // 绘制自适应搜索区域
+      if (step === 2) {
+        ctx.fillStyle = 'rgba(0, 184, 148, 0.15)';
+        ctx.beginPath();
+        ctx.arc(550, 200, 60, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#00B894';
+        ctx.stroke();
+        
+        ctx.fillStyle = '#2C3E50';
+        ctx.font = '14px system-ui';
+        ctx.textAlign = 'center';
+        ctx.fillText('自适应搜索区域', 550, 130);
+      }
+      
+      // 绘制残差更新示意
+      if (step === 3) {
+        ctx.fillStyle = 'rgba(225, 112, 85, 0.2)';
+        ctx.fillRect(50, 180, 500, 40);
+        ctx.strokeStyle = '#E17055';
+        ctx.strokeRect(50, 180, 500, 40);
+        
+        ctx.fillStyle = '#2C3E50';
+        ctx.font = '14px system-ui';
+        ctx.textAlign = 'center';
+        ctx.fillText('残差更新：R₂ = R₁ - β₁ω', 300, 205);
+      }
+    }
+    
+    // 绘制标签
+    ctx.fillStyle = '#2C3E50';
+    ctx.font = '16px system-ui';
+    ctx.textAlign = 'left';
+    ctx.fillText('发射端', 20, 205);
+    ctx.textAlign = 'right';
+    ctx.fillText('接收端', 580, 205);
+  }
+  
+  // 更新界面
+  function updateUI() {
+    const step = STEPS[currentStep];
+    
+    // 更新叠加层
+    stepNumEl.textContent = currentStep + 1;
+    stepTitleEl.textContent = step.title;
+    stepDescEl.textContent = step.desc;
+    
+    // 更新数据面板
+    valL.textContent = step.data.l;
+    valEnergy.textContent = step.data.energy.toFixed(3);
+    valIndex.textContent = step.data.index;
+    valAngle.textContent = step.data.angle;
+    valMatrix.textContent = step.data.matrix;
+    
+    // 更新按钮状态
+    btnPrev.disabled = currentStep === 0;
+    btnNext.disabled = currentStep === STEPS.length - 1;
+    
+    // 绘制画布
+    drawCanvas(currentStep);
+    
+    // 显示叠加层
+    overlay.classList.add('active');
+  }
+  
+  // 事件处理
+  function handleNext() {
+    if (currentStep < STEPS.length - 1) {
+      currentStep++;
+      updateUI();
+    }
+  }
+  
+  function handlePrev() {
+    if (currentStep > 0) {
+      currentStep--;
+      updateUI();
+    }
+  }
+  
+  function handleReset() {
+    currentStep = 0;
+    updateUI();
+  }
+  
+  // 键盘导航
+  function handleKeydown(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      handleNext();
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      handlePrev();
+    } else if (e.key === 'r' || e.key === 'R') {
+      handleReset();
+    }
+  }
+  
+  // 来源按钮处理
+  function handleSourceClick(e) {
+    const sourceId = e.target.getAttribute('data-source');
+    if (sourceId && window.paperMindData && window.paperMindData.sources) {
+      // 由宿主内核处理来源跳转
+      console.log('Source requested:', sourceId);
+    }
+  }
+  
+  // 初始化
+  function init() {
+    // 绑定事件
+    btnNext.addEventListener('click', handleNext);
+    btnPrev.addEventListener('click', handlePrev);
+    btnReset.addEventListener('click', handleReset);
+    document.addEventListener('keydown', handleKeydown);
+    
+    // 绑定来源按钮
+    document.querySelectorAll('.source-btn').forEach(btn => {
+      btn.addEventListener('click', handleSourceClick);
+    });
+    
+    // 初始绘制
+    drawCanvas(0);
+    updateUI();
+  }
+  
+  // 启动
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-chap-6-results");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>root.id===String(id)?root:root.querySelector('[id="'+CSS.escape(String(id))+'"]');if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{
+(()=>{const tables=window.paperMindData.tables,t3=tables.find(t=>t.id==='p11-Table_3'),t4=tables.find(t=>t.id==='p11-Table_4');if(!t3||!t4)throw Error('缺少原表3或4');
+const number=s=>{if(s==null||s==='')return null;const supers={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-'};const clean=String(s).replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]/g,c=>supers[c]);const parts=clean.match(/^([\d.]+)\s*[×x]\s*10\s*\^?\s*(-?\d+)$/);return parts?Number(parts[1])*10**Number(parts[2]):Number(clean);};
+function bars(id,rows,column,output){const box=document.getElementById(id);box.replaceChildren();const values=rows.map(row=>number(row.values[column])),max=Math.max(...values.filter(v=>v!=null));rows.forEach((row,j)=>{const line=document.createElement('div');line.className='repair-bar';const label=document.createElement('span');label.textContent=row.label;const track=document.createElement('div');track.className='repair-track';const fill=document.createElement('div');fill.className='repair-fill';fill.dataset.value=String(values[j]);fill.style.width=(values[j]==null?0:100*values[j]/max)+'%';track.append(fill);const value=document.createElement('span');value.textContent=row.values[column]??'未报告';line.append(label,track,value);box.append(line);});const out=document.getElementById(output);out.dataset.values=JSON.stringify(values);out.textContent=column+'；零基线，同组最大值为比例尺上限。';}
+const metric=document.getElementById('chap-6-results--efficiency-metric'),parameter=document.getElementById('chap-6-results--rmse-parameter');t4.columns.slice(1).forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;parameter.append(o);});const head=document.getElementById('chap-6-results--rmse-head'),tr=document.createElement('tr');t4.columns.forEach(c=>{const th=document.createElement('th');th.textContent=c;tr.append(th);});head.append(tr);const tbody=document.getElementById('chap-6-results--rmse-rows');t4.rows.forEach(row=>{const tr=document.createElement('tr');t4.columns.forEach(c=>{const td=document.createElement('td');td.textContent=row.values[c]??'未报告';tr.append(td);});tbody.append(tr);});
+function render(){bars('chap-6-results--efficiency-bars',t3.rows,metric.value,'chap-6-results--efficiency-values');bars('chap-6-results--rmse-bars',t4.rows,parameter.value,'chap-6-results--rmse-values');}metric.addEventListener('change',render);parameter.addEventListener('change',render);document.getElementById('chap-6-results--results-reset').addEventListener('click',()=>{metric.selectedIndex=0;parameter.selectedIndex=0;render();});render();})();
+})(d);})();
+(()=>{const root=document.getElementById("chapter-chap-7-limits");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>root.id===String(id)?root:root.querySelector('[id="'+CSS.escape(String(id))+'"]');if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+
+  // --- 数据加载 ---
+  const tables = window.paperMindData?.tables || [];
+  const rmseTable = tables.find(t => t.id === 'p11-Table_4');
+  const tbody = document.getElementById('chap-7-limits--rmse-table-body');
+
+  if (rmseTable && tbody) {
+    rmseTable.rows.forEach(row => {
+      const tr = document.createElement('tr');
+      // 构造单元格，确保数值正确读取
+      const cells = [
+        row.values['Method'],
+        row.values['ε_φaz (rad)'],
+        row.values['ε_φel (rad)'],
+        row.values['ε_θaz (rad)'],
+        row.values['ε_θel (rad)'],
+        row.values['ε_τ (us)']
+      ];
+      
+      cells.forEach((text, idx) => {
+        const td = document.createElement('td');
+        td.textContent = text || 'N/A';
+        // 高亮自适应方法的低误差
+        if (row.label === 'Adaptive DCS-SOMP' && idx > 0) {
+          td.style.color = '#00B894';
+          td.style.fontWeight = '600';
+        }
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  }
+
+  // --- 可视化逻辑 ---
+  const canvas = document.getElementById('chap-7-limits--limit-canvas');
+  const ctx = canvas.getContext('2d');
+  const btnIdeal = document.getElementById('chap-7-limits--btn-ideal');
+  const btnReal = document.getElementById('chap-7-limits--btn-real');
+  const overlay = document.getElementById('chap-7-limits--viz-overlay');
+
+  let state = 'ideal'; // 'ideal' or 'real'
+  let animationFrame;
+
+  // 绘图参数
+  const colors = {
+    bg: '#FAFAFA',
+    bs: '#2C3E50',
+    ms: '#00B894',
+    pathIdeal: '#95A5A6',
+    pathReal: '#E17055',
+    text: '#2C3E50'
+  };
+
+  function draw() {
+    const w = canvas.width;
+    const h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    
+    // 背景
+    ctx.fillStyle = colors.bg;
+    ctx.fillRect(0, 0, w, h);
+
+    // 绘制基站 (BS) 和 移动站 (MS)
+    const bsX = 50, bsY = h / 2;
+    const msX = w - 50, msY = h / 2;
+
+    // BS
+    ctx.fillStyle = colors.bs;
+    ctx.beginPath();
+    ctx.arc(bsX, bsY, 15, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.font = '12px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('BS', bsX, bsY + 4);
+
+    // MS
+    ctx.fillStyle = colors.ms;
+    ctx.beginPath();
+    ctx.arc(msX, msY, 12, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.fillText('MS', msX, msY + 4);
+
+    if (state === 'ideal') {
+      // 理想状态：直射 + 单反射
+      drawPath(ctx, bsX, bsY, msX, msY, colors.pathIdeal, false);
+      drawReflectedPath(ctx, bsX, bsY, msX, msY, colors.pathIdeal);
+      
+      ctx.fillStyle = colors.text;
+      ctx.font = '14px sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('完美同步 / 单反射模型', 20, 30);
+    } else {
+      // 现实状态：偏差 + 多反射
+      drawPath(ctx, bsX, bsY, msX, msY, colors.pathReal, true);
+      drawMultiPath(ctx, bsX, bsY, msX, msY, colors.pathReal);
+      
+      // 绘制时钟偏差符号
+      ctx.strokeStyle = '#E17055';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(msX - 10, msY - 25);
+      ctx.lineTo(msX + 10, msY - 25);
+      ctx.stroke();
+      ctx.fillStyle = '#E17055';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.fillText('Δt (时钟偏差)', msX, msY - 30);
+
+      ctx.fillStyle = colors.text;
+      ctx.font = '14px sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('时钟偏差 / 多反射干扰', 20, 30);
+    }
+  }
+
+  function drawPath(ctx, x1, y1, x2, y2, color, isDashed) {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 3;
+    if (isDashed) ctx.setLineDash([5, 5]);
+    else ctx.setLineDash([]);
+    
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    // 添加一点随机扰动模拟现实
+    if (state === 'real') {
+      ctx.quadraticCurveTo((x1+x2)/2, y1 + 20, x2, y2);
+    } else {
+      ctx.lineTo(x2, y2);
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  function drawReflectedPath(ctx, x1, y1, x2, y2, color) {
+    const midX = (x1 + x2) / 2;
+    const reflectY = 40; // 天花板反射
+    
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(midX, reflectY);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  function drawMultiPath(ctx, x1, y1, x2, y2, color) {
+ const h=canvas.height;
+    // 绘制几条杂乱的反射路径
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([2, 3]);
+    ctx.globalAlpha = 0.6;
+    
+    const paths = [
+      {y: 60}, {y: h - 60}, {y: h/2 + 40}
+    ];
+
+    paths.forEach(p => {
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.quadraticCurveTo((x1+x2)/2, p.y, x2, y2);
+      ctx.stroke();
+    });
+
+    ctx.globalAlpha = 1.0;
+    ctx.setLineDash([]);
+  }
+
+  // 交互事件
+  btnIdeal.addEventListener('click', () => {
+    state = 'ideal';
+    btnIdeal.classList.add('active');
+    btnReal.classList.remove('active');
+    overlay.classList.remove('visible');
+    draw();
+  });
+
+  btnReal.addEventListener('click', () => {
+    state = 'real';
+    btnReal.classList.add('active');
+    btnIdeal.classList.remove('active');
+    overlay.classList.add('visible');
+    draw();
+  });
+
+  // 初始化
+  draw();
+
+  // 来源按钮处理 (由宿主拦截 data-source)
+  document.querySelectorAll('.source-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      // 默认行为由宿主通过 data-source 属性处理
+      // 此处仅防止表单提交等默认行为
+      e.preventDefault();
+    });
+  });
+
+})();})(d);})();;const pmDone=()=>{if(document.body.dataset.pmError)return;document.body.dataset.pmInitialized="true";window.dispatchEvent(new Event("pm-initialized"));};if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",pmDone,{once:true});else pmDone();}catch(error){document.body.dataset.pmError=error.message;window.dispatchEvent(new ErrorEvent("error",{message:error.message}));}</script></body></html>

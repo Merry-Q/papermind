@@ -1,0 +1,1 @@
+{"items": [{"node_id": "special-case-linear", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "sim-validation-near", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "sim-validation-far", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}]}

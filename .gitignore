@@ -1,0 +1,13 @@
+node_modules/
+frontend/dist/
+.venv/
+__pycache__/
+*.pyc
+.env
+.env.local
+data/papermind.db-wal
+data/papermind.db-shm
+data/papermind.db-journal
+artifacts/
+.impeccable/
+*.log

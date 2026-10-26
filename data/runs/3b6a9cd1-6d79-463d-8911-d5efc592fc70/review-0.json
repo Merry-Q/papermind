@@ -1,0 +1,1 @@
+{"items": [{"node_id": "core-trilemma", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "substrate-independence", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "comp-power-lower-bound", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}]}

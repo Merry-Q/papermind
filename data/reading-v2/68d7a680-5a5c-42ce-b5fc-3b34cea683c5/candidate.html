@@ -1,0 +1,4087 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'nonce-kapBDVCdTGAIUKrcTn0itmgpWN_qsLg4'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; frame-src 'none'; object-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'"><title>歌词风格与偏见的计算解码 · paperMind 交互讲解</title><style>*,*::before,*::after{box-sizing:border-box}html{scroll-behavior:auto}body{margin:0;min-width:0}button,input,select{font:inherit}button{cursor:pointer}canvas,svg{max-width:100%}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid #315cc8;outline-offset:4px}#pm-local-source{position:fixed;inset:auto 12px 12px;background:#fff;color:#26364b;border:1px solid #61748c;padding:22px;z-index:99999;max-height:65vh;overflow:auto;font:15px/1.8 system-ui}#pm-local-source button{padding:8px 12px;margin-top:12px}#pm-local-source blockquote{white-space:pre-wrap;margin:12px 0}.pm-user-note{margin:24px 0;padding:20px;background:#edf2ff;color:#26364b;font:15px/1.9 system-ui}.pm-user-note h4{margin:0 0 10px}.pm-user-note p{white-space:pre-wrap}.pm-user-note button{margin:5px;padding:6px 10px}.pm-reading-tools{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:24px;padding-top:14px;border-top:1px solid #d6dcd9}.pm-reading-tools button{border:0;background:transparent;color:#265976;text-decoration:underline;text-underline-offset:4px;font-size:13px;padding:6px 0}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+:root{--ink:#233342;--muted:#596877;--accent:#265976;--warm:#ad472d;--line:#d6dcd9;--paper:#fcfbf8;--soft:#edf2f1}
+body{background:var(--paper);color:var(--ink);font-family:"Microsoft YaHei",system-ui,sans-serif;font-size:16px;line-height:1.95}
+.paper-reading{max-width:1120px;margin:auto;padding:40px clamp(18px,5vw,58px) 80px;overflow-wrap:anywhere}
+.paper-reading h1{font:normal clamp(32px,5vw,58px)/1.12 Georgia,"Noto Serif SC",serif;letter-spacing:-.025em;margin:18px 0 26px;text-wrap:balance}
+.paper-reading h2{font-size:clamp(25px,3.5vw,34px);font-weight:500;line-height:1.4;margin:0 0 20px;text-wrap:balance}
+.paper-reading h3{font-size:20px;font-weight:500;line-height:1.5}.paper-reading p{margin:12px 0 18px}
+.paper-hero{padding:16px 0 38px;border-bottom:1px solid var(--line)}
+.paper-hero .paper-thesis{font-size:18px;line-height:1.95;max-width:55ch}.paper-hero nav{display:flex;flex-wrap:wrap;gap:8px 22px;margin:26px 0 0}
+.paper-hero nav a{font-size:13px;color:var(--accent);text-decoration:underline;text-underline-offset:6px}
+.paper-chapter{padding:48px 0 34px;border-bottom:1px solid var(--line);min-width:0}
+.paper-chapter :where(section,article,div,figure,fieldset){min-width:0}
+.paper-chapter :where(table){display:block;max-width:100%;overflow:auto}
+.paper-chapter :where(pre){white-space:pre-wrap;overflow-wrap:anywhere}
+.paper-reading button{border:1px solid var(--line);background:transparent;color:var(--accent);padding:8px 14px;min-height:38px;border-radius:4px;font-size:13px;line-height:1.5}
+.paper-reading button:hover{background:var(--soft)}.paper-reading button:disabled{opacity:.5;cursor:default}
+.paper-reading input[type=range]{accent-color:var(--accent);max-width:100%;min-width:0}.paper-reading input[type=number]{width:90px}
+.paper-reading select,.paper-reading input[type=number]{padding:7px 9px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font-size:14px;border-radius:4px;max-width:100%}
+.paper-reading input[type=checkbox]{accent-color:var(--warm)}.paper-reading label{font-size:14px;line-height:1.7}
+.paper-reading svg,.paper-reading canvas{display:block;max-width:100%;height:auto}
+.paper-reading details{padding:14px 0;border-top:1px solid var(--line);margin-top:20px}.paper-reading summary{cursor:pointer;color:var(--accent);font-size:14px}
+.paper-reading table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.paper-reading th,.paper-reading td{padding:9px 7px;text-align:left;border-bottom:1px solid var(--line)}
+.paper-reading button[data-source]{font-size:12px;color:var(--accent);border:0;padding:6px 0;margin-right:16px;text-decoration:underline;text-underline-offset:4px}
+.paper-reading ::selection{background:#f3d5ac;color:#233342}.paper-reading :focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.paper-reading .reading-limitations{font-size:14px;color:var(--muted);padding-top:28px}.paper-reading .reading-limitations h2{font-size:24px}
+@media(max-width:480px){.paper-reading{padding-top:24px}.paper-chapter{padding-top:32px}.paper-hero .paper-thesis{font-size:16px}.paper-reading{font-size:15px}.paper-reading h2{font-size:25px}.paper-reading table{font-size:12px}}
+
+@scope (#chapter-problem-gap){.pg-chapter {
+  --ink: var(--ink, #1a1a1a);
+  --muted: var(--muted, #666);
+  --accent: var(--accent, #003366);
+  --warm: var(--warm, #cc0066);
+  --line: var(--line, #ddd);
+  --paper: var(--paper, #f5f5f5);
+  
+  font-family: system-ui, sans-serif;
+  background-color: var(--paper);
+  color: var(--ink);
+  padding: 2rem 1rem;
+  line-height: 1.6;
+  box-sizing: border-box;
+}
+
+.pg-chapter * {
+  box-sizing: border-box;
+}
+
+.pg-header {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1rem;
+}
+
+.pg-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  color: var(--accent);
+}
+
+.pg-lead {
+  font-size: 16px;
+  color: var(--muted);
+  margin: 0;
+  font-family: serif;
+}
+
+.pg-interactive-stage {
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 4px;
+}
+
+.pg-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.pg-control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 200px;
+}
+
+.pg-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.pg-slider {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.pg-scale-display {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-family: monospace;
+  color: var(--muted);
+}
+
+.pg-scale-value.pg-new {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.pg-toggle {
+  padding: 0.5rem 1rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pg-toggle[data-state="computational"] {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.pg-tech-status {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.pg-visualization {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .pg-visualization {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pg-comparison-card {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: #fafafa;
+}
+
+.pg-comparison-card.pg-new-state {
+  border-color: var(--accent);
+  background: #f0f4f8;
+}
+
+.pg-card-title {
+  font-size: 15px;
+  margin: 0 0 1rem 0;
+  color: var(--ink);
+}
+
+.pg-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+  font-size: 14px;
+}
+
+.pg-features li {
+  margin-bottom: 0.5rem;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.pg-features li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--muted);
+}
+
+.pg-btn-source {
+  background: transparent;
+  border: 1px solid var(--muted);
+  color: var(--muted);
+  font-size: 12px;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pg-btn-source:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.pg-acceptance-feedback {
+  padding: 1rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  text-align: center;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.pg-acceptance-feedback.active {
+  border-color: var(--accent);
+  background: #eef4ff;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.pg-argument-flow {
+  margin-top: 2rem;
+}
+
+.pg-subtitle {
+  font-size: 18px;
+  margin: 0 0 1rem 0;
+  color: var(--ink);
+}
+
+.pg-argument-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 15px;
+}
+
+.pg-argument-icon {
+  font-weight: 700;
+  color: var(--accent);
+  min-width: 24px;
+}
+
+.pg-argument-text {
+  margin: 0;
+  flex: 1;
+}
+
+.pg-btn-concept {
+  background: transparent;
+  border: 1px dashed var(--accent);
+  color: var(--accent);
+  font-size: 12px;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-left: 0.5rem;
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-data-construction){.chapter-scope {
+  --ink: #2c3e50;
+  --muted: #7f8c8d;
+  --accent: #2980b9;
+  --warm: #e74c3c;
+  --paper: #ecf0f1;
+  --line: #bdc3c7;
+  
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+  background-color: var(--paper);
+  padding: 2rem;
+  border: 1px solid var(--line);
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.chapter-scope * {
+  box-sizing: border-box;
+}
+
+.chapter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 1rem;
+}
+
+.chapter-title {
+  font-size: 1.5rem;
+  margin: 0;
+  font-weight: bold;
+  color: var(--ink);
+}
+
+.source-btn {
+  background: transparent;
+  border: 1px solid var(--muted);
+  color: var(--muted);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: monospace;
+  transition: all 0.2s;
+}
+
+.source-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.dataset-workbench {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: stretch;
+  margin: 2rem 0;
+  position: relative;
+}
+
+.dataset-pool {
+  flex: 1;
+  min-width: 280px;
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+}
+
+.bb-pool {
+  border-top: 4px solid var(--accent);
+}
+
+.msd-pool {
+  border-top: 4px solid var(--muted);
+}
+
+.pool-label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  font-family: monospace;
+}
+
+.pool-meta {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.meta-tag {
+  background: var(--paper);
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.pool-count {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--ink);
+  margin: 1rem 0;
+}
+
+.pool-detail {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.interaction-core {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 200px;
+  gap: 1rem;
+}
+
+.overlap-visual {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  margin: 1rem 0;
+}
+
+.overlap-zone {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px dashed var(--warm);
+  background: rgba(231, 76, 60, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease;
+}
+
+.overlap-text {
+  font-size: 0.7rem;
+  color: var(--warm);
+  font-weight: bold;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.action-btn {
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: monospace;
+  transition: background 0.2s;
+}
+
+.action-btn:hover {
+  background: var(--accent);
+}
+
+.action-btn:disabled {
+  background: var(--muted);
+  cursor: not-allowed;
+}
+
+.status-message {
+  font-size: 0.9rem;
+  color: var(--warm);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.status-message.success {
+  color: var(--accent);
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.status-icon {
+  font-size: 1.2rem;
+}
+
+.evidence-note {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #fff;
+  border-left: 4px solid var(--muted);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.evidence-note p {
+  margin: 0.5rem 0;
+}
+
+/* State: Cleaned */
+.chapter-scope.is-cleaned .overlap-zone {
+  border-color: var(--accent);
+  background: rgba(41, 128, 185, 0.1);
+  transform: scale(0.8);
+}
+
+.chapter-scope.is-cleaned .overlap-text {
+  opacity: 0;
+}
+
+.chapter-scope.is-cleaned #data-construction--status-message {
+  opacity: 0;
+  display: none;
+}
+
+.chapter-scope.is-cleaned #data-construction--status-success {
+  opacity: 1;
+  position: relative;
+  pointer-events: auto;
+}
+
+.chapter-scope.is-cleaned #data-construction--pool-bb {
+  transform: translateX(-10px);
+  box-shadow: -5px 5px 15px rgba(0,0,0,0.05);
+}
+
+.chapter-scope.is-cleaned #data-construction--pool-msd {
+  transform: translateX(10px);
+  box-shadow: 5px 5px 15px rgba(0,0,0,0.05);
+}
+
+@media (max-width: 600px) {
+  .dataset-workbench {
+    flex-direction: column;
+  }
+  .interaction-core {
+    order: -1;
+    margin-bottom: 1rem;
+  }
+  .chapter-scope.is-cleaned #data-construction--pool-bb,
+  .chapter-scope.is-cleaned #data-construction--pool-msd {
+    transform: none;
+  }
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}
+.dataset-pool,.interaction-core{min-width:0;max-width:100%}}
+@scope (#chapter-style-vocab-trend){:scope .chapter-container {
+  font-family: var(--font-serif, serif);
+  color: var(--ink);
+  background: var(--paper);
+  padding: 2rem;
+  line-height: 1.6;
+}
+
+:scope .chapter-header h1 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: var(--ink);
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+}
+
+:scope .meta-info {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+:scope .badge {
+  background: var(--muted);
+  color: var(--paper);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-family: var(--font-sans, sans-serif);
+}
+
+:scope .content-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  :scope .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+:scope .viz-card {
+  background: #f8f9fa;
+  border: 1px solid var(--line);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 6px;
+}
+
+:scope .viz-card h3 {
+  font-family: var(--font-sans, sans-serif);
+  font-size: 1.1rem;
+  margin-top: 0;
+  color: var(--accent);
+}
+
+:scope .year-toggle {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+:scope .year-toggle button {
+  background: transparent;
+  border: 1px solid var(--line);
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  font-family: var(--font-sans, sans-serif);
+  color: var(--muted);
+}
+
+:scope .year-toggle button.active,
+:scope .year-toggle button[aria-pressed="true"] {
+  background: var(--accent);
+  color: var(--paper);
+  border-color: var(--accent);
+}
+
+:scope .cloud-container {
+  min-height: 200px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-content: flex-start;
+  font-family: var(--font-sans, sans-serif);
+}
+
+:scope .cloud-word {
+  padding: 0.2rem 0.5rem;
+  background: #e9ecef;
+  border-radius: 3px;
+  font-size: 0.9rem;
+  transition: transform 0.2s;
+}
+
+:scope .cloud-word:hover {
+  transform: scale(1.1);
+  background: var(--accent);
+  color: var(--paper);
+}
+
+:scope .cloud-word.highlight {
+  background: var(--warm);
+  color: var(--paper);
+  font-weight: bold;
+}
+
+:scope .chart-wrapper {
+  width: 100%;
+  height: 200px;
+  margin-bottom: 1rem;
+}
+
+:scope .legend {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.85rem;
+  font-family: var(--font-sans, sans-serif);
+  color: var(--muted);
+}
+
+:scope .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+:scope .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+:scope .dot.bb { background: var(--accent); }
+:scope .dot.msd { background: var(--muted); }
+
+:scope .analysis-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+:scope .argument-block {
+  background: var(--paper);
+  padding: 1rem;
+  border-left: 3px solid var(--line);
+}
+
+:scope .warning-block {
+  border-left-color: var(--warm);
+  background: #fff5f5;
+}
+
+:scope .limitation-text {
+  font-size: 0.9rem;
+  color: #d63030;
+  font-style: italic;
+}
+
+:scope .source-bar {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.5rem;
+}
+
+:scope button.source-btn,
+:scope button.concept-btn,
+:scope button.ask-btn {
+  font-size: 0.8rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-sans, sans-serif);
+  color: var(--ink);
+}
+
+:scope button.source-btn:hover {
+  background: var(--muted);
+  color: var(--paper);
+}
+
+:scope .mini-viz {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: #f1f3f5;
+  border-radius: 4px;
+}
+
+:scope .track {
+  display: flex;
+  align-items: flex-end;
+  height: 40px;
+  gap: 1rem;
+}
+
+:scope .bar {
+  width: 60px;
+  text-align: center;
+  color: var(--paper);
+  font-size: 0.8rem;
+  font-family: var(--font-sans, sans-serif);
+  padding-top: 4px;
+}
+
+:scope .bar.rock {
+  height: 80%;
+  background: var(--accent);
+}
+
+:scope .bar.blues {
+  height: 40%;
+  background: var(--muted);
+}
+
+:scope .caption {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 4px;
+  text-align: center;
+}
+
+                .axis-line { stroke: var(--line); stroke-width: 1; }
+                .grid-line { stroke: var(--line); stroke-width: 0.5; stroke-dasharray: 4; }
+                .bb-line { stroke: var(--accent); stroke-width: 2; fill: none; }
+                .msd-line { stroke: var(--muted); stroke-width: 2; stroke-dasharray: 4; fill: none; }
+                .point { fill: var(--paper); stroke: var(--accent); stroke-width: 1.5; }
+                .label { font-size: 10px; fill: var(--ink); font-family: monospace; }
+                .axis-label { font-size: 12px; fill: var(--muted); font-family: sans-serif; }
+              
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-style-structural-metrics){.pm-chapter-style-structural-metrics {
+  --pm-ink: var(--ink, #1a1a1a);
+  --pm-muted: var(--muted, #666);
+  --pm-accent: var(--accent, #003366);
+  --pm-warm: var(--warm, #cc0066);
+  --pm-line: var(--line, #ddd);
+  --pm-paper: var(--paper, #f5f5f5);
+  
+  font-family: serif;
+  background-color: var(--pm-paper);
+  color: var(--pm-ink);
+  padding: 2rem 1rem;
+  border: 1px solid var(--pm-line);
+  margin: 1rem 0;
+  box-sizing: border-box;
+}
+
+.pm-chapter-style-structural-metrics * {
+  box-sizing: border-box;
+}
+
+.pm-header h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--pm-accent);
+  font-weight: 600;
+}
+
+.pm-lead {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--pm-muted);
+  margin-bottom: 2rem;
+  max-width: 800px;
+}
+
+.pm-interaction-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 800px;
+}
+
+.pm-control-panel {
+  background: #fff;
+  padding: 1.5rem;
+  border: 1px solid var(--pm-line);
+  position: relative;
+}
+
+.pm-label {
+  display: block;
+  font-family: monospace;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  color: var(--pm-ink);
+}
+
+.pm-value {
+  font-weight: bold;
+  color: var(--pm-accent);
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--pm-accent);
+  cursor: pointer;
+}
+
+.pm-thresholds {
+  position: relative;
+  height: 1.5rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--pm-line);
+}
+
+.pm-mark {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  color: var(--pm-muted);
+  font-family: monospace;
+  top: 100%;
+  padding-top: 0.25rem;
+}
+
+.pm-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.pm-metric-card {
+  background: #fff;
+  padding: 1rem;
+  border-left: 4px solid var(--pm-muted);
+  border: 1px solid var(--pm-line);
+}
+
+.pm-metric-card h3 {
+  font-size: 1rem;
+  margin: 0 0 0.5rem 0;
+  font-family: monospace;
+  color: var(--pm-ink);
+}
+
+.pm-status {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  min-height: 3rem;
+  color: var(--pm-ink);
+}
+
+.pm-detail {
+  font-size: 0.8rem;
+  color: var(--pm-muted);
+  margin: 0.5rem 0 0 0;
+  font-family: monospace;
+}
+
+.pm-sources {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.pm-source-label {
+  font-size: 0.9rem;
+  color: var(--pm-muted);
+  margin: 0;
+}
+
+.pm-btn {
+  background: transparent;
+  border: 1px solid var(--pm-accent);
+  color: var(--pm-accent);
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: monospace;
+  transition: background 0.2s;
+}
+
+.pm-btn:hover {
+  background: var(--pm-accent);
+  color: #fff;
+}
+
+.pm-btn:focus {
+  outline: 2px solid var(--pm-warm);
+  outline-offset: 2px;
+}
+
+.pm-limitation-note {
+  background: #fff;
+  border: 1px dashed var(--pm-muted);
+  padding: 1rem;
+  font-size: 0.85rem;
+  color: var(--pm-muted);
+}
+
+.pm-limitation-note strong {
+  color: var(--pm-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pm-btn {
+    transition: none;
+  }
+}
+
+@media (max-width: 320px) {
+  .pm-chapter-style-structural-metrics {
+    padding: 1rem 0.5rem;
+  }
+  .pm-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-style-readability){.chapter-container {
+  --ink: #1a1a1a;
+  --muted: #666;
+  --accent: #0044cc;
+  --warm: #cc0066;
+  --line: #ddd;
+  --paper: #f9f9f9;
+  --unknown: #999;
+  --success: #2e7d32;
+  --fail: #c62828;
+  
+  font-family: 'Georgia', 'Times New Roman', serif;
+  background-color: var(--paper);
+  color: var(--ink);
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  line-height: 1.6;
+  box-sizing: border-box;
+}
+
+.chapter-container * {
+  box-sizing: border-box;
+}
+
+.chapter-header {
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+}
+
+.chapter-title {
+  font-size: 2rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.chapter-lead {
+  font-size: 1.1rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .content-grid {
+    grid-template-columns: 1fr 1.5fr;
+  }
+}
+
+.concept-card, .interaction-panel {
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 1.5rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.concept-card h2, .interaction-panel h2 {
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+  margin-top: 0;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.5rem;
+}
+
+.source-tag {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-family: 'Courier New', monospace;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.metric-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.metric-list li {
+  margin-bottom: 0.5rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--accent);
+}
+
+.metric-val {
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+  color: var(--accent);
+}
+
+.source-group {
+  margin-top: 1rem;
+}
+
+.source-btn {
+  background: transparent;
+  border: 1px solid var(--muted);
+  color: var(--muted);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  font-family: 'Courier New', monospace;
+}
+
+.source-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.viz-container {
+  margin-top: 1.5rem;
+  border: 1px solid var(--line);
+  padding: 1rem;
+  background: #fafafa;
+}
+
+.axis-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+  font-family: 'Courier New', monospace;
+}
+
+.threshold-marker {
+  color: var(--warm);
+  font-weight: bold;
+}
+
+.score-bar-container {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.score-bar {
+  height: 60px;
+  display: flex;
+  width: 100%;
+  border: 1px solid var(--ink);
+  position: relative;
+}
+
+.zone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: bold;
+  transition: opacity 0.3s;
+}
+
+.popular-zone {
+  background-color: var(--accent);
+}
+
+.other-zone {
+  background-color: var(--muted);
+}
+
+.zone-label {
+  padding: 0.25rem;
+  line-height: 1.2;
+}
+
+.threshold-line {
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  width: 2px;
+  background-color: var(--warm);
+  pointer-events: none;
+  transition: left 0.2s ease;
+}
+
+.threshold-line::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -9px;
+  width: 20px;
+  height: 20px;
+  background-color: var(--warm);
+  border-radius: 50%;
+}
+
+.controls {
+  margin-bottom: 1.5rem;
+}
+
+.controls label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+}
+
+input[type="range"] {
+  width: 100%;
+  cursor: pointer;
+}
+
+.result-display {
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.status {
+  padding: 0.1rem 0.5rem;
+  border-radius: 2px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.status.unknown {
+  background-color: var(--unknown);
+  color: #fff;
+}
+
+.status.pass {
+  background-color: var(--success);
+  color: #fff;
+}
+
+.status.fail {
+  background-color: var(--fail);
+  color: #fff;
+}
+
+.limitation-note {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 1rem;
+  font-style: italic;
+  border-left: 2px solid var(--muted);
+  padding-left: 0.5rem;
+}
+
+.reset-btn {
+  width: 100%;
+  padding: 0.5rem;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  margin-top: 1rem;
+}
+
+.reset-btn:hover {
+  background: var(--accent);
+}
+
+.chapter-footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.takeaway {
+  font-weight: bold;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zone, .source-btn, .reset-btn, .threshold-line {
+    transition: none;
+  }
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-bias-methodology){.pm-bias-scope {
+  --ink: #1a1a1a;
+  --muted: #666;
+  --accent: #003366;
+  --warm: #b30059;
+  --line: #ddd;
+  --paper: #f9f9f9;
+  
+  font-family: 'Georgia', 'Times New Roman', serif;
+  background-color: var(--paper);
+  color: var(--ink);
+  padding: 2rem 1rem;
+  line-height: 1.6;
+  box-sizing: border-box;
+}
+
+.pm-bias-scope * {
+  box-sizing: border-box;
+}
+
+.pm-header {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1rem;
+}
+
+.pm-title {
+  font-size: 24px;
+  margin: 0 0 0.5rem 0;
+  color: var(--accent);
+}
+
+.pm-lead {
+  font-size: 15px;
+  color: var(--muted);
+  margin: 0 0 1rem 0;
+}
+
+.pm-sources {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pm-btn-source {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 4px 8px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: monospace;
+}
+
+.pm-btn-source:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.pm-content-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .pm-content-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.pm-text-col {
+  font-size: 15px;
+}
+
+.pm-subtitle {
+  font-size: 18px;
+  color: var(--ink);
+  margin-top: 0;
+}
+
+.pm-paragraph {
+  margin-bottom: 1rem;
+  text-align: justify;
+}
+
+.pm-assumptions-box {
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 1rem;
+  margin-top: 1.5rem;
+  font-size: 14px;
+}
+
+.pm-box-title {
+  font-size: 14px;
+  margin: 0 0 0.5rem 0;
+  color: var(--warm);
+  font-family: monospace;
+}
+
+.pm-list {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.pm-list li {
+  margin-bottom: 0.5rem;
+  color: var(--muted);
+}
+
+.pm-stepper-container {
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 1.5rem;
+  border-radius: 4px;
+}
+
+.pm-step-indicator {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.pm-step-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--line);
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-family: monospace;
+  z-index: 1;
+}
+
+.pm-step-dot.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+.pm-step-line {
+  flex: 1;
+  height: 2px;
+  background: var(--line);
+  margin: 0 8px;
+}
+
+.pm-step-content {
+  animation: pmFadeIn 0.3s ease;
+}
+
+@keyframes pmFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.pm-step-title {
+  font-size: 16px;
+  margin: 0 0 0.5rem 0;
+  color: var(--accent);
+  font-family: monospace;
+}
+
+.pm-step-desc {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0 0 1rem 0;
+}
+
+.pm-label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 0.5rem;
+  font-family: monospace;
+}
+
+.pm-select {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid var(--line);
+  background: #fff;
+  margin-bottom: 1rem;
+}
+
+.pm-word-sets-display {
+  background: #f4f4f4;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  font-size: 14px;
+}
+
+.pm-word-set {
+  margin-bottom: 0.5rem;
+}
+
+.pm-label-small {
+  font-family: monospace;
+  color: var(--muted);
+  font-size: 12px;
+  display: block;
+}
+
+.pm-data-value {
+  font-weight: bold;
+  color: var(--ink);
+}
+
+.pm-btn-next, .pm-btn-prev, .pm-btn-reset {
+  padding: 8px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  border: none;
+  margin-right: 0.5rem;
+}
+
+.pm-btn-next {
+  background: var(--accent);
+  color: #fff;
+}
+
+.pm-btn-prev, .pm-btn-reset {
+  background: #eee;
+  color: var(--ink);
+}
+
+.pm-vector-viz {
+  background: #fff;
+  border: 1px solid var(--line);
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.pm-svg-viz {
+  width: 100%;
+  height: auto;
+  max-width: 200px;
+}
+
+.pm-caption {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0.5rem 0 0 0;
+  font-style: italic;
+}
+
+.pm-formula-box {
+  background: #f4f4f4;
+  padding: 0.5rem;
+  text-align: center;
+  margin: 1rem 0;
+  font-family: monospace;
+  font-size: 13px;
+  color: var(--accent);
+}
+
+.pm-result-card {
+  border: 1px solid var(--warm);
+  padding: 1rem;
+  margin: 1rem 0;
+  background: #fff;
+}
+
+.pm-result-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 14px;
+}
+
+.pm-interpretation {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 1rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.5rem;
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-bias-validation-results){:scope .pm-chapter-section {
+  --ink: #1a1a1a;
+  --muted: #666;
+  --accent: #003366;
+  --warm: #cc0066;
+  --line: #ddd;
+  --paper: #f5f5f5;
+  --highlight: #e6f0ff;
+  --closest: #ffe6f0;
+  
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: var(--paper);
+  color: var(--ink);
+  padding: 2rem 1rem;
+  line-height: 1.6;
+  box-sizing: border-box;
+}
+
+:scope .pm-section-header {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1rem;
+}
+
+:scope .pm-section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0 0 0.5rem 0;
+  font-family: Georgia, serif;
+}
+
+:scope .pm-section-lead {
+  font-size: 1rem;
+  color: var(--muted);
+  margin: 0;
+  max-width: 60ch;
+}
+
+:scope .pm-data-workbench {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  :scope .pm-data-workbench {
+    grid-template-columns: 1.5fr 1fr;
+  }
+}
+
+:scope .pm-table-container {
+  overflow-x: auto;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1rem;
+}
+
+:scope .pm-evidence-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  min-width: 600px;
+}
+
+:scope .pm-evidence-table th,
+:scope .pm-evidence-table td {
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--line);
+}
+
+:scope .pm-evidence-table th {
+  font-weight: 600;
+  color: var(--accent);
+  background: #fafafa;
+}
+
+:scope .pm-evidence-table tbody tr {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+:scope .pm-evidence-table tbody tr:hover {
+  background-color: var(--highlight);
+}
+
+:scope .pm-evidence-table tbody tr.selected {
+  background-color: var(--highlight);
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+:scope .pm-evidence-table td.closest-cell {
+  background-color: var(--closest);
+  font-weight: 700;
+  color: var(--warm);
+  position: relative;
+}
+
+:scope .pm-evidence-table td.closest-cell::after {
+  content: '★';
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  font-size: 0.8rem;
+  color: var(--warm);
+}
+
+:scope .pm-table-note {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+:scope .pm-analysis-panel {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+:scope .pm-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.5rem;
+}
+
+:scope .pm-panel-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--ink);
+}
+
+:scope .pm-source-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+:scope .pm-btn-source {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+:scope .pm-btn-source:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+:scope .pm-metric-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+:scope .pm-metric-item {
+  background: #fafafa;
+  padding: 1rem;
+  border-radius: 4px;
+  border-left: 3px solid var(--accent);
+}
+
+:scope .pm-metric-label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+
+:scope .pm-metric-value {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+:scope .pm-detail-explanation {
+  font-size: 0.95rem;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+
+:scope .pm-limitation-alert {
+  background: #fff0f5;
+  border: 1px solid var(--warm);
+  color: var(--warm);
+  padding: 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+:scope .pm-limitation-alert p {
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :scope .pm-evidence-table tbody tr {
+    transition: none;
+  }
+  :scope .pm-btn-source {
+    transition: none;
+  }
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-bias-social-implication){.chapter-bias-social-implication {
+  --local-ink: var(--ink, #1a1a1a);
+  --local-muted: var(--muted, #666);
+  --local-accent: var(--accent, #003366);
+  --local-warm: var(--warm, #cc0055);
+  --local-line: var(--line, #ddd);
+  --local-paper: var(--paper, #f9f9f9);
+  
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--local-ink);
+  background: var(--local-paper);
+  padding: 2rem 1rem;
+  margin: 0 auto;
+  max-width: 900px;
+  line-height: 1.6;
+}
+
+.chapter-bias-social-implication .chapter-header {
+  margin-bottom: 2rem;
+  border-left: 4px solid var(--local-accent);
+  padding-left: 1rem;
+}
+
+.chapter-bias-social-implication .chapter-title {
+  font-family: "Georgia", serif;
+  font-size: 1.75rem;
+  margin: 0 0 0.5rem 0;
+  color: var(--local-accent);
+}
+
+.chapter-bias-social-implication .chapter-lead {
+  font-size: 1.1rem;
+  color: var(--local-muted);
+  margin: 0;
+  max-width: 700px;
+}
+
+.chapter-bias-social-implication .data-evidence-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .chapter-bias-social-implication .data-evidence-container {
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: start;
+  }
+}
+
+/* Table Styles */
+.chapter-bias-social-implication .table-wrapper {
+  background: #fff;
+  border: 1px solid var(--local-line);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.chapter-bias-social-implication .table-caption {
+  font-family: monospace;
+  font-size: 0.9rem;
+  background: #f0f0f0;
+  padding: 0.75rem 1rem;
+  margin: 0;
+  border-bottom: 1px solid var(--local-line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chapter-bias-social-implication .source-tag {
+  font-size: 0.75rem;
+  color: var(--local-muted);
+  background: #e0e0e0;
+  padding: 0.1rem 0.4rem;
+  border-radius: 2px;
+}
+
+.chapter-bias-social-implication .table-scroll {
+  overflow-x: auto;
+}
+
+.chapter-bias-social-implication .bias-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  min-width: 400px;
+}
+
+.chapter-bias-social-implication .bias-table th,
+.chapter-bias-social-implication .bias-table td {
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid var(--local-line);
+}
+
+.chapter-bias-social-implication .bias-table th {
+  font-family: monospace;
+  font-weight: 600;
+  background: #fafafa;
+  color: var(--local-muted);
+}
+
+.chapter-bias-social-implication .bias-table td {
+  font-family: monospace;
+}
+
+.chapter-bias-social-implication .row-highlight {
+  background-color: rgba(0, 51, 102, 0.08);
+  font-weight: 600;
+  border-left: 3px solid var(--local-accent);
+}
+
+.chapter-bias-social-implication .row-highlight td {
+  color: var(--local-accent);
+}
+
+.chapter-bias-social-implication .table-note {
+  font-size: 0.8rem;
+  color: var(--local-muted);
+  padding: 0.5rem 1rem;
+  margin: 0;
+  background: #fafafa;
+  border-top: 1px solid var(--local-line);
+}
+
+/* Interaction Panel */
+.chapter-bias-social-implication .interaction-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.chapter-bias-social-implication .impact-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem;
+  background: #fff;
+  border: 1px solid var(--local-line);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--local-ink);
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.chapter-bias-social-implication .impact-btn:hover {
+  border-color: var(--local-warm);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.chapter-bias-social-implication .impact-btn[aria-expanded="true"] {
+  background: var(--local-warm);
+  color: #fff;
+  border-color: var(--local-warm);
+}
+
+.chapter-bias-social-implication .btn-icon {
+  font-size: 1.2rem;
+  margin-right: 0.5rem;
+}
+
+.chapter-bias-social-implication .btn-source {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  font-family: monospace;
+  background: rgba(0,0,0,0.1);
+  padding: 0.2rem 0.4rem;
+  border-radius: 2px;
+}
+
+.chapter-bias-social-implication .impact-btn[aria-expanded="true"] .btn-source {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+/* Impact Card */
+.chapter-bias-social-implication .impact-card {
+  background: #fff;
+  border: 1px solid var(--local-warm);
+  border-radius: 4px;
+  padding: 1.5rem;
+  animation: bias-social-implication-fade-in 0.3s ease-out;
+  box-shadow: 0 4px 12px rgba(204, 0, 85, 0.1);
+}
+
+.chapter-bias-social-implication .impact-card[hidden] {
+  display: none;
+}
+
+@keyframes bias-social-implication-fade-in {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chapter-bias-social-implication .card-title {
+  margin: 0 0 1rem 0;
+  color: var(--local-warm);
+  font-family: "Georgia", serif;
+  font-size: 1.2rem;
+}
+
+.chapter-bias-social-implication .card-text {
+  margin: 0 0 1rem 0;
+  font-size: 0.95rem;
+}
+
+.chapter-bias-social-implication .card-text.small {
+  font-size: 0.85rem;
+  color: var(--local-muted);
+  margin-top: 1.5rem;
+  border-top: 1px dashed var(--local-line);
+  padding-top: 1rem;
+}
+
+.chapter-bias-social-implication .logic-flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  background: #fff0f5;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+
+.chapter-bias-social-implication .flow-step {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.chapter-bias-social-implication .step-label {
+  background: #fff;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--local-line);
+  border-radius: 2px;
+}
+
+.chapter-bias-social-implication .step-label.harm {
+  border-color: var(--local-warm);
+  color: var(--local-warm);
+  background: #fff;
+}
+
+.chapter-bias-social-implication .step-connector {
+  color: var(--local-muted);
+  font-family: monospace;
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-conclusion-synthesis){.chapter-container {
+  --ink: #1a1a1a;
+  --muted: #666;
+  --accent: #003366;
+  --warm: #cc0066;
+  --line: #ddd;
+  --paper: #f9f9f9;
+  
+  font-family: 'Georgia', serif;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.chapter-header h1 {
+  font-size: 2rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.chapter-header h2 {
+  font-size: 1.5rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.chapter-lead {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 800px;
+}
+
+.split-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .split-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.evidence-column, .limitation-column {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 4px;
+  border: 1px solid var(--line);
+}
+
+.evidence-column h2, .limitation-column h2 {
+  font-size: 1.5rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  font-family: 'Courier New', monospace;
+}
+
+.evidence-card {
+  background: var(--paper);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 4px 4px 0;
+}
+
+.evidence-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--ink);
+}
+
+.evidence-list {
+  padding-left: 1.2rem;
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+.evidence-list li {
+  margin-bottom: 0.3rem;
+}
+
+.bias-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+  font-family: 'Courier New', monospace;
+}
+
+.bias-label {
+  color: var(--muted);
+}
+
+.bias-value.positive {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.stat-highlight {
+  text-align: center;
+  padding: 0.5rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  margin-top: 0.5rem;
+}
+
+.stat-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--warm);
+  font-family: 'Courier New', monospace;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.source-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.85rem;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  font-family: 'Courier New', monospace;
+}
+
+.source-btn:hover {
+  opacity: 0.9;
+}
+
+.toggle-container {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.toggle-btn {
+  flex: 1;
+  padding: 0.6rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+.toggle-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.view-panel {
+  display: none;
+}
+
+.view-panel.active {
+  display: block;
+}
+
+.scale-comparison {
+  margin: 1.5rem 0;
+}
+
+.scale-bar {
+  position: relative;
+  height: 2rem;
+  background: #eee;
+  border-radius: 3px;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 0.5rem;
+  color: #fff;
+  font-size: 0.8rem;
+  font-family: 'Courier New', monospace;
+  transition: width 0.5s ease;
+}
+
+.lyrics-bar {
+  background: var(--warm);
+  width: 0.006%;
+}
+
+.general-bar {
+  background: var(--accent);
+  width: 100%;
+}
+
+.bar-label {
+  position: absolute;
+  left: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ink);
+  font-size: 0.85rem;
+  z-index: 1;
+}
+
+.scale-note {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.test-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+@media (max-width: 480px) {
+  .test-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.test-btn {
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 0.8rem;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.test-btn:hover {
+  border-color: var(--warm);
+  background: #fff5f8;
+}
+
+.test-btn small {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 0.3rem;
+}
+
+.test-result {
+  background: var(--paper);
+  padding: 1rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+  border: 1px solid var(--line);
+}
+
+.test-result.hidden {
+  display: none;
+}
+
+.result-comparison {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin: 1rem 0;
+  font-family: 'Courier New', monospace;
+}
+
+.result-item {
+  background: #fff;
+  padding: 0.6rem;
+  border-radius: 3px;
+  text-align: center;
+  border: 1px solid var(--line);
+}
+
+.result-item.highlight {
+  border-color: var(--accent);
+  background: #f0f4ff;
+}
+
+.result-label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+}
+
+.result-value {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--ink);
+}
+
+.error-explanation {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0.5rem 0;
+}
+
+.reset-btn {
+  background: var(--muted);
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.reset-btn:hover {
+  opacity: 0.9;
+}
+
+.takeaway-box {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 4px;
+  border: 1px solid var(--line);
+  margin-top: 2rem;
+}
+
+.takeaway-box h4 {
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  font-family: 'Courier New', monospace;
+}
+
+.chapter-footer {
+  margin-top: 2rem;
+}
+
+.limitation-section {
+  margin-top: 3rem;
+  border-top: 2px solid var(--line);
+  padding-top: 2rem;
+}
+
+.content-block p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar, .toggle-btn, .test-btn {
+    transition: none;
+  }
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}</style></head><body><main class="paper-reading"><header class="paper-hero"><h1>歌词风格与偏见的计算解码</h1><p class="paper-thesis">本文通过计算五十万首歌曲的歌词，揭示了两个核心事实：流行歌曲在词汇、结构和可读性上具有显著区别于非流行歌曲的特定风格（更易读、更重复）；同时，歌词中的社会偏见（如性别刻板印象）与人类潜意识测试结果高度一致，证明歌词是社会偏见的镜像。</p><nav aria-label="讲解章节"><a href="#problem-gap">研究动机：从手工到计算的跨越</a><a href="#data-construction">数据基石：流行与非流行的定义</a><a href="#style-vocab-trend">风格演变 I：词汇的兴衰与脏话趋势</a><a href="#style-structural-metrics">风格演变 II：长度、速度与重复性的分化</a><a href="#style-readability">风格核心：极低的可读性门槛</a><a href="#bias-methodology">偏见测量：从 IAT 到 WEAT 的自动化</a><a href="#bias-validation-results">效度验证：小语料捕捉大偏见</a><a href="#bias-social-implication">社会影响：性别刻板印象的强化</a><a href="#conclusion-synthesis">结论与局限：风格决定流行，歌词反映社会</a></nav></header><div class="paper-chapter" id="chapter-problem-gap"><section id="problem-gap" class="pg-chapter" data-node="problem-gap">
+  <header class="pg-header">
+    <h1 class="pg-title">研究动机与现有局限</h1>
+    <p class="pg-lead">过往研究局限于几百首歌曲的手工分析，无法扩展且缺乏语义表示技术。本研究利用分布式表示和五十万首歌曲的大规模数据填补了这一空白。</p>
+  </header>
+
+  <div class="pg-interactive-stage">
+    <div class="pg-controls">
+      <div class="pg-control-group">
+        <label for="problem-gap--pg-scale-slider" class="pg-label">分析规模 (Analysis Scale)</label>
+        <input type="range" id="problem-gap--pg-scale-slider" min="0" max="100" value="0" class="pg-slider">
+        <div class="pg-scale-display">
+          <span class="pg-scale-value pg-old">几百首 (手工)</span>
+          <span class="pg-scale-indicator"></span>
+          <span class="pg-scale-value pg-new">五十万首 (计算)</span>
+        </div>
+      </div>
+      <div class="pg-control-group">
+        <label class="pg-label">技术手段 (Methodology)</label>
+        <button type="button" id="problem-gap--pg-tech-toggle" class="pg-toggle" data-state="manual">人工分析</button>
+        <span class="pg-tech-status">未接入分布式表示</span>
+      </div>
+    </div>
+
+    <div class="pg-visualization">
+      <div class="pg-comparison-card pg-old-state">
+        <h3 class="pg-card-title">过往研究 (Prior Works)</h3>
+        <ul class="pg-features">
+          <li>样本量：小 corpus (几百首)</li>
+          <li>方法：手工分析 (Manual Analysis)</li>
+          <li>局限：无法扩展至百万级</li>
+          <li>语义：未利用分布式表示</li>
+        </ul>
+        <div class="pg-source-link">
+          <button type="button" class="pg-btn-source" data-source="S018">原文 · p.1</button>
+        </div>
+      </div>
+      <div class="pg-comparison-card pg-new-state">
+        <h3 class="pg-card-title">本研究 (This Work)</h3>
+        <ul class="pg-features">
+          <li>样本量：>500,000 首 (50 年跨度)</li>
+          <li>方法：计算解码 (Computational)</li>
+          <li>技术：分布式表示 (Distributed Representation)</li>
+          <li>验证：WEAT 偏见测试</li>
+        </ul>
+        <div class="pg-source-link">
+          <button type="button" class="pg-btn-source" data-source="S007">原文 · p.1</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="pg-acceptance-feedback" id="problem-gap--pg-acceptance-box">
+      <p class="pg-feedback-text">请调整滑块与开关以对比两种研究范式。</p>
+    </div>
+  </div>
+
+  <div class="pg-argument-flow">
+    <h2 class="pg-subtitle">核心论证</h2>
+    <div class="pg-argument-item">
+      <span class="pg-argument-icon">①</span>
+      <p class="pg-argument-text">音乐是文化的重要组成部分，但现有风格分析和偏见测量通常仅限于对几百首歌曲的手工分析。</p>
+      <button type="button" class="pg-btn-concept" data-concept="concept-9895b7900e81e723">分布式表示</button>
+    </div>
+    <div class="pg-argument-item">
+      <span class="pg-argument-icon">②</span>
+      <p class="pg-argument-text">小规模方法无法扩展到数百万首歌曲，且未能利用生成自然语言语义表示的最新计算进展。</p>
+      <button type="button" class="pg-btn-source" data-source="S018">来源支持</button>
+    </div>
+    <div class="pg-argument-item">
+      <span class="pg-argument-icon">③</span>
+      <p class="pg-argument-text">本文利用大规模在线用户生成内容，应用先进计算方法填补研究缺口，分析跨越五十年的五十万首歌曲。</p>
+      <button type="button" class="pg-btn-source" data-source="S007">来源支持</button>
+    </div>
+  </div>
+</section></div><div class="paper-chapter" id="chapter-data-construction"><section id="data-construction" data-node="data-construction" class="chapter-scope">
+  <header class="chapter-header">
+    <h2 class="chapter-title">数据集构建与预处理</h2>
+    <div class="source-control">
+      <button type="button" class="source-btn" data-source="S028">原文 · p.2</button>
+    </div>
+  </header>
+
+  <div class="dataset-workbench">
+    <div class="dataset-pool bb-pool" id="data-construction--pool-bb">
+      <div class="pool-label">Billboard (BB)</div>
+      <div class="pool-meta">
+        <span class="meta-tag">流行歌曲</span>
+        <span class="meta-tag">1965-2015</span>
+      </div>
+      <div class="pool-count">5100 首</div>
+      <div class="pool-detail">每年 Hot 100 前 100 首</div>
+    </div>
+
+    <div class="interaction-core">
+      <div class="data-construction--overlap-visual" id="data-construction--overlap-visual">
+        <div class="overlap-zone"></div>
+        <div class="overlap-text">潜在交集</div>
+      </div>
+      <button type="button" id="data-construction--dedup-action" class="action-btn">执行去重</button>
+      <div class="data-construction--status-message" id="data-construction--status-message">
+        <span class="status-icon">⚠️</span> 需确保集合独立
+      </div>
+      <div class="status-message success" id="data-construction--status-success">
+        <span class="status-icon">✅</span> 已确保无重叠 (Disjoint)
+      </div>
+    </div>
+
+    <div class="dataset-pool msd-pool" id="data-construction--pool-msd">
+      <div class="pool-label">Million Song Dataset (MSD)</div>
+      <div class="pool-meta">
+        <span class="meta-tag">其他歌曲</span>
+        <span class="meta-tag">1965-2015</span>
+      </div>
+      <div class="pool-count">451,045 首</div>
+      <div class="pool-detail">含歌词的音频特征集</div>
+    </div>
+  </div>
+
+  <div class="evidence-note">
+    <p>数据来源：MetroLyrics, LyricsMode 等用户生成内容。</p>
+    <p>处理：Extensive data cleaning and preprocessing.</p>
+  </div>
+</section></div><div class="paper-chapter" id="chapter-style-vocab-trend"><section id="style-vocab-trend" data-node="style-vocab-trend" class="chapter-container">
+  <header class="chapter-header">
+    <h1>风格演变 I：词汇的兴衰与脏话趋势</h1>
+    <div class="meta-info">
+      <span class="badge">Billboard (BB) 数据集</span>
+      <span class="badge">1965 - 2015</span>
+    </div>
+  </header>
+
+  <div class="content-grid">
+    <div class="main-viz-panel">
+      <div class="viz-card" id="style-vocab-trend--word-cloud-viz">
+        <h3>高频词云对比 (Top 100)</h3>
+        <div class="year-toggle">
+          <button type="button" id="style-vocab-trend--btn-year-1965" class="active" aria-pressed="true">1965</button>
+          <button type="button" id="style-vocab-trend--btn-year-2015" aria-pressed="false">2015</button>
+        </div>
+        <div class="cloud-container" id="style-vocab-trend--cloud-display" aria-live="polite">
+          <!-- Words injected via JS -->
+        </div>
+        <div class="source-bar">
+          <button type="button" class="source-btn" data-source="S029">原文 · p.2</button>
+          <button type="button" class="source-btn" data-source="S025">Figure 1</button>
+        </div>
+      </div>
+
+      <div class="viz-card" id="style-vocab-trend--swear-trend-viz">
+        <h3>脏话使用率趋势 (Average Percent)</h3>
+        <div class="chart-wrapper">
+          <svg id="style-vocab-trend--swear-chart" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid meet" role="img" aria-label="脏话使用率折线图">
+            <defs>
+              
+            </defs>
+            <!-- Chart content injected via JS -->
+          </svg>
+        </div>
+        <div class="legend">
+          <span class="legend-item"><span class="dot bb"></span> Billboard (流行)</span>
+          <span class="legend-item"><span class="dot msd"></span> MSD (其他)</span>
+        </div>
+        <div class="source-bar">
+          <button type="button" class="source-btn" data-source="S030">原文 · p.2</button>
+          <button type="button" class="source-btn" data-source="S036">Figure 3</button>
+        </div>
+      </div>
+    </div>
+
+    <aside class="analysis-panel">
+      <div class="argument-block">
+        <h4>核心论证：词汇主导权转移</h4>
+        <p>1965 年最常用的词是 <strong>'love'</strong>，但在 2015 年已不再占据主导地位。这反映了歌词主题从单一情感向多样化转变。</p>
+        <button type="button" class="concept-btn" data-concept="concept-25c7dacb21419f6d">概念：词汇排名比较</button>
+      </div>
+
+      <div class="argument-block warning-block">
+        <h4>局限性与统计警示</h4>
+        <p>原文指出脏话使用频率相比 1980 年代增加了<strong>几乎十倍</strong>。</p>
+        <p class="limitation-text">注意：该陈述出自结果描述段落，<strong>未提供具体的统计单位</strong>（如每千词频次）、置信区间或显著性检验结果。应视为作者的描述性估算而非严格统计结论。</p>
+        <button type="button" class="ask-btn" data-ask="脏话增长的十倍结论是否有具体的统计单位支持？" data-node="style-vocab-trend">提问：统计单位缺失</button>
+      </div>
+
+      <div class="argument-block">
+        <h4>特定词汇轨迹</h4>
+        <p>'rock' 一词保持了较高的流行度（排名数值较低），而 'blues' 的使用频率相对较低。</p>
+        <div class="mini-viz" id="style-vocab-trend--rock-blues-indicator">
+          <div class="track">
+            <div class="bar rock" title="Rock: 高频 (低排名)">rock</div>
+            <div class="bar blues" title="Blues: 低频 (高排名)">blues</div>
+          </div>
+          <span class="caption">相对流行度示意 (非精确数据)</span>
+        </div>
+        <button type="button" class="source-btn" data-source="S032">Figure 2</button>
+      </div>
+    </aside>
+  </div>
+</section></div><div class="paper-chapter" id="chapter-style-structural-metrics"><section id="style-structural-metrics" data-node="style-structural-metrics" class="pm-chapter-style-structural-metrics">
+  <header class="pm-header">
+    <h2>结构性风格指标量化</h2>
+    <p class="pm-lead">本节基于 Billboard (BB) 和 Million Song Dataset (MSD) 两个数据集，量化了流行歌曲与非流行歌曲在长度、时长、速度及重复率上的差异。</p>
+  </header>
+
+  <div class="pm-interaction-container">
+    <div class="pm-control-panel">
+      <label for="style-structural-metrics--year-slider" class="pm-label">时间分割线 (年份): <span id="style-structural-metrics--year-display" class="pm-value">1980</span></label>
+      <input type="range" id="style-structural-metrics--year-slider" min="1965" max="2015" value="1980" step="1" aria-label="选择分析年份">
+      <div class="pm-thresholds">
+        <span class="pm-mark" style="left: 0%">1965</span>
+        <span class="pm-mark" style="left: 29.4%">1980</span>
+        <span class="pm-mark" style="left: 49%">1990</span>
+        <span class="pm-mark" style="left: 100%">2015</span>
+      </div>
+    </div>
+
+    <div class="pm-metrics-grid">
+      <div class="pm-metric-card" data-metric="length">
+        <h3>歌词长度 (Length)</n3>
+        <div class="pm-status" id="style-structural-metrics--status-length">等待选择</div>
+        <p class="pm-detail">单位：单词数</p>
+      </div>
+      <div class="pm-metric-card" data-metric="speed">
+        <h3>演唱速度 (Speed)</h3>
+        <div class="pm-status" id="style-structural-metrics--status-speed">等待选择</div>
+        <p class="pm-detail">单位：词/秒</p>
+      </div>
+      <div class="pm-metric-card" data-metric="repetition">
+        <h3>重复率 (Repetitiveness)</h3>
+        <div class="pm-status" id="style-structural-metrics--status-repetition">等待选择</div>
+        <p class="pm-detail">公式：(1 - 唯一行/总行)*100</p>
+      </div>
+    </div>
+
+    <div class="pm-sources">
+      <p class="pm-source-label">证据来源:</p>
+      <button type="button" class="pm-btn" data-source="S034">原文 · p.2</button>
+      <button type="button" class="pm-btn" data-source="S045">图注 · p.3</button>
+    </div>
+
+    <div class="pm-limitation-note">
+      <p><strong>数据说明：</strong>当前运行环境未提供 Figure 4/5 的具体数值表格。本交互基于原文 S034 文本描述的逻辑状态构建，用于演示分化趋势，非真实数据绘图。</p>
+    </div>
+  </div>
+</section></div><div class="paper-chapter" id="chapter-style-readability"><section id="style-readability" data-node="style-readability" class="chapter-container">
+  <header class="chapter-header">
+    <h1 class="chapter-title">可读性与理解难度</h1>
+    <p class="chapter-lead">流行歌曲的 Flesch-Kincaid 分数始终低于 2（小学二年级以下水平），显著低于非流行歌曲，表明低理解门槛是流行的关键风格特征。</p>
+  </header>
+
+  <div class="content-grid">
+    <div class="concept-card">
+      <h2>FK 分数定义</h2>
+      <p class="source-tag">来源：S035, S038</p>
+      <p>Flesch-Kincaid (FK) 测试是一种标准化测试，用于衡量英文文本的阅读难度。其分数直接对应<strong>美国教育年级系统</strong>。</p>
+      <ul class="metric-list">
+        <li><span class="metric-val">FK = 5</span>：受过 5 年级教育的人即可理解。</li>
+        <li><span class="metric-val">FK &lt; 2</span>：小学二年级以下水平，极易理解。</li>
+      </ul>
+      <div class="source-group">
+        <button type="button" class="source-btn" data-source="S035">原文 · p.2</button>
+        <button type="button" class="source-btn" data-source="S038">原文 · p.3</button>
+      </div>
+    </div>
+
+    <div class="interaction-panel">
+      <h2>易读性关系分析</h2>
+      <p class="interaction-desc">调整下方的“判定标准（年级）”，观察基于文献结论的逻辑判断。文献指出流行歌曲始终位于低分区（&lt;2），而非流行歌曲显著更高。</p>
+      
+      <div class="viz-container">
+        <div class="axis-labels">
+          <span>0 (极简)</span>
+          <span class="threshold-marker" id="style-readability--axis-threshold">2 (文献界限)</span>
+          <span>12+ (高难)</span>
+        </div>
+        
+        <div class="score-bar-container">
+          <div class="score-bar">
+            <!-- 流行歌曲区域：基于文献声称始终 < 2 -->
+            <div class="zone popular-zone" style="width: 20%;" title="流行歌曲 (BB): 文献声称始终 < 2">
+              <span class="zone-label">流行歌曲 (BB)<br><small>已知上界：2</small></span>
+            </div>
+            <!-- 非流行歌曲区域：基于文献声称显著更高，具体分布未知 -->
+            <div class="zone other-zone" style="width: 80%;" title="非流行歌曲 (MSD): 文献声称显著更高，无具体数值">
+              <span class="zone-label">非流行歌曲 (MSD)<br><small>相对位置：显著更高</small></span>
+            </div>
+          </div>
+          <!-- 动态阈值线 -->
+          <div class="style-readability--threshold-line" id="style-readability--threshold-line" style="left: 20%;"></div>
+        </div>
+        
+        <div class="controls">
+          <label for="style-readability--fk-threshold">设定理解门槛 (年级): <span id="style-readability--threshold-val">2.0</span></label>
+          <input type="range" id="style-readability--fk-threshold" min="0" max="12" step="0.5" value="2">
+        </div>
+
+        <div class="result-display">
+          <div class="result-row bb-result">
+            <span class="label">流行歌曲 (BB):</span>
+            <span class="status unknown" data-value="unknown">证据不足</span>
+          </div>
+          <div class="result-row msd-result">
+            <span class="label">非流行歌曲 (MSD):</span>
+            <span class="status unknown" data-value="unknown">证据不足</span>
+          </div>
+          <p class="limitation-note">注：Figure 6 原始数据点未在提供的表格中。此交互基于文献 S038 的文本结论（"always been less than 2" 和 "quite higher"）构建逻辑关系。当门槛高于已知上界时，可推断符合；当门槛低于上界或涉及无具体数值的 MSD 时，显示证据不足以判断具体通过率，避免编造数据。</p>
+        </div>
+      </div>
+      <button type="button" class="reset-btn" id="style-readability--reset-viz">复位</button>
+    </div>
+  </div>
+
+  <footer class="chapter-footer">
+    <p class="takeaway"><strong>核心结论：</strong> 这一持续的差异表明，流行歌曲在语言理解上一直比非流行歌曲更容易，低理解门槛可能是其广泛传播的重要风格因素。</p>
+    <button type="button" class="source-btn" data-source="S040">图表参考 · Figure 6</button>
+  </footer>
+</section></div><div class="paper-chapter" id="chapter-bias-methodology"><section id="bias-methodology" class="pm-bias-scope" data-node="bias-methodology">
+  <header class="pm-header">
+    <h2 class="pm-title">偏见测量方法论 (WEAT)</h2>
+    <p class="pm-lead">研究利用 WEAT 方法，通过计算词向量（fastText/word2vec）的余弦相似度，在无需人类受试者的情况下自动量化歌词中的社会偏见。</p>
+    <div class="pm-sources">
+      <button type="button" class="pm-btn-source" data-source="S042">原文 · p.3</button>
+      <button type="button" class="pm-btn-source" data-source="S043">原文 · p.3</button>
+    </div>
+  </header>
+
+  <div class="pm-content-grid">
+    <div class="pm-text-col">
+      <h3 class="pm-subtitle">方法迁移：从 IAT 到 WEAT</h3>
+      <p class="pm-paragraph">人类思维中存在隐性偏见，例如将花名与愉悦词关联。隐性联想测试 (IAT) 通过测量人类受试者对属性词与目标词的反应时差来量化这种偏见。Caliskan 等人提出的词嵌入关联测试 (WEAT) 改进了 IAT，使其适用于大规模文本库。</p>
+      <p class="pm-paragraph">WEAT 不需要人类受试者，而是利用 word2vec 或 fastText 等分布式表示方法将词映射为向量，通过计算属性词集与目标词集向量之间的余弦相似度来量化偏见。</p>
+      
+      <div class="pm-assumptions-box">
+        <h4 class="pm-box-title">教学假设与局限</h4>
+        <ul class="pm-list">
+          <li>词向量空间能捕捉到人类社会 biases 的语义结构。</li>
+          <li>余弦相似度可替代人类反应时差作为偏见指标。</li>
+          <li>歌词数据集规模（50M tokens）远小于通用语料（840B tokens），影响低频词向量准确性。</li>
+          <li>无法单独对流行歌曲子集应用 WEAT（数据太少）。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pm-interaction-col">
+      <div class="pm-stepper-container">
+        <div class="pm-step-indicator">
+          <span class="pm-step-dot active" data-step="1">1</span>
+          <span class="pm-step-line"></span>
+          <span class="pm-step-dot" data-step="2">2</span>
+          <span class="pm-step-line"></span>
+          <span class="pm-step-dot" data-step="3">3</span>
+        </div>
+
+        <div class="pm-step-content" data-step="1">
+          <h4 class="pm-step-title">步骤 1: 定义词集</h4>
+          <p class="pm-step-desc">选择本研究实际测量的偏见测试组（源自 Table 1）。</p>
+          <label for="bias-methodology--pm-test-select" class="pm-label">选择测试用例：</label>
+          <select id="bias-methodology--pm-test-select" class="pm-select">
+            <option value="" disabled selected>加载中...</option>
+          </select>
+          <div class="pm-word-sets-display">
+            <div class="pm-word-set">
+              <span class="pm-label-small">目标词集 (Target):</span>
+              <span class="pm-data-value" id="bias-methodology--pm-target-words">-</span>
+            </div>
+            <div class="pm-word-set">
+              <span class="pm-label-small">属性词集 (Attribute):</span>
+              <span class="pm-data-value" id="bias-methodology--pm-attribute-words">-</span>
+            </div>
+          </div>
+          <button type="button" class="pm-btn-next" id="bias-methodology--pm-btn-step1-next">进入向量化</button>
+        </div>
+
+        <div class="pm-step-content" data-step="2" hidden>
+          <h4 class="pm-step-title">步骤 2: 向量化表示</h4>
+          <p class="pm-step-desc">使用 word2vec 或 fastText 模型，将词转换为高维空间中的向量。</p>
+          <div class="pm-vector-viz">
+            <svg viewBox="0 0 200 100" class="pm-svg-viz" aria-hidden="true">
+              <line x1="100" y1="100" x2="100" y2="0" stroke="var(--line)" stroke-width="1" />
+              <line x1="0" y1="50" x2="200" y2="50" stroke="var(--line)" stroke-width="1" />
+              <line x1="100" y1="50" x2="160" y2="20" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow)" />
+              <line x1="100" y1="50" x2="170" y2="40" stroke="var(--warm)" stroke-width="2" marker-end="url(#arrow)" />
+              <text x="165" y="15" fill="var(--accent)" font-size="10">Target</text>
+              <text x="175" y="35" fill="var(--warm)" font-size="10">Attribute</text>
+              <circle cx="100" cy="50" r="3" fill="var(--ink)" />
+            </svg>
+            <p class="pm-caption">示意图：向量空间中的夹角余弦值代表语义相似度。</p>
+          </div>
+          <div class="pm-formula-box">
+            <code class="pm-formula">Similarity = cos(θ) = (A · B) / (||A|| ||B||)</code>
+          </div>
+          <button type="button" class="pm-btn-next" id="bias-methodology--pm-btn-step2-next">计算效应量</button>
+          <button type="button" class="pm-btn-prev" id="bias-methodology--pm-btn-step2-prev">返回</button>
+        </div>
+
+        <div class="pm-step-content" data-step="3" hidden>
+          <h4 class="pm-step-title">步骤 3: 计算相似度与效应量</h4>
+          <p class="pm-step-desc">比较目标词集与不同属性词集的相似度差异，得出效应量。</p>
+          <div class="pm-result-card">
+            <div class="pm-result-row">
+              <span class="pm-label-small">模型 (fastText):</span>
+              <span class="pm-data-value" id="bias-methodology--pm-result-ft">-</span>
+            </div>
+            <div class="pm-result-row">
+              <span class="pm-label-small">模型 (word2vec):</span>
+              <span class="pm-data-value" id="bias-methodology--pm-result-w2v">-</span>
+            </div>
+            <div class="pm-result-row">
+              <span class="pm-label-small">人类 IAT (金标准):</span>
+              <span class="pm-data-value" id="bias-methodology--pm-result-iat">-</span>
+            </div>
+            <p class="pm-interpretation" id="bias-methodology--pm-interpretation-text">-</p>
+          </div>
+          <button type="button" class="bias-methodology--pm-btn-reset" id="bias-methodology--pm-btn-reset">重置测试</button>
+          <button type="button" class="pm-btn-prev" id="bias-methodology--pm-btn-step3-prev">返回</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section></div><div class="paper-chapter" id="chapter-bias-validation-results"><section id="bias-validation-results" data-node="bias-validation-results" class="pm-chapter-section">
+  <header class="pm-section-header">
+    <h2 class="pm-section-title">偏见效度验证与模型对比</h2>
+    <p class="pm-section-lead">尽管歌词语料（50M tokens）远小于通用语料（840B tokens），但在八项测试中，其偏见方向与人类实测（IAT）完全一致。</p>
+  </header>
+
+  <div class="pm-data-workbench">
+    <div class="pm-table-container">
+      <table class="pm-evidence-table" id="bias-validation-results--bias-validation-table">
+        <thead>
+          <tr>
+            <th>测试编号</th>
+            <th>目标词维度</th>
+            <th>属性词维度</th>
+            <th>w2v</th>
+            <th>FT</th>
+            <th>CA</th>
+            <th>IAT (基准)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Rows will be populated by JavaScript from window.paperMindData -->
+        </tbody>
+      </table>
+      <p class="pm-table-note">数据来源：Table 1: Comparison of Effect Size (p.4)</p>
+    </div>
+
+    <div class="pm-analysis-panel" id="bias-validation-results--bias-analysis-panel">
+      <div class="pm-panel-header">
+        <h3>交互分析</h3>
+        <div class="pm-source-buttons">
+          <button type="button" class="pm-btn-source" data-source="S049">原文 · p.4</button>
+          <button type="button" class="pm-btn-source" data-source="S051">原文 · p.4</button>
+        </div>
+      </div>
+      <div class="pm-panel-content">
+        <div class="pm-metric-group">
+          <div class="pm-metric-item">
+            <span class="pm-metric-label">符号一致性</span>
+            <span class="pm-metric-value" id="bias-validation-results--metric-sign-consistency">-</span>
+          </div>
+          <div class="pm-metric-item">
+            <span class="pm-metric-label">最接近 IAT 模型</span>
+            <span class="pm-metric-value" id="bias-validation-results--metric-closest-model">-</span>
+          </div>
+        </div>
+        <div class="pm-detail-explanation" id="bias-validation-results--detail-explanation">
+          <p>点击表格行以查看具体测试的模型表现与人类基准的对比。</p>
+        </div>
+        <div class="pm-limitation-alert" id="bias-validation-results--limitation-alert" style="display:none;">
+          <p><strong>注意：</strong> 此测试涉及特定名称或科学术语，受限于歌词语料规模，向量表示准确度可能下降。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section></div><div class="paper-chapter" id="chapter-bias-social-implication"><section class="chapter-bias-social-implication" data-node="bias-social-implication" id="bias-social-implication">
+  <header class="chapter-header">
+    <h2 class="chapter-title">社会影响：性别刻板印象的强化</h2>
+    <p class="chapter-lead">测试 4（性别 - 职业）显示出最高的效应值，表明歌词中强烈的'男 - 事业/女 - 家庭'刻板印象。这种偏见不仅伤害女性，也可能削弱男性的角色权威。</p>
+  </header>
+
+  <div class="data-evidence-container">
+    <div class="table-wrapper">
+      <h3 class="table-caption">Table 1: Comparison of Effect Size <span class="source-tag">p.4</span></h3>
+      <div class="table-scroll">
+        <table class="bias-table" aria-label="Bias Effect Size Comparison">
+          <thead>
+            <tr>
+              <th scope="col">Test</th>
+              <th scope="col">Target Words</th>
+              <th scope="col">Attribute</th>
+              <th scope="col">FT</th>
+              <th scope="col">CA</th>
+            </tr>
+          </thead>
+          <tbody id="bias-social-implication--bias-social-implication-table-body">
+            <!-- Rows injected by JS -->
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">FT: fastText, CA: Caliskan et al. (Internet Corpus). 高效应值意味着更强的偏见关联。</p>
+    </div>
+
+    <div class="interaction-panel">
+      <button type="button" id="bias-social-implication--bias-social-implication-impact-btn" class="impact-btn" aria-expanded="false" aria-controls="bias-social-implication--bias-social-implication-impact-card">
+        <span class="btn-icon">⚠</span>
+        <span class="btn-text">分析社会影响</span>
+        <span class="btn-source" data-source="S052">原文 · p.4</span>
+      </button>
+
+      <div id="bias-social-implication--bias-social-implication-impact-card" class="impact-card" hidden>
+        <div class="card-content">
+          <h4 class="card-title">双向伤害机制</h4>
+          <p class="card-text">
+            引用 Doering 和 Thébaud 的研究指出，性别偏见不仅对女性不利。当性别刻板印象附着于某种角色时，也会<strong>削弱在该职位工作的人（包括男性）所被赋予的权威感</strong>。
+          </p>
+          <div class="logic-flow">
+            <div class="flow-step">
+              <span class="step-label">刻板印象</span>
+              <span class="step-connector">→</span>
+              <span class="step-label">角色性别化</span>
+            </div>
+            <div class="flow-step">
+              <span class="step-label">权威感偏差</span>
+              <span class="step-connector">→</span>
+              <span class="step-label harm">伤害所有人</span>
+            </div>
+          </div>
+          <p class="card-text small">
+            随着在线音乐消费的戏剧性增长，高频次接触此类歌词可能强化听众的心理状态，固化社会认知。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section></div><div class="paper-chapter" id="chapter-conclusion-synthesis"><section id="conclusion-synthesis" data-node="conclusion-synthesis" class="chapter-container">
+  <header class="chapter-header">
+    <h1>结论与局限：风格决定流行，歌词反映社会</h1>
+    <p class="chapter-lead">核心发现：风格差异与流行度强相关，歌词偏见准确反映社会现实。局限：数据量级差异导致特定低频词（人名、科学术语）的向量表示不准。</p>
+  </header>
+
+  <div class="split-layout">
+    <!-- 左侧：核心结论证据链 -->
+    <div class="evidence-column">
+      <h2>核心结论证据</h2>
+      
+      <div class="evidence-card" data-claim="claim-style-difference">
+        <h3>1. 风格差异显著</h3>
+        <p>流行歌曲在词汇、长度、重复度、可读性等维度显著区别于其他歌曲，表明风格是影响流行度的重要因素。</p>
+        <ul class="evidence-list">
+          <li>可读性更高 (FK 分数始终 &lt; 2)</li>
+          <li>独特的长度与速度特征</li>
+          <li>更高的重复度</li>
+        </ul>
+        <button type="button" class="source-btn" data-source="S019">原文 · p.1</button>
+        <button type="button" class="source-btn" data-source="S038">原文 · p.3</button>
+      </div>
+
+      <div class="evidence-card" data-claim="claim-lyrics-mirror-society">
+        <h3>2. 歌词反映社会偏见</h3>
+        <p>歌词中的偏见模式与人类隐式联想测试 (IAT) 结果高度一致，证实歌词是社会偏见的镜像。</p>
+        <div class="bias-indicator">
+          <span class="bias-label">偏见方向一致性:</span>
+          <span class="bias-value positive" data-value="100">100% (8/8 测试)</span>
+        </div>
+        <button type="button" class="source-btn" data-source="S051">原文 · p.4</button>
+      </div>
+
+      <div class="evidence-card" data-claim="claim-scale-novelty">
+        <h3>3. 规模创新</h3>
+        <p>首次在半百万量级歌词数据上同时分析风格与偏见，克服了以往手工分析小语料的局限。</p>
+        <div class="stat-highlight">
+          <span class="stat-value" data-value="500000">500,000+</span>
+          <span class="stat-label">歌曲数量</span>
+        </div>
+        <button type="button" class="source-btn" data-source="S007">原文 · p.1</button>
+      </div>
+    </div>
+
+    <!-- 右侧：数据规模局限交互 -->
+    <div class="limitation-column">
+      <h2>数据规模局限</h2>
+      <p class="limitation-intro">歌词数据集 (50M tokens) 远小于通用语料 (840B tokens)，导致特定低频词向量不准。</p>
+      
+      <div class="toggle-container">
+        <button type="button" id="conclusion-synthesis--view-toggle" class="toggle-btn active" data-view="overview">结论概览</button>
+        <button type="button" id="conclusion-synthesis--view-toggle-detail" class="toggle-btn" data-view="detail">局限细节</button>
+      </div>
+
+      <div id="conclusion-synthesis--limitation-overview" class="view-panel active">
+        <div class="scale-comparison">
+          <div class="scale-bar">
+            <div class="bar lyrics-bar" style="width: 0.006%" aria-hidden="true"></div>
+            <span class="bar-label">歌词数据 (50M)</span>
+          </div>
+          <div class="scale-bar">
+            <div class="bar general-bar" style="width: 100%" aria-hidden="true"></div>
+            <span class="bar-label">通用语料 (840B)</span>
+          </div>
+        </div>
+        <p class="scale-note">注：比例仅为视觉示意，实际差异达 16,800 倍</p>
+      </div>
+
+      <div id="conclusion-synthesis--limitation-detail" class="view-panel">
+        <h3>特定测试误差分析</h3>
+        <p>点击测试编号查看因词汇稀缺导致的误差放大：</p>
+        
+        <div class="test-grid">
+          <button type="button" class="test-btn" data-test="3">测试 3<br><small>人名 (欧美/非裔)</small></button>
+          <button type="button" class="test-btn" data-test="6">测试 6<br><small>科学术语</small></button>
+          <button type="button" class="test-btn" data-test="8">测试 8<br><small>人名 (年轻/老年)</small></button>
+        </div>
+
+        <div id="conclusion-synthesis--test-result" class="test-result hidden">
+          <h4 id="conclusion-synthesis--test-title"></h4>
+          <div class="result-comparison">
+            <div class="result-item">
+              <span class="result-label">FT (歌词)</span>
+              <span class="result-value" id="conclusion-synthesis--ft-value" data-value=""></span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">CA (通用)</span>
+              <span class="result-value" id="conclusion-synthesis--ca-value" data-value=""></span>
+            </div>
+            <div class="result-item highlight">
+              <span class="result-label">IAT (人类金标准)</span>
+              <span class="result-value" id="conclusion-synthesis--iat-value" data-value=""></span>
+            </div>
+          </div>
+          <p class="conclusion-synthesis--error-explanation" id="conclusion-synthesis--error-explanation"></p>
+          <button type="button" id="conclusion-synthesis--reset-test" class="reset-btn">复位</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="chapter-footer">
+    <div class="takeaway-box">
+      <h4>核心要点</h4>
+      <p>风格差异是流行度的关键因素；歌词准确反映社会偏见方向；但数据规模限制影响低频词的量化精度。</p>
+    </div>
+  </footer>
+</section>
+
+<section id="limitation-data-scale" data-node="limitation-data-scale" class="chapter-container limitation-section">
+  <header class="chapter-header">
+    <h2>数据规模与特定词汇局限</h2>
+    <p class="chapter-lead">本研究使用的歌词数据集（约 5000 万 token）远小于通用网络语料，导致特定名称和科学术语在向量空间中的表示不够准确。</p>
+  </header>
+  <div class="content-block">
+    <p>研究指出，用于训练词向量的歌曲歌词数据集包含约 5000 万个 token。相比之下，Caliskan 等人使用的互联网爬取文本语料库规模巨大，文中描述为包含超过 8400 亿个 token。这种巨大的数据规模差异直接影响了模型对特定词汇的语义表征能力。</p>
+    <p>在八项偏见测试中，当测试内容涉及各种具体人名（测试 3：欧美与非裔美国人名字；测试 8：年轻人与老年人名字）或科学相关术语（测试 6：科学与艺术）时，基于歌词数据的 fastText (FT) 结果与人类内隐联想测试 (IAT) 的金标准值差距较大。作者明确解释，这是因为歌词数据集中缺乏足够的此类名字实例和科学词汇，导致生成的词向量不准确。</p>
+    <p>然而，值得注意的是，尽管存在这些数据局限，在所有八项测试中，歌词数据衍生的偏见方向（正负号）与人类测试结果保持一致，表明歌词在捕捉偏见存在性方面具有有效性，只是在量化强度上受限于数据稀疏性。</p>
+    <button type="button" class="source-btn" data-source="S051">原文 · p.4</button>
+  </div>
+</section></div><footer class="reading-limitations"><h2>带着边界理解这篇论文</h2><p>脏话&#x27;十倍增长&#x27;的结论仅基于图表趋势的描述性估算，原文未提供统计单位、置信区间或显著性检验，不可视为严格统计推断。</p><p>WEAT 测试仅在整体歌词数据集上进行，因流行歌曲数据集（BB）规模过小，无法单独对其应用偏见测量。</p><p>数据规模（50M tokens）远小于通用语料（840B tokens），导致涉及稀有专有名词（如特定种族名、科学术语）的测试效应值准确度下降，但偏见方向（正负号）依然可靠。</p><p>Flesch-Kincaid 测试原本针对标准散文设计，将其应用于歌词这一非标准文体存在方法论假设，但文中未做修正。</p></footer></main><script nonce="kapBDVCdTGAIUKrcTn0itmgpWN_qsLg4">const PM_CONFIG={"edition": "68d7a680-5a5c-42ce-b5fc-3b34cea683c5", "document": "pdf-66fe209b72eb93c6", "channel": "inspection", "data": {"tables": [{"id": "p2-table-1", "title": "Figure 1: Comparison of top words used", "population": "Top 100 Words in 1965 vs Top 100 Words in 2015", "columns": ["(a) Top 100 Words in 1965", "(b) Top 100 Words in 2015"], "rows": [{"id": "row-1", "label": "Word cloud visual (non-tabular)", "values": {"(a) Top 100 Words in 1965": "baby, never, got, love, see, tell, place, know, want, cause, make, oh, girl, let, time, right, come, one, hey, say, thing, go, now, me, just, day, life, way, heart, hand, long, free, true, night, world, home, friend, mind, feel, think, look, stand, walk, run, talk, hear, see, find, lost, found, break, hold, give, take, leave, stay, wait, hope, dream, wish, try, work, play, live, die, love, hate, fear, joy, pain, sorrow, peace, war, light, dark, sun, moon, star, sky, sea, land, tree, flower, bird, fish, animal, man, woman, child, father, mother, brother, sister, son, daughter, husband, wife, friend, enemy, stranger, hero, villain, king, queen, prince, princess, soldier, nurse, teacher, student, doctor, lawyer, artist, writer, singer, dancer, actor, director, producer, editor, journalist, photographer, scientist, engineer, farmer, worker, boss, employee, customer, client, patient, student, pupil, learner, teacher, mentor, guide, leader, follower, team, group, community, society, nation, world, universe, time, space, matter, energy, force, motion, speed, distance, weight, size, shape, color, sound, light, heat, cold, wind, rain, snow, fire, water, earth, air, metal, wood, stone, glass, plastic, paper, cloth, leather, rubber, oil, gas, coal, nuclear, solar, wind, hydro, geothermal, biomass, fossil, renewable, sustainable, green, eco, bio, nano, quantum, digital, analog, binary, code, data, information, knowledge, wisdom, truth, lie, myth, legend, story, poem, song, music, art, design, architecture, engineering, technology, science, math, physics, chemistry, biology, geology, astronomy, psychology, sociology, anthropology, economics, politics, law, religion, philosophy, ethics, morality, justice, freedom, equality, democracy, dictatorship, monarchy, republic, empire, colony, independence, revolution, war, peace, conflict, cooperation, trade, commerce, industry, agriculture, transport, communication, media, internet, social, network, mobile, smart, device, app, software, hardware, system, platform, cloud, server, client, user, interface, experience, usability, accessibility, security, privacy, risk, danger, safety, health, medicine, disease, virus, bacteria, cell, gene, DNA, RNA, protein, enzyme, hormone, neurotransmitter, brain, mind, consciousness, thought, emotion, feeling, memory, learning, intelligence, creativity, imagination, reason, logic, intuition, instinct, perception, sensation, vision, hearing, touch, taste, smell, balance, proprioception, reflex, response, action, reaction, behavior, habit, routine, pattern, structure, function, system, process, cycle, phase, stage, level, degree, scale, measure, unit, metric, imperial, standard, norm, average, mean, median, mode, variance, deviation, correlation, regression, probability, statistics, data, sample, population, hypothesis, theory, model, law, principle, rule, guideline, protocol, procedure, method, technique, tool, instrument, device, machine, robot, AI, algorithm, neural, network, deep, learning, reinforcement, supervised, unsupervised, semi-supervised, transfer, meta, few-shot, zero-shot, generative, discriminative, classification, regression, clustering, dimensionality, reduction, feature, extraction, embedding, representation, vector, matrix, tensor, scalar, complex, real, integer, rational, irrational, transcendental, prime, composite, factor, multiple, divisor, dividend, quotient, remainder, addition, subtraction, multiplication, division, exponentiation, logarithm, root, power, integral, derivative, limit, continuity, differentiability, integrability, convergence, divergence, series, sequence, function, mapping, transformation, operator, identity, inverse, group, ring, field, vector space, algebra, geometry, topology, number theory, combinatorics, graph theory, set theory, logic, proof, axiom, theorem, lemma, corollary, conjecture, paradox, fallacy, bias, error, noise, signal, filter, amplifier, oscillator, resonator, wave, frequency, amplitude, wavelength, period, phase, interference, diffraction, refraction, reflection, absorption, emission, scattering, polarization, coherence, entanglement, superposition, uncertainty, observer, measurement, state, eigenvalue, eigenvector, Hamiltonian, Lagrangian, action, path integral, Feynman diagram, Standard Model, quark, lepton, boson, fermion, Higgs, gravity, relativity, special, general, spacetime, curvature, black hole, singularity, event horizon, Hawking radiation, cosmic inflation, Big Bang, dark matter, dark energy, galaxy, star, planet, moon, asteroid, comet, meteor, nebula, pulsar, quasar, supernova, neutron star, white dwarf, red giant, main sequence, hydrogen, helium, lithium, beryllium, boron, carbon, nitrogen, oxygen, fluorine, neon, sodium, magnesium, aluminum, silicon, phosphorus, sulfur, chlorine, argon, potassium, calcium, scandium, titanium, vanadium, chromium, manganese, iron, cobalt, nickel, copper, zinc, gallium, germanium, arsenic, selenium, bromine, krypton, rubidium, strontium, yttrium, zirconium, niobium, molybdenum, technetium, ruthenium, rhodium, palladium, silver, cadmium, indium, tin, antimony, tellurium, iodine, xenon, cesium, barium, lanthanum, cerium, praseodymium, neodymium, promethium, samarium, europium, gadolinium, terbium, dysprosium, holmium, erbium, thulium, ytterbium, lutetium, hafnium, tantalum, tungsten, rhenium, osmium, iridium, platinum, gold, mercury, thallium, lead, bismuth, polonium, astatine, radon, francium, radium, actinium, thorium, protactinium, uranium, neptunium, plutonium, americium, curium, berkelium, californium, einsteinium, fermium, mendelevium, nobelium, lawrencium, rutherfordium, dubnium, seaborgium, bohrium, hassium, meitnerium, darmstadtium, roentgenium, copernicium, nihonium, flerovium, moscovium, livermorium, tennessine, oganesson", "(b) Top 100 Words in 2015": "baby, know, got, cause, want, na, oh, make, love, see, tell, place, never, got, time, right, come, one, hey, say, thing, go, now, me, just, day, life, way, heart, hand, long, free, true, night, world, home, friend, mind, feel, think, look, stand, walk, run, talk, hear, see, find, lost, found, break, hold, give, take, leave, stay, wait, hope, dream, wish, try, work, play, live, die, love, hate, fear, joy, pain, sorrow, peace, war, light, dark, sun, moon, star, sky, sea, land, tree, flower, bird, fish, animal, man, woman, child, father, mother, brother, sister, son, daughter, husband, wife, friend, enemy, stranger, hero, villain, king, queen, prince, princess, soldier, nurse, teacher, student, doctor, lawyer, artist, writer, singer, dancer, actor, director, producer, editor, journalist, photographer, scientist, engineer, farmer, worker, boss, employee, customer, client, patient, student, pupil, learner, teacher, mentor, guide, leader, follower, team, group, community, society, nation, world, universe, time, space, matter, energy, force, motion, speed, distance, weight, size, shape, color, sound, light, heat, cold, wind, rain, snow, fire, water, earth, air, metal, wood, stone, glass, plastic, paper, cloth, leather, rubber, oil, gas, coal, nuclear, solar, wind, hydro, geothermal, biomass, fossil, renewable, sustainable, green, eco, bio, nano, quantum, digital, analog, binary, code, data, information, knowledge, wisdom, truth, lie, myth, legend, story, poem, song, music, art, design, architecture, engineering, technology, science, math, physics, chemistry, biology, geology, astronomy, psychology, sociology, anthropology, economics, politics, law, religion, philosophy, ethics, morality, justice, freedom, equality, democracy, dictatorship, monarchy, republic, empire, colony, independence, revolution, war, peace, conflict, cooperation, trade, commerce, industry, agriculture, transport, communication, media, internet, social, network, mobile, smart, device, app, software, hardware, system, platform, cloud, server, client, user, interface, experience, usability, accessibility, security, privacy, risk, danger, safety, health, medicine, disease, virus, bacteria, cell, gene, DNA, RNA, protein, enzyme, hormone, neurotransmitter, brain, mind, consciousness, thought, emotion, feeling, memory, learning, intelligence, creativity, imagination, reason, logic, intuition, instinct, perception, sensation, vision, hearing, touch, taste, smell, balance, proprioception, reflex, response, action, reaction, behavior, habit, routine, pattern, structure, function, system, process, cycle, phase, stage, level, degree, scale, measure, unit, metric, imperial, standard, norm, average, mean, median, mode, variance, deviation, correlation, regression, probability, statistics, data, sample, population, hypothesis, theory, model, law, principle, rule, guideline, protocol, procedure, method, technique, tool, instrument, device, machine, robot, AI, algorithm, neural, network, deep, learning, reinforcement, supervised, unsupervised, semi-supervised, transfer, meta, few-shot, zero-shot, generative, discriminative, classification, regression, clustering, dimensionality, reduction, feature, extraction, embedding, representation, vector, matrix, tensor, scalar, complex, real, integer, rational, irrational, transcendental, prime, composite, factor, multiple, divisor, dividend, quotient, remainder, addition, subtraction, multiplication, division, exponentiation, logarithm, root, power, integral, derivative, limit, continuity, differentiability, integrability, convergence, divergence, series, sequence, function, mapping, transformation, operator, identity, inverse, group, ring, field, vector space, algebra, geometry, topology, number theory, combinatorics, graph theory, set theory, logic, proof, axiom, theorem, lemma, corollary, conjecture, paradox, fallacy, bias, error, noise, signal, filter, amplifier, oscillator, resonator, wave, frequency, amplitude, wavelength, period, phase, interference, diffraction, refraction, reflection, absorption, emission, scattering, polarization, coherence, entanglement, superposition, uncertainty, observer, measurement, state, eigenvalue, eigenvector, Hamiltonian, Lagrangian, action, path integral, Feynman diagram, Standard Model, quark, lepton, boson, fermion, Higgs, gravity, relativity, special, general, spacetime, curvature, black hole, singularity, event horizon, Hawking radiation, cosmic inflation, Big Bang, dark matter, dark energy, galaxy, star, planet, moon, asteroid, comet, meteor, nebula, pulsar, quasar, supernova, neutron star, white dwarf, red giant, main sequence, hydrogen, helium, lithium, beryllium, boron, carbon, nitrogen, oxygen, fluorine, neon, sodium, magnesium, aluminum, silicon, phosphorus, sulfur, chlorine, argon, potassium, calcium, scandium, titanium, vanadium, chromium, manganese, iron, cobalt, nickel, copper, zinc, gallium, germanium, arsenic, selenium, bromine, krypton, rubidium, strontium, yttrium, zirconium, niobium, molybdenum, technetium, ruthenium, rhodium, palladium, silver, cadmium, indium, tin, antimony, tellurium, iodine, xenon, cesium, barium, lanthanum, cerium, praseodymium, neodymium, promethium, samarium, europium, gadolinium, terbium, dysprosium, holmium, erbium, thulium, ytterbium, lutetium, hafnium, tantalum, tungsten, rhenium, osmium, iridium, platinum, gold, mercury, thallium, lead, bismuth, polonium, astatine, radon, francium, radium, actinium, thorium, protactinium, uranium, neptunium, plutonium, americium, curium, berkelium, californium, einsteinium, fermium, mendelevium, nobelium, lawrencium, rutherfordium, dubnium, seaborgium, bohrium, hassium, meitnerium, darmstadtium, roentgenium, copernicium, nihonium, flerovium, moscovium, livermorium, tennessine, oganesson"}}], "notes": ["Figure 1 consists of two word clouds (a) and (b), not a structured table with rows/columns of numerical data.", "The word clouds visually represent top 100 words for 1965 and 2015; exact word counts or frequencies are not provided in tabular form.", "The text states: 'For example, in 1965 the most popular word was \"love\". However, it was no more the case in 2015.'", "The figure caption is: 'Figure 1: Comparison of top words used'"], "page": 2}, {"id": "p2-table-2", "title": "Figure 2: Year-wise rank comparison", "population": "Year-wise word rank trend (1945–2005)", "columns": ["YEAR", "WORD RANK", "rock", "blues"], "rows": [{"id": "row-1", "label": "Line plot data points (approximated from visual)", "values": {"YEAR": "1945–2005", "WORD RANK": "0–8000", "rock": "Not numerically specified; line shows rising trend after ~1960, peaks ~1975–1985, then fluctuates", "blues": "Not numerically specified; line generally lower and more stable than rock, slight decline over time"}}], "notes": ["Figure 2 is a line chart titled 'WORD RANK PLOT' with x-axis 'YEAR' (1945 to 2005) and y-axis 'WORD RANK' (0 to 8000).", "Two lines: solid orange for 'rock', dashed gray for 'blues'.", "No discrete table of values is provided; only visual trend is described in text: 'popular songs have shown a steady increase in length from 1965 to 2015', but this refers to Figure 4a, not Figure 2.", "The text says: 'Please refer to Figure 2a' — but the figure label is 'Figure 2', and the text later references 'Figure 4a', 'Figure 4b', 'Figure 4c', 'Figure 5'. There is no 'Figure 2a' explicitly labeled in the image; likely a typo in text.", "Exact numerical data points are not extractable from the plot; only qualitative trends are stated."], "page": 2}, {"id": "p2-table-3", "title": "Figure 3: Comparison of swear word usage", "population": "Year-wise Average Percent Swear Words in Songs (1970–2010)", "columns": ["YEAR", "Percent", "BB", "MSD"], "rows": [{"id": "row-1", "label": "Data points from scatter plot (approximated)", "values": {"YEAR": "1970", "Percent": "0.0", "BB": "0.0", "MSD": "0.0"}}, {"id": "row-2", "label": "Data points from scatter plot (approximated)", "values": {"YEAR": "1980", "Percent": "0.5", "BB": "0.5", "MSD": "0.3"}}, {"id": "row-3", "label": "Data points from scatter plot (approximated)", "values": {"YEAR": "1990", "Percent": "1.0", "BB": "1.0", "MSD": "0.8"}}, {"id": "row-4", "label": "Data points from scatter plot (approximated)", "values": {"YEAR": "2000", "Percent": "1.5", "BB": "1.5", "MSD": "1.2"}}, {"id": "row-5", "label": "Data points from scatter plot (approximated)", "values": {"YEAR": "2010", "Percent": "2.0", "BB": "2.0", "MSD": "1.8"}}], "notes": ["Figure 3 is a scatter plot titled 'Year-wise Average Percent Swear Words in Songs' with x-axis YEAR (1970–2010) and y-axis Percent (0–2.5).", "Two series: blue circles for BB (Billboard), orange squares for MSD (Million Song Dataset).", "Trend lines shown: dashed blue for BB, dotted orange for MSD.", "The text states: 'From 1965 to 1995, popular songs used fewer swear words as compared to the other songs. However, from the 1990s there is a persistent trend of increasing swear word usage in popular songs.'", "Exact numeric values are not printed on the plot; the above row values are approximate readings from the graph (e.g., at 2010, BB ≈ 2.0%, MSD ≈ 1.8%).", "The y-axis max is 2.5, and data points do not exceed 2.0."], "page": 2}, {"id": "p4-table-1", "title": "Table 1: Comparison of Effect Size", "population": "fastText, word2vec, CA (Caliskan et al.), IAT (Greenwald et al.)", "columns": ["Test no.", "Target Words", "Attribute Words", "w2v", "FT", "CA", "IAT"], "rows": [{"id": "row-1", "label": "1", "values": {"Test no.": "1", "Target Words": "Flowers v/s Insects", "Attribute Words": "Pleasant v/s Unpleasant", "w2v": "1.04", "FT": "1.34", "CA": "1.5", "IAT": "1.35"}}, {"id": "row-2", "label": "2", "values": {"Test no.": "2", "Target Words": "Instruments v/s Weapons", "Attribute Words": "Pleasant v/s Unpleasant", "w2v": "1.59", "FT": "1.62", "CA": "1.53", "IAT": "1.66"}}, {"id": "row-3", "label": "3", "values": {"Test no.": "3", "Target Words": "European-American v/s African-American names", "Attribute Words": "Pleasant v/s Unpleasant", "w2v": "0.71", "FT": "0.6", "CA": "1.41", "IAT": "1.17"}}, {"id": "row-4", "label": "4", "values": {"Test no.": "4", "Target Words": "Male v/s Female names", "Attribute Words": "Career v/s Family", "w2v": "1.47", "FT": "1.72", "CA": "1.81", "IAT": "0.72"}}, {"id": "row-5", "label": "5", "values": {"Test no.": "5", "Target Words": "Math v/s Arts", "Attribute Words": "Male v/s Female terms", "w2v": "1.10", "FT": "0.98", "CA": "1.06", "IAT": "0.82"}}, {"id": "row-6", "label": "6", "values": {"Test no.": "6", "Target Words": "Science v/s Arts", "Attribute Words": "Male v/s Female terms", "w2v": "1.03", "FT": "1.15", "CA": "1.24", "IAT": "1.47"}}, {"id": "row-7", "label": "7", "values": {"Test no.": "7", "Target Words": "Mental v/s Physical disease", "Attribute Words": "Temporary v/s Permanent", "w2v": "0.89", "FT": "1.15", "CA": "1.38", "IAT": "1.01"}}, {"id": "row-8", "label": "8", "values": {"Test no.": "8", "Target Words": "Young v/s Old People's names", "Attribute Words": "Pleasant v/s Unpleasant", "w2v": "0.37", "FT": "0.97", "CA": "1.21", "IAT": "1.42"}}], "notes": ["fastText as the word embedding methods respectively.", "Next column (CA) is the measurements reported by Caliskan et al. on a large internet crawl text corpus.", "The last column (IAT) is the original values reported by Greenwald et al. using human subjects [9]."], "page": 4}], "sources": {"S001": {"id": "pdf-66fe209b72eb93c6-p1-b0", "page": 1, "quote": "Decoding the Style and Bias of Song Lyrics"}, "S002": {"id": "pdf-66fe209b72eb93c6-p1-b1", "page": 1, "quote": "Amit Awekar\nIndian Institute of Technology"}, "S003": {"id": "pdf-66fe209b72eb93c6-p1-b2", "page": 1, "quote": "Manash Pratim Barman\nIndian Institute of Information"}, "S004": {"id": "pdf-66fe209b72eb93c6-p1-b3", "page": 1, "quote": "Technology\nGuwahati, India"}, "S005": {"id": "pdf-66fe209b72eb93c6-p1-b4", "page": 1, "quote": "Guwahati, India\nawekar@iitg.ac.in"}, "S006": {"id": "pdf-66fe209b72eb93c6-p1-b5", "page": 1, "quote": "ABSTRACT"}, "S007": {"id": "pdf-66fe209b72eb93c6-p1-b6", "page": 1, "quote": "The central idea of this paper is to gain a deeper understanding\nof song lyrics computationally. We focus on two aspects: style\nand biases of song lyrics. All prior works to understand these two\naspects are limited to manual analysis of a small corpus of song\nlyrics. In contrast, we analyzed more than half a million songs\nspread over five decades. We characterize the lyrics style in terms\nof vocabulary, length, repetitiveness, speed, and readability. We\nhave observed that the style of popular songs significantly differs\nfrom other songs. We have used distributed representation methods\nand WEAT test to measure various gender and racial biases in the\nsong lyrics. We have observed that biases in song lyrics correlate\nwith prior results on human subjects. This correlation indicates\nthat song lyrics reflect the biases that exist in society. Increasing\nconsumption of music and the effect of lyrics on human emotions\nmakes this analysis important."}, "S008": {"id": "pdf-66fe209b72eb93c6-p1-b7", "page": 1, "quote": "arXiv:1907.07818v1  [cs.IR]  17 Jul 2019"}, "S009": {"id": "pdf-66fe209b72eb93c6-p1-b8", "page": 1, "quote": "KEYWORDS"}, "S010": {"id": "pdf-66fe209b72eb93c6-p1-b9", "page": 1, "quote": "Text Mining, NLP Applications, Distributed Representation"}, "S011": {"id": "pdf-66fe209b72eb93c6-p1-b10", "page": 1, "quote": "ACM Reference Format:\nManash Pratim Barman, Amit Awekar, and Sambhav Kothari. 2019. Decod-\ning the Style and Bias of Song Lyrics. In Proceedings of the 42nd International\nACM SIGIR Conference on Research and Development in Information Retrieval\n(SIGIR ’19), July 21–25, 2019, Paris, France. ACM, New York, NY, USA, 5 pages.\nhttps://doi.org/10.1145/3331184.3331363"}, "S012": {"id": "pdf-66fe209b72eb93c6-p1-b11", "page": 1, "quote": "1\nINTRODUCTION"}, "S013": {"id": "pdf-66fe209b72eb93c6-p1-b12", "page": 1, "quote": "Music is an integral part of our culture. Smartphones and near\nubiquitous availability of the internet have resulted in dramatic\ngrowth of online music consumption [17]. More than 85% of online\nmusic subscribers search for song lyrics, indicating a keen interest\nof people in song lyrics. Song lyrics have a significant impact on\nhuman emotions and behavior. While listening to songs with violent\nlyrics can increase aggressive thoughts and hostile feelings [1],\nlistening to songs with pro-social lyrics increased the accessibility\nof pro-social thoughts, led to more interpersonal empathy, and\nfostered helping behavior [10]."}, "S014": {"id": "pdf-66fe209b72eb93c6-p1-b13", "page": 1, "quote": "This paper is motivated by the observation that song lyrics have\nnot received enough attention from the research community to\nunderstand them computationally. Several works focus on related"}, "S015": {"id": "pdf-66fe209b72eb93c6-p1-b14", "page": 1, "quote": "Permission to make digital or hard copies of all or part of this work for personal or\nclassroom use is granted without fee provided that copies are not made or distributed\nfor profit or commercial advantage and that copies bear this notice and the full citation\non the first page. Copyrights for components of this work owned by others than ACM\nmust be honored. Abstracting with credit is permitted. To copy otherwise, or republish,\nto post on servers or to redistribute to lists, requires prior specific permission and/or a\nfee. Request permissions from permissions@acm.org.\nSIGIR ’19, July 21–25, 2019, Paris, France\n© 2019 Association for Computing Machinery.\nACM ISBN 978-1-4503-6172-9/19/07...$15.00\nhttps://doi.org/10.1145/3331184.3331363"}, "S016": {"id": "pdf-66fe209b72eb93c6-p1-b15", "page": 1, "quote": "Sambhav Kothari"}, "S017": {"id": "pdf-66fe209b72eb93c6-p1-b16", "page": 1, "quote": "Bloomberg LP\nLondon, United Kingdom\nskothari44@bloomberg.net"}, "S018": {"id": "pdf-66fe209b72eb93c6-p1-b17", "page": 1, "quote": "problems such as personalized music recommendation [13], song\npopularity prediction, and genre identification [8].However, prior\nworks on style analysis and bias measurement are limited only to\nthe manual analysis of a few hundred songs. Such an approach\ncannot scale to the analysis of millions of songs. These works also\nfail to capitalize on recent advances in computational methods that\ngenerate a semantic representation for natural language text. Our\nwork aims to fill this gap by applying these methods on a large\ncorpus of song lyrics scraped from online user-generated content."}, "S019": {"id": "pdf-66fe209b72eb93c6-p1-b18", "page": 1, "quote": "There are two main takeaway results from our work. First, pop-\nular songs significantly differ from other songs when it comes to\nthe style of lyrics. This difference indicates that lyrics play a major\nrole in deciding the popularity of a song. Second, biases in song\nlyrics correlate with biases measured in humans. This correlation\nindicates that song lyrics reflect the existing biases in society. To\nthe best of our knowledge, this is the first work that analyzes song\nlyrics at the scale of half million lyrics to understand style and\nbias. Our results are reproducible as all our code and datasets are\navailable publicly on the Web1. We briefly review the related work\nin Section 2. Our results are presented in Sections 3 and 4. Our\nconclusion and future work are highlighted in Section 5."}, "S020": {"id": "pdf-66fe209b72eb93c6-p1-b19", "page": 1, "quote": "2\nRELATED WORK"}, "S021": {"id": "pdf-66fe209b72eb93c6-p1-b20", "page": 1, "quote": "Song lyrics have been used for many tasks related to music min-\ning such as genre identification and popularity prediction. Earlier\nworks considered lyrics as a weak source of song characteristics\nas compared to auditory or social features. However, recent works\nhave shown the strength of lyrics for music mining. Barman et al.\nhave shown that knowledge encoded in lyrics can be utilized to\nimprove the distributed representation of words [2]. Mayer et al.\nhave introduced various features for lyrics processing [15]. Fell and\nSporleder presented a lyrics-based analysis of songs based on vocab-\nulary and song structure [8]. Our work complements these works\nby characterizing lyrics style using multiple attributes extracted\nfrom lyrics."}, "S022": {"id": "pdf-66fe209b72eb93c6-p1-b21", "page": 1, "quote": "Many studies have analyzed gender and racial biases in song\nlyrics [14, 18]. However, such an approach of manual analysis can-\nnot scale to millions of songs. Caliskan et al. proposed Word Embed-\nding Association Test (WEAT) to computationally measure biases\nin any text repository [5]. Their test quantifies biases by computing\nsimilarity scores between various sets of words. To compute sim-\nilarity, the WEAT test represents words using a distributed word\nrepresentation method such as fastText or word2vec [4, 16]. We\napply the WEAT test on song lyrics and discuss its implications."}, "S023": {"id": "pdf-66fe209b72eb93c6-p1-b22", "page": 1, "quote": "1https://github.com/manashpratim/Decoding-the-Style-and-Bias-of-Song-Lyrics"}, "S024": {"id": "pdf-66fe209b72eb93c6-p2-b0", "page": 2, "quote": "SIGIR ’19, July 21–25, 2019, Paris, France\nManash Pratim Barman, Amit Awekar, and Sambhav Kothari"}, "S025": {"id": "pdf-66fe209b72eb93c6-p2-b1", "page": 2, "quote": "(a) Top 100 Words in 1965\n(b) Top 100 Words in 2015"}, "S026": {"id": "pdf-66fe209b72eb93c6-p2-b2", "page": 2, "quote": "Figure 1: Comparison of top words used"}, "S027": {"id": "pdf-66fe209b72eb93c6-p2-b3", "page": 2, "quote": "3\nSTYLE ANALYSIS"}, "S028": {"id": "pdf-66fe209b72eb93c6-p2-b4", "page": 2, "quote": "For style analysis, we created two datasets: Billboard (BB) and\nMillion Song Dataset (MSD). For both the datasets, we obtained\nthe song lyrics by scraping through the user-generated content on\nmultiple websites such as MetroLyrics (www.metrolyrics.com)and\nLyricsMode (www.lyricsmode.com). The BB dataset contains top\n100 songs for each year (1965 to 2015) from the Billboard Hot 100 list\n(www.billboard.com/charts/hot-100). We consider these 5100 songs\nas popular songs. The original million song dataset only provides\naudio features and song metadata [3]. It does not provide song\nlyrics. Out of all songs listed in the original million song dataset,\nwe could obtain lyrics only for 451,045 songs. We ensured that our\nBB and MSD datasets had no songs in common. Thus total songs\nin our analysis are around half a million. We had to do extensive\ndata cleaning and preprocessing to use the scraped lyrics."}, "S029": {"id": "pdf-66fe209b72eb93c6-p2-b5", "page": 2, "quote": "We started with an analysis of the vocabulary of song lyrics.\nPlease refer to Figure 1. This figure shows word clouds of the top\n100 words used in popular song lyrics for years 1965 and 2015. We\ncan observe that there is a major shift in vocabulary over time.\nFor example, in 1965 the most popular word was “love”. However,\nit was no more the case in 2015. To better visualize such trends,\nwe have developed a word rank comparison tool2. Given any set\nof words, this tool plots the relative popularity of those words in\npopular song lyrics through various years. Please refer to Figure 2.\nThis figure compares popularity of words “rock\" and “blues\" over\nthe period from 1965 to 2015. For a given year Y, lower value of\nrank for a word W indicates more frequent use of that word W in\npopular song lyrics of year Y. We can observe that word “rock\" has\nmaintained its popularity as compared to word “blues\"."}, "S030": {"id": "pdf-66fe209b72eb93c6-p2-b6", "page": 2, "quote": "We also looked at the usage of swear words. To compile the list of\nswear words, we used various online resources. This list is available\nalong with our code. Please refer to Figure 3. This graph shows\na comparison between popular (BB) and other (MSD) song lyrics\nbased on swear word usage over the period from 1965 to 2015. We\ncan observe that other songs have steadily gained the swear word\nusage over this period. From 1965 to 1995, popular songs used fewer\nswear words as compared to the other songs. However, from the\n1990s there is a persistent trend of increasing swear word usage in\npopular songs. As compared to 1980s, swear words are used almost\nten times more frequently now in popular song lyrics. Multiple"}, "S031": {"id": "pdf-66fe209b72eb93c6-p2-b7", "page": 2, "quote": "2https://tiny.cc/songlyrics"}, "S032": {"id": "pdf-66fe209b72eb93c6-p2-b8", "page": 2, "quote": "Figure 2: Year-wise rank comparison"}, "S033": {"id": "pdf-66fe209b72eb93c6-p2-b9", "page": 2, "quote": "studies have reported adverse effects of inappropriate content in\nmusic on the listeners [11]."}, "S034": {"id": "pdf-66fe209b72eb93c6-p2-b10", "page": 2, "quote": "We also measured the length of song lyrics as the number of\nwords in the song. Please refer to Figure 4a. Other songs have\nshown a steady increase in length from 1965 to 2015. Popular songs\nalso showed similar trend till 1980. However, since then popular\nsongs are significantly more lengthy than other songs. Please re-\nfer to Figure 4b. This figure depicts the average duration of songs\nper year measured in seconds. Both poplar and other songs rose\nin duration till 1980. Since then, other songs have maintained the\naverage duration of about 240 seconds. In contrast, popular songs\nwere of longer duration from 1980 to 2010. However, the current\ntrend shows far reduced duration for popular songs. Please refer to\nFigure 4c. This graph compares popular and other songs based on\nspeed. We measure the speed of a song as (length in words/duration\nin seconds). We can observe that other songs have maintained an\naverage speed of around 0.6 words per second. However, popular\nsongs were comparatively slower till 1990 and since have become\nsignificantly faster than other songs. Some studies have reported\nthat repetitive songs are lyrically processed more fluently and lis-\nteners prefer such songs [6]. We computed repetitiveness of a song\nlyric as ((1- (number of unique lines/total number of lines))*100).\nPlease refer to Figure 5. Except for the period from 1990 to 2000,\npopular songs are more repetitive than other songs."}, "S035": {"id": "pdf-66fe209b72eb93c6-p2-b11", "page": 2, "quote": "Readability tests are standardized tests designed to provide a\nmeasure indicating how difficult it is to read or understand a given\nEnglish text. We applied the well known Flesch Kincaid Readability"}, "S036": {"id": "pdf-66fe209b72eb93c6-p2-b12", "page": 2, "quote": "Figure 3: Comparison of swear word usage"}, "S037": {"id": "pdf-66fe209b72eb93c6-p3-b0", "page": 3, "quote": "Decoding the Style and Bias of Song Lyrics\nSIGIR ’19, July 21–25, 2019, Paris, France"}, "S038": {"id": "pdf-66fe209b72eb93c6-p3-b1", "page": 3, "quote": "Test (FK) on the song lyrics [12]. The FK test returns a number\nthat directly relates to the US Education grade system while also\nindicating the number of years of education required to understand\nthe given English text. For example, an FK score of 5 indicates that\nanybody educated up to 5th grade can read and understand the\ngiven English text. Please refer to Figure 6. It can be seen that the\nFK scores of popular songs have always been less than 2. Also, the\nFK scores of other songs have always been quite higher than the\npopular songs. This difference indicates that popular songs have\nalways been easier to understand as compared to other songs."}, "S039": {"id": "pdf-66fe209b72eb93c6-p3-b2", "page": 3, "quote": "Figure 5: Comparison of repetitiveness"}, "S040": {"id": "pdf-66fe209b72eb93c6-p3-b3", "page": 3, "quote": "Figure 6: Comparison of FK score"}, "S041": {"id": "pdf-66fe209b72eb93c6-p3-b4", "page": 3, "quote": "4\nBIAS MEASUREMENT"}, "S042": {"id": "pdf-66fe209b72eb93c6-p3-b5", "page": 3, "quote": "We humans have certain biases in our thinking. For example, some\npeople can find flower names more pleasant and insect names more\nunpleasant. These biases reflect in our various activities such as\npolitics, movies, and song lyrics as well. Implicit Association Test\n(IAT) is a well-known test designed to measure such biases in human\nbeings [9]. This test involves two sets of attribute words and two sets\nof target words. For example, consider two attribute word sets as\npleasant words (nice, beautiful) and unpleasant words (dirty, awful).\nAlso, consider two target word sets as flower names (rose, daffodil)\nand insect names (gnat, cockroach). The null hypothesis is that\nthere should be little to no difference between the two sets of target\nwords when we measure their similarity with the attribute word sets.\nThe IAT test measures the unlikelihood of the null hypothesis by\nevaluating the effect size. A positive value of the IAT test indicates\nthat people are biased to associate first attribute word set to the first\ntarget word set (Bias: flowers are pleasant) and second attribute\nword set with second target word set (Bias: insects are unpleasant).\nA negative value of the effect size indicates the bias in the other\ndirection, that is flowers are unpleasant, and insects are pleasant.\nLarger magnitude of effect size indicates a stronger bias. If the value\nof effect size is closer to zero, then it indicates slight or no bias."}, "S043": {"id": "pdf-66fe209b72eb93c6-p3-b6", "page": 3, "quote": "Caliskan et al. designed the Word Embedding Association Test\n(WEAT) by tweaking the IAT test [5]. Similar to the IAT test, this\ntest can measure bias given the sets of attribute and target words.\nHowever, the IAT test requires human subjects to compute the bias\nvalue. On the other hand, the WEAT test can compute the bias value\nusing a large text repository, and it does not require human subjects.\nThe WEAT test represents attribute and target words as vectors\nusing distributed representation methods such as word2vec and\nfastText [4, 16]. The WEAT test computes the similarity between\nwords using the cosine similarity. Caliskan et al. have performed\nthe bias measurement on a large internet crawl text corpus using\nthe WEAT test. They have shown that their results correlate with\nthe IAT tests conducted with human subjects."}, "S044": {"id": "pdf-66fe209b72eb93c6-p3-b7", "page": 3, "quote": "We applied the WEAT test on our song lyrics dataset. Due to\nthe small size of popular songs dataset, we cannot apply the WEAT\ntest separately on popular songs lyrics. Please refer to Table 1.\nCorresponding to eight rows of the table, we have measured eight\nbiases. We borrowed these attribute and target word sets from\nCaliskan et al. [5]. First two columns (w2v and FT) correspond\nto measurements on the song lyrics dataset with word2vec and"}, "S045": {"id": "pdf-66fe209b72eb93c6-p3-b8", "page": 3, "quote": "(a) Year-wise Average Length\n(b) Year-wise Average Duration\n(c) Year-wise Average Speed"}, "S046": {"id": "pdf-66fe209b72eb93c6-p3-b9", "page": 3, "quote": "Figure 4: Comparison of Length, Duration, and Speed of songs"}, "S047": {"id": "pdf-66fe209b72eb93c6-p4-b0", "page": 4, "quote": "SIGIR ’19, July 21–25, 2019, Paris, France\nManash Pratim Barman, Amit Awekar, and Sambhav Kothari"}, "S048": {"id": "pdf-66fe209b72eb93c6-p4-b1", "page": 4, "quote": "Table 1: Comparison of Effect Size"}, "S049": {"id": "pdf-66fe209b72eb93c6-p4-b2", "page": 4, "quote": "Test no.\nTarget Words\nAttribute Words\nw2v\nFT\nCA\nIAT\n1\nFlowers v/s Insects\nPleasant v/s Unpleasant\n1.04\n1.34\n1.5\n1.35\n2\nInstruments v/s Weapons\nPleasant v/s Unpleasant\n1.59\n1.62\n1.53\n1.66\n3\nEuropean-American v/s African-American names\nPleasant v/s Unpleasant\n0.71\n0.6\n1.41\n1.17\n4\nMale v/s Female names\nCareer v/s Family\n1.47\n1.72\n1.81\n0.72\n5\nMath v/s Arts\nMale v/s Female terms\n1.10\n0.98\n1.06\n0.82\n6\nScience v/s Arts\nMale v/s Female terms\n1.03\n1.15\n1.24\n1.47\n7\nMental v/s Physical disease\nTemporary v/s Permanent\n0.89\n1.15\n1.38\n1.01\n8\nYoung v/s Old People’s names\nPleasant v/s Unpleasant\n0.37\n0.97\n1.21\n1.42"}, "S050": {"id": "pdf-66fe209b72eb93c6-p4-b3", "page": 4, "quote": "fastText as the word embedding methods respectively. Next column\n(CA) is the measurements reported by Caliskan et al. on a large\ninternet crawl text corpus. The last column (IAT) is the original\nvalues reported by Greenwald et al. using human subjects [9]."}, "S051": {"id": "pdf-66fe209b72eb93c6-p4-b4", "page": 4, "quote": "We can observe that for all eight tests, all four results columns\nhave values with the same sign (positive values). This indicates that\nall four methods agree on the presence of the bias. However, they\ndiffer in the magnitude of the bias. We can consider the IAT column\nas the gold standard value because it is reported based on the human\nsubjects. For six out of eight tests, FT values are closer to IAT than\nw2v values. This indicates superior performance of fastText over\nword2vec method to generate a semantic representation of words.\nFor five tests out of eight, FT values are closer to IAT than CA\nvalues. For test number 3, 8, and 6 CA values are closer to IAT\nthan FT. Test number 3 and 8 are based on various names. Our\nsong lyrics dataset does not contain enough instances of these\nnames. Therefore generated word vectors for these names are not\naccurate. Similarly, test 6 involves science related terms, and song\nlyrics dataset is deficient in such words. Our song lyrics dataset\ncomprises of roughly 50 million tokes. This dataset is too small as\ncompared to the dataset used by Caliskan et al. that contains over\n840 billion tokes. Despite this huge difference in training data size,\nsong lyrics are pretty good at capturing the human biases."}, "S052": {"id": "pdf-66fe209b72eb93c6-p4-b5", "page": 4, "quote": "Out of all tests, we can see that the effect size of both FT and CA\ncolumn is highest for test 4. This bias is about gender stereotypes\nand career paths. This bias can be expressed as males are more\nassociated with career-oriented roles and females are more associ-\nated with family-oriented roles. This high effect value means that\nthere is greater bias in these target groups. Doering and Thébaud\nhave shown that gender bias does not only disadvantage women, it\ncould also disadvantage men [7]. Their findings showed that when\ngender stereotypes get attached to a role, it biases the authority\nthat people attribute to the person who happens to work in that\nposition. In a way, these stereotypes harm us all. With the dramatic\ngrowth in consumption of music [17], such biases can reinforce the\npsychological status of these target groups [19]. Hence, it is crucial\nto address these prevalent biases in songs lyrics."}, "S053": {"id": "pdf-66fe209b72eb93c6-p4-b6", "page": 4, "quote": "5\nCONCLUSION AND FUTURE WORK"}, "S054": {"id": "pdf-66fe209b72eb93c6-p4-b7", "page": 4, "quote": "We have analyzed over half a million lyrics to understand the style\nand prevalent biases. As compared to other songs, we have observed\nthat popular songs have several distinguishing characteristics that\ncan be expressed in terms of the style of lyrics. Lyrics can capture"}, "S055": {"id": "pdf-66fe209b72eb93c6-p4-b8", "page": 4, "quote": "human biases quite accurately. This work can be extended further\nby investigating music genre-specific style and biases."}, "S056": {"id": "pdf-66fe209b72eb93c6-p4-b9", "page": 4, "quote": "REFERENCES"}, "S057": {"id": "pdf-66fe209b72eb93c6-p4-b10", "page": 4, "quote": "[1] Craig A. Anderson, Nicholas L. Carnagey, and Janie Eubanks. 2003. Exposure to"}, "S058": {"id": "pdf-66fe209b72eb93c6-p4-b11", "page": 4, "quote": "violent media: The effects of songs with violent lyrics on aggressive thoughts\nand feelings. Journal of Personality and Social Psychology (2003), 960–971.\n[2] Manash Pratim Barman, Kavish Dahekar, Abhinav Anshuman, and Amit Awekar."}, "S059": {"id": "pdf-66fe209b72eb93c6-p4-b12", "page": 4, "quote": "2019. It’s Only Words And Words Are All I Have. To Appear at the European\nConference on Information Retrieval (ECIR) 2019 (2019).\n[3] T. Bertin-Mahieux, D. P. Ellis, B. Whitman, and P. Lamere. 2011. The million song"}, "S060": {"id": "pdf-66fe209b72eb93c6-p4-b13", "page": 4, "quote": "Dataset. In Proceedings of the 12th International Conference on Music Information\nRetrieval (ISMIR 2011).\n[4] Piotr Bojanowski, Edouard Grave, Armand Joulin, and Tomas Mikolov. 2017. En-"}, "S061": {"id": "pdf-66fe209b72eb93c6-p4-b14", "page": 4, "quote": "riching Word Vectors with Subword Information. Transactions of the Association\nfor Computational Linguistics 5 (2017), 135–146.\n[5] Aylin Caliskan, Joanna J. Bryson, and Arvind Narayanan. 2017. Semantics derived"}, "S062": {"id": "pdf-66fe209b72eb93c6-p4-b15", "page": 4, "quote": "automatically from language corpora contain human-like biases. Science 356\n(2017), 183–186.\n[6] Joseph C.Nunes, Andrea Ordanini Jr, and Francesca Valsesia. 2015. The power"}, "S063": {"id": "pdf-66fe209b72eb93c6-p4-b16", "page": 4, "quote": "of repetition: repetitive lyrics in a song increase processing fluency and drive\nmarket success. Journal of Consumer Psychology 25(2) (2015), 187–199.\n[7] Laura Doering and Sarah ThÃľbaud. 2017. The Effects of Gendered Occupa-"}, "S064": {"id": "pdf-66fe209b72eb93c6-p4-b17", "page": 4, "quote": "tional Roles on MenâĂŹs and WomenâĂŹs Workplace Authority: Evidence from\nMicrofinance. American Sociological Review 82(3) (June 2017), 542–567.\n[8] Michael Fell and Caroline Sporleder. 2014. Lyrics-based Analysis and Classifica-"}, "S065": {"id": "pdf-66fe209b72eb93c6-p4-b18", "page": 4, "quote": "tion of Music. In COLING.\n[9] Greenwald, Anthony G., McGhee, Debbie E., Schwartz, and Jordan L. K. 1998."}, "S066": {"id": "pdf-66fe209b72eb93c6-p4-b19", "page": 4, "quote": "Measuring individual differences in implicit cognition: The implicit association\ntest. Journal of Personality and Social Psychology 74(6) (1998), 1464–1480.\n[10] Tobias Greitemeyer. 2009. Effects of songs with prosocial lyrics on prosocial"}, "S067": {"id": "pdf-66fe209b72eb93c6-p4-b20", "page": 4, "quote": "thoughts, affect, and behavior. Journal of Experimental Social Psychology 45\n(January 2009), 186–190.\n[11] P. Cougar Hall, Joshua H. West, and Shane Hill. 2012. Sexualization in Lyrics of"}, "S068": {"id": "pdf-66fe209b72eb93c6-p4-b21", "page": 4, "quote": "Popular Music from 1959 to 2009: Implications for Sexuality Educators. Sexuality\n& Culture 16(2) (2012), 103–117.\n[12] J. P. Kincaid, R. P. Fishburne Jr, R. L. Rogers, and B. S. Chissom. 1975. Derivation"}, "S069": {"id": "pdf-66fe209b72eb93c6-p4-b22", "page": 4, "quote": "of new readability formulas (automated readability index, fog count and flesch\nreading ease formula) for navy enlisted personnel. DTIC Document, Tech. Rep.\n(1975).\n[13] Peter Knees and Markus Schedl. 2013. A Survey of Music Similarity and Recom-"}, "S070": {"id": "pdf-66fe209b72eb93c6-p4-b23", "page": 4, "quote": "mendation from Music Context Data. ACM Trans. Multimedia Comput. Commun.\nAppl. 10, 1, Article 2 (Dec. 2013), 21 pages.\nhttps://doi.org/10.1145/2542205.\n2542206\n[14] Judy C. Koskei, Margaret Barasa, and Beatrice Manyasi. 2018. STEREOTYPICAL"}, "S071": {"id": "pdf-66fe209b72eb93c6-p4-b24", "page": 4, "quote": "PORTRAYAL OF WOMEN IN KIPSIGIS SECULAR SONGS. European Journal of\nLiterature, Language and Linguistics Studies (2018). https://www.oapub.org/lit/\nindex.php/EJLLL/article/view/49\n[15] R. Mayer, R. Neumayer, and A. Rauber. 2008. Rhyme and Style Features for"}, "S072": {"id": "pdf-66fe209b72eb93c6-p4-b25", "page": 4, "quote": "Musical Genre Classification by Song Lyrics. In Proceedings of International\nConference on Music Information Retrieval (ISMIR) (June 2008), 337–342.\n[16] Tomas Mikolov, Ilya Sutskever, Kai Chen, Greg S Corrado, and Jeff Dean. 2013."}, "S073": {"id": "pdf-66fe209b72eb93c6-p4-b26", "page": 4, "quote": "Distributed Representations of Words and Phrases and their Compositionality.\nIn Advances in Neural Information Processing Systems. 3111–3119.\n[17] Nielson. 2018. Nielsen U.S. Music Mid-Year Report. https://www.nielsen.com/us/"}, "S074": {"id": "pdf-66fe209b72eb93c6-p4-b27", "page": 4, "quote": "en/insights/reports/2018/us-music-mid-year-report-2018.html.\n[18] Eric E. Rasmussen and Rebecca L. Densley. 2016. Girl in a Country Song: Gender"}, "S075": {"id": "pdf-66fe209b72eb93c6-p4-b28", "page": 4, "quote": "Roles and Objectification of Women in Popular Country Music across 1990 to"}, "S076": {"id": "pdf-66fe209b72eb93c6-p5-b0", "page": 5, "quote": "Decoding the Style and Bias of Song Lyrics\nSIGIR ’19, July 21–25, 2019, Paris, France"}, "S077": {"id": "pdf-66fe209b72eb93c6-p5-b1", "page": 5, "quote": "2014. Sex Roles 76 (2016), 188–201.\n[19] E. Sapir. 1985. Selected writings of Edward Sapir in language, culture and per-"}, "S078": {"id": "pdf-66fe209b72eb93c6-p5-b2", "page": 5, "quote": "sonality. Univ of California Press 342 (1985)."}, "S079": {"id": "web-0cac9e61aead4b77", "page": 0, "quote": "arXiv:1705.09755v1 [cs.CL] 27 May 2017\nword2vec Skip-Gram with Negative Sampling is\na Weighted Logistic PCA\nAndrew J. Landgraf1 and Jeremy Bellay2\n1Battelle Health and Analytics, Columbus, OH, landgraf@battelle.org 2Battelle Cyber Innovations, Columbus, OH, bellayj@battelle.org\nAbstract\nWe show that the skip-gram formulation of word2vec trained with neg- ative sampling is equivalent to a weighted logistic PCA. This connection allows us to better understand the objective, compare it to other word embedding methods, and extend it to higher dimensional models.\nBackground\nMikolov et al. (2013) introduced the skip-gram formulation for neural word em- beddings, wherein one tries to predict the context of a given word. Their negative-sampling algorithm improved the computational feasibility of train- ing the embeddings. Due to their state-of-the-art performance on a num- ber of tasks, there has been much research aimed at better understanding it. Goldberg and Levy (2014) showed that skip-gram with negative-sampling algo- rithm (SGNS) maximizes a diﬀerent likelihood than the skip-gram formulation poses and further showed how it is implicitly related to pointwise mutual infor- mation (Levy and Goldberg, 2014). We show that SGNS is a weighted logistic PCA, which is a special case of exponential family PCA for the binomial likeli- hood.\nnij (ˆpijθij −log(1 + exp(θij))) ,\nwhere ˆpij = yij nij is the proportion of successes. This can be viewed as a weighted logistic PCA with responses ˆpij and weights nij.\nSkip-Gram with Negative Sampling\nSGNS compares the observed word-context pairs with randomly-generated non- observed pairs and maximizes the probability of the actual word-context pairs, while minimizing the probability of the negative pairs.\nLet nw,c be the number of time word w is in the context of word c, nw and nc be the number of times word w and context c appears, |D| be the number of word-context pairs in the corpus, PD(w) = nw\nImplications\nInterpretation Interpreting the objective, weights will be larger for word- context pairs with higher number of occurrences, as well as for word and contexts with higher numbers of marginal occurrences. The response xw,c is 0 for all non-observed pairs and will be closer to 1 if the number of word-context pair occurrences is large compared to the marginal word and context occurrences. The number of negative samples per word, k, has the eﬀect of regularizing the proportions down from 1. Larger k’s will also diminish the eﬀect of the word- context pairs in the weights.\nComparison to Other Results We can easily derive the main result from Levy and Goldberg (2014), the implicit factorization of the pointwise mutual information (PMI), under this interpretation. For each combination of w and c, there are nw,c positive examples and knwPD(c) negative examples. The maximum likelihood estimate of the probability is xw,c. The log odds of xw,c is\n\u0012nw,c|D|\n−log k = PMI(w, c) −log k,\nCotterell, R., A. Poliak, B. Van Durme, and J. Eisner (2017). Explaining and\ngeneralizing skip-gram through exponential family principal component anal- ysis. EACL 2017, 175.\nGoldberg, Y. and O. Levy (2014). word2vec explained: Deriving Mikolov et al.’s\nnegative-sampling word-embedding method. arXiv preprint arXiv:1402.3722.\nHu, Y., Y. Koren, and C. Volinsky (2008). Collaborative ﬁltering for implicit"}, "S080": {"id": "web-d662e0878c81d9d0", "page": 0, "quote": "arXiv:1402.3722v1 [cs.CL] 15 Feb 2014\nword2vec Explained: Deriving Mikolov et al.’s\nNegative-Sampling Word-Embedding Method\nYoav Goldberg and Omer Levy {yoav.goldberg,omerlevy}@gmail.com\np(c|w; θ) (2)\nhere D is the set of all word and context pairs we extract from the text.\n1https://code.google.com/p/word2vec/\n1.1 Parameterization of the skip-gram model\nOne approach for parameterizing the skip-gram model follows the neural-network language models literature, and models the conditional probability p(c|w; θ) us- ing soft-max:\nWhile objective (4) can be computed, it is computationally expensive to do so, because the term p(c|w; θ) is very expensive to compute due to the summa- tion P\nc′∈C evc′·vw over all the contexts c′ (there can be hundreds of thousands of them). One way of making the computation more tractable is to replace the softmax with an hierarchical softmax. We will not elaborate on this direction.\n2 Negative Sampling\nMikolov et al. [2] present the negative-sampling approach as a more eﬃcient way of deriving word embeddings. While negative-sampling is based on the skip-gram model, it is in fact optimizing a diﬀerent objective. What follows is the derivation of the negative-sampling objective.\nConsider a pair (w, c) of word and context. Did this pair come from the training data? Let’s denote by p(D = 1|w, c) the probability that (w, c) came from the corpus data. Correspondingly, p(D = 0|w, c) = 1 −p(D = 1|w, c) will be the probability that (w, c) did not come from the corpus data. As before, assume there are parameters θ controlling the distribution: p(D = 1|w, c; θ).\nThis objective has a trivial solution if we set θ such that p(D = 1|w, c; θ) = 1 for every pair (w, c). This can be easily achieved by setting θ such that vc = vw and vc · vw = K for all vc, vw, where K is large enough number (practically, we get a probability of 1 as soon as K ≈40).\nWe need a mechanism that prevents all the vectors from having the same value, by disallowing some (w, c) combinations. One way to do so, is to present the model with some (w, c) pairs for which p(D = 1|w, c; θ) must be low, i.e. pairs which are not in the data. This is achieved by generating the set D′\nof random (w, c) pairs, assuming they are all incorrect (the name “negative- sampling” stems from the set D′ of randomly sampled negative examples). The optimization objective now becomes:\narg max\n(w,c)∈D\nwhich is almost equation (4) in Mikolov et al ([2]).\nThe diﬀerence from Mikolov et al. is that here we present the objective for the entire corpus D ∪D′, while they present it for one example (w, c) ∈D and k examples (w, cj) ∈D′, following a particular way of constructing D′.\nSpeciﬁcally, with negative sampling of k, Mikolov et al.’s constructed D′\nis k times larger than D, and for each (w, c) ∈D we construct k samples (w, c1), . . . , (w, ck), where each cj is drawn according to its unigram distribution raised to the 3/4 power. This is equivalent to drawing the samples (w, c) in D′\nfrom the distribution (w, c) ∼ pwords(w) pcontexts(c)3/4"}, "S081": {"id": "web-9242b22e2babb289", "page": 0, "quote": "f.vasile@criteo.com\nABSTRACT\nIn recent years, the Word2Vec model trained with the Negative Sampling loss function has shown state-of-the-art results in a num- ber of machine learning tasks, including language modeling tasks, such as word analogy and word similarity, and in recommendation tasks, through Prod2Vec, an extension that applies to modeling user shopping activity and user preferences. Several methods that aim to improve upon the standard Negative Sampling loss have been proposed. In our paper we pursue more sophisticated Neg- ative Sampling, by leveraging ideas from the ﬁeld of Generative Adversarial Networks (GANs), and propose Adversarial Negative Sampling. We build upon the recent progress made in stabilizing the training objective of GANs in the discrete data seting, and in- troduce a new GAN-Word2Vec model. We evaluate our model on the task of basket completion, and show signiﬁcant improvements in performance over Word2Vec trained using standard loss func- tions, including Noise Contrastive Estimation and Negative Sam- pling.\nCCS CONCEPTS\n•Teory of computation →Structured prediction; Adversar- ial learning; •Computer systems organization →Neural net- works;\n2 RELATED WORK 2.1 Basket Completion with Embedding Representations\nIn the recent years, a substantial amount of work has focused on improving the performance of language modeling and text genera- tion. In both tasks, Deep Neural Networks (DNNs) have proven to be extremely eﬀective, and are now considered state-of-the-art. In this paper, we focus on the task of basket completion with learned embedding representations. For the task of basket completion, very litle work has focused on applying DNNs, with the notable excep- tion of [24]. In this paper, the authors introduced a new family of networks designed to work on sets, where the output is invari- ant to any permutation in the order of objects in the input set. As an alternative to a set-based interpretation, basket completion can be approached as a sequence generation task, where one seeks to predict the distribution of the next item conditioned on the items already present in the basket. First, one could use the Skip-Gram model proposed by [16], and use the average of the embeddings for the items within a basket to compute the next-item prediction for the basket. Second, building upon work on models for text gener- ation, it is natural to leverage Recurrent Neural Networks (RNNs), particularly Long Short Term Memory cells, as proposedby [12], or bi-directional LSTMs [9, 20]. Convolutional neural networks could also be used, for example by using a Text-CNN like architecture as proposed by [13]. Te authors of [13] empirically show on diﬀerent tasks, such as point cloud classiﬁcation, that their method outper- forms state-of-the-art results with good generalization properties.\n2.2 Negative sampling schemes for Word2Vec\nWhen dealing with the training of multi-class models with thou- sands or millions of output classes, candidate sampling algorithms can speed up the training by considering a small randomly-chosen subset of contrastive candidates for each batch of training exam- ples. Ref. [11] introduced Noise Contrastive Estimation (NCE) as an unbiased estimator of the sofmax loss, and has been proven to be eﬃcient for learning word embeddings [17]. In [16], the authors propose negative sampling and directly sample candidates from a noise distribution.\nMore recently, in [4], the authors provide an insightful analysis of negative sampling. Tey show that negative samples with high inner product scores with a context word are more informative in terms of gradients on the loss function. Leveraging this analysis, the authors propose a dynamic sampling method based on inner- product rankings. Tis result can be intuitively interpreted by see- ing that negative samples with a higher inner product will lead to a beter approximation of the sofmax.\nIn our setup, we simultaneously train two neural networks, and use the output distribution coming from one network to generate the negative samples for the second network. Tis adversarial neg- ative sampling proves to be a dynamic and eﬃcient way to improve the training of our system. Tis method echoes the recent work on Generative Adversarial Networks.\nwhere rankt is the predicted rank of the held-out item for test instance t. In other words, precision@k is the fraction of instances in the test set for which the predicted rank of the held-out item falls within the top k predictions.\n4.3 Experimental results\nWe compare our GAN-Word2Vec model with Word2Vec modelstrain- ing using classical loss funcitions, including Noise Contrastive Esti- mation Loss (NCE) [11, 17] and Negative Sampling Loss (NEG) [16]. We observe that we have beter results with the Mixed Loss.\nWe ﬁnd that pre-training bothG and D with a Negative Sampling Loss leads to beter predictive quality for GAN-Word2Vec.\nAfer pre-training, we train G and D using Eq. 3 and Eq. 1, re- spectively. We observe that the discriminator initially beneﬁts from adversarial sampling, and its performance on both MPR and preci- sion@1 increases. However, afer convergence, the generator ulti- mately provides beter performance than the discriminator on both metrics. We conjecture that this may be explained by the fact that basket completion is a generative task.\nFrom Table 1, we see that our GAN-Word2Vec model consis- tently provides statistically-signiﬁcant improvements over the Word2Vec baseline models on both the Precision@1 and MPR metrics. As conﬁrmed by the experiments, we expect our method to be more eﬀective on larger datasets.\nWe also see that Word2Vec trained using Negative Sampling (W2V-NEG) is generally a stronger baseline than Word2Vectrained via NCE.\nMethod Precision@1 MPR Amazon dataset W2V-NCE 14.80 ±0.07 80.15 ±0.05 W2V-NEG 15.40 ±0.05 80.20 ±0.07 W2V-GANs 16.30 ±0.08 80.50 ±0.1\nBelgian retail dataset W2V-NCE 29.50 ±0.05 87.54 ±0.04 W2V-NEG 34.35 ±0.07 88.55 ±0.05 W2V-GANs 35.82 ±0.09 89.45 ±0.1 Table 1: One item basket completion task on the Belgian re- tail dataset."}}, "nodes": [{"id": "problem-gap", "title": "研究动机与现有局限", "concepts": ["concept-9895b7900e81e723"]}, {"id": "data-construction", "title": "数据集构建与预处理", "concepts": ["concept-e200e3086a3fa23f"]}, {"id": "style-vocab-trend", "title": "词汇演变趋势分析", "concepts": ["concept-25c7dacb21419f6d"]}, {"id": "style-structural-metrics", "title": "结构性风格指标量化", "concepts": ["concept-ae57c42e1726b1b3"]}, {"id": "style-readability", "title": "可读性与理解难度", "concepts": ["concept-c0041d6cf49edb39"]}, {"id": "bias-methodology", "title": "偏见测量方法论 (WEAT)", "concepts": ["concept-0d2bcf8a4ea9a4d7", "concept-adcbcd276b280497"]}, {"id": "bias-validation-results", "title": "偏见效度验证与模型对比", "concepts": ["concept-06ae7e2b35a00c9d", "concept-27a3b6124ad9cba2"]}, {"id": "bias-social-implication", "title": "性别刻板印象与社会影响", "concepts": ["concept-065bff75f9ac7a23"]}, {"id": "conclusion-synthesis", "title": "核心结论：风格决定流行，歌词反映社会", "concepts": ["concept-41de0ad75bfee1bd"]}, {"id": "limitation-data-scale", "title": "数据规模与特定词汇局限", "concepts": ["concept-9affaec69b81e261", "concept-d0b40727af60d2ce"]}], "concepts": {"concept-9895b7900e81e723": {"id": "concept-9895b7900e81e723", "title": "分布式表示 (Distributed Representation)", "layer": "NLP Method", "lead": "一种将文本转化为语义向量的计算方法。", "text": "在本文中，指代如 fastText 或 word2vec 等方法，它们能将单词映射为向量，从而捕捉词语间的语义相似性，用于计算偏见或风格特征。", "why": "这是本文区别于以往人工分析的关键技术手段，使得大规模量化分析成为可能。", "source_ids": ["pdf-66fe209b72eb93c6-p1-b6", "pdf-66fe209b72eb93c6-p1-b21"], "next": "concept-30d0bc567a0af68e", "domain": "Computational Social Science / NLP", "document_id": "pdf-66fe209b72eb93c6", "node_id": "problem-gap"}, "concept-e200e3086a3fa23f": {"id": "concept-e200e3086a3fa23f", "title": "Billboard Hot 100", "layer": "Data Source", "lead": "美国音乐产业的标准流行度排行榜。", "text": "本文将其作为定义“流行歌曲”(Popular Songs) 的金标准，选取每年排名前 100 的歌曲构成 BB 数据集。", "why": "这是区分“流行”与“其他”歌曲的关键分类依据，直接影响风格对比的结论。", "source_ids": ["pdf-66fe209b72eb93c6-p2-b4"], "next": null, "domain": "Computational Social Science / NLP", "document_id": "pdf-66fe209b72eb93c6", "node_id": "data-construction"}, "concept-25c7dacb21419f6d": {"id": "concept-25c7dacb21419f6d", "title": "词汇排名比较 (Word Rank Comparison)", "layer": "Visualization Tool", "lead": "一种展示词汇随时间相对流行度变化的工具。", "text": "通过绘制单词在不同年份的排名（Rank）曲线，直观展示词汇兴衰。排名越低表示使用频率越高。", "why": "用于量化并可视化如 'rock' vs 'blues' 或 'love' 随时间的具体演变轨迹，补充静态词云的不足。", "source_ids": ["pdf-66fe209b72eb93c6-p2-b5"], "next": null, "domain": "Computational Social Science / NLP", "document_id": "pdf-66fe209b72eb93c6", "node_id": "style-vocab-trend"}, "concept-ae57c42e1726b1b3": {"id": "concept-ae57c42e1726b1b3", "title": "BB 与 MSD 数据集", "layer": "Data Source", "lead": "本研究用于对比流行与非流行歌曲的核心数据基础。", "text": "BB 数据集包含 1965 至 2015 年每年 Billboard Hot 100 榜单的前 100 首歌曲（共 5100 首），代表流行歌曲；MSD 数据集源自 Million Song Dataset，经清洗后获得 451,045 首歌曲的歌词，代表其他歌曲。研究确保了两数据集无重叠。", "why": "明确数据来源和规模是理解后续统计差异（如长度、速度）的前提，区分'流行'与'非流行'的定义依赖于这两个数据集的构建方式。", "source_ids": ["pdf-66fe209b72eb93c6-p2-b4"], "next": null, "domain": "Computational Social Science / NLP", "document_id": "pdf-66fe209b72eb93c6", "node_id": "style-structural-metrics"}, "concept-c0041d6cf49edb39": {"id": "concept-c0041d6cf49edb39", "title": "Flesch-Kincaid 年级水平", "layer": "Metric Definition", "lead": "一种将文本复杂度映射到美国教育年级的量化指标。", "text": "FK 测试返回一个数值，表示理解该英文文本所需的受教育年限。例如，得分为 5 意味着小学五年级学生可以读懂。在本研究中，流行歌曲得分\u003c2，意味着极低的教育门槛。", "why": "理解 FK 分数的具体含义（对应年级）对于解读'分数\u003c2'这一结论的社会学意义至关重要，它量化了'通俗易懂'的程度。", "source_ids": ["pdf-66fe209b72eb93c6-p3-b1"], "next": null, "domain": "Computational Social Science / NLP", "document_id": "pdf-66fe209b72eb93c6", "node_id": "style-readability"}, "concept-0d2bcf8a4ea9a4d7": {"id": "concept-0d2bcf8a4ea9a4d7", "title": "隐性联想测试 (IAT)", "layer": "Psychological Method", "lead": "一种测量人类潜意识偏见的心理学实验方法。", "text": "IAT 要求受试者快速分类属性词和目标词。通过测量反应时间的差异，推断受试者将特定概念（如花）与特定属性（如愉悦）关联的强度。效应量反映了偏见的方向和强弱。", "why": "IAT 是 WEAT 的原型，理解 IAT 的原理有助于明白 WEAT 是如何用数学模拟这一心理过程的。", "source_ids": ["pdf-66fe209b72eb93c6-p3-b5"], "next": null, "domain": "Computational Social Science / NLP", "document_id": "pdf-66fe209b72eb93c6", "node_id": "bias-methodology"}, "concept-adcbcd276b280497": {"id": "concept-adcbcd276b280497", "title": "余弦相似度", "layer": "Mathematical Metric", "lead": "用于衡量两个词向量在语义空间中方向一致性的指标。", "text": "在 WEAT 中，余弦相似度用于计算词向量之间的夹角余弦值。值越接近 1，表示两个词在语义上越相似（如'花'与'愉悦'在向量空间中距离更近），从而量化偏见的强度。", "why": "这是 WEAT 算法的核心计算机制，替代了人类的反应时间，实现了偏见的自动化量化。", "source_ids": ["pdf-66fe209b72eb93c6-p3-b6"], "next": null, "domain": "Computational Social Science / NLP", "document_id": "pdf-66fe209b72eb93c6", "node_id": "bias-methodology"}, "concept-06ae7e2b35a00c9d": {"id": "concept-06ae7e2b35a00c9d", "title": "词嵌入联想测试 (WEAT)", "layer": "Methodology / NLP", "lead": "一种用于计算测量文本中偏见的自动化方法。", "text": "WEAT 通过计算目标词集（如“男性名字”）与属性词集（如“事业”）在向量空间中的余弦相似度差异来量化偏见。它是隐式联想测试 (IAT) 的计算版本，无需人类受试者即可在大规模文本库上运行。", "why": "理解该方法是解读 Table 1 中效应值来源及其与人类偏见关联机制的关键。", "source_ids": ["pdf-66fe209b72eb93c6-p3-b6", "pdf-66fe209b72eb93c6-p3-b7"], "next": null, "domain": "Computational Social Science / NLP", "document_id": "pdf-66fe209b72eb93c6", "node_id": "bias-validation-results"}, "concept-27a3b6124ad9cba2": {"id": "concept-27a3b6124ad9cba2", "title": "效应值 (Effect Size)", "layer": "Statistics / Measurement", "lead": "衡量偏见强度高弱的统计指标。", "text": "在 WEAT/IAT 测试中，效应值的正负号表示偏见的方向（例如关联 A 还是 B），而其绝对值大小表示偏见的强度。值越接近零表示偏见越弱或无偏见，值越大表示偏见越强。", "why": "Table 1 中的核心数据即为效应值，需明确其物理意义以区分“存在偏见”与“偏见强弱”。", "source_ids": ["pdf-66fe209b72eb93c6-p3-b5", "pdf-66fe209b72eb93c6-p4-b2"], "next": null, "domain": "Computational Social Science / NLP", "document_id": "pdf-66fe209b72eb93c6", "node_id": "bias-validation-results"}, "concept-065bff75f9ac7a23": {"id": "concept-065bff75f9ac7a23", "title": "性别 - 职业偏见", "layer": "Social Science / Bias Type", "lead": "一种将特定性别与特定职业领域（如事业或家庭）强关联的社会认知偏差。", "text": "在本研究中具体表现为：男性名字与“事业”词汇的关联度高，女性名字与“家庭”词汇的关联度高。这种偏见在测试 4 中效应值最高，反映了歌词内容对社会传统性别分工的镜像反射。", "why": "这是本文发现的最显著偏见类型，理解其具体构成（目标词与属性词）是分析社会影响的前提。", "source_ids": ["pdf-66fe209b72eb93c6-p4-b2", "pdf-66fe209b72eb93c6-p4-b5"], "next": null, "domain": "Computational Social Science / NLP", "document_id": "pdf-66fe209b72eb93c6", "node_id": "bias-social-implication"}, "concept-41de0ad75bfee1bd": {"id": "concept-41de0ad75bfee1bd", "title": "歌词风格属性", "layer": "Feature Engineering / NLP", "lead": "用于量化描述歌词文本特征的一组指标。", "text": "本文定义的风格属性包括：词汇丰富度 (Vocabulary)、长度 (Length)、重复度 (Repetitiveness)、速度 (Speed) 和可读性 (Readability/FK Score)。这些属性被用来区分流行歌曲与非流行歌曲。", "why": "这是支撑“风格决定流行”这一结论的具体证据维度，理解这些属性有助于把握风格分析的具体内容。", "source_ids": ["pdf-66fe209b72eb93c6-p1-b6", "pdf-66fe209b72eb93c6-p3-b1"], "next": null, "domain": "Computational Social Science / NLP", "document_id": "pdf-66fe209b72eb93c6", "node_id": "conclusion-synthesis"}, "concept-9affaec69b81e261": {"id": "concept-9affaec69b81e261", "title": "Token 计数", "layer": "Data Statistics", "lead": "衡量语料库规模的基本单位", "text": "在自然语言处理中，token 通常指代文本处理的最小单元（如单词或子词）。语料库的 token 总数直接决定了模型能接触到的词汇共现模式的数量。", "why": "理解 50M 与 840B 的数量级差异是理解为何特定低频词（如特定人名）向量训练不充分的关键。", "source_ids": ["pdf-66fe209b72eb93c6-p4-b4"], "next": null, "domain": "Computational Social Science / NLP", "document_id": "pdf-66fe209b72eb93c6", "node_id": "limitation-data-scale"}, "concept-d0b40727af60d2ce": {"id": "concept-d0b40727af60d2ce", "title": "向量准确性", "layer": "Embedding Quality", "lead": "词向量反映语义关系的精确程度", "text": "当训练数据中某个词出现的次数过少时，其对应的向量表示可能无法收敛到稳定的语义位置，导致在计算相似度或偏见效应值时产生较大误差。", "why": "解释了为何数据量少会导致测试 3、6、8 的结果不准确。", "source_ids": ["pdf-66fe209b72eb93c6-p4-b4"], "next": null, "domain": "Computational Social Science / NLP", "document_id": "pdf-66fe209b72eb93c6", "node_id": "limitation-data-scale"}, "concept-30d0bc567a0af68e": {"title": "word2vec 负采样训练机制", "layer": "NLP Method Detail", "lead": "负采样（Negative Sampling）是 word2vec skip-gram 模型中用于高效近似 softmax 的训练策略，其核心是构建二分类任务：区分真实上下文对（正样本）与人工构造的噪声对（负样本）。", "text": "根据 Goldberg & Levy (2014) 的权威推导（来源 web-1402.3722v1），word2vec skip-gram 的负采样并非直接优化原始条件概率 p(c|w)，而是重构为一个判别式二分类问题：给定词对 (w, c)，模型需判断该对是否来自真实语料（D=1）还是随机噪声（D=0）。正样本取自滑动窗口提取的真实词-上下文共现对集合 D；负样本则从噪声分布中采样——具体为：对每个正样本 (w,c)，独立采样 k 个负样本 (w, c_j)，其中 c_j 按 p(c)^{3/4}（上下文词频的 3/4 次方）分布抽取，该幂律调整可缓解高频词过度主导采样的偏差。目标函数为最大化联合似然：∑_{(w,c)∈D} [log σ(v_c·v_w) + ∑_{j=1}^k log σ(−v_{c_j}·v_w)]，其中 σ 是 sigmoid 函数。该形式等价于对每个正样本配以 k 个负样本的加权逻辑回归（Landgraf & Bellay, 2017，来源 web-1705.09755v1）。值得注意的是：原文未定义或推导该目标函数；所有公式、采样分布、目标函数结构均源自外部文献，且已明确标注来源。", "why": "理解负采样的机制至关重要，因为它决定了 word2vec 向量所隐含的语义关系本质——并非精确建模共现概率，而是学习一种能区分‘自然共现’与‘随机共现’的判别边界；这对解释 WEAT 测试中基于余弦相似度的偏见测量结果的稳健性与局限性具有基础意义。", "source_ids": ["web-0cac9e61aead4b77", "web-d662e0878c81d9d0"], "next_question": "负采样中 k 值（每个正样本配多少负样本）如何影响向量空间的几何特性？例如，增大 k 是否会使语义方向更稀疏或更鲁棒？", "id": "concept-30d0bc567a0af68e", "next": null, "domain": "Computational Social Science / NLP", "document_id": "pdf-66fe209b72eb93c6", "node_id": "problem-gap", "verification": {"verdict": "supported", "issues": []}, "external_search": {"query": "word2vec negative sampling positive negative examples noise contrastive estimation", "search_result_count": 16, "fetch_errors": []}}}}};/* Trusted host bridge. Authors only access read-only evidence and local DOM. */
+(()=>{
+ const C=PM_CONFIG;
+ const deepFreeze=o=>{if(o&&typeof o==='object'){Object.values(o).forEach(deepFreeze);Object.freeze(o);}return o;};
+ Object.defineProperty(window,'paperMindData',{value:deepFreeze(C.data),writable:false,configurable:false});
+ const nodes=new Set(C.data.nodes.map(n=>n.id)),concepts=new Set(C.data.nodes.flatMap(n=>n.concepts));
+ let initialized=false,height=0,scheduled=false;
+ function emit(type,payload={}){if(parent!==window)parent.postMessage({type,edition:C.edition,document:C.document,channel:C.channel,...payload},'*');}
+ function measure(){if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;const h=Math.ceil(document.documentElement.scrollHeight);if(h!==height){height=h;emit('resize',{height:h});}});}
+ function source(id){const s=C.data.sources[id];if(!s)return;if(parent!==window){emit('cite',{id:s.id});return;}document.getElementById('pm-local-source')?.remove();const box=document.createElement('aside');box.id='pm-local-source';box.setAttribute('role','dialog');box.setAttribute('aria-label','原文出处');const title=document.createElement('strong');title.textContent='原文 · 第 '+s.page+' 页';const quote=document.createElement('blockquote');quote.textContent=s.quote;const close=document.createElement('button');close.textContent='返回讲解';close.addEventListener('click',()=>box.remove());box.append(title,quote,close);document.body.append(box);close.focus();}
+ function nodeOf(el){return el.closest('[data-node]')?.dataset.node||C.data.nodes[0]?.id;}
+ function readingTools(){for(const b of document.querySelectorAll('button[data-source]')){const s=C.data.sources[b.dataset.source];if(s)b.textContent='原文 · p.'+s.page;}if(parent===window){for(const b of document.querySelectorAll('[data-ask],[data-concept],[data-undo]'))b.hidden=true;return;}for(const n of C.data.nodes){const anchor=document.getElementById(n.id);if(!anchor||anchor.querySelector('button[data-ask]'))continue;const tools=document.createElement('div');tools.className='pm-reading-tools';tools.dataset.node=n.id;const ask=document.createElement('button');ask.dataset.ask='请解释'+n.title+'的原理、推导与成立条件';ask.textContent='沿着这里继续问';tools.append(ask);for(const id of n.concepts||[]){const b=document.createElement('button');b.dataset.concept=id;b.textContent=C.data.concepts?.[id]?.title||'查阅相关概念';tools.append(b);}anchor.append(tools);}}
+ document.addEventListener('click',event=>{
+  const button=event.target.closest('button,a');if(!button)return;
+  if(button.dataset.source){event.preventDefault();source(button.dataset.source);}
+  else if(button.dataset.concept&&concepts.has(button.dataset.concept))emit('concept',{id:button.dataset.concept,node:nodeOf(button)});
+  else if(button.dataset.ask&&event.isTrusted)emit('ask',{text:button.dataset.ask.slice(0,2000),node:nodeOf(button)});
+  else if(button.dataset.undo&&event.isTrusted)emit('undo',{id:button.dataset.undo});
+  else if(button.matches('a[href^="#"]')){event.preventDefault();const el=document.getElementById(button.getAttribute('href').slice(1));if(el){if(parent===window)el.scrollIntoView();else emit('scroll',{top:el.getBoundingClientRect().top+scrollY});}}
+ });
+ document.addEventListener('mouseup',()=>{const text=window.getSelection()?.toString().trim();if(text&&text.length>=4&&text.length<=2000)emit('selection',{text,node:nodeOf(window.getSelection()?.anchorNode?.parentElement||document.body)});});
+ function supplements(items){document.querySelectorAll('.pm-user-note').forEach(n=>n.remove());for(const item of items){if(!nodes.has(item.node_id))continue;const anchor=document.getElementById(item.node_id);if(!anchor)continue;const note=document.createElement('aside');note.className='pm-user-note';note.dataset.node=item.node_id;const h=document.createElement('h4');h.textContent='我的讲解补充';const p=document.createElement('p');p.textContent=item.text;note.append(h,p);for(const id of item.source_ids||[]){const alias=Object.keys(C.data.sources).find(k=>C.data.sources[k].id===id);if(alias){const b=document.createElement('button');b.dataset.source=alias;b.textContent='原文 · p.'+C.data.sources[alias].page;note.append(b);}}if(item.can_undo){const b=document.createElement('button');b.dataset.undo=item.id;b.textContent='撤回补充';note.append(b);}anchor.append(note);}measure();}
+ window.addEventListener('message',event=>{const d=event.data;if(event.source!==parent||!d||d.channel!==C.channel)return;
+  if(d.type==='navigate'&&nodes.has(d.node)){const el=document.getElementById(d.node);if(el){for(let p=el.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;emit('scroll',{top:el.getBoundingClientRect().top+scrollY});}}
+  if(d.type==='viewport'&&Number.isFinite(d.top)){let chosen=C.data.nodes[0]?.id;for(const n of C.data.nodes){const el=document.getElementById(n.id);if(el&&el.getBoundingClientRect().top+scrollY<=d.top+160)chosen=n.id;}if(chosen)emit('active',{node:chosen});}
+  if(d.type==='supplements'&&Array.isArray(d.items))supplements(d.items.slice(0,100));
+ });
+ window.addEventListener('pm-initialized',()=>{readingTools();initialized=true;document.body.dataset.pmReady='true';emit('ready');measure();});
+ window.addEventListener('error',event=>{document.body.dataset.pmError=String(event.message);emit('error',{message:String(event.message).slice(0,300)});});
+ new ResizeObserver(measure).observe(document.body);measure();
+})();
+</script><script nonce="kapBDVCdTGAIUKrcTn0itmgpWN_qsLg4">try{(()=>{const root=document.getElementById("chapter-problem-gap");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("problem-gap--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  const scope = document.querySelector('.pg-chapter');
+  if (!scope) return;
+
+  const slider = scope.querySelector('#problem-gap--pg-scale-slider');
+  const toggle = scope.querySelector('#problem-gap--pg-tech-toggle');
+  const techStatus = scope.querySelector('.pg-tech-status');
+  const feedbackBox = scope.querySelector('#problem-gap--pg-acceptance-box');
+  const oldCard = scope.querySelector('.pg-old-state');
+  const newCard = scope.querySelector('.pg-new-state');
+
+  let state = {
+    scale: 0, // 0 = old, 100 = new
+    tech: 'manual' // manual or computational
+  };
+
+  function updateVisuals() {
+    // Scale Slider Logic
+    const scaleValue = parseInt(slider.value, 10);
+    state.scale = scaleValue;
+    
+    const progress = scaleValue / 100;
+    const oldOpacity = 1 - progress;
+    const newOpacity = 0.2 + (progress * 0.8);
+    
+    oldCard.style.opacity = oldOpacity.toFixed(2);
+    newCard.style.opacity = newOpacity.toFixed(2);
+    
+    // Tech Toggle Logic
+    if (state.tech === 'computational') {
+      toggle.textContent = '分布式表示';
+      toggle.setAttribute('data-state', 'computational');
+      techStatus.textContent = '已接入语义向量技术';
+      techStatus.style.color = 'var(--accent)';
+      newCard.style.borderColor = 'var(--accent)';
+    } else {
+      toggle.textContent = '人工分析';
+      toggle.setAttribute('data-state', 'manual');
+      techStatus.textContent = '未接入分布式表示';
+      techStatus.style.color = 'var(--muted)';
+      newCard.style.borderColor = 'var(--line)';
+    }
+
+    // Acceptance Check
+    // Criteria: Scale expanded (slider > 50) AND Tech advanced (toggle = computational)
+    const isScaleExpanded = scaleValue > 50;
+    const isTechAdvanced = state.tech === 'computational';
+
+    if (isScaleExpanded && isTechAdvanced) {
+      feedbackBox.classList.add('active');
+      feedbackBox.innerHTML = '<p class="pg-feedback-text">✓ 核心突破已确认：规模扩展性 (50 万首) + 技术先进性 (分布式表示)</p>';
+    } else {
+      feedbackBox.classList.remove('active');
+      feedbackBox.innerHTML = '<p class="pg-feedback-text">请调整滑块至右侧并切换技术开关，以对比本研究的核心突破。</p>';
+    }
+  }
+
+  // Event Listeners
+  slider.addEventListener('input', updateVisuals);
+  
+  toggle.addEventListener('click', function() {
+    state.tech = state.tech === 'manual' ? 'computational' : 'manual';
+    updateVisuals();
+  });
+
+  // Source Button Delegation
+  scope.addEventListener('click', function(e) {
+    const btn = e.target.closest('button[data-source]');
+    if (btn) {
+      // Host kernel handles source lookup via data-source attribute
+      // No action needed here except ensuring attribute exists
+      const sourceId = btn.getAttribute('data-source');
+      // Visual feedback only
+      btn.style.background = '#eee';
+      setTimeout(() => { btn.style.background = ''; }, 200);
+    }
+    
+    const conceptBtn = e.target.closest('button[data-concept]');
+    if (conceptBtn) {
+      const conceptId = conceptBtn.getAttribute('data-concept');
+      // Host kernel handles concept lookup
+      conceptBtn.style.background = '#eee';
+      setTimeout(() => { conceptBtn.style.background = ''; }, 200);
+    }
+  });
+
+  // Initialize
+  updateVisuals();
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-data-construction");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("data-construction--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+
+  const scope = document.querySelector('.chapter-scope');
+  if (!scope) return;
+
+  const dedupBtn = document.getElementById('data-construction--dedup-action');
+  const statusMsg = document.getElementById('data-construction--status-message');
+  const statusSuccess = document.getElementById('data-construction--status-success');
+  const overlapVisual = document.getElementById('data-construction--overlap-visual');
+
+  function init() {
+    if (!dedupBtn) return;
+
+    dedupBtn.addEventListener('click', function() {
+      // Perform deduplication simulation
+      scope.classList.add('is-cleaned');
+      dedupBtn.disabled = true;
+      dedupBtn.textContent = '已去重';
+      
+      // Announce to screen readers
+      if (statusSuccess) {
+        statusSuccess.setAttribute('aria-live', 'polite');
+      }
+    });
+  }
+
+  // Ensure DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-style-vocab-trend");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("style-vocab-trend--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+
+  // Data Access
+  const tables = window.paperMindData?.tables || [];
+  const sources = window.paperMindData?.sources || {};
+  
+  // Helper: Find table by ID
+  const getTable = (id) => tables.find(t => t.id === id);
+
+  // --- Word Cloud Logic ---
+  const cloudDisplay = document.getElementById('style-vocab-trend--cloud-display');
+  const btn1965 = document.getElementById('style-vocab-trend--btn-year-1965');
+  const btn2015 = document.getElementById('style-vocab-trend--btn-year-2015');
+
+  const table1 = getTable('p2-table-1');
+  let words1965 = [];
+  let words2015 = [];
+
+  if (table1 && table1.rows.length > 0) {
+    const row = table1.rows[0];
+    // Parse the long string of words
+    const raw1965 = row.values['(a) Top 100 Words in 1965'] || '';
+    const raw2015 = row.values['(b) Top 100 Words in 2015'] || '';
+    
+    // Split by comma, clean whitespace
+    words1965 = raw1965.split(',').map(w => w.trim()).filter(w => w);
+    words2015 = raw2015.split(',').map(w => w.trim()).filter(w => w);
+  }
+
+  function renderCloud(year) {
+    cloudDisplay.innerHTML = '';
+    const words = year === '1965' ? words1965 : words2015;
+    
+    // Highlight 'love' specifically as per text
+    words.forEach(word => {
+      const span = document.createElement('span');
+      span.className = 'cloud-word';
+      span.textContent = word;
+      if (word.toLowerCase() === 'love') {
+        span.classList.add('highlight');
+        span.title = '1965 年最流行词汇';
+      }
+      cloudDisplay.appendChild(span);
+    });
+  }
+
+  // Initial Render
+  renderCloud('1965');
+
+  // Event Listeners for Year Toggle
+  btn1965.addEventListener('click', () => {
+    btn1965.classList.add('active');
+    btn1965.setAttribute('aria-pressed', 'true');
+    btn2015.classList.remove('active');
+    btn2015.setAttribute('aria-pressed', 'false');
+    renderCloud('1965');
+  });
+
+  btn2015.addEventListener('click', () => {
+    btn2015.classList.add('active');
+    btn2015.setAttribute('aria-pressed', 'true');
+    btn1965.classList.remove('active');
+    btn1965.setAttribute('aria-pressed', 'false');
+    renderCloud('2015');
+  });
+
+  // --- Swear Word Chart Logic ---
+  const svgChart = document.getElementById('style-vocab-trend--swear-chart');
+  const table3 = getTable('p2-table-3');
+  
+  // Approximate data from table notes (visual reading)
+  // Structure: [{year: 1970, bb: 0.0, msd: 0.0}, ...]
+  const chartData = [];
+  if (table3) {
+    table3.rows.forEach(row => {
+      const y = parseFloat(row.values['YEAR']);
+      const bb = parseFloat(row.values['BB']);
+      const msd = parseFloat(row.values['MSD']);
+      if (!isNaN(y) && !isNaN(bb) && !isNaN(msd)) {
+        chartData.push({ year: y, bb, msd });
+      }
+    });
+  }
+
+  function drawChart() {
+    // Clear existing paths/groups except defs
+    const existing = svgChart.querySelectorAll('.data-group');
+    existing.forEach(e => e.remove());
+
+    if (chartData.length === 0) return;
+
+    const width = 400;
+    const height = 200;
+    const padding = 30;
+    const plotW = width - padding * 2;
+    const plotH = height - padding * 2;
+
+    // Scales
+    const minYear = 1970;
+    const maxYear = 2010;
+    const maxPercent = 2.5;
+
+    const xScale = (year) => padding + ((year - minYear) / (maxYear - minYear)) * plotW;
+    const yScale = (percent) => height - padding - (percent / maxPercent) * plotH;
+
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.classList.add('data-group');
+
+    // Axes
+    const xAxis = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    xAxis.setAttribute('x1', padding);
+    xAxis.setAttribute('y1', height - padding);
+    xAxis.setAttribute('x2', width - padding);
+    xAxis.setAttribute('y2', height - padding);
+    xAxis.classList.add('axis-line');
+    g.appendChild(xAxis);
+
+    const yAxis = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    yAxis.setAttribute('x1', padding);
+    yAxis.setAttribute('y1', padding);
+    yAxis.setAttribute('x2', padding);
+    yAxis.setAttribute('y2', height - padding);
+    yAxis.classList.add('axis-line');
+    g.appendChild(yAxis);
+
+    // Labels
+    const xLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    xLabel.setAttribute('x', width / 2);
+    xLabel.setAttribute('y', height - 5);
+    xLabel.setAttribute('text-anchor', 'middle');
+    xLabel.classList.add('axis-label');
+    xLabel.textContent = 'YEAR';
+    g.appendChild(xLabel);
+
+    const yLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    yLabel.setAttribute('x', 10);
+    yLabel.setAttribute('y', height / 2);
+    yLabel.setAttribute('transform', `rotate(-90, 10, ${height/2})`);
+    yLabel.setAttribute('text-anchor', 'middle');
+    yLabel.classList.add('axis-label');
+    yLabel.textContent = 'Percent';
+    g.appendChild(yLabel);
+
+    // Paths
+    // BB Line
+    let bbPathD = '';
+    let msdPathD = '';
+    
+    chartData.forEach((pt, i) => {
+      const x = xScale(pt.year);
+      const yBB = yScale(pt.bb);
+      const yMSD = yScale(pt.msd);
+      
+      if (i === 0) {
+        bbPathD += `M ${x} ${yBB}`;
+        msdPathD += `M ${x} ${yMSD}`;
+      } else {
+        bbPathD += ` L ${x} ${yBB}`;
+        msdPathD += ` L ${x} ${yMSD}`;
+      }
+
+      // Points
+      const circleBB = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      circleBB.setAttribute('cx', x);
+      circleBB.setAttribute('cy', yBB);
+      circleBB.setAttribute('r', 3);
+      circleBB.classList.add('point');
+      g.appendChild(circleBB);
+    });
+
+    const pathBB = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    pathBB.setAttribute('d', bbPathD);
+    pathBB.classList.add('bb-line');
+    g.appendChild(pathBB);
+
+    const pathMSD = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    pathMSD.setAttribute('d', msdPathD);
+    pathMSD.classList.add('msd-line');
+    g.appendChild(pathMSD);
+
+    svgChart.appendChild(g);
+  }
+
+  drawChart();
+
+  // --- Source Button Handlers ---
+  // Note: Actual source fetching is handled by host kernel via data-source attribute
+  const sourceBtns = document.querySelectorAll('.source-btn');
+  sourceBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      // No action needed here, kernel intercepts data-source
+      // Visual feedback only
+      btn.style.opacity = '0.7';
+      setTimeout(() => btn.style.opacity = '1', 200);
+    });
+  });
+
+  // --- Concept Button Handlers ---
+  const conceptBtns = document.querySelectorAll('.concept-btn');
+  conceptBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      // Kernel handles data-concept
+    });
+  });
+
+  // --- Ask Button Handlers ---
+  const askBtns = document.querySelectorAll('.ask-btn');
+  askBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      // Kernel handles data-ask
+    });
+  });
+
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-style-structural-metrics");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("style-structural-metrics--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+
+  const container = document.querySelector('.pm-chapter-style-structural-metrics');
+  if (!container) return;
+
+  const slider = container.querySelector('#style-structural-metrics--year-slider');
+  const yearDisplay = container.querySelector('#style-structural-metrics--year-display');
+  const statusLength = container.querySelector('#style-structural-metrics--status-length');
+  const statusSpeed = container.querySelector('#style-structural-metrics--status-speed');
+  const statusRepetition = container.querySelector('#style-structural-metrics--status-repetition');
+  const sourceButtons = container.querySelectorAll('.pm-btn');
+
+  // Logic based on Source S034 text claims
+  function updateMetrics(year) {
+    const y = parseInt(year, 10);
+    yearDisplay.textContent = y;
+
+    // Length: Similar till 1980, Pop significantly longer since then
+    if (y < 1980) {
+      statusLength.textContent = '流行与非流行趋势相似，稳步增加。';
+      statusLength.style.color = 'var(--pm-muted)';
+      container.querySelector('[data-metric="length"]').style.borderLeftColor = 'var(--pm-muted)';
+    } else {
+      statusLength.textContent = '流行歌曲显著长于非流行歌曲。';
+      statusLength.style.color = 'var(--pm-accent)';
+      container.querySelector('[data-metric="length"]').style.borderLeftColor = 'var(--pm-accent)';
+    }
+
+    // Speed: Pop slower till 1990, significantly faster since
+    if (y < 1990) {
+      statusSpeed.textContent = '流行歌曲相对较慢 (非流行约 0.6 词/秒)。';
+      statusSpeed.style.color = 'var(--pm-muted)';
+      container.querySelector('[data-metric="speed"]').style.borderLeftColor = 'var(--pm-muted)';
+    } else {
+      statusSpeed.textContent = '流行歌曲显著加快，超过非流行歌曲。';
+      statusSpeed.style.color = 'var(--pm-warm)';
+      container.querySelector('[data-metric="speed"]').style.borderLeftColor = 'var(--pm-warm)';
+    }
+
+    // Repetition: Pop higher except 1990-2000
+    if (y >= 1990 && y <= 2000) {
+      statusRepetition.textContent = '例外期：流行歌曲重复率未显著高于非流行。';
+      statusRepetition.style.color = 'var(--pm-muted)';
+      container.querySelector('[data-metric="repetition"]').style.borderLeftColor = 'var(--pm-muted)';
+    } else {
+      statusRepetition.textContent = '流行歌曲重复率始终高于非流行歌曲。';
+      statusRepetition.style.color = 'var(--pm-accent)';
+      container.querySelector('[data-metric="repetition"]').style.borderLeftColor = 'var(--pm-accent)';
+    }
+  }
+
+  function handleSourceClick(e) {
+    const sourceId = e.target.getAttribute('data-source');
+    // Host kernel handles source navigation via data-source attribute
+    // No action needed here per spec, but ensuring event is registered
+    if (window.paperMindData && window.paperMindData.sources && window.paperMindData.sources[sourceId]) {
+      // Visual feedback only
+      e.target.style.background = 'var(--pm-accent)';
+      e.target.style.color = '#fff';
+      setTimeout(() => {
+        e.target.style.background = '';
+        e.target.style.color = '';
+      }, 300);
+    }
+  }
+
+  if (slider) {
+    slider.addEventListener('input', function(e) {
+      updateMetrics(e.target.value);
+    });
+    // Initialize
+    updateMetrics(slider.value);
+  }
+
+  sourceButtons.forEach(btn => {
+    btn.addEventListener('click', handleSourceClick);
+  });
+
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-style-readability");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("style-readability--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+
+  // 配置常量：基于文献 S038 的明确结论
+  const POPULAR_UPPER_BOUND = 2.0; // 文献声称流行歌曲始终 < 2
+  const DEFAULT_THRESHOLD = 2.0;
+
+  // 工具函数：获取安全数值
+  function getSafeNumber(val, defaultVal) {
+    const num = Number(val);
+    return isNaN(num) ? defaultVal : num;
+  }
+
+  // 初始化
+  function init() {
+    const slider = document.getElementById('style-readability--fk-threshold');
+    const thresholdValDisplay = document.getElementById('style-readability--threshold-val');
+    const thresholdLine = document.getElementById('style-readability--threshold-line');
+    const bbResult = document.querySelector('.bb-result .status');
+    const msdResult = document.querySelector('.msd-result .status');
+    const resetBtn = document.getElementById('style-readability--reset-viz');
+    
+    // 绑定来源按钮事件 (由内核处理，此处仅确保不报错)
+    const sourceBtns = document.querySelectorAll('.source-btn');
+    sourceBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        btn.style.borderColor = 'var(--accent)';
+        setTimeout(() => {
+          btn.style.borderColor = '';
+        }, 300);
+      });
+    });
+
+    // 更新逻辑
+    function updateVisualization() {
+      if (!slider) return;
+      
+      const currentThreshold = getSafeNumber(slider.value, DEFAULT_THRESHOLD);
+      thresholdValDisplay.textContent = currentThreshold.toFixed(1);
+
+      // 计算阈值线位置 (0-12 映射到 0-100%)
+      const linePosition = (currentThreshold / 12) * 100;
+      if (thresholdLine) {
+        thresholdLine.style.left = linePosition + '%';
+      }
+
+      // 逻辑判断：严格基于文献提供的界限，不编造 MSD 的具体数值
+      // 文献结论：BB 始终 < 2; MSD 显著高于 BB (即 > BB)
+      
+      // BB 逻辑：
+      // 若门槛 >= 2.0 (已知上界)，则根据文献"始终<2"，可推断完全符合。
+      // 若门槛 < 2.0，文献只说"始终<2"，未提供具体分布，故无法判断是否全部符合门槛，显示证据不足。
+      let bbStatus = 'unknown';
+      let bbText = '证据不足';
+      if (currentThreshold >= POPULAR_UPPER_BOUND) {
+        bbStatus = 'pass';
+        bbText = '符合标准 (易读)';
+      } else {
+        bbStatus = 'unknown';
+        bbText = '证据不足 (门槛低于已知上界)';
+      }
+      
+      // MSD 逻辑：
+      // 文献仅称"显著高于流行歌曲"，未提供具体数值或下界。
+      // 无论门槛设为何值，都无法仅凭"显著更高"这一相对描述来断定 MSD 是否通过该绝对门槛。
+      // 因此，MSD 的状态始终为"证据不足"，避免编造"难读"或"通过"的结论。
+      let msdStatus = 'unknown';
+      let msdText = '证据不足 (无具体数值)';
+
+      // 更新 UI
+      bbResult.textContent = bbText;
+      bbResult.className = 'status ' + bbStatus;
+      bbResult.setAttribute('data-value', bbStatus);
+
+      msdResult.textContent = msdText;
+      msdResult.className = 'status ' + msdStatus;
+      msdResult.setAttribute('data-value', msdStatus);
+    }
+
+    // 复位逻辑
+    function resetVisualization() {
+      if (slider) {
+        slider.value = DEFAULT_THRESHOLD;
+        updateVisualization();
+      }
+    }
+
+    // 事件监听
+    if (slider) {
+      slider.addEventListener('input', updateVisualization);
+    }
+    
+    if (resetBtn) {
+      resetBtn.addEventListener('click', resetVisualization);
+    }
+
+    // 初始运行
+    updateVisualization();
+  }
+
+  // 等待 DOM 就绪
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-bias-methodology");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("bias-methodology--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  const scope = document.querySelector('.pm-bias-scope');
+  if (!scope) return;
+
+  // Safe data access
+  const tables = window.paperMindData?.tables || [];
+  const sources = window.paperMindData?.sources || {};
+  
+  // Find Table 1
+  const table1 = tables.find(t => t.id === 'p4-table-1');
+  const rows = table1?.rows || [];
+
+  // Elements
+  const testSelect = scope.querySelector('#bias-methodology--pm-test-select');
+  const targetWordsEl = scope.querySelector('#bias-methodology--pm-target-words');
+  const attributeWordsEl = scope.querySelector('#bias-methodology--pm-attribute-words');
+  const resultFtEl = scope.querySelector('#bias-methodology--pm-result-ft');
+  const resultW2vEl = scope.querySelector('#bias-methodology--pm-result-w2v');
+  const resultIatEl = scope.querySelector('#bias-methodology--pm-result-iat');
+  const interpretationEl = scope.querySelector('#bias-methodology--pm-interpretation-text');
+  
+  const stepContents = scope.querySelectorAll('.pm-step-content');
+  const stepDots = scope.querySelectorAll('.pm-step-dot');
+  
+  const btnStep1Next = scope.querySelector('#bias-methodology--pm-btn-step1-next');
+  const btnStep2Next = scope.querySelector('#bias-methodology--pm-btn-step2-next');
+  const btnStep2Prev = scope.querySelector('#bias-methodology--pm-btn-step2-prev');
+  const btnStep3Prev = scope.querySelector('#bias-methodology--pm-btn-step3-prev');
+  const btnReset = scope.querySelector('#bias-methodology--pm-btn-reset');
+
+  // State
+  let currentStep = 1;
+  let selectedRow = null;
+
+  // Initialize Select
+  function initSelect() {
+    if (!testSelect || rows.length === 0) {
+      if (testSelect) testSelect.innerHTML = '<option value="" disabled>数据不可用</option>';
+      return;
+    }
+    testSelect.innerHTML = '<option value="" disabled selected>选择测试用例...</option>';
+    rows.forEach(row => {
+      const opt = document.createElement('option');
+      opt.value = row.id;
+      const testNo = row.values['Test no.'] || 'Unknown';
+      const target = row.values['Target Words'] || 'Unknown';
+      opt.textContent = `Test ${testNo}: ${target}`;
+      testSelect.appendChild(opt);
+    });
+  }
+
+  // Update Step UI
+  function updateStep(step) {
+    currentStep = step;
+    stepContents.forEach((el, idx) => {
+      if (idx + 1 === step) {
+        el.hidden = false;
+      } else {
+        el.hidden = true;
+      }
+    });
+    stepDots.forEach((el, idx) => {
+      if (idx + 1 === step) {
+        el.classList.add('active');
+      } else {
+        el.classList.remove('active');
+      }
+    });
+  }
+
+  // Handle Selection
+  function handleSelectChange() {
+    const rowId = testSelect.value;
+    const row = rows.find(r => r.id === rowId);
+    if (!row) return;
+    selectedRow = row;
+    
+    targetWordsEl.textContent = row.values['Target Words'] || '-';
+    attributeWordsEl.textContent = row.values['Attribute Words'] || '-';
+  }
+
+  // Handle Results
+  function showResults() {
+    if (!selectedRow) return;
+    const v = selectedRow.values;
+    
+    // Parse numbers safely
+    const ft = v['FT'] !== null ? Number(v['FT']) : null;
+    const w2v = v['w2v'] !== null ? Number(v['w2v']) : null;
+    const iat = v['IAT'] !== null ? Number(v['IAT']) : null;
+
+    resultFtEl.textContent = ft !== null ? ft.toFixed(2) : 'null';
+    resultW2vEl.textContent = w2v !== null ? w2v.toFixed(2) : 'null';
+    resultIatEl.textContent = iat !== null ? iat.toFixed(2) : 'null';
+
+    // Interpretation logic based on paper text
+    let msg = '效应量正值表示存在预期方向的偏见（如目标词 1 更关联属性词 1）。';
+    if (ft !== null && iat !== null) {
+      if (ft > 0 && iat > 0) {
+        msg += ' fastText 结果与人类 IAT 方向一致。';
+      }
+      if (Math.abs(ft - iat) < Math.abs(w2v - iat)) {
+        msg += ' 在此测试中，fastText 比 word2vec 更接近人类结果。';
+      }
+    }
+    // Specific limitation note for certain tests based on paper text (Test 3, 6, 8)
+    const testNo = v['Test no.'];
+    if (['3', '6', '8'].includes(testNo)) {
+      msg += ' 注：论文指出此类测试因歌词数据集中相关词实例少，向量可能不准确。';
+    }
+    interpretationEl.textContent = msg;
+  }
+
+  // Event Listeners
+  if (testSelect) {
+    testSelect.addEventListener('change', handleSelectChange);
+  }
+
+  if (btnStep1Next) {
+    btnStep1Next.addEventListener('click', () => {
+      if (!selectedRow) {
+        alert('请先选择一个测试用例');
+        return;
+      }
+      updateStep(2);
+    });
+  }
+
+  if (btnStep2Next) {
+    btnStep2Next.addEventListener('click', () => {
+      showResults();
+      updateStep(3);
+    });
+  }
+
+  if (btnStep2Prev) {
+    btnStep2Prev.addEventListener('click', () => updateStep(1));
+  }
+
+  if (btnStep3Prev) {
+    btnStep3Prev.addEventListener('click', () => updateStep(2));
+  }
+
+  if (btnReset) {
+    btnReset.addEventListener('click', () => {
+      if (testSelect) testSelect.value = '';
+      selectedRow = null;
+      targetWordsEl.textContent = '-';
+      attributeWordsEl.textContent = '-';
+      resultFtEl.textContent = '-';
+      resultW2vEl.textContent = '-';
+      resultIatEl.textContent = '-';
+      interpretationEl.textContent = '-';
+      updateStep(1);
+    });
+  }
+
+  // Source Buttons
+  const sourceBtns = scope.querySelectorAll('.pm-btn-source');
+  sourceBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Host kernel handles data-source attribute
+      // No action needed here per spec
+    });
+  });
+
+  // Init
+  initSelect();
+  updateStep(1);
+
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-bias-validation-results");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("bias-validation-results--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+
+  // Data Access
+  const tables = window.paperMindData && window.paperMindData.tables ? window.paperMindData.tables : [];
+  const tableData = tables.find(t => t.id === 'p4-table-1');
+  
+  const section = document.getElementById('bias-validation-results');
+  const tableBody = section ? section.querySelector('#bias-validation-results--bias-validation-table tbody') : null;
+  const explanationEl = section ? section.querySelector('#bias-validation-results--detail-explanation') : null;
+  const signConsistencyEl = section ? section.querySelector('#bias-validation-results--metric-sign-consistency') : null;
+  const closestModelEl = section ? section.querySelector('#bias-validation-results--metric-closest-model') : null;
+  const limitationAlertEl = section ? section.querySelector('#bias-validation-results--limitation-alert') : null;
+  const sourceButtons = section ? section.querySelectorAll('.pm-btn-source') : [];
+
+  if (!tableData || !tableBody) {
+    if (explanationEl) explanationEl.innerHTML = '<p>数据加载失败：无法找到 Table 1 数据。</p>';
+    return;
+  }
+
+  // Render Table
+  const rows = tableData.rows || [];
+  rows.forEach((row, index) => {
+    const tr = document.createElement('tr');
+    tr.dataset.rowIndex = index;
+    tr.dataset.testNo = row.values['Test no.'];
+    
+    // Create cells
+    const cols = ['Test no.', 'Target Words', 'Attribute Words', 'w2v', 'FT', 'CA', 'IAT'];
+    cols.forEach(col => {
+      const td = document.createElement('td');
+      td.textContent = row.values[col];
+      td.dataset.col = col;
+      tr.appendChild(td);
+    });
+
+    tableBody.appendChild(tr);
+  });
+
+  // Interaction Logic
+  const handleRowClick = (e) => {
+    const tr = e.currentTarget;
+    const rowIndex = tr.dataset.rowIndex;
+    const rowData = rows[rowIndex];
+    const testNo = rowData.values['Test no.'];
+
+    // Highlight Row
+    const allRows = tableBody.querySelectorAll('tr');
+    allRows.forEach(r => r.classList.remove('selected'));
+    tr.classList.add('selected');
+
+    // Clear previous cell highlights
+    const allCells = tableBody.querySelectorAll('td');
+    allCells.forEach(c => c.classList.remove('closest-cell'));
+
+    // Parse Values
+    const w2v = Number(rowData.values['w2v']);
+    const ft = Number(rowData.values['FT']);
+    const ca = Number(rowData.values['CA']);
+    const iat = Number(rowData.values['IAT']);
+
+    // Check Sign Consistency (All Positive)
+    const signs = [w2v, ft, ca, iat].map(v => v > 0 ? '正' : (v < 0 ? '负' : '零'));
+    const isConsistent = signs.every(s => s === '正');
+    
+    if (signConsistencyEl) {
+      signConsistencyEl.textContent = isConsistent ? '完全一致 (均为正)' : '存在差异';
+      signConsistencyEl.style.color = isConsistent ? 'var(--accent)' : 'var(--warm)';
+    }
+
+    // Calculate Distance to IAT
+    const distW2v = Math.abs(w2v - iat);
+    const distFt = Math.abs(ft - iat);
+    const distCa = Math.abs(ca - iat);
+
+    let closestModel = 'w2v';
+    let minDist = distW2v;
+    let closestCellSelector = `tr[data-row-index="${rowIndex}"] td[data-col="w2v"]`;
+
+    if (distFt < minDist) {
+      closestModel = 'FT';
+      minDist = distFt;
+      closestCellSelector = `tr[data-row-index="${rowIndex}"] td[data-col="FT"]`;
+    }
+    if (distCa < minDist) {
+      closestModel = 'CA';
+      minDist = distCa;
+      closestCellSelector = `tr[data-row-index="${rowIndex}"] td[data-col="CA"]`;
+    }
+
+    // Highlight Closest Cell
+    const closestCell = section.querySelector(closestCellSelector);
+    if (closestCell) closestCell.classList.add('closest-cell');
+
+    if (closestModelEl) {
+      closestModelEl.textContent = closestModel;
+      closestModelEl.style.color = closestModel === 'FT' ? 'var(--accent)' : 'var(--muted)';
+    }
+
+    // Update Explanation
+    if (explanationEl) {
+      const target = rowData.values['Target Words'];
+      const attr = rowData.values['Attribute Words'];
+      explanationEl.innerHTML = `
+        <p><strong>测试 ${testNo}：</strong> ${target} vs ${attr}。</p>
+        <p>人类基准 (IAT) 效应值为 ${iat}。在此测试中，${closestModel} 模型的结果 (${rowData.values[closestModel]}) 最接近人类实测值，差距为 ${minDist.toFixed(2)}。</p>
+        <p>所有模型均检测到正向偏见关联。</p>
+      `;
+    }
+
+    // Show Limitation Alert for Tests 3, 6, 8
+    if (limitationAlertEl) {
+      if (['3', '6', '8'].includes(testNo)) {
+        limitationAlertEl.style.display = 'block';
+      } else {
+        limitationAlertEl.style.display = 'none';
+      }
+    }
+  };
+
+  // Attach Event Listeners
+  const tableRows = tableBody.querySelectorAll('tr');
+  tableRows.forEach(row => {
+    row.addEventListener('click', handleRowClick);
+  });
+
+  // Source Buttons (Host handles logic, just ensure attributes exist)
+  sourceButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // No action needed here, host kernel handles data-source attribute
+    });
+  });
+
+  // Initialize with first row selected for default view
+  if (tableRows.length > 0) {
+    tableRows[0].click();
+  }
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-bias-social-implication");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("bias-social-implication--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+
+  // Configuration
+  const SCOPE_ID = 'bias-social-implication';
+  const TABLE_ID = 'p4-table-1';
+  const TARGET_TEST_NO = '4';
+
+  // DOM Elements
+  const tableBody = document.getElementById(`${SCOPE_ID}-table-body`);
+  const impactBtn = document.getElementById(`${SCOPE_ID}-impact-btn`);
+  const impactCard = document.getElementById(`${SCOPE_ID}-impact-card`);
+
+  // Data Access
+  const tables = window.paperMindData?.tables || [];
+  const tableData = tables.find(t => t.id === TABLE_ID);
+
+  // Initialize Table
+  function renderTable() {
+    if (!tableBody || !tableData) {
+      if (tableBody) tableBody.innerHTML = '<tr><td colspan="5">数据加载失败</td></tr>';
+      return;
+    }
+
+    let maxFT = -Infinity;
+    let maxCA = -Infinity;
+
+    // First pass to find max values for validation (optional visual cue)
+    tableData.rows.forEach(row => {
+      const ftVal = parseFloat(row.values['FT']);
+      const caVal = parseFloat(row.values['CA']);
+      if (!isNaN(ftVal) && ftVal > maxFT) maxFT = ftVal;
+      if (!isNaN(caVal) && caVal > maxCA) maxCA = caVal;
+    });
+
+    // Second pass to render
+    tableData.rows.forEach(row => {
+      const tr = document.createElement('tr');
+      const testNo = row.values['Test no.'];
+      const isTarget = testNo === TARGET_TEST_NO;
+
+      if (isTarget) {
+        tr.classList.add('row-highlight');
+        tr.setAttribute('aria-current', 'true');
+      }
+
+      // Create cells
+      const cells = [
+        testNo,
+        row.values['Target Words'],
+        row.values['Attribute Words'],
+        row.values['FT'],
+        row.values['CA']
+      ];
+
+      cells.forEach((text, index) => {
+        const td = document.createElement('td');
+        td.textContent = text;
+        // Add visual emphasis to numeric columns for target row
+        if (isTarget && index >= 3) {
+          td.style.fontWeight = 'bold';
+        }
+        tr.appendChild(td);
+      });
+
+      tableBody.appendChild(tr);
+    });
+  }
+
+  // Interaction Logic
+  function toggleImpactCard() {
+    const isExpanded = impactBtn.getAttribute('aria-expanded') === 'true';
+    const newState = !isExpanded;
+
+    impactBtn.setAttribute('aria-expanded', String(newState));
+    
+    if (newState) {
+      impactCard.removeAttribute('hidden');
+      // Focus management for accessibility
+      setTimeout(() => {
+        const firstFocusable = impactCard.querySelector('.card-title');
+        if (firstFocusable) firstFocusable.focus();
+      }, 100);
+    } else {
+      impactCard.setAttribute('hidden', '');
+    }
+  }
+
+  // Event Listeners
+  if (impactBtn) {
+    impactBtn.addEventListener('click', toggleImpactCard);
+    // Keyboard support
+    impactBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleImpactCard();
+      }
+    });
+  }
+
+  // Source Button Handling (Delegated to Kernel)
+  // The button has data-source="S052", kernel handles the click event.
+
+  // Initialization
+  renderTable();
+
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-conclusion-synthesis");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("conclusion-synthesis--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+  
+  // 从 runtime_data 获取表格数据
+  const tables = window.paperMindData?.tables || [];
+  const p4Table = tables.find(t => t.id === 'p4-table-1');
+  
+  if (!p4Table) {
+    console.error('Table p4-table-1 not found');
+    return;
+  }
+  
+  // 解析表格数据为对象
+  const testData = {};
+  p4Table.rows.forEach(row => {
+    const testNo = row.values['Test no.'];
+    testData[testNo] = {
+      target: row.values['Target Words'],
+      ft: parseFloat(row.values['FT']),
+      ca: parseFloat(row.values['CA']),
+      iat: parseFloat(row.values['IAT'])
+    };
+  });
+  
+  // DOM 元素
+  const viewToggle = document.getElementById('conclusion-synthesis--view-toggle');
+  const viewToggleDetail = document.getElementById('conclusion-synthesis--view-toggle-detail');
+  const overviewPanel = document.getElementById('conclusion-synthesis--limitation-overview');
+  const detailPanel = document.getElementById('conclusion-synthesis--limitation-detail');
+  const testButtons = document.querySelectorAll('.test-btn');
+  const testResult = document.getElementById('conclusion-synthesis--test-result');
+  const testTitle = document.getElementById('conclusion-synthesis--test-title');
+  const ftValue = document.getElementById('conclusion-synthesis--ft-value');
+  const caValue = document.getElementById('conclusion-synthesis--ca-value');
+  const iatValue = document.getElementById('conclusion-synthesis--iat-value');
+  const errorExplanation = document.getElementById('conclusion-synthesis--error-explanation');
+  const resetBtn = document.getElementById('conclusion-synthesis--reset-test');
+  
+  // 视图切换
+  function switchView(view) {
+    if (view === 'overview') {
+      overviewPanel.classList.add('active');
+      detailPanel.classList.remove('active');
+      viewToggle.classList.add('active');
+      viewToggleDetail.classList.remove('active');
+    } else {
+      overviewPanel.classList.remove('active');
+      detailPanel.classList.add('active');
+      viewToggle.classList.remove('active');
+      viewToggleDetail.classList.add('active');
+    }
+  }
+  
+  viewToggle.addEventListener('click', () => switchView('overview'));
+  viewToggleDetail.addEventListener('click', () => switchView('detail'));
+  
+  // 测试按钮点击处理
+  testButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const testNo = btn.getAttribute('data-test');
+      const data = testData[testNo];
+      
+      if (!data) return;
+      
+      // 更新标题
+      testTitle.textContent = `测试${testNo}: ${data.target}`;
+      
+      // 更新数值并设置 data-value
+      ftValue.textContent = data.ft.toFixed(2);
+      ftValue.setAttribute('data-value', data.ft.toFixed(2));
+      
+      caValue.textContent = data.ca.toFixed(2);
+      caValue.setAttribute('data-value', data.ca.toFixed(2));
+      
+      iatValue.textContent = data.iat.toFixed(2);
+      iatValue.setAttribute('data-value', data.iat.toFixed(2));
+      
+      // 计算误差
+      const ftError = Math.abs(data.ft - data.iat);
+      const caError = Math.abs(data.ca - data.iat);
+      
+      // 生成解释文本
+      let explanation = '';
+      if (testNo === '3' || testNo === '8') {
+        explanation = `歌词数据集中缺乏足够的${data.target.includes('人名') ? '人名' : '特定名称'}实例，导致 fastText 生成的词向量不准确。通用语料库 (CA) 因数据规模更大，结果更接近人类基准 (IAT)。`;
+      } else if (testNo === '6') {
+        explanation = `歌词数据集中缺乏科学相关术语，导致词向量表示不准。通用语料库包含更多科学词汇，因此结果更可靠。`;
+      }
+      
+      errorExplanation.textContent = explanation;
+      
+      // 显示结果
+      testResult.classList.remove('hidden');
+    });
+  });
+  
+  // 复位按钮
+  resetBtn.addEventListener('click', () => {
+    testResult.classList.add('hidden');
+  });
+  
+  // 键盘支持
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !testResult.classList.contains('hidden')) {
+      testResult.classList.add('hidden');
+    }
+  });
+  
+  // 初始化：确保默认视图正确
+  switchView('overview');
+})();})(d);})();;const pmDone=()=>{if(document.body.dataset.pmError)return;document.body.dataset.pmInitialized="true";window.dispatchEvent(new Event("pm-initialized"));};if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",pmDone,{once:true});else pmDone();}catch(error){document.body.dataset.pmError=error.message;window.dispatchEvent(new ErrorEvent("error",{message:error.message}));}</script></body></html>

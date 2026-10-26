@@ -1,0 +1,2078 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'nonce-Ibh5Shb_5vpZXlrWNSUs47SKMZquwW7N'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; frame-src 'none'; object-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'"><title>Attention Is All You Need · paperMind 交互讲解</title><style>*,*::before,*::after{box-sizing:border-box}html{scroll-behavior:auto}body{margin:0;min-width:0}button,input,select{font:inherit}button{cursor:pointer}canvas,svg{max-width:100%}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid #315cc8;outline-offset:4px}#pm-local-source{position:fixed;inset:auto 12px 12px;background:#fff;color:#26364b;border:1px solid #61748c;padding:22px;z-index:99999;max-height:65vh;overflow:auto;font:15px/1.8 system-ui}#pm-local-source button{padding:8px 12px;margin-top:12px}#pm-local-source blockquote{white-space:pre-wrap;margin:12px 0}.pm-user-note{margin:24px 0;padding:20px;background:#edf2ff;color:#26364b;font:15px/1.9 system-ui}.pm-user-note h4{margin:0 0 10px}.pm-user-note p{white-space:pre-wrap}.pm-user-note button{margin:5px;padding:6px 10px}.pm-reading-tools{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:24px;padding-top:14px;border-top:1px solid #d6dcd9}.pm-reading-tools button{border:0;background:transparent;color:#265976;text-decoration:underline;text-underline-offset:4px;font-size:13px;padding:6px 0}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+:root{--ink:#233342;--muted:#596877;--accent:#265976;--warm:#ad472d;--line:#d6dcd9;--paper:#fcfbf8;--soft:#edf2f1}
+body{background:var(--paper);color:var(--ink);font-family:"Microsoft YaHei",system-ui,sans-serif;font-size:16px;line-height:1.95}
+.paper-reading{max-width:1120px;margin:auto;padding:40px clamp(18px,5vw,58px) 80px;overflow-wrap:anywhere}
+.paper-reading h1{font:normal clamp(32px,5vw,58px)/1.12 Georgia,"Noto Serif SC",serif;letter-spacing:-.025em;margin:18px 0 26px;text-wrap:balance}
+.paper-reading h2{font-size:clamp(25px,3.5vw,34px);font-weight:500;line-height:1.4;margin:0 0 20px;text-wrap:balance}
+.paper-reading h3{font-size:20px;font-weight:500;line-height:1.5}.paper-reading p{margin:12px 0 18px}
+.paper-hero{padding:16px 0 38px;border-bottom:1px solid var(--line)}
+.paper-hero .paper-thesis{font-size:18px;line-height:1.95;max-width:55ch}.paper-hero nav{display:flex;flex-wrap:wrap;gap:8px 22px;margin:26px 0 0}
+.paper-hero nav a{font-size:13px;color:var(--accent);text-decoration:underline;text-underline-offset:6px}
+.paper-chapter{padding:48px 0 34px;border-bottom:1px solid var(--line);min-width:0}
+.paper-chapter :where(section,article,div,figure,fieldset){min-width:0}
+.paper-chapter :where(table){display:block;max-width:100%;overflow:auto}
+.paper-chapter :where(pre){white-space:pre-wrap;overflow-wrap:anywhere}
+.paper-reading button{border:1px solid var(--line);background:transparent;color:var(--accent);padding:8px 14px;min-height:38px;border-radius:4px;font-size:13px;line-height:1.5}
+.paper-reading button:hover{background:var(--soft)}.paper-reading button:disabled{opacity:.5;cursor:default}
+.paper-reading input[type=range]{accent-color:var(--accent);max-width:100%;min-width:0}.paper-reading input[type=number]{width:90px}
+.paper-reading select,.paper-reading input[type=number]{padding:7px 9px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font-size:14px;border-radius:4px;max-width:100%}
+.paper-reading input[type=checkbox]{accent-color:var(--warm)}.paper-reading label{font-size:14px;line-height:1.7}
+.paper-reading svg,.paper-reading canvas{display:block;max-width:100%;height:auto}
+.paper-reading details{padding:14px 0;border-top:1px solid var(--line);margin-top:20px}.paper-reading summary{cursor:pointer;color:var(--accent);font-size:14px}
+.paper-reading table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.paper-reading th,.paper-reading td{padding:9px 7px;text-align:left;border-bottom:1px solid var(--line)}
+.paper-reading button[data-source]{font-size:12px;color:var(--accent);border:0;padding:6px 0;margin-right:16px;text-decoration:underline;text-underline-offset:4px}
+.paper-reading ::selection{background:#f3d5ac;color:#233342}.paper-reading :focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.paper-reading .reading-limitations{font-size:14px;color:var(--muted);padding-top:28px}.paper-reading .reading-limitations h2{font-size:24px}
+@media(max-width:480px){.paper-reading{padding-top:24px}.paper-chapter{padding-top:32px}.paper-hero .paper-thesis{font-size:16px}.paper-reading{font-size:15px}.paper-reading h2{font-size:25px}.paper-reading table{font-size:12px}}
+
+@scope (#chapter-ch1_arch_flow){.pm-chapter-container {
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--ink, #1a1a1a);
+  background-color: var(--paper, #ffffff);
+  line-height: 1.6;
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.pm-chapter-container * {
+  box-sizing: border-box;
+}
+
+.pm-section {
+  margin-bottom: 40px;
+  border-left: 4px solid var(--line, #e0e0e0);
+  padding-left: 20px;
+}
+
+.pm-section-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--ink, #1a1a1a);
+}
+
+.pm-text {
+  font-size: 16px;
+  margin-bottom: 16px;
+  color: var(--ink, #1a1a1a);
+}
+
+.pm-small {
+  font-size: 14px;
+  color: var(--muted, #666666);
+}
+
+.pm-diagram-wrapper {
+  background: var(--paper, #ffffff);
+  border: 1px solid var(--line, #e0e0e0);
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+.pm-arch-svg {
+  width: 100%;
+  height: auto;
+  min-width: 320px;
+  display: block;
+}
+
+.pm-block {
+  stroke: var(--ink, #1a1a1a);
+  stroke-width: 1.5;
+  fill: var(--paper, #ffffff);
+  transition: fill 0.3s ease;
+}
+
+.pm-block-input { fill: #f0f4f8; }
+.pm-block-pos { fill: #e3f2fd; }
+.pm-block-encoder { fill: #e0f7fa; }
+.pm-block-decoder { fill: #fff3e0; }
+.pm-block-output { fill: #f3e5f5; }
+
+.pm-label {
+  font-size: 12px;
+  fill: var(--ink, #1a1a1a);
+  font-family: monospace;
+}
+
+.pm-label-sub {
+  font-size: 10px;
+  fill: var(--muted, #666666);
+  font-family: monospace;
+}
+
+.pm-connector {
+  stroke: var(--line, #cccccc);
+  stroke-width: 2;
+  fill: none;
+  marker-end: url(#ch1_arch_flow--arrow-head);
+}
+
+.pm-flow-path {
+  transition: opacity 0.3s ease;
+}
+
+.pm-controls {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pm-btn {
+  font-size: 14px;
+  padding: 8px 16px;
+  background: var(--paper, #ffffff);
+  border: 1px solid var(--line, #cccccc);
+  color: var(--ink, #1a1a1a);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.pm-btn:hover {
+  background: var(--line, #f0f0f0);
+}
+
+.pm-btn-source {
+  border-color: var(--muted, #999999);
+  color: var(--muted, #666666);
+}
+
+.pm-btn-concept {
+  border-color: var(--accent, #007bff);
+  color: var(--accent, #007bff);
+}
+
+.pm-stepper-container {
+  border: 1px solid var(--line, #e0e0e0);
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 4px;
+}
+
+.pm-stepper-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.pm-step-label {
+  font-size: 14px;
+  color: var(--muted, #666666);
+}
+
+.pm-step-content {
+  min-height: 80px;
+  margin-bottom: 15px;
+}
+
+.pm-step-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--ink, #1a1a1a);
+}
+
+.pm-step-text {
+  font-size: 15px;
+  color: var(--ink, #1a1a1a);
+}
+
+.pm-stepper-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--line, #e0e0e0);
+  padding-top: 15px;
+}
+
+.pm-note-block {
+  background: #f9f9f9;
+  border-left: 3px solid var(--accent, #007bff);
+  padding: 15px;
+  margin-top: 20px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pm-flow-path, .pm-block {
+    transition: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .pm-text { font-size: 15px; }
+  .pm-btn { font-size: 13px; padding: 6px 12px; }
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}
+.diagram-readable-scroll{max-width:100%;overflow-x:auto}.pm-arch-svg{width:800px!important;min-width:800px;max-width:none!important}.pm-label{font-size:16px}.pm-label-sub{font-size:14px}.diagram-scroll-hint{font-size:14px;color:var(--muted)}}
+@scope (#chapter-ch2_encoder_unit){:root {
+  --ink: #1a1a1a;
+  --muted: #666666;
+  --accent: #0066cc;
+  --warm: #e6f0ff;
+  --line: #e0e0e0;
+  --paper: #ffffff;
+  --code-bg: #f5f5f5;
+  --highlight: #fff4e5;
+}
+
+.chapter-container {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.6;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.chapter-header {
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+}
+
+.chapter-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  color: var(--ink);
+}
+
+.chapter-takeaway {
+  font-size: 16px;
+  color: var(--muted);
+  margin: 0;
+  font-style: italic;
+}
+
+.node-block {
+  margin-bottom: 40px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 20px;
+  background: #fff;
+}
+
+.node-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: var(--accent);
+  border-left: 4px solid var(--accent);
+  padding-left: 10px;
+}
+
+.node-summary {
+  font-size: 15px;
+  margin-bottom: 20px;
+  color: var(--ink);
+}
+
+/* Stepper Styles */
+.interactive-stepper {
+  background: var(--warm);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.stepper-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.control-btn {
+  background: var(--paper);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.control-btn:hover {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+.control-btn.secondary {
+  border-color: var(--muted);
+  color: var(--muted);
+}
+
+.control-btn.secondary:hover {
+  background: var(--muted);
+  color: var(--paper);
+}
+
+.step-label {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+  min-width: 80px;
+  text-align: center;
+}
+
+.stepper-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flow-diagram {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.flow-node {
+  background: var(--paper);
+  border: 2px solid var(--line);
+  border-radius: 6px;
+  padding: 10px;
+  width: 100%;
+  text-align: center;
+  transition: all 0.3s ease;
+  opacity: 0.6;
+  transform: scale(0.98);
+}
+
+.flow-node.active {
+  border-color: var(--accent);
+  background: #fff;
+  opacity: 1;
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);
+  z-index: 2;
+}
+
+.flow-node input-node,
+.flow-node output-node {
+  background: var(--code-bg);
+  border-style: dashed;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.flow-arrow {
+  color: var(--muted);
+  font-size: 18px;
+  font-weight: bold;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+
+.flow-arrow.active {
+  opacity: 1;
+  color: var(--accent);
+}
+
+.label {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.detail {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  font-family: monospace;
+}
+
+.formula-preview {
+  display: block;
+  font-family: "Times New Roman", Times, serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--code-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+.dimension-tag {
+  display: inline-block;
+  font-size: 11px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-top: 6px;
+  font-family: monospace;
+}
+
+.stepper-explanation {
+  margin-top: 25px;
+  padding: 15px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.stepper-explanation h3 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  color: var(--accent);
+}
+
+.stepper-explanation p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+/* Formula Card */
+.formula-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.formula-display {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 20px;
+  text-align: center;
+  padding: 15px;
+  background: var(--code-bg);
+  border-radius: 4px;
+  margin-bottom: 20px;
+  color: var(--ink);
+}
+
+.formula-conditions h4 {
+  font-size: 15px;
+  margin: 0 0 10px 0;
+  color: var(--ink);
+}
+
+.condition-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.condition-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+}
+
+.condition-list li:last-child {
+  border-bottom: none;
+}
+
+.condition-label {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.condition-value {
+  color: var(--ink);
+  font-family: monospace;
+  font-weight: 600;
+}
+
+/* Teaching Note */
+.teaching-note {
+  background: #fff8e1;
+  border-left: 4px solid #ffc107;
+  padding: 15px;
+  margin: 20px 0;
+  font-size: 14px;
+  color: #5d4037;
+}
+
+.teaching-note h4 {
+  margin: 0 0 10px 0;
+  font-size: 15px;
+}
+
+.teaching-note ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.teaching-note li {
+  margin-bottom: 5px;
+}
+
+/* Source Button */
+.source-block {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.source-btn {
+  background: transparent;
+  border: 1px solid var(--muted);
+  color: var(--muted);
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.source-btn:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+  background: var(--code-bg);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .chapter-container {
+    padding: 10px;
+  }
+  
+  .node-block {
+    padding: 15px;
+  }
+  
+  .formula-display {
+    font-size: 16px;
+    overflow-x: auto;
+  }
+  
+  .condition-list li {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-ch3_decoder_mask){#ch3_decoder_mask--ch3_decoder_mask {
+  --warm-accent: #d97706;
+  --warm-light: #fef3c7;
+  --cold-accent: #2563eb;
+  --mask-color: #e5e7eb;
+  --mask-pattern: repeating-linear-gradient(45deg, #e5e7eb, #e5e7eb 10px, #f3f4f6 10px, #f3f4f6 20px);
+  
+  font-family: inherit;
+  color: var(--ink, #1f2937);
+  background: var(--paper, #ffffff);
+  padding: 24px;
+  border: 1px solid var(--line, #e5e7eb);
+  border-radius: 8px;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-lead {
+  color: var(--muted, #6b7280);
+  margin-bottom: 24px;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  #ch3_decoder_mask--ch3_decoder_mask .pm-content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-text-block p {
+  margin-bottom: 16px;
+  text-align: justify;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-interactive-stage {
+  background: var(--warm-light);
+  border: 1px solid var(--warm-accent);
+  border-radius: 6px;
+  padding: 16px;
+  margin-top: 24px;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-btn {
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-mask-viz {
+  margin: 24px 0;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-matrix-container {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  grid-template-rows: 1fr 40px;
+  gap: 8px;
+  align-items: center;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 4px;
+  aspect-ratio: 1;
+  background: #fff;
+  padding: 8px;
+  border: 1px solid var(--line);
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-cell {
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-cell.allowed {
+  background: var(--warm-accent);
+  opacity: 0.8;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-cell.masked {
+  background: var(--mask-pattern);
+  opacity: 0.5;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-cell.current {
+  border: 2px solid var(--cold-accent);
+  transform: scale(1.05);
+  z-index: 2;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-axis-label {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-legend {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  margin-right: 4px;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-allowed { background: var(--warm-accent); }
+#ch3_decoder_mask--ch3_decoder_mask .pm-masked { background: var(--mask-pattern); border: 1px solid #ccc; }
+#ch3_decoder_mask--ch3_decoder_mask .pm-current { border: 2px solid var(--cold-accent); background: #fff; }
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-viz-note {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-stepper {
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+  margin-top: 16px;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-step-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-step-content {
+  background: #fff;
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid var(--line);
+  font-size: 14px;
+  min-height: 60px;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-evidence-panel {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 16px;
+  height: fit-content;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-source-btn {
+  background: transparent;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-source-quote {
+  font-size: 13px;
+  color: var(--muted);
+  background: var(--warm-light);
+  padding: 8px;
+  border-radius: 4px;
+  margin: 0;
+}
+
+#ch3_decoder_mask--ch3_decoder_mask .pm-limitations ul {
+  font-size: 13px;
+  color: var(--muted);
+  padding-left: 20px;
+  margin-top: 8px;
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-ch4_attention_core){:root {
+  --ink: #1a1a1a;
+  --muted: #666;
+  --accent: #2563eb;
+  --warm: #d97706;
+  --line: #e5e5e5;
+  --paper: #ffffff;
+  --q-color: #2563eb;
+  --k-color: #059669;
+  --v-color: #d97706;
+}
+
+.pm-chapter {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  padding: 24px;
+  line-height: 1.6;
+  font-size: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.pm-chapter * {
+  box-sizing: border-box;
+}
+
+.pm-header {
+  border-bottom: 2px solid var(--line);
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.pm-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--ink);
+}
+
+.pm-meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.pm-btn-source {
+  background: transparent;
+  border: 1px solid var(--muted);
+  color: var(--muted);
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pm-btn-source:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.pm-concept-tag {
+  font-size: 13px;
+  background: #f3f4f6;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+}
+
+.pm-content-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .pm-content-grid {
+    grid-template-columns: 350px 1fr;
+  }
+}
+
+.pm-panel {
+  background: #fafafa;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.pm-text {
+  font-size: 15px;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+
+.pm-alert {
+  background: #eff6ff;
+  border-left: 4px solid var(--accent);
+  padding: 12px;
+  font-size: 14px;
+  color: #1e40af;
+}
+
+.pm-viz-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (min-width: 900px) {
+  .pm-viz-container {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
+.pm-viz-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pm-viz-label {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 4px;
+}
+
+.pm-vector-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pm-vector-item {
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 12px;
+  border-radius: 6px;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 14px;
+}
+
+.pm-vector-item.pm-q { border-color: var(--q-color); }
+.pm-vector-item.pm-k { border-color: var(--k-color); }
+.pm-vector-item.pm-v { border-color: var(--v-color); }
+
+.pm-label {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.pm-controls label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+
+.pm-controls input[type="range"] {
+  width: 100px;
+  margin-left: 8px;
+}
+
+.pm-vector-display {
+  margin-top: 8px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.pm-process {
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 16px;
+  border-radius: 6px;
+}
+
+.pm-calc-block {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pm-calc-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pm-calc-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.pm-bar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pm-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-family: monospace;
+}
+
+.pm-bar-label {
+  width: 40px;
+  text-align: right;
+  color: var(--muted);
+}
+
+.pm-bar-bg {
+  flex: 1;
+  height: 8px;
+  background: #f3f4f6;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.pm-bar-fill {
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.pm-score-1 { background: var(--q-color); }
+.pm-score-2 { background: var(--k-color); }
+.pm-weight-1 { background: var(--warm); }
+.pm-weight-2 { background: #a855f7; }
+
+.pm-bar-val {
+  width: 40px;
+  text-align: left;
+}
+
+.pm-note {
+  font-size: 11px;
+  color: var(--muted);
+  text-align: right;
+  font-style: italic;
+}
+
+.pm-output-box {
+  background: #fff;
+  border: 2px solid var(--ink);
+  padding: 16px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.pm-formula {
+  font-family: monospace;
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: var(--muted);
+}
+
+.pm-output {
+  font-size: 18px;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+
+.pm-contributors {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.pm-contributor {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.pm-c-label {
+  width: 70px;
+  color: var(--muted);
+}
+
+.pm-c-bar-bg {
+  flex: 1;
+  height: 6px;
+  background: #f3f4f6;
+  border-radius: 3px;
+}
+
+.pm-c-bar-fill {
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+#ch4_attention_core--contrib-1 { background: var(--warm); }
+#ch4_attention_core--contrib-2 { background: #a855f7; }
+
+.pm-teaching-note {
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--muted);
+  border-top: 1px dashed var(--line);
+  padding-top: 8px;
+}
+
+.pm-footer {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.pm-status {
+  color: var(--k-color);
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pm-bar-fill, .pm-c-bar-fill {
+    transition: none;
+  }
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}</style></head><body><main class="paper-reading"><header class="paper-hero"><h1>Attention Is All You Need</h1><p class="paper-thesis">Transformer 摒弃递归与卷积，完全依赖注意力机制构建编码器 - 解码器架构，通过残差连接、层归一化及因果掩码确保训练稳定与生成因果性。</p><nav aria-label="讲解章节"><a href="#arch_overview">架构全景与输入流</a><a href="#encoder_mechanism">编码器计算单元</a><a href="#decoder_constraints">解码器因果约束</a><a href="#attention_definition">注意力机制定义</a></nav></header><div class="paper-chapter" id="chapter-ch1_arch_flow"><p class="excerpt-scope">阅读范围：仅上传的 Transformer 架构单页，含第3.1节及第3.2节开头；未上传章节的公式与实验不作为本页原文事实。</p><div id="ch1_arch_flow--ch1_arch_flow" class="pm-chapter-container">
+  <section id="arch_overview" data-node="arch_overview" class="pm-node-anchor"><section class="pm-section" data-node="arch_overview">
+    <h2 class="pm-section-title">Transformer 整体架构概览</h2>
+    <div class="pm-content-block">
+      <p class="pm-text">本文确立了 Transformer 模型由左侧的编码器堆栈和右侧的解码器堆栈组成的宏观结构。数据流向从输入嵌入开始，经过位置编码叠加，依次通过编码器处理上下文信息，再进入解码器生成输出序列，最后经线性层和 Softmax 得到概率分布。</p>
+      <div class="pm-diagram-wrapper">
+        <p class="diagram-scroll-hint">可横向滚动查看完整架构图。</p><div class="diagram-readable-scroll" tabindex="0" aria-label="完整架构图，可横向滚动"><svg class="pm-arch-svg" viewBox="0 0 800 400" aria-labelledby="ch1_arch_flow--arch-desc">
+          <title id="ch1_arch_flow--arch-desc">Transformer 架构数据流示意图</title>
+          <defs>
+            <marker id="ch1_arch_flow--arrow-head" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,6 L9,3 z" fill="var(--ink)" />
+            </marker>
+          </defs>
+          
+          <!-- Input -->
+          <g class="pm-flow-group" data-flow-step="0">
+            <rect x="50" y="175" width="100" height="50" class="pm-block pm-block-input" />
+            <text x="100" y="205" text-anchor="middle" class="pm-label">Input Embedding</text>
+          </g>
+          
+          <!-- Positional Encoding -->
+          <g class="pm-flow-group" data-flow-step="1">
+            <circle cx="200" cy="200" r="25" class="pm-block pm-block-pos" />
+            <text x="200" y="205" text-anchor="middle" class="pm-label">+ PE</text>
+          </g>
+          
+          <!-- Encoder Stack -->
+          <g class="pm-flow-group" data-flow-step="2">
+            <rect x="250" y="100" width="120" height="200" class="pm-block pm-block-encoder" />
+            <text x="310" y="205" text-anchor="middle" class="pm-label">Encoder Stack</text>
+            <text x="310" y="225" text-anchor="middle" class="pm-label-sub">N=6 Layers</text>
+          </g>
+          
+          <!-- Decoder Stack -->
+          <g class="pm-flow-group" data-flow-step="3">
+            <rect x="450" y="100" width="120" height="200" class="pm-block pm-block-decoder" />
+            <text x="510" y="205" text-anchor="middle" class="pm-label">Decoder Stack</text>
+            <text x="510" y="225" text-anchor="middle" class="pm-label-sub">N=6 Layers</text>
+          </g>
+          
+          <!-- Output Linear & Softmax -->
+          <g class="pm-flow-group" data-flow-step="4">
+            <rect x="650" y="175" width="100" height="50" class="pm-block pm-block-output" />
+            <text x="700" y="205" text-anchor="middle" class="pm-label">Linear & Softmax</text>
+          </g>
+          
+          <!-- Connections -->
+          <path d="M150,200 L175,200" class="pm-connector" />
+          <path d="M225,200 L250,200" class="pm-connector" />
+          <path d="M370,200 L450,200" class="pm-connector" />
+          <path d="M570,200 L650,200" class="pm-connector" />
+          
+          <!-- Highlight Overlay -->
+          <path id="ch1_arch_flow--pm-flow-highlight" d="M50,200 L750,200" fill="none" stroke="var(--accent)" stroke-width="3" stroke-dasharray="10,5" opacity="0" class="pm-flow-path" />
+        </svg></div>
+        <div class="pm-controls">
+          <button type="button" id="ch1_arch_flow--pm-flow-toggle" class="pm-btn">切换数据流向高亮</button>
+          <button type="button" data-source="S001" class="pm-btn pm-btn-source">原文 · p.1</button>
+        </div>
+      </div>
+      <p class="pm-text pm-small">根据 Figure 1 所示，Transformer 的整体架构分为左右两半：左半部分为编码器（Encoder），右半部分为解码器（Decoder）。两者均采用了堆叠的自注意力机制和逐点全连接层。</p>
+    </div>
+  </section></section>
+
+  <section id="embedding_positional" data-node="embedding_positional" class="pm-node-anchor"><section class="pm-section" data-node="embedding_positional">
+    <h2 class="pm-section-title">嵌入层与位置编码输入</h2>
+    <div class="pm-content-block">
+      <p class="pm-text">Transformer 模型不包含递归或卷积结构，因此需要显式地注入位置信息。图中显示，输入嵌入和输出嵌入都会与位置编码相加。</p>
+      
+      <div class="pm-stepper-container">
+        <div class="pm-stepper-nav">
+          <button type="button" id="ch1_arch_flow--pm-step-prev" class="pm-btn" disabled>上一步</button>
+          <span id="ch1_arch_flow--pm-step-indicator" class="pm-step-label">步骤 1 / 2</span>
+          <button type="button" id="ch1_arch_flow--pm-step-next" class="pm-btn">下一步</button>
+        </div>
+        <div id="ch1_arch_flow--pm-step-content" class="ch1_arch_flow--pm-step-content">
+          <h3 class="pm-step-title">步骤 1: 嵌入与位置编码结合</h3>
+          <p class="pm-step-text">原始输入 token 首先转换为输入嵌入向量，然后加上对应的位置编码向量。同样，目标序列转换为输出嵌入后也加上位置编码。</p>
+        </div>
+        <div class="pm-stepper-actions">
+          <button type="button" data-concept="concept-80ce6d4cb5dee4cb" class="pm-btn pm-btn-concept">概念：位置编码</button>
+          <button type="button" data-concept="concept-ea04a8f259ca1a9d" class="pm-btn pm-btn-concept">概念：输出嵌入偏移</button>
+          <button type="button" data-source="S001" class="pm-btn pm-btn-source">原文 · p.1</button>
+        </div>
+      </div>
+
+      <div class="pm-note-block">
+        <p class="pm-text"><strong>注意：</strong>在解码器部分，为了防止位置 i 的预测依赖于位置 i 之后的未知输出，模型采取了掩码措施，且输出嵌入偏移了一个位置（offset by one position）。</p>
+      </div>
+    </div>
+  </section></section>
+</div></div><div class="paper-chapter" id="chapter-ch2_encoder_unit"><section id="ch2_encoder_unit--ch2_encoder_unit" class="chapter-container" data-node="ch2_encoder_unit--ch2_encoder_unit">
+  <header class="chapter-header">
+    <h1 class="chapter-title">编码器计算单元</h1>
+    <p class="chapter-takeaway">编码器由 6 个相同层堆叠，每层含自注意力与前馈网络两个子层，均应用残差连接与层归一化，维度固定为 512。</p>
+  </header>
+
+  <article id="encoder_mechanism" class="node-block" data-node="encoder_mechanism">
+    <h2 class="node-title">编码器堆栈内部机制</h2>
+    <div class="node-content">
+      <p class="node-summary">编码器堆栈由 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">N=6</annotation></semantics></math></span> 个完全相同的层组成。每个层内部包含两个子层：第一个是多头自注意力机制，第二个是逐点的全连接前馈网络。</p>
+      
+      <div class="interactive-stepper" id="ch2_encoder_unit--encoder-stepper">
+        <div class="stepper-controls">
+          <button type="button" id="ch2_encoder_unit--step-prev" class="control-btn" aria-label="上一步">← 上一步</button>
+          <span id="ch2_encoder_unit--step-indicator" class="step-label">步骤 1 / 4</span>
+          <button type="button" id="ch2_encoder_unit--step-next" class="control-btn" aria-label="下一步">下一步 →</button>
+          <button type="button" id="ch2_encoder_unit--step-reset" class="control-btn secondary">复位</button>
+        </div>
+
+        <div class="ch2_encoder_unit--stepper-visual" id="ch2_encoder_unit--stepper-visual">
+          <div class="flow-diagram">
+            <div class="flow-node input-node" data-step="all">
+              <span class="label">输入 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span></span>
+              <span class="dimension-tag"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mrow><mi>m</mi><mi>o</mi><mi>d</mi><mi>e</mi><mi>l</mi></mrow></msub><mo>=</mo><mn>512</mn></mrow><annotation encoding="application/x-tex">d_{model}=512</annotation></semantics></math></span></span>
+            </div>
+            
+            <div class="flow-arrow" id="ch2_encoder_unit--arrow-1">↓</div>
+            
+            <div class="flow-node sublayer-node" data-step="1">
+              <span class="label">多头自注意力</span>
+              <span class="detail">Multi-Head Self-Attention</span>
+            </div>
+            
+            <div class="flow-arrow" id="ch2_encoder_unit--arrow-2">↓</div>
+            
+            <div class="flow-node residual-node" data-step="2">
+              <span class="label">残差连接</span>
+              <span class="formula-preview"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>+</mo><mtext>Sublayer</mtext><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">x + \text{Sublayer}(x)</annotation></semantics></math></span></span>
+            </div>
+            
+            <div class="flow-arrow" id="ch2_encoder_unit--arrow-3">↓</div>
+            
+            <div class="flow-node norm-node" data-step="2">
+              <span class="label">层归一化</span>
+              <span class="formula-preview"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>LayerNorm</mtext><mo stretchy="false">(</mo><mo>⋅</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\text{LayerNorm}(\cdot)</annotation></semantics></math></span></span>
+            </div>
+            
+            <div class="flow-arrow" id="ch2_encoder_unit--arrow-4">↓</div>
+            
+            <div class="flow-node sublayer-node ffn-node" data-step="3">
+              <span class="label">前馈网络</span>
+              <span class="detail">Position-wise FFN</span>
+            </div>
+            
+            <div class="flow-arrow" id="ch2_encoder_unit--arrow-5">↓</div>
+            
+            <div class="flow-node residual-node" data-step="4">
+              <span class="label">残差连接</span>
+              <span class="formula-preview"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>+</mo><mtext>Sublayer</mtext><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">x + \text{Sublayer}(x)</annotation></semantics></math></span></span>
+            </div>
+            
+            <div class="flow-arrow" id="ch2_encoder_unit--arrow-6">↓</div>
+            
+            <div class="flow-node norm-node" data-step="4">
+              <span class="label">层归一化</span>
+              <span class="formula-preview"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>LayerNorm</mtext><mo stretchy="false">(</mo><mo>⋅</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\text{LayerNorm}(\cdot)</annotation></semantics></math></span></span>
+            </div>
+            
+            <div class="flow-arrow">↓</div>
+            
+            <div class="flow-node output-node" data-step="all">
+              <span class="label">层输出</span>
+              <span class="dimension-tag"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mrow><mi>m</mi><mi>o</mi><mi>d</mi><mi>e</mi><mi>l</mi></mrow></msub><mo>=</mo><mn>512</mn></mrow><annotation encoding="application/x-tex">d_{model}=512</annotation></semantics></math></span></span>
+            </div>
+          </div>
+          
+          <div class="stepper-explanation" id="ch2_encoder_unit--stepper-text">
+            <h3 id="ch2_encoder_unit--step-title">步骤 1：多头自注意力处理</h3>
+            <p id="ch2_encoder_unit--step-desc">输入向量 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span> 首先进入第一个子层，即多头自注意力机制。该机制允许模型在不同表示子空间中关注不同位置的信息。</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="source-block">
+        <button type="button" class="source-btn" data-source="S001" data-node="encoder_mechanism">原文 · p.1</button>
+      </div>
+    </div>
+  </article>
+
+  <article id="residual_norm_formula" class="node-block" data-node="residual_norm_formula">
+    <h2 class="node-title">残差连接与层归一化公式</h2>
+    <div class="node-content">
+      <p class="node-summary">本节点形式化定义了 Transformer 子层的输出计算方式，并明确了维度约束。</p>
+      
+      <div class="formula-card">
+        <div class="formula-display">
+          <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Output</mtext><mo>=</mo><mtext>LayerNorm</mtext><mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mtext>Sublayer</mtext><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\text{Output} = \text{LayerNorm}(x + \text{Sublayer}(x))</annotation></semantics></math></span>
+        </div>
+        <div class="formula-conditions">
+          <h4>约束条件验证</h4>
+          <ul class="condition-list">
+            <li>
+              <span class="condition-label">维度一致性：</span>
+              <span class="condition-value">输入 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span> 与 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Sublayer</mtext><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\text{Sublayer}(x)</annotation></semantics></math></span> 必须同维</span>
+            </li>
+            <li>
+              <span class="condition-label">设定值：</span>
+              <span class="condition-value"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mrow><mi>m</mi><mi>o</mi><mi>d</mi><mi>e</mi><mi>l</mi></mrow></msub><mo>=</mo><mn>512</mn></mrow><annotation encoding="application/x-tex">d_{model} = 512</annotation></semantics></math></span></span>
+            </li>
+            <li>
+              <span class="condition-label">适用范围：</span>
+              <span class="condition-value">所有子层及嵌入层</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="teaching-note">
+        <h4>教学假设与局限</h4>
+        <ul>
+          <li><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mrow><mi>m</mi><mi>o</mi><mi>d</mi><mi>e</mi><mi>l</mi></mrow></msub><mo>=</mo><mn>512</mn></mrow><annotation encoding="application/x-tex">d_{model}=512</annotation></semantics></math></span> 是该特定实验配置的值，并非所有 Transformer 变体的通用常数。</li>
+          <li>前馈网络的具体内部维度（通常大于 512）在当前页未明确给出，此处仅展示输入输出维度一致。</li>
+          <li>原文引用了外部文献支持残差连接和层归一化的有效性，但未在此处展开数学证明。</li>
+        </ul>
+      </div>
+
+      <div class="source-block">
+        <button type="button" class="source-btn" data-source="S001" data-node="residual_norm_formula">原文 · p.1</button>
+      </div>
+    </div>
+  </article>
+</section></div><div class="paper-chapter" id="chapter-ch3_decoder_mask"><section id="decoder_constraints" data-node="decoder_constraints" class="pm-node-anchor"><section id="ch3_decoder_mask--ch3_decoder_mask" class="pm-chapter-container" data-node="decoder_constraints">
+  <header class="pm-chapter-header">
+    <h1 class="pm-title">解码器因果约束</h1>
+    <p class="pm-lead">解码器堆栈与因果掩码机制</p>
+  </header>
+
+  <div class="pm-content-grid">
+    <div class="pm-main-panel">
+      <article class="pm-text-block">
+        <p>解码器堆栈由 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">N=6</annotation></semantics></math></span> 个相同的层组成。与编码器类似，它包含多头自注意力子层和前馈网络子层，并同样采用了残差连接和层归一化。</p>
+        <p>解码器的独特之处在于插入了第三个子层，该层执行多头注意力机制，作用于编码器的输出。这使得解码器在生成每个 token 时能够利用源序列的全部上下文信息。</p>
+        <p>为了防止在训练和推理过程中“泄露”未来信息，解码器中的自注意力子层引入了掩码（masking）。这种掩码机制阻止了位置 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span> 关注随后的位置。结合输出嵌入向右偏移一位的设计，确保了对位置 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span> 的预测仅依赖于位置小于 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span> 的已知输出。</p>
+      </article>
+
+      <div class="pm-interactive-stage">
+        <div class="pm-controls">
+          <label class="pm-toggle-label">
+            <input type="checkbox" id="ch3_decoder_mask--ch3_decoder_mask-mask-toggle" checked>
+            <span>启用因果掩码 (Causal Mask)</span>
+          </label>
+          <button type="button" id="ch3_decoder_mask--ch3_decoder_mask-reset-btn" class="pm-btn">复位视图</button>
+        </div>
+
+        <div class="pm-mask-viz">
+          <div class="pm-matrix-container">
+            <div class="pm-axis-label pm-y-axis">查询位置 (Query i)</div>
+            <div class="pm-grid" id="ch3_decoder_mask--ch3_decoder_mask-matrix-grid">
+              <!-- Grid generated by JS -->
+            </div>
+            <div class="pm-axis-label pm-x-axis">键位置 (Key j)</div>
+          </div>
+          <div class="pm-legend">
+            <span class="pm-legend-item"><span class="pm-dot pm-allowed"></span> 允许关注</span>
+            <span class="pm-legend-item"><span class="pm-dot pm-masked"></span> 掩码 (未来信息)</span>
+            <span class="pm-legend-item"><span class="pm-dot pm-current"></span> 当前预测位置</span>
+          </div>
+          <p class="pm-viz-note">教学示例：展示掩码如何阻止位置 i  attending 到 j > i 的位置。</p>
+        </div>
+
+        <div class="pm-stepper">
+          <h3>解码器层计算流程</h3>
+          <div class="pm-step-controls">
+            <button type="button" id="ch3_decoder_mask--ch3_decoder_mask-prev-step" class="pm-btn" disabled>上一步</button>
+            <span id="ch3_decoder_mask--ch3_decoder_mask-step-indicator">步骤 1 / 5</span>
+            <button type="button" id="ch3_decoder_mask--ch3_decoder_mask-next-step" class="pm-btn">下一步</button>
+          </div>
+          <div class="pm-step-content" id="ch3_decoder_mask--ch3_decoder_mask-step-text">
+            <!-- Step text injected by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="pm-evidence-panel">
+      <h3>证据来源</h3>
+      <div class="pm-source-card">
+        <button type="button" class="pm-source-btn" data-source="S001">原文 · p.1</button>
+        <p class="pm-source-quote">"We also modify the self-attention sub-layer in the decoder stack to prevent positions from attending to subsequent positions. This masking, combined with fact that the output embeddings are offset by one position, ensures that the predictions for position i can depend only on the known outputs at positions less than i."</p>
+      </div>
+      <div class="pm-limitations">
+        <h3>局限与假设</h3>
+        <ul>
+          <li>原文未提供掩码矩阵的具体数值形式或实现代码。</li>
+          <li>假设输出嵌入的偏移操作是在输入到解码器之前完成的预处理步骤。</li>
+          <li>解码器的层数 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">N=6</annotation></semantics></math></span> 与编码器保持一致，属于特定架构选择。</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section></section></div><div class="paper-chapter" id="chapter-ch4_attention_core"><section id="attention_definition" data-node="attention_definition" class="pm-node-anchor"><section id="ch4_attention_core--ch4_attention_core" class="pm-chapter" data-node="attention_definition">
+  <header class="pm-header">
+    <h2 class="pm-title">注意力函数的基本映射</h2>
+    <div class="pm-meta">
+      <button type="button" class="pm-btn-source" data-source="S001">原文 · p.1</button>
+      <span class="pm-concept-tag" data-concept="concept-46991c3cbbed2559">Query, Key, Value</span>
+    </div>
+  </header>
+
+  <div class="pm-content-grid">
+    <div class="pm-panel pm-panel-intro">
+      <p class="pm-text">注意力函数（Attention Function）是 Transformer 的核心组件。根据原文 3.2 节的定义，该函数接收一个<strong>查询向量（query）</strong>和一组<strong>键值对向量（key-value pairs）</strong>作为输入。</p>
+      <p class="pm-text">函数的输出也是一个向量。原文明确指出了其计算的本质逻辑：<strong>输出是值的加权求和（weighted sum of the values）</strong>。权重由查询与相应键的兼容性函数计算得出。</p>
+      <div class="pm-alert">
+        <strong>核心论证：</strong> 注意力机制能够动态地决定在生成输出时，应该从哪些值向量中提取多少信息。
+      </div>
+    </div>
+
+    <div class="pm-panel pm-panel-viz">
+      <div class="pm-viz-container">
+        <div class="pm-viz-column">
+          <h3 class="pm-viz-label">输入 (Input)</h3>
+          <div class="pm-vector-group">
+            <div class="pm-vector-item pm-q">
+              <span class="pm-label">Query (Q)</span>
+              <div class="pm-controls">
+                <label>Q<sub>x</sub>: <input type="range" id="ch4_attention_core--input-qx" min="-5" max="5" step="0.1" value="1"></label>
+                <label>Q<sub>y</sub>: <input type="range" id="ch4_attention_core--input-qy" min="-5" max="5" step="0.1" value="1"></label>
+              </div>
+              <div class="pm-vector-display" id="ch4_attention_core--disp-q">[1.0, 1.0]</div>
+            </div>
+            <div class="pm-vector-list">
+              <div class="pm-vector-item pm-k">
+                <span class="pm-label">Key 1 (K<sub>1</sub>)</span>
+                <div class="pm-vector-display">[2.0, 0.0]</div>
+              </div>
+              <div class="pm-vector-item pm-k">
+                <span class="pm-label">Key 2 (K<sub>2</sub>)</span>
+                <div class="pm-vector-display">[0.0, 2.0]</div>
+              </div>
+            </div>
+            <div class="pm-vector-list">
+              <div class="pm-vector-item pm-v">
+                <span class="pm-label">Value 1 (V<sub>1</sub>)</span>
+                <div class="pm-vector-display">[10, 0]</div>
+              </div>
+              <div class="pm-vector-item pm-v">
+                <span class="pm-label">Value 2 (V<sub>2</sub>)</span>
+                <div class="pm-vector-display">[0, 10]</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pm-viz-column pm-process">
+          <h3 class="pm-viz-label">计算过程 (Process)</h3>
+          <div class="pm-calc-block">
+            <div class="pm-calc-row">
+              <span class="pm-calc-name">兼容性 (Compatibility)</span>
+              <div class="pm-bar-container">
+                <div class="pm-bar-wrap"><span class="pm-bar-label">Q·K<sub>1</sub></span><div class="pm-bar-bg"><div class="pm-bar-fill pm-score-1" id="ch4_attention_core--bar-score-1"></div></div><span class="pm-bar-val" id="ch4_attention_core--val-score-1">0</span></div>
+                <div class="pm-bar-wrap"><span class="pm-bar-label">Q·K<sub>2</sub></span><div class="pm-bar-bg"><div class="pm-bar-fill pm-score-2" id="ch4_attention_core--bar-score-2"></div></div><span class="pm-bar-val" id="ch4_attention_core--val-score-2">0</span></div>
+              </div>
+            </div>
+            <div class="pm-calc-row">
+              <span class="pm-calc-name">权重 (Weights)</span>
+              <div class="pm-bar-container">
+                <div class="pm-bar-wrap"><span class="pm-bar-label">α<sub>1</sub></span><div class="pm-bar-bg"><div class="pm-bar-fill pm-weight-1" id="ch4_attention_core--bar-weight-1"></div></div><span class="pm-bar-val" id="ch4_attention_core--val-weight-1">0.5</span></div>
+                <div class="pm-bar-wrap"><span class="pm-bar-label">α<sub>2</sub></span><div class="pm-bar-bg"><div class="pm-bar-fill pm-weight-2" id="ch4_attention_core--bar-weight-2"></div></div><span class="pm-bar-val" id="ch4_attention_core--val-weight-2">0.5</span></div>
+              </div>
+              <div class="pm-note">Softmax 归一化</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pm-viz-column">
+          <h3 class="pm-viz-label">输出 (Output)</h3>
+          <div class="pm-output-box">
+            <div class="pm-formula">Output = α<sub>1</sub>V<sub>1</sub> + α<sub>2</sub>V<sub>2</sub></div>
+            <div class="pm-vector-display pm-output" id="ch4_attention_core--disp-output">[5.0, 5.0]</div>
+            <div class="pm-contributors">
+              <div class="pm-contributor">
+                <span class="pm-c-label">来自 V<sub>1</sub>:</span>
+                <div class="pm-c-bar-bg"><div class="pm-c-bar-fill" id="ch4_attention_core--contrib-1"></div></div>
+              </div>
+              <div class="pm-contributor">
+                <span class="pm-c-label">来自 V<sub>2</sub>:</span>
+                <div class="pm-c-bar-bg"><div class="pm-c-bar-fill" id="ch4_attention_core--contrib-2"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pm-teaching-note">
+        教学示例：此处使用简化的 2 维向量与点积兼容性函数演示加权求和逻辑，非论文中的完整训练权重。
+      </div>
+    </div>
+  </div>
+
+  <footer class="pm-footer">
+    <div class="pm-claim">
+      <strong>主张验证：</strong> 注意力函数的输出计算本质上是值的加权求和。
+      <span class="pm-status">状态：已支持 (Supported)</span>
+    </div>
+  </footer>
+</section></section></div><footer class="reading-limitations"><h2>带着边界理解这篇论文</h2><p>本文档证据仅覆盖论文第 1 页（Section 3.1 及 3.2 开头），不包含 Scaled Dot-Product Attention 的具体数学公式。</p><p>位置编码（Positional Encoding）的具体数学形式（如正弦函数）在当前证据中未给出，仅确认其存在及相加操作。</p><p>未包含实验结果表格、模型性能数据或与其他模型的对比数据。</p><p>多头注意力（Multi-Head Attention）的具体分割与拼接细节在当前证据片段中未详细展开。</p><p>前馈网络的具体内部维度（通常大于 512）在当前页未明确给出。</p></footer></main><script nonce="Ibh5Shb_5vpZXlrWNSUs47SKMZquwW7N">const PM_CONFIG={"edition": "5df55aad-2051-4bb2-87f5-ae0d98db8ca6", "document": "pdf-1a02a680ff1cd6e0", "channel": "inspection", "data": {"tables": [], "sources": {"S001": {"id": "pdf-1a02a680ff1cd6e0-p1-b0", "page": 1, "quote": "Figure 1: The Transformer - model architecture.\n\nThe Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder, shown in the left and right halves of Figure 1, respectively.\n\n### 3.1 Encoder and Decoder Stacks\n\n**Encoder:** The encoder is composed of a stack of $N=6$ identical layers. Each layer has two sub-layers. The first is a multi-head self-attention mechanism, and the second is a simple, position-wise fully connected feed-forward network. We employ a residual connection [11] around each of the two sub-layers, followed by layer normalization [1]. That is, the output of each sub-layer is LayerNorm($x$ + Sublayer($x$)), where Sublayer($x$) is the function implemented by the sub-layer itself. To facilitate these residual connections, all sub-layers in the model, as well as the embedding layers, produce outputs of dimension $d_{\\text{model}}=512$.\n\n**Decoder:** The decoder is also composed of a stack of $N=6$ identical layers. In addition to the two sub-layers in each encoder layer, the decoder inserts a third sub-layer, which performs multi-head attention over the output of the encoder stack. Similar to the encoder, we employ residual connections around each of the sub-layers, followed by layer normalization. We also modify the self-attention sub-layer in the decoder stack to prevent positions from attending to subsequent positions. This masking, combined with fact that the output embeddings are offset by one position, ensures that the predictions for position $i$ can depend only on the known outputs at positions less than $i$.\n\n### 3.2 Attention\n\nAn attention function can be described as mapping a query and a set of key-value pairs to an output, where the query, keys, values, and output are all vectors. The output is computed as a weighted sum"}}, "nodes": [{"id": "arch_overview", "title": "Transformer 整体架构概览", "concepts": ["concept-d207ed28236ad393"]}, {"id": "encoder_mechanism", "title": "编码器堆栈内部机制", "concepts": ["concept-8165e5703cb1c7d2"]}, {"id": "decoder_constraints", "title": "解码器堆栈与因果掩码", "concepts": ["concept-bc5df93b457ef839"]}, {"id": "residual_norm_formula", "title": "残差连接与层归一化公式", "concepts": ["concept-faa6f34d60b8bf4f", "concept-ad8a20edb0308980"]}, {"id": "attention_definition", "title": "注意力函数的基本映射", "concepts": ["concept-46991c3cbbed2559"]}, {"id": "embedding_positional", "title": "嵌入层与位置编码输入", "concepts": ["concept-80ce6d4cb5dee4cb", "concept-ea04a8f259ca1a9d"]}], "concepts": {"concept-d207ed28236ad393": {"id": "concept-d207ed28236ad393", "title": "位置编码 (Positional Encoding)", "layer": "Architecture Input Layer", "lead": "用于弥补自注意力机制缺乏序列顺序信息的缺陷。", "text": "在 Transformer 中，由于模型不包含递归或卷积结构，必须显式地注入位置信息。文中指出输入嵌入会与位置编码相加（added to positional encodings），以使模型能够利用序列中 token 的相对或绝对位置。", "why": "理解此概念是明白为何静态的自注意力机制能处理有序序列的关键，也是 Figure 1 中输入预处理步骤的核心。", "source_ids": ["pdf-1a02a680ff1cd6e0-p1-b0"], "next": null, "domain": "Deep Learning Architecture", "document_id": "pdf-1a02a680ff1cd6e0", "node_id": "arch_overview"}, "concept-8165e5703cb1c7d2": {"id": "concept-8165e5703cb1c7d2", "title": "层归一化 (Layer Normalization)", "layer": "Optimization Technique", "lead": "一种用于稳定深度神经网络训练的技术。", "text": "在 Transformer 中，层归一化被应用在残差连接之后。它对单个样本的所有特征进行归一化（计算均值和方差），使得每一层的输入分布更加稳定，从而加速收敛并减少对初始化的敏感度。", "why": "这是编码器层输出公式 LayerNorm($x$ + Sublayer($x$)) 中的关键操作，确保了深层网络中梯度的有效传播。", "source_ids": ["pdf-1a02a680ff1cd6e0-p1-b0"], "next": null, "domain": "Deep Learning Architecture", "document_id": "pdf-1a02a680ff1cd6e0", "node_id": "encoder_mechanism"}, "concept-bc5df93b457ef839": {"id": "concept-bc5df93b457ef839", "title": "因果掩码 (Causal Mask / Look-ahead Mask)", "layer": "Attention Mechanism Constraint", "lead": "一种用于序列生成任务的控制机制，防止模型窥探未来数据。", "text": "在解码器的自注意力计算中，因果掩码将未来位置的注意力分数设为负无穷大（或在 Softmax 后变为 0）。这强制模型在预测时刻 $t$ 时，只能利用时刻 $t$ 及之前的信息，符合自回归生成的因果律要求。", "why": "这是解码器能够实现逐个 token 生成且不依赖未来信息的核心机制，解释了为何原文强调“predictions for position $i$ can depend only on the known outputs at positions less than $i$", "source_ids": ["pdf-1a02a680ff1cd6e0-p1-b0"], "next": null, "domain": "Deep Learning Architecture", "document_id": "pdf-1a02a680ff1cd6e0", "node_id": "decoder_constraints"}, "concept-faa6f34d60b8bf4f": {"id": "concept-faa6f34d60b8bf4f", "title": "残差连接 (Residual Connection)", "layer": "Architecture Mechanism", "lead": "一种跳过单层或多层直接将输入传递到输出的连接方式。", "text": "在 Transformer 中，残差连接表现为将子层的输入 x 直接加到子层的输出 Sublayer(x) 上，形成 x + Sublayer(x)。这种结构有助于缓解深层网络中的梯度消失问题。", "why": "理解此概念是掌握 LayerNorm(x + Sublayer(x)) 公式中加法来源的关键。", "source_ids": ["pdf-1a02a680ff1cd6e0-p1-b0"], "next": null, "domain": "Deep Learning Architecture", "document_id": "pdf-1a02a680ff1cd6e0", "node_id": "residual_norm_formula"}, "concept-ad8a20edb0308980": {"id": "concept-ad8a20edb0308980", "title": "层归一化 (Layer Normalization)", "layer": "Normalization Technique", "lead": "对神经网络层 activations 进行标准化处理的技术。", "text": "在此架构中，层归一化应用于残差连接之后，即对 (x + Sublayer(x)) 的结果进行归一化。这与某些在其他位置（如残差之前）应用归一化的变体不同。", "why": "明确归一化的应用位置对于复现模型行为和理解公式顺序至关重要。", "source_ids": ["pdf-1a02a680ff1cd6e0-p1-b0"], "next": null, "domain": "Deep Learning Architecture", "document_id": "pdf-1a02a680ff1cd6e0", "node_id": "residual_norm_formula"}, "concept-46991c3cbbed2559": {"id": "concept-46991c3cbbed2559", "title": "查询、键与值 (Query, Key, Value)", "layer": "Attention Mechanism Components", "lead": "注意力机制中的三个核心输入向量角色。", "text": "Query 用于发起检索，Key 用于被检索匹配，Value 包含实际的信息内容。注意力机制通过计算 Query 和 Key 的相似度来确定对 Value 的权重。", "why": "这是理解注意力函数如何从 'mapping' 转化为具体 'weighted sum' 的基础概念。", "source_ids": ["pdf-1a02a680ff1cd6e0-p1-b0"], "next": null, "domain": "Deep Learning Architecture", "document_id": "pdf-1a02a680ff1cd6e0", "node_id": "attention_definition"}, "concept-80ce6d4cb5dee4cb": {"id": "concept-80ce6d4cb5dee4cb", "title": "位置编码 (Positional Encoding)", "layer": "Input Representation", "lead": "向嵌入向量中添加的表示 token 位置的信号。", "text": "由于 Transformer 缺乏固有的顺序感，位置编码被加到嵌入中以提供位置信息。原文提到其具体形式（如正弦函数）但未在当前片段展示公式。", "why": "解释为何需要对嵌入进行额外处理以保留序列顺序信息。", "source_ids": ["pdf-1a02a680ff1cd6e0-p1-b0"], "next": null, "domain": "Deep Learning Architecture", "document_id": "pdf-1a02a680ff1cd6e0", "node_id": "embedding_positional"}, "concept-ea04a8f259ca1a9d": {"id": "concept-ea04a8f259ca1a9d", "title": "输出嵌入偏移 (Output Embedding Offset)", "layer": "Decoder Strategy", "lead": "解码器输入序列相对于目标输出序列的时间步错位。", "text": "这是一种训练技巧，使得解码器在预测第 t 个词时，其输入是第 t-1 个词。结合掩码机制，严格保证了因果性。", "why": "这是理解解码器如何避免 '作弊' 看到未来数据的关键机制。", "source_ids": ["pdf-1a02a680ff1cd6e0-p1-b0"], "next": null, "domain": "Deep Learning Architecture", "document_id": "pdf-1a02a680ff1cd6e0", "node_id": "embedding_positional"}}}};/* Trusted host bridge. Authors only access read-only evidence and local DOM. */
+(()=>{
+ const C=PM_CONFIG;
+ const deepFreeze=o=>{if(o&&typeof o==='object'){Object.values(o).forEach(deepFreeze);Object.freeze(o);}return o;};
+ Object.defineProperty(window,'paperMindData',{value:deepFreeze(C.data),writable:false,configurable:false});
+ const nodes=new Set(C.data.nodes.map(n=>n.id)),concepts=new Set(C.data.nodes.flatMap(n=>n.concepts));
+ let initialized=false,height=0,scheduled=false;
+ function emit(type,payload={}){if(parent!==window)parent.postMessage({type,edition:C.edition,document:C.document,channel:C.channel,...payload},'*');}
+ function measure(){if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;const h=Math.ceil(document.documentElement.scrollHeight);if(h!==height){height=h;emit('resize',{height:h});}});}
+ function source(id){const s=C.data.sources[id];if(!s)return;if(parent!==window){emit('cite',{id:s.id});return;}document.getElementById('pm-local-source')?.remove();const box=document.createElement('aside');box.id='pm-local-source';box.setAttribute('role','dialog');box.setAttribute('aria-label','原文出处');const title=document.createElement('strong');title.textContent='原文 · 第 '+s.page+' 页';const quote=document.createElement('blockquote');quote.textContent=s.quote;const close=document.createElement('button');close.textContent='返回讲解';close.addEventListener('click',()=>box.remove());box.append(title,quote,close);document.body.append(box);close.focus();}
+ function nodeOf(el){return el.closest('[data-node]')?.dataset.node||C.data.nodes[0]?.id;}
+ function readingTools(){for(const b of document.querySelectorAll('button[data-source]')){const s=C.data.sources[b.dataset.source];if(s)b.textContent='原文 · p.'+s.page;}if(parent===window){for(const b of document.querySelectorAll('[data-ask],[data-concept],[data-undo]'))b.hidden=true;return;}for(const n of C.data.nodes){const anchor=document.getElementById(n.id);if(!anchor||anchor.querySelector('button[data-ask]'))continue;const tools=document.createElement('div');tools.className='pm-reading-tools';tools.dataset.node=n.id;const ask=document.createElement('button');ask.dataset.ask='请解释'+n.title+'的原理、推导与成立条件';ask.textContent='沿着这里继续问';tools.append(ask);for(const id of n.concepts||[]){const b=document.createElement('button');b.dataset.concept=id;b.textContent=C.data.concepts?.[id]?.title||'查阅相关概念';tools.append(b);}anchor.append(tools);}}
+ document.addEventListener('click',event=>{
+  const button=event.target.closest('button,a');if(!button)return;
+  if(button.dataset.source){event.preventDefault();source(button.dataset.source);}
+  else if(button.dataset.concept&&concepts.has(button.dataset.concept))emit('concept',{id:button.dataset.concept,node:nodeOf(button)});
+  else if(button.dataset.ask&&event.isTrusted)emit('ask',{text:button.dataset.ask.slice(0,2000),node:nodeOf(button)});
+  else if(button.dataset.undo&&event.isTrusted)emit('undo',{id:button.dataset.undo});
+  else if(button.matches('a[href^="#"]')){event.preventDefault();const el=document.getElementById(button.getAttribute('href').slice(1));if(el){if(parent===window)el.scrollIntoView();else emit('scroll',{top:el.getBoundingClientRect().top+scrollY});}}
+ });
+ document.addEventListener('mouseup',()=>{const text=window.getSelection()?.toString().trim();if(text&&text.length>=4&&text.length<=2000)emit('selection',{text,node:nodeOf(window.getSelection()?.anchorNode?.parentElement||document.body)});});
+ function supplements(items){document.querySelectorAll('.pm-user-note').forEach(n=>n.remove());for(const item of items){if(!nodes.has(item.node_id))continue;const anchor=document.getElementById(item.node_id);if(!anchor)continue;const note=document.createElement('aside');note.className='pm-user-note';note.dataset.node=item.node_id;const h=document.createElement('h4');h.textContent='我的讲解补充';const p=document.createElement('p');p.textContent=item.text;note.append(h,p);for(const id of item.source_ids||[]){const alias=Object.keys(C.data.sources).find(k=>C.data.sources[k].id===id);if(alias){const b=document.createElement('button');b.dataset.source=alias;b.textContent='原文 · p.'+C.data.sources[alias].page;note.append(b);}}if(item.can_undo){const b=document.createElement('button');b.dataset.undo=item.id;b.textContent='撤回补充';note.append(b);}anchor.append(note);}measure();}
+ window.addEventListener('message',event=>{const d=event.data;if(event.source!==parent||!d||d.channel!==C.channel)return;
+  if(d.type==='navigate'&&nodes.has(d.node)){const el=document.getElementById(d.node);if(el){for(let p=el.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;emit('scroll',{top:el.getBoundingClientRect().top+scrollY});}}
+  if(d.type==='viewport'&&Number.isFinite(d.top)){let chosen=C.data.nodes[0]?.id;for(const n of C.data.nodes){const el=document.getElementById(n.id);if(el&&el.getBoundingClientRect().top+scrollY<=d.top+160)chosen=n.id;}if(chosen)emit('active',{node:chosen});}
+  if(d.type==='supplements'&&Array.isArray(d.items))supplements(d.items.slice(0,100));
+ });
+ window.addEventListener('pm-initialized',()=>{readingTools();initialized=true;document.body.dataset.pmReady='true';emit('ready');measure();});
+ window.addEventListener('error',event=>{document.body.dataset.pmError=String(event.message);emit('error',{message:String(event.message).slice(0,300)});});
+ new ResizeObserver(measure).observe(document.body);measure();
+})();
+</script><script nonce="Ibh5Shb_5vpZXlrWNSUs47SKMZquwW7N">try{(()=>{const root=document.getElementById("chapter-ch1_arch_flow");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("ch1_arch_flow--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  var container = document.getElementById('ch1_arch_flow--ch1_arch_flow');
+  if (!container) return;
+
+  var flowToggle = document.getElementById('ch1_arch_flow--pm-flow-toggle');
+  var flowPath = document.getElementById('ch1_arch_flow--pm-flow-highlight');
+  var stepPrev = document.getElementById('ch1_arch_flow--pm-step-prev');
+  var stepNext = document.getElementById('ch1_arch_flow--pm-step-next');
+  var stepIndicator = document.getElementById('ch1_arch_flow--pm-step-indicator');
+  var stepContent = document.getElementById('ch1_arch_flow--pm-step-content');
+  
+  var isFlowActive = false;
+  var currentStep = 0;
+  
+  var stepsData = [
+    {
+      title: "步骤 1: 嵌入与位置编码结合",
+      text: "原始输入 token 首先转换为输入嵌入向量，然后加上对应的位置编码向量。同样，目标序列转换为输出嵌入后也加上位置编码。"
+    },
+    {
+      title: "步骤 2: 解码器输入偏移",
+      text: "在解码器中，为了预测位置 i 的输出，输入序列被向右偏移一位。这意味着在时刻 i，模型看到的是时刻 i-1 及之前的真实输出（或生成的 token），从而实现了自回归的因果约束。"
+    }
+  ];
+
+  function updateFlow() {
+    if (!flowPath) return;
+    if (isFlowActive) {
+      flowPath.style.opacity = '1';
+    } else {
+      flowPath.style.opacity = '0';
+    }
+  }
+
+  function updateStepper() {
+    if (!stepIndicator || !stepContent) return;
+    var data = stepsData[currentStep];
+    stepIndicator.textContent = '步骤 ' + (currentStep + 1) + ' / ' + stepsData.length;
+    
+    var titleEl = stepContent.querySelector('.pm-step-title');
+    var textEl = stepContent.querySelector('.pm-step-text');
+    
+    if (titleEl) titleEl.textContent = data.title;
+    if (textEl) textEl.textContent = data.text;
+    
+    if (stepPrev) stepPrev.disabled = (currentStep === 0);
+    if (stepNext) {
+      stepNext.disabled = (currentStep === stepsData.length - 1);
+      stepNext.textContent = (currentStep === stepsData.length - 1) ? '完成' : '下一步';
+    }
+  }
+
+  if (flowToggle) {
+    flowToggle.addEventListener('click', function() {
+      isFlowActive = !isFlowActive;
+      updateFlow();
+    });
+  }
+
+  if (stepPrev) {
+    stepPrev.addEventListener('click', function() {
+      if (currentStep > 0) {
+        currentStep--;
+        updateStepper();
+      }
+    });
+  }
+
+  if (stepNext) {
+    stepNext.addEventListener('click', function() {
+      if (currentStep < stepsData.length - 1) {
+        currentStep++;
+        updateStepper();
+      }
+    });
+  }
+
+  initializeState();
+
+  function initializeState() {
+    updateFlow();
+    updateStepper();
+  }
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-ch2_encoder_unit");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("ch2_encoder_unit--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+
+  // State Management
+  const state = {
+    currentStep: 1,
+    totalSteps: 4,
+    stepData: [
+      {
+        title: "步骤 1：多头自注意力处理",
+        desc: "输入向量 $x$ 首先进入第一个子层，即多头自注意力机制。该机制允许模型在不同表示子空间中关注不同位置的信息。",
+        activeNodes: ['sublayer-node'],
+        activeArrows: ['ch2_encoder_unit--arrow-1']
+      },
+      {
+        title: "步骤 2：残差连接与归一化",
+        desc: "自注意力层的输出与原始输入 $x$ 相加（残差连接），然后结果通过层归一化函数 LayerNorm 进行处理，得到第一阶段的输出。",
+        activeNodes: ['residual-node', 'norm-node'],
+        activeArrows: ['ch2_encoder_unit--arrow-2', 'ch2_encoder_unit--arrow-3']
+      },
+      {
+        title: "步骤 3：前馈网络处理",
+        desc: "上一阶段的输出进入第二个子层，即逐点全连接前馈网络。该网络独立地应用于每个位置。",
+        activeNodes: ['ffn-node'],
+        activeArrows: ['ch2_encoder_unit--arrow-4']
+      },
+      {
+        title: "步骤 4：再次残差连接与归一化",
+        desc: "前馈网络的输出再次与该层的输入（即步骤 2 的输出）相加，并通过 LayerNorm，完成整个编码器层的计算。",
+        activeNodes: ['residual-node', 'norm-node'],
+        activeArrows: ['ch2_encoder_unit--arrow-5', 'ch2_encoder_unit--arrow-6'],
+        // Special handling for second residual/norm visually if needed, 
+        // but for simplicity in this DOM structure, we highlight the generic nodes again
+        // or we could have duplicated IDs. Given the static HTML, we highlight the bottom ones.
+        // To fix ambiguity in static HTML with duplicate classes, we rely on CSS nth-child or specific logic.
+        // However, the provided HTML has unique IDs for arrows but shared classes for nodes.
+        // Let's refine the selector logic in the update function.
+      }
+    ]
+  };
+
+  // DOM Elements
+  const els = {
+    prev: document.getElementById('ch2_encoder_unit--step-prev'),
+    next: document.getElementById('ch2_encoder_unit--step-next'),
+    reset: document.getElementById('ch2_encoder_unit--step-reset'),
+    indicator: document.getElementById('ch2_encoder_unit--step-indicator'),
+    title: document.getElementById('ch2_encoder_unit--step-title'),
+    desc: document.getElementById('ch2_encoder_unit--step-desc'),
+    nodes: document.querySelectorAll('.flow-node'),
+    arrows: document.querySelectorAll('.flow-arrow')
+  };
+
+  // Helper: Clear Active States
+  function clearActive() {
+    els.nodes.forEach(n => n.classList.remove('active'));
+    els.arrows.forEach(a => a.classList.remove('active'));
+  }
+
+  // Helper: Update Visuals
+  function updateVisuals() {
+    clearActive();
+    const step = state.stepData[state.currentStep - 1];
+    
+    // Update Text
+    els.title.textContent = step.title;
+    els.desc.textContent = step.desc;
+    els.indicator.textContent = `步骤 ${state.currentStep} / ${state.totalSteps}`;
+
+    // Highlight Arrows
+    step.activeArrows.forEach(id => {
+      const arrow = document.getElementById(id);
+      if (arrow) arrow.classList.add('active');
+    });
+
+    // Highlight Nodes
+    // Note: For steps 2 and 4, we need to be careful which nodes to highlight 
+    // since the HTML has generic classes. 
+    // Step 2 highlights the first residual/norm set.
+    // Step 4 highlights the second residual/norm set.
+    // We can use DOM order or specific data attributes if we had them.
+    // Since the HTML structure is linear:
+    // Index 0: Input
+    // Index 1: Attn (Step 1)
+    // Index 2: Residual 1 (Step 2)
+    // Index 3: Norm 1 (Step 2)
+    // Index 4: FFN (Step 3)
+    // Index 5: Residual 2 (Step 4)
+    // Index 6: Norm 2 (Step 4)
+    // Index 7: Output
+    
+    const nodeArray = Array.from(els.nodes);
+    
+    if (state.currentStep === 1) {
+      nodeArray[1].classList.add('active'); // Attn
+    } else if (state.currentStep === 2) {
+      nodeArray[2].classList.add('active'); // Residual 1
+      nodeArray[3].classList.add('active'); // Norm 1
+    } else if (state.currentStep === 3) {
+      nodeArray[4].classList.add('active'); // FFN
+    } else if (state.currentStep === 4) {
+      nodeArray[5].classList.add('active'); // Residual 2
+      nodeArray[6].classList.add('active'); // Norm 2
+    }
+
+    // Always keep input/output visible but not 'active' in the sense of processing
+    nodeArray[0].classList.add('active'); 
+    nodeArray[7].classList.add('active');
+  }
+
+  // Event Handlers
+  function handleNext() {
+    if (state.currentStep < state.totalSteps) {
+      state.currentStep++;
+      updateVisuals();
+    }
+  }
+
+  function handlePrev() {
+    if (state.currentStep > 1) {
+      state.currentStep--;
+      updateVisuals();
+    }
+  }
+
+  function handleReset() {
+    state.currentStep = 1;
+    updateVisuals();
+  }
+
+  // Source Button Handling (Mock Kernel Bridge)
+  function handleSourceClick(e) {
+    const btn = e.currentTarget;
+    const sourceId = btn.getAttribute('data-source');
+    const nodeId = btn.getAttribute('data-node');
+    // In a real kernel, this would trigger a navigation or modal.
+    // Here we just log or visually acknowledge.
+    console.log(`Source requested: ${sourceId} for node ${nodeId}`);
+    // Visual feedback
+    const originalText = btn.textContent;
+    btn.textContent = "查阅中...";
+    setTimeout(() => {
+      btn.textContent = originalText;
+    }, 1000);
+  }
+
+  // Initialization
+  function init() {
+    // Bind Events
+    els.next.addEventListener('click', handleNext);
+    els.prev.addEventListener('click', handlePrev);
+    els.reset.addEventListener('click', handleReset);
+    
+    const sourceBtns = document.querySelectorAll('.source-btn');
+    sourceBtns.forEach(btn => {
+      btn.addEventListener('click', handleSourceClick);
+    });
+
+    // Initial Render
+    updateVisuals();
+  }
+
+  // Run
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-ch3_decoder_mask");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("ch3_decoder_mask--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  const scopeId = 'ch3_decoder_mask--ch3_decoder_mask';
+  const matrixSize = 5;
+  let currentStep = 0;
+  let maskEnabled = true;
+  let selectedRow = 2; // Default highlight row
+
+  const steps = [
+    { title: "步骤 1：带掩码的自注意力", text: "输入进入第一个子层。此时自注意力机制被施加了掩码，使得当前位置只能看到之前的位置，无法看到未来的位置。" },
+    { title: "步骤 2：第一次残差与归一化", text: "掩码自注意力的输出与输入相加，并通过层归一化。" },
+    { title: "步骤 3：编码器 - 解码器注意力", text: "数据进入第三个子层。此处 Query 来自解码器上一层的输出，而 Key 和 Value 来自编码器堆栈的输出。" },
+    { title: "步骤 4：第二次残差与归一化", text: "编码器 - 解码器注意力的输出经过残差连接和层归一化。" },
+    { title: "步骤 5：前馈网络与最终归一化", text: "数据通过前馈网络子层，最后再次进行残差连接和层归一化，完成该解码器层的计算。" }
+  ];
+
+  function init() {
+    const container = document.getElementById(scopeId);
+    if (!container) return;
+
+    const maskToggle = document.getElementById(scopeId + '-mask-toggle');
+    const resetBtn = document.getElementById(scopeId + '-reset-btn');
+    const prevBtn = document.getElementById(scopeId + '-prev-step');
+    const nextBtn = document.getElementById(scopeId + '-next-step');
+    const stepIndicator = document.getElementById(scopeId + '-step-indicator');
+    const stepText = document.getElementById(scopeId + '-step-text');
+    const grid = document.getElementById(scopeId + '-matrix-grid');
+    const sourceBtn = container.querySelector('[data-source="S001"]');
+
+    // Render Matrix
+    function renderMatrix() {
+      grid.innerHTML = '';
+      for (let i = 0; i < matrixSize; i++) {
+        for (let j = 0; j < matrixSize; j++) {
+          const cell = document.createElement('div');
+          cell.className = 'pm-cell';
+          
+          // Logic: Mask if j > i (Future positions)
+          const isMasked = maskEnabled && (j > i);
+          const isCurrentRow = (i === selectedRow);
+          const isCurrentCell = (i === selectedRow && j === selectedRow);
+
+          if (isMasked) {
+            cell.classList.add('masked');
+            cell.setAttribute('aria-label', `位置 ${i} 无法关注未来位置 ${j}`);
+          } else {
+            cell.classList.add('allowed');
+            if (isCurrentRow) {
+              cell.style.opacity = '1';
+            } else {
+              cell.style.opacity = '0.3';
+            }
+          }
+
+          if (isCurrentCell) {
+            cell.classList.add('current');
+          }
+
+          // Interaction: Click cell to select row
+          cell.addEventListener('click', () => {
+            selectedRow = i;
+            renderMatrix();
+          });
+
+          grid.appendChild(cell);
+        }
+      }
+    }
+
+    function updateStep() {
+      stepIndicator.textContent = `步骤 ${currentStep + 1} / ${steps.length}`;
+      stepText.textContent = steps[currentStep].text;
+      prevBtn.disabled = currentStep === 0;
+      nextBtn.disabled = currentStep === steps.length - 1;
+    }
+
+    // Event Listeners
+    if (maskToggle) {
+      maskToggle.addEventListener('change', (e) => {
+        maskEnabled = e.target.checked;
+        renderMatrix();
+      });
+    }
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        maskEnabled = true;
+        if (maskToggle) maskToggle.checked = true;
+        selectedRow = 2;
+        currentStep = 0;
+        renderMatrix();
+        updateStep();
+      });
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        if (currentStep > 0) {
+          currentStep--;
+          updateStep();
+        }
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        if (currentStep < steps.length - 1) {
+          currentStep++;
+          updateStep();
+        }
+      });
+    }
+
+    if (sourceBtn) {
+      sourceBtn.addEventListener('click', () => {
+        // Host kernel handles source navigation via data-source attribute
+        // No action needed here per spec
+      });
+    }
+
+    // Initial Render
+    renderMatrix();
+    updateStep();
+  }
+
+  // Wait for DOM
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-ch4_attention_core");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("ch4_attention_core--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+
+  // Constants for the teaching example
+  // Fixed Keys and Values for the demonstration
+  const K1 = [2.0, 0.0];
+  const K2 = [0.0, 2.0];
+  const V1 = [10, 0];
+  const V2 = [0, 10];
+
+  // DOM Elements
+  const inputQx = document.getElementById('ch4_attention_core--input-qx');
+  const inputQy = document.getElementById('ch4_attention_core--input-qy');
+  const dispQ = document.getElementById('ch4_attention_core--disp-q');
+  
+  const barScore1 = document.getElementById('ch4_attention_core--bar-score-1');
+  const valScore1 = document.getElementById('ch4_attention_core--val-score-1');
+  const barScore2 = document.getElementById('ch4_attention_core--bar-score-2');
+  const valScore2 = document.getElementById('ch4_attention_core--val-score-2');
+  
+  const barWeight1 = document.getElementById('ch4_attention_core--bar-weight-1');
+  const valWeight1 = document.getElementById('ch4_attention_core--val-weight-1');
+  const barWeight2 = document.getElementById('ch4_attention_core--bar-weight-2');
+  const valWeight2 = document.getElementById('ch4_attention_core--val-weight-2');
+  
+  const dispOutput = document.getElementById('ch4_attention_core--disp-output');
+  const contrib1 = document.getElementById('ch4_attention_core--contrib-1');
+  const contrib2 = document.getElementById('ch4_attention_core--contrib-2');
+
+  // Helper: Dot Product
+  function dot(v1, v2) {
+    return v1[0] * v2[0] + v1[1] * v2[1];
+  }
+
+  // Helper: Softmax
+  function softmax(scores) {
+    const maxScore = Math.max(...scores);
+    const exps = scores.map(s => Math.exp(s - maxScore));
+    const sumExps = exps.reduce((a, b) => a + b, 0);
+    return exps.map(e => e / sumExps);
+  }
+
+  // Helper: Vector Add
+  function addScaled(v1, s1, v2, s2) {
+    return [
+      v1[0] * s1 + v2[0] * s2,
+      v1[1] * s1 + v2[1] * s2
+    ];
+  }
+
+  // Main Update Function
+  function updateAttention() {
+    // 1. Get Query Input
+    const qx = parseFloat(inputQx.value);
+    const qy = parseFloat(inputQy.value);
+    const Q = [qx, qy];
+
+    // Update Q Display
+    dispQ.textContent = `[${qx.toFixed(1)}, ${qy.toFixed(1)}]`;
+
+    // 2. Calculate Compatibility (Dot Product)
+    // Note: In full Scaled Dot-Product, we divide by sqrt(d_k), here d_k=2, sqrt(2)~1.41
+    // For teaching clarity on "Weighted Sum", we show raw scores then normalize.
+    const score1 = dot(Q, K1);
+    const score2 = dot(Q, K2);
+
+    // Update Score Bars (Visual scaling for display, max range approx +/- 10)
+    const maxScoreRange = 10;
+    const pct1 = Math.min(100, Math.max(0, ((score1 + maxScoreRange) / (maxScoreRange * 2)) * 100));
+    const pct2 = Math.min(100, Math.max(0, ((score2 + maxScoreRange) / (maxScoreRange * 2)) * 100));
+    
+    barScore1.style.width = `${pct1}%`;
+    valScore1.textContent = score1.toFixed(2);
+    barScore2.style.width = `${pct2}%`;
+    valScore2.textContent = score2.toFixed(2);
+
+    // 3. Calculate Weights (Softmax)
+    const weights = softmax([score1, score2]);
+    const w1 = weights[0];
+    const w2 = weights[1];
+
+    // Update Weight Bars
+    barWeight1.style.width = `${w1 * 100}%`;
+    valWeight1.textContent = w1.toFixed(3);
+    barWeight2.style.width = `${w2 * 100}%`;
+    valWeight2.textContent = w2.toFixed(3);
+
+    // 4. Calculate Output (Weighted Sum)
+    // Output = w1 * V1 + w2 * V2
+    const output = addScaled(V1, w1, V2, w2);
+
+    // Update Output Display
+    dispOutput.textContent = `[${output[0].toFixed(1)}, ${output[1].toFixed(1)}]`;
+
+    // Update Contribution Visualization
+    // Since V1 is [10, 0] and V2 is [0, 10], the output components directly reflect the weights * 10
+    // We visualize the magnitude of contribution to the final vector magnitude roughly
+    const contribPct1 = w1 * 100;
+    const contribPct2 = w2 * 100;
+    
+    contrib1.style.width = `${contribPct1}%`;
+    contrib2.style.width = `${contribPct2}%`;
+  }
+
+  // Initialize Event Listeners
+  if (inputQx && inputQy) {
+    inputQx.addEventListener('input', updateAttention);
+    inputQy.addEventListener('input', updateAttention);
+  }
+
+  // Initial Run
+  updateAttention();
+
+  // Source Button Handler (Delegated to Kernel via data attribute, no JS logic needed)
+  // But we ensure the button exists and is accessible
+  const sourceBtn = document.querySelector('.pm-btn-source');
+  if (sourceBtn) {
+    sourceBtn.addEventListener('click', function(e) {
+      // The kernel handles the data-source attribute
+      // No alert or mock behavior
+    });
+  }
+
+})();})(d);})();;const pmDone=()=>{if(document.body.dataset.pmError)return;document.body.dataset.pmInitialized="true";window.dispatchEvent(new Event("pm-initialized"));};if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",pmDone,{once:true});else pmDone();}catch(error){document.body.dataset.pmError=error.message;window.dispatchEvent(new ErrorEvent("error",{message:error.message}));}</script></body></html>

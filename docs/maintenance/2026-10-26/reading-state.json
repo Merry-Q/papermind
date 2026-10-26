@@ -1,0 +1,408 @@
+{
+  "defaults": [
+    [
+      "pdf-bdfaa68d8984f0dc",
+      "079275a4-bac5-4953-b1ff-e449a44ef573"
+    ]
+  ],
+  "edition_statuses": {
+    "validated": 1,
+    "failed": 10,
+    "draft": 16
+  },
+  "editions": [
+    {
+      "id": "079275a4-bac5-4953-b1ff-e449a44ef573",
+      "document_id": "pdf-bdfaa68d8984f0dc",
+      "status": "validated",
+      "stage": "validated",
+      "checks": {
+        "structure": "pass",
+        "browser": "pass",
+        "calculations": "pass",
+        "fidelity": "pass",
+        "experience": "pass",
+        "host": "pass"
+      },
+      "error": null,
+      "artifact_hash": "fee756c21c60833e45ef6a70387a53eb3e28116ae6713d5f965923aebdee6050",
+      "data_hash": "84030ed76a3bf0cdd1b53d4616f6838d4fb7c996d52cbce02a98ef75ba3870ce"
+    },
+    {
+      "id": "1e811d20-657e-4bc5-a6d1-6f835ac675bc",
+      "document_id": "pdf-b4deafe808239771",
+      "status": "failed",
+      "stage": "failed",
+      "checks": {},
+      "error": "章节结构检查失败：[{\"chapter\": \"chap-1-problem\", \"issue\": \"缺少节点锚点：{'problem-statement'}\"}, {\"chapter\": \"chap-2-model\", \"issue\": \"缺少节点锚点：{'system-model-3d'}\"}, {\"chapter\": \"chap-3-bottleneck\", \"issue\": \"缺少节点锚点：{'sensing-matrix-construction'}\"}, {\"chapter\": \"chap-4-mechanism\", \"issue\": \"不允许的标签：code；不允许的标签：code；不允许的标签：code；不允许的标签：code；不允许的标签：code；不允许的标签：code；不允许的标签：code；不允许的标签：code；不允许的标签：code；缺少节点锚点：{'adaptive-mechanism'}\"}, {\"chapter\": \"chap-7-limits\", \"issue\": \"缺少节点锚点：{'limitations-scope'}\"}]",
+      "artifact_hash": null,
+      "data_hash": null
+    },
+    {
+      "id": "ae090d55-b8ff-4fa4-bcb4-d450f89db345",
+      "document_id": "pdf-23e3249e9a1e7541",
+      "status": "failed",
+      "stage": "failed",
+      "checks": {},
+      "error": "章节结构检查失败：[{\"chapter\": \"chap-1-problem\", \"issue\": \"缺少节点锚点：{'problem-statement'}\"}, {\"chapter\": \"chap-2-architecture\", \"issue\": \"不允许的标签：pattern；不允许的标签：code\"}, {\"chapter\": \"chap-3-mechanism\", \"issue\": \"不允许的标签：lineargradient；不允许的标签：stop；不允许的标签：stop\"}, {\"chapter\": \"chap-4-training\", \"issue\": \"缺少节点锚点：{'training-decoding'}\"}, {\"chapter\": \"chap-7-ablation\", \"issue\": \"缺少节点锚点：{'retrieval-ablations'}\"}, {\"chapter\": \"chap-8-dynamic\", \"issue\": \"缺少节点锚点：{'index-hot-swapping'}\"}, {\"chapter\": \"chap-9-limits\", \"issue\": \"缺少节点锚点：{'limitations-scope'}\"}]",
+      "artifact_hash": null,
+      "data_hash": null
+    },
+    {
+      "id": "284336eb-c194-44fe-a682-3cc691048b9d",
+      "document_id": "pdf-6e4e3411984f3edf",
+      "status": "failed",
+      "stage": "interrupted",
+      "checks": {},
+      "error": "上一轮后台进程已结束，保留缓存；本轮按用户最新要求修复已知问题，未完成材料不发布。",
+      "artifact_hash": null,
+      "data_hash": null
+    },
+    {
+      "id": "3ea2996d-d812-488e-ae72-6f73eb7a6e61",
+      "document_id": "pdf-66fe209b72eb93c6",
+      "status": "failed",
+      "stage": "interrupted",
+      "checks": {},
+      "error": "上一轮后台进程已结束，保留缓存；本轮按用户最新要求修复已知问题，未完成材料不发布。",
+      "artifact_hash": null,
+      "data_hash": null
+    },
+    {
+      "id": "ff61987b-4552-40e5-ab3d-2015e77d6774",
+      "document_id": "pdf-23e3249e9a1e7541",
+      "status": "draft",
+      "stage": "awaiting_full_review",
+      "checks": {
+        "structure": {
+          "status": "pass",
+          "anchors": 10,
+          "citations": 20
+        },
+        "calculations": {
+          "status": "targeted_pass",
+          "report": "known-issues-repair/independent-values/report.json"
+        },
+        "fidelity": "pending_full_document_review",
+        "experience": "pending_full_document_review",
+        "host": {
+          "status": "pass",
+          "report": "known-issues-repair/rag-host-final/report.json"
+        }
+      },
+      "error": null,
+      "artifact_hash": "cba5e9347c2ecc43dcb93047bffe4885c6cf97d95b4cf36517bc2ed9d2f3c55b",
+      "data_hash": "f2b2f8bedb0c86a54eb0c4631f78810255d90dc863b3cde421931707758bbc1b"
+    },
+    {
+      "id": "92c47ac1-5693-439a-9140-944c5c0b2ce0",
+      "document_id": "pdf-b4deafe808239771",
+      "status": "draft",
+      "stage": "awaiting_full_review",
+      "checks": {
+        "structure": {
+          "status": "pass",
+          "anchors": 8,
+          "citations": 27
+        },
+        "calculations": {
+          "status": "targeted_pass",
+          "report": "known-issues-repair/independent-values/report.json"
+        },
+        "fidelity": "pending_full_document_review",
+        "experience": "pending_full_document_review",
+        "host": {
+          "status": "pass",
+          "report": "known-issues-repair/sensors-host-diagnosis/report.json"
+        }
+      },
+      "error": null,
+      "artifact_hash": "317b4d15df6ad819ffc46752355640b668850fd854f74503cfc57efd739e4b8e",
+      "data_hash": "9e3737420a1b0c09a583a2310d2493c43a7042ec41166a90d228c99f9cfe0934"
+    },
+    {
+      "id": "00f64620-2440-4231-a559-459d6a9f2382",
+      "document_id": "pdf-23e3249e9a1e7541",
+      "status": "draft",
+      "stage": "awaiting_validation",
+      "checks": {
+        "structure": {
+          "status": "pass",
+          "anchors": 10,
+          "citations": 20
+        }
+      },
+      "error": null,
+      "artifact_hash": "cba5e9347c2ecc43dcb93047bffe4885c6cf97d95b4cf36517bc2ed9d2f3c55b",
+      "data_hash": "f2b2f8bedb0c86a54eb0c4631f78810255d90dc863b3cde421931707758bbc1b"
+    },
+    {
+      "id": "5b4b2f49-c50c-40e0-9d93-833782eb4350",
+      "document_id": "pdf-b4deafe808239771",
+      "status": "draft",
+      "stage": "awaiting_validation",
+      "checks": {
+        "structure": {
+          "status": "pass",
+          "anchors": 8,
+          "citations": 27
+        }
+      },
+      "error": null,
+      "artifact_hash": "317b4d15df6ad819ffc46752355640b668850fd854f74503cfc57efd739e4b8e",
+      "data_hash": "9e3737420a1b0c09a583a2310d2493c43a7042ec41166a90d228c99f9cfe0934"
+    },
+    {
+      "id": "84e43ad0-3286-4487-b87d-edb348858dd3",
+      "document_id": "pdf-6e4e3411984f3edf",
+      "status": "failed",
+      "stage": "failed",
+      "checks": {},
+      "error": "章节结构检查失败：[{\"chapter\": \"ch2-system-model\", \"issue\": \"不允许的标签：filter；不允许的标签：fegaussianblur；不允许的标签：femerge；不允许的标签：femergenode；不允许的标签：femergenode；来源缺失或越界\"}]",
+      "artifact_hash": null,
+      "data_hash": null
+    },
+    {
+      "id": "a4c1ebd3-7957-446b-99cc-200182278139",
+      "document_id": "pdf-66fe209b72eb93c6",
+      "status": "failed",
+      "stage": "failed",
+      "checks": {},
+      "error": "章节结构检查失败：[{\"chapter\": \"style-vocab-trend\", \"issue\": \"不允许的标签：style\"}, {\"chapter\": \"conclusion-synthesis\", \"issue\": \"缺少节点锚点：{'limitation-data-scale'}\"}]",
+      "artifact_hash": null,
+      "data_hash": null
+    },
+    {
+      "id": "278f8557-f0da-4d9a-a83c-2abaf814a67d",
+      "document_id": "pdf-59c4f6158add045b",
+      "status": "failed",
+      "stage": "failed",
+      "checks": {},
+      "error": "章节结构检查失败：[{\"chapter\": \"limitations\", \"issue\": \"不允许的标签：b；不允许的标签：b\"}]",
+      "artifact_hash": null,
+      "data_hash": null
+    },
+    {
+      "id": "1ca47681-7aa7-4b81-917b-7442ee2f155c",
+      "document_id": "pdf-be823e12764a35cd",
+      "status": "draft",
+      "stage": "awaiting_validation",
+      "checks": {
+        "structure": {
+          "status": "pass",
+          "anchors": 10,
+          "citations": 10
+        }
+      },
+      "error": null,
+      "artifact_hash": "6dea392484f0b7e21b475152faa87fbf20fed6c96741cec182ab739efc671f48",
+      "data_hash": "068bafab6b8e068377be82602db5fdee292df8416d32b80d62cc8c7b4b07f562"
+    },
+    {
+      "id": "5f13bf8d-0478-401c-a32a-236136c8485f",
+      "document_id": "pdf-ac0a4e183aa6f936",
+      "status": "failed",
+      "stage": "failed",
+      "checks": {},
+      "error": "全文节点覆盖不完整或越界：{'adherence_analysis'}",
+      "artifact_hash": null,
+      "data_hash": null
+    },
+    {
+      "id": "5f0ec9e7-5228-4faa-89c1-9149cf37a2e3",
+      "document_id": "pdf-b0183405d850db11",
+      "status": "draft",
+      "stage": "awaiting_validation",
+      "checks": {
+        "structure": {
+          "status": "pass",
+          "anchors": 9,
+          "citations": 36
+        }
+      },
+      "error": null,
+      "artifact_hash": "3bf4ac8dcf8d7e123cc63985b5d3aa540fcf7d44c76973002d4d7cec91e252f7",
+      "data_hash": "955469590a107ec66df6328793fb64036566a2f047cae3d38ac3fecf2af16ffa"
+    },
+    {
+      "id": "9732739c-3568-4c59-8701-d03e133a2c80",
+      "document_id": "pdf-473e344b1814e453",
+      "status": "failed",
+      "stage": "failed",
+      "checks": {},
+      "error": "全文节点覆盖不完整或越界：{'covariance-derivation'}",
+      "artifact_hash": null,
+      "data_hash": null
+    },
+    {
+      "id": "1835a7ff-9894-4cc5-b4bd-058dd5df005c",
+      "document_id": "pdf-fe9119a9c453151a",
+      "status": "failed",
+      "stage": "failed",
+      "checks": {},
+      "error": "章节结构检查失败：[{\"chapter\": \"ch1-problem\", \"issue\": \"无效ID：4g-limitations\"}, {\"chapter\": \"ch2-5g-tech\", \"issue\": \"无效ID：5g-key-tech\"}]",
+      "artifact_hash": null,
+      "data_hash": null
+    },
+    {
+      "id": "65692414-669d-4c7d-a1f8-45902c79136d",
+      "document_id": "pdf-6e4e3411984f3edf",
+      "status": "draft",
+      "stage": "awaiting_validation",
+      "checks": {
+        "structure": {
+          "status": "pass",
+          "anchors": 10,
+          "citations": 37
+        }
+      },
+      "error": null,
+      "artifact_hash": "da63593b52eb6cbb0b337dbf95d42623d44af23d7d6fd62270fdc191a1937851",
+      "data_hash": "76eb0498615c8ecf02205088cf19796307e3ca9f71a04933e76abe0fdf85af9f"
+    },
+    {
+      "id": "a9958210-2077-4f59-b9e3-28e28dcbe47c",
+      "document_id": "pdf-59c4f6158add045b",
+      "status": "draft",
+      "stage": "awaiting_validation",
+      "checks": {
+        "structure": {
+          "status": "pass",
+          "anchors": 8,
+          "citations": 15
+        }
+      },
+      "error": null,
+      "artifact_hash": "5b7fe36664e4b73fc42423ac36f1d51b8735c11eb8a7b7ef082a05d6d1c358bd",
+      "data_hash": "8fcdd7febad37512184027760e8bd476931890190db0db7be8b5377e5c8009d3"
+    },
+    {
+      "id": "011ba157-97bb-47c1-91e2-2d4a759e49ca",
+      "document_id": "pdf-23e3249e9a1e7541",
+      "status": "draft",
+      "stage": "awaiting_validation",
+      "checks": {
+        "structure": {
+          "status": "pass",
+          "anchors": 10,
+          "citations": 20
+        }
+      },
+      "error": null,
+      "artifact_hash": "8ce3407816e2f0e60de82ae0b8e92125fec6f49e6c799c90d2632c2cbb84682c",
+      "data_hash": "f2b2f8bedb0c86a54eb0c4631f78810255d90dc863b3cde421931707758bbc1b"
+    },
+    {
+      "id": "68d7a680-5a5c-42ce-b5fc-3b34cea683c5",
+      "document_id": "pdf-66fe209b72eb93c6",
+      "status": "draft",
+      "stage": "awaiting_validation",
+      "checks": {
+        "structure": {
+          "status": "pass",
+          "anchors": 10,
+          "citations": 19
+        }
+      },
+      "error": null,
+      "artifact_hash": "85c26686bdd0d03b4ae9f80ea02eba2e6d846f34f4815939210a205505aaf58b",
+      "data_hash": "105c31dce444b116d1f5dea89379e3aa136fb8bef7b6c3e71bff97c61692f9ef"
+    },
+    {
+      "id": "5df55aad-2051-4bb2-87f5-ae0d98db8ca6",
+      "document_id": "pdf-1a02a680ff1cd6e0",
+      "status": "draft",
+      "stage": "awaiting_validation",
+      "checks": {
+        "structure": {
+          "status": "pass",
+          "anchors": 6,
+          "citations": 1
+        }
+      },
+      "error": null,
+      "artifact_hash": "43e4a4b57618f2c0866fe6a8d9f9c7f9ed1c48c03b27b3a84a03ea285330b9f4",
+      "data_hash": "d5cb739969f9b0cdfcd053185f73bb098d3bc3c06b0e17294fb2ff67619b56d0"
+    },
+    {
+      "id": "f409fae8-7e5c-403d-8ca7-5eeacb9fa007",
+      "document_id": "pdf-473e344b1814e453",
+      "status": "draft",
+      "stage": "awaiting_validation",
+      "checks": {
+        "structure": {
+          "status": "pass",
+          "anchors": 10,
+          "citations": 31
+        }
+      },
+      "error": null,
+      "artifact_hash": "74e95cefe82a02e72aa51af4c39a83fc35b5d1bf76b121d202bc5b3485bc4a42",
+      "data_hash": "dd3a94b8a13a815c41c6251c561c30b65ae73d2671eb9360927038d91d049572"
+    },
+    {
+      "id": "917662fc-a4e6-4bcb-ac7f-f9cbe992a034",
+      "document_id": "pdf-ac0a4e183aa6f936",
+      "status": "draft",
+      "stage": "awaiting_validation",
+      "checks": {
+        "structure": {
+          "status": "pass",
+          "anchors": 10,
+          "citations": 41
+        }
+      },
+      "error": null,
+      "artifact_hash": "463923c0b4489bf60921abc7bb09f5f5f00dafbb19675a5f9f1e45dfb37e97ae",
+      "data_hash": "6bd4fc11396e27ab31fbb57a9965babed398a1c725737e558a8ac509d67ced76"
+    },
+    {
+      "id": "fbc90b04-29cf-482a-9ec4-0dbcf25b9f5e",
+      "document_id": "pdf-be823e12764a35cd",
+      "status": "draft",
+      "stage": "awaiting_validation",
+      "checks": {
+        "structure": {
+          "status": "pass",
+          "anchors": 10,
+          "citations": 14
+        }
+      },
+      "error": null,
+      "artifact_hash": "487d80854e49df24ec2879acda50ac69031840f58587bf6f2c46ea0a29589a34",
+      "data_hash": "068bafab6b8e068377be82602db5fdee292df8416d32b80d62cc8c7b4b07f562"
+    },
+    {
+      "id": "dbbf5b7d-dbc8-4903-aac0-6960596fcc64",
+      "document_id": "pdf-b0183405d850db11",
+      "status": "draft",
+      "stage": "awaiting_validation",
+      "checks": {
+        "structure": {
+          "status": "pass",
+          "anchors": 9,
+          "citations": 36
+        }
+      },
+      "error": null,
+      "artifact_hash": "3fcfecbba5c8bd9aae007824f6f947c5bab0e5cc5cb0f9ef07c6a80d11fad644",
+      "data_hash": "955469590a107ec66df6328793fb64036566a2f047cae3d38ac3fecf2af16ffa"
+    },
+    {
+      "id": "c67cefb0-eec6-4cb5-a977-c4cdf634405e",
+      "document_id": "pdf-fe9119a9c453151a",
+      "status": "draft",
+      "stage": "awaiting_validation",
+      "checks": {
+        "structure": {
+          "status": "pass",
+          "anchors": 9,
+          "citations": 24
+        }
+      },
+      "error": null,
+      "artifact_hash": "6d982bff760c1c1149b4a781cde17b774ebef13937b5fdfdd9a7d09c5e215513",
+      "data_hash": "fb3ccec2a442e778752a087099199a19ca07813e4cc72e5820fbdfa995b247c6"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"items": [{"node_id": "training-decoding", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "qa-results", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "generation-quality", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}]}

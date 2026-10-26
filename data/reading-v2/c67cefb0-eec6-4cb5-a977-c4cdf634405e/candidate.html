@@ -1,0 +1,2340 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'nonce-Bi_W5GCq_1rjddq39KjNpM2N7jgRJYWY'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; frame-src 'none'; object-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'"><title>面向 5G 移动通信网的高精度定位技术探讨 · paperMind 交互讲解</title><style>*,*::before,*::after{box-sizing:border-box}html{scroll-behavior:auto}body{margin:0;min-width:0}button,input,select{font:inherit}button{cursor:pointer}canvas,svg{max-width:100%}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid #315cc8;outline-offset:4px}#pm-local-source{position:fixed;inset:auto 12px 12px;background:#fff;color:#26364b;border:1px solid #61748c;padding:22px;z-index:99999;max-height:65vh;overflow:auto;font:15px/1.8 system-ui}#pm-local-source button{padding:8px 12px;margin-top:12px}#pm-local-source blockquote{white-space:pre-wrap;margin:12px 0}.pm-user-note{margin:24px 0;padding:20px;background:#edf2ff;color:#26364b;font:15px/1.9 system-ui}.pm-user-note h4{margin:0 0 10px}.pm-user-note p{white-space:pre-wrap}.pm-user-note button{margin:5px;padding:6px 10px}.pm-reading-tools{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:24px;padding-top:14px;border-top:1px solid #d6dcd9}.pm-reading-tools button{border:0;background:transparent;color:#265976;text-decoration:underline;text-underline-offset:4px;font-size:13px;padding:6px 0}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+:root{--ink:#233342;--muted:#596877;--accent:#265976;--warm:#ad472d;--line:#d6dcd9;--paper:#fcfbf8;--soft:#edf2f1}
+body{background:var(--paper);color:var(--ink);font-family:"Microsoft YaHei",system-ui,sans-serif;font-size:16px;line-height:1.95}
+.paper-reading{max-width:1120px;margin:auto;padding:40px clamp(18px,5vw,58px) 80px;overflow-wrap:anywhere}
+.paper-reading h1{font:normal clamp(32px,5vw,58px)/1.12 Georgia,"Noto Serif SC",serif;letter-spacing:-.025em;margin:18px 0 26px;text-wrap:balance}
+.paper-reading h2{font-size:clamp(25px,3.5vw,34px);font-weight:500;line-height:1.4;margin:0 0 20px;text-wrap:balance}
+.paper-reading h3{font-size:20px;font-weight:500;line-height:1.5}.paper-reading p{margin:12px 0 18px}
+.paper-hero{padding:16px 0 38px;border-bottom:1px solid var(--line)}
+.paper-hero .paper-thesis{font-size:18px;line-height:1.95;max-width:55ch}.paper-hero nav{display:flex;flex-wrap:wrap;gap:8px 22px;margin:26px 0 0}
+.paper-hero nav a{font-size:13px;color:var(--accent);text-decoration:underline;text-underline-offset:6px}
+.paper-chapter{padding:48px 0 34px;border-bottom:1px solid var(--line);min-width:0}
+.paper-chapter :where(section,article,div,figure,fieldset){min-width:0}
+.paper-chapter :where(table){display:block;max-width:100%;overflow:auto}
+.paper-chapter :where(pre){white-space:pre-wrap;overflow-wrap:anywhere}
+.paper-reading button{border:1px solid var(--line);background:transparent;color:var(--accent);padding:8px 14px;min-height:38px;border-radius:4px;font-size:13px;line-height:1.5}
+.paper-reading button:hover{background:var(--soft)}.paper-reading button:disabled{opacity:.5;cursor:default}
+.paper-reading input[type=range]{accent-color:var(--accent);max-width:100%;min-width:0}.paper-reading input[type=number]{width:90px}
+.paper-reading select,.paper-reading input[type=number]{padding:7px 9px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font-size:14px;border-radius:4px;max-width:100%}
+.paper-reading input[type=checkbox]{accent-color:var(--warm)}.paper-reading label{font-size:14px;line-height:1.7}
+.paper-reading svg,.paper-reading canvas{display:block;max-width:100%;height:auto}
+.paper-reading details{padding:14px 0;border-top:1px solid var(--line);margin-top:20px}.paper-reading summary{cursor:pointer;color:var(--accent);font-size:14px}
+.paper-reading table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.paper-reading th,.paper-reading td{padding:9px 7px;text-align:left;border-bottom:1px solid var(--line)}
+.paper-reading button[data-source]{font-size:12px;color:var(--accent);border:0;padding:6px 0;margin-right:16px;text-decoration:underline;text-underline-offset:4px}
+.paper-reading ::selection{background:#f3d5ac;color:#233342}.paper-reading :focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.paper-reading .reading-limitations{font-size:14px;color:var(--muted);padding-top:28px}.paper-reading .reading-limitations h2{font-size:24px}
+@media(max-width:480px){.paper-reading{padding-top:24px}.paper-chapter{padding-top:32px}.paper-hero .paper-thesis{font-size:16px}.paper-reading{font-size:15px}.paper-reading h2{font-size:25px}.paper-reading table{font-size:12px}}
+
+@scope (#chapter-ch1-problem){:host {
+  --ink: #1a1a1a;
+  --muted: #666;
+  --accent: #0066cc;
+  --warm: #ff6b35;
+  --line: #e0e0e0;
+  --paper: #fafafa;
+}
+
+.chapter-container {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--paper);
+  padding: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.chapter-header {
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 16px;
+  margin-bottom: 32px;
+}
+
+.chapter-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: var(--ink);
+}
+
+.chapter-takeaway {
+  font-size: 15px;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.content-block {
+  margin-bottom: 40px;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 20px 0;
+  color: var(--ink);
+  border-left: 4px solid var(--accent);
+  padding-left: 12px;
+}
+
+.evidence-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 600px) {
+  .evidence-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.evidence-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 16px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  color: var(--accent);
+}
+
+.card-text {
+  font-size: 15px;
+  color: var(--ink);
+  margin: 0 0 12px 0;
+  line-height: 1.5;
+}
+
+.source-btn {
+  font-size: 13px;
+  padding: 6px 12px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.source-btn:hover {
+  background: #0052a3;
+}
+
+.source-group {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.key-claim {
+  background: #f0f7ff;
+  border-left: 4px solid var(--accent);
+  padding: 16px;
+  margin-top: 20px;
+}
+
+.claim-text {
+  font-size: 15px;
+  margin: 0;
+  color: var(--ink);
+}
+
+.interaction-panel {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 20px;
+}
+
+.step-controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.step-btn {
+  font-size: 14px;
+  padding: 10px 16px;
+  background: #f5f5f5;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.step-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.step-btn:hover:not(.active) {
+  background: #e8e8e8;
+}
+
+.step-content {
+  min-height: 200px;
+}
+
+.step-panel {
+  display: none;
+}
+
+.step-panel.active {
+  display: block;
+}
+
+.step-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  color: var(--ink);
+}
+
+.step-text {
+  font-size: 15px;
+  color: var(--ink);
+  margin: 0 0 16px 0;
+  line-height: 1.5;
+}
+
+.improvement-list {
+  font-size: 15px;
+  color: var(--ink);
+  margin: 0 0 16px 0;
+  padding-left: 20px;
+}
+
+.improvement-list li {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.limitation-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+@media (max-width: 600px) {
+  .limitation-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.limitation-item {
+  background: #fff5f0;
+  border: 1px solid #ffccbc;
+  border-radius: 4px;
+  padding: 16px;
+}
+
+.limitation-item.critical {
+  border-left: 4px solid var(--warm);
+}
+
+.limit-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.limit-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: var(--ink);
+}
+
+.limit-desc {
+  font-size: 14px;
+  color: var(--ink);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.acceptance-check {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.check-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  margin: 0 0 12px 0;
+}
+
+.check-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.check-item {
+  font-size: 15px;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.check-mark {
+  font-size: 16px;
+  color: var(--muted);
+}
+
+.check-item[data-checked="true"] .check-mark {
+  color: #4caf50;
+}
+
+.check-item[data-checked="true"] .check-text {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-ch2-5g-tech){:scope .chapter-container {
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--ink, #1a1a1a);
+  background: var(--paper, #ffffff);
+  line-height: 1.6;
+  padding: 2rem 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+:scope .chapter-header {
+  border-bottom: 2px solid var(--line, #e0e0e0);
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+}
+
+:scope .chapter-header h1 {
+  font-size: 1.8rem;
+  color: var(--accent, #0055aa);
+  margin: 0 0 0.5rem 0;
+}
+
+:scope .chapter-takeaway {
+  font-size: 1rem;
+  color: var(--muted, #666);
+  font-style: italic;
+}
+
+:scope .content-block {
+  margin-bottom: 3rem;
+}
+
+:scope .content-block h2 {
+  font-size: 1.5rem;
+  border-left: 4px solid var(--accent, #0055aa);
+  padding-left: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Stepper Interaction */
+:scope .tech-stack-interaction {
+  border: 1px solid var(--line, #e0e0e0);
+  border-radius: 8px;
+  padding: 1.5rem;
+  background: #f9f9f9;
+}
+
+:scope .interaction-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+:scope .control-btn {
+  background: var(--accent, #0055aa);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+:scope .control-btn:disabled {
+  background: var(--muted, #ccc);
+  cursor: not-allowed;
+}
+
+:scope .step-indicators {
+  display: flex;
+  gap: 0.5rem;
+}
+
+:scope .step-indicator {
+  background: transparent;
+  border: 1px solid var(--accent, #0055aa);
+  color: var(--accent, #0055aa);
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+:scope .step-indicator.active {
+  background: var(--accent, #0055aa);
+  color: #fff;
+}
+
+:scope .visual-stage {
+  background: #fff;
+  border: 1px solid var(--line, #e0e0e0);
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+:scope #ch2-5g-tech--tech-svg {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+}
+
+:scope .content-panel h3 {
+  font-size: 1.2rem;
+  margin: 0 0 0.5rem 0;
+  color: var(--ink, #1a1a1a);
+}
+
+:scope .content-panel p {
+  font-size: 1rem;
+  margin: 0 0 1rem 0;
+}
+
+:scope .source-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+:scope .source-btn {
+  background: transparent;
+  border: 1px solid var(--muted, #999);
+  color: var(--muted, #666);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+:scope .source-btn:hover {
+  border-color: var(--accent, #0055aa);
+  color: var(--accent, #0055aa);
+}
+
+/* Strategy Comparison */
+:scope .strategy-comparison {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: stretch;
+  margin-bottom: 1.5rem;
+}
+
+:scope .strategy-card {
+  flex: 1;
+  min-width: 280px;
+  border: 1px solid var(--line, #e0e0e0);
+  border-radius: 8px;
+  padding: 1.5rem;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+:scope .strategy-card h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+}
+
+:scope .strategy-card.uplink {
+  border-top: 4px solid var(--muted, #999);
+}
+
+:scope .strategy-card.downlink {
+  border-top: 4px solid var(--accent, #0055aa);
+}
+
+:scope .strategy-card.highlighted {
+  background: #f0f7ff;
+  border-color: var(--accent, #0055aa);
+}
+
+:scope .mechanism {
+  font-weight: bold;
+  color: var(--ink, #1a1a1a);
+  margin-bottom: 0.5rem;
+}
+
+:scope .benefits {
+  margin: 1rem 0;
+  padding-left: 1.2rem;
+  color: var(--ink, #1a1a1a);
+}
+
+:scope .benefits li {
+  margin-bottom: 0.3rem;
+}
+
+:scope .strategy-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: var(--muted, #999);
+  font-size: 1.2rem;
+  padding: 0 1rem;
+}
+
+:scope .narrative-text {
+  font-size: 1rem;
+  color: var(--ink, #1a1a1a);
+  background: #fff;
+  padding: 1rem;
+  border-left: 3px solid var(--accent, #0055aa);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  :scope .interaction-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  :scope .step-indicators {
+    justify-content: center;
+  }
+  :scope .strategy-divider {
+    padding: 0.5rem 0;
+  }
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}
+.strategy-card{min-width:min(100%,280px)}
+:scope .strategy-card{min-width:0!important;max-width:100%}}
+@scope (#chapter-ch3-arch-fusion){:host(#ch3-arch-fusion--ch3-arch-fusion) {
+  display: block;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--ink, #1a1a1a);
+  background: var(--paper, #ffffff);
+  padding: 2rem;
+  line-height: 1.6;
+}
+
+#ch3-arch-fusion--ch3-arch-fusion h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--ink);
+  border-bottom: 2px solid var(--accent, #0055aa);
+  padding-bottom: 0.5rem;
+}
+
+.chapter-takeaway {
+  font-size: 1.1rem;
+  color: var(--muted, #666);
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+.node-section {
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  border: 1px solid var(--line, #e0e0e0);
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.node-section h2 {
+  font-size: 1.5rem;
+  color: var(--accent);
+  margin-top: 0;
+}
+
+.content-block {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+.btn-source {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  background: #eef4fb;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  margin-top: 0.5rem;
+  transition: all 0.2s;
+}
+
+.btn-source:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Integrated Arch Diagram */
+.interactive-diagram {
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 1rem;
+  margin: 1.5rem 0;
+  border-radius: 6px;
+}
+
+.diagram-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.control-btn {
+  padding: 0.5rem 1rem;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.control-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.diagram-stage {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 1rem;
+  min-height: 300px;
+}
+
+@media (max-width: 768px) {
+  .diagram-stage {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stage-visual {
+  background: #f8f9fa;
+  border: 1px solid #eee;
+  position: relative;
+  overflow: hidden;
+}
+
+.blueprint-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.stage-description {
+  padding: 1rem;
+  background: #fff;
+  border-left: 4px solid var(--accent);
+}
+
+.stage-description h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+}
+
+/* Claims */
+.claims-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.claim-item {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 4px;
+  border: 1px solid #eee;
+  font-size: 0.95rem;
+}
+
+/* Hetero Fusion Flow */
+.mechanism-flow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.flow-node {
+  flex: 1;
+  min-width: 120px;
+  padding: 1rem;
+  background: #fff;
+  border: 2px solid var(--line);
+  border-radius: 8px;
+  text-align: center;
+  transition: all 0.3s;
+  opacity: 0.6;
+}
+
+.flow-node.active {
+  border-color: var(--warm, #ff9800);
+  background: #fff8e1;
+  opacity: 1;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.flow-node .node-label {
+  display: block;
+  font-weight: bold;
+  color: var(--ink);
+  margin-bottom: 0.25rem;
+}
+
+.flow-node .node-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.flow-arrow {
+  font-size: 1.5rem;
+  color: var(--muted);
+}
+
+@media (max-width: 600px) {
+  .mechanism-flow {
+    flex-direction: column;
+  }
+  .flow-arrow {
+    transform: rotate(90deg);
+  }
+}
+
+.toggle-container {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+.simulation-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f0f4f8;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+.simulation-box.hidden {
+  display: none;
+}
+
+.sim-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px dashed #ccc;
+  padding-bottom: 0.25rem;
+}
+
+.val-noise { color: #d32f2f; }
+.val-process { color: #f57c00; }
+.val-clean { color: #388e3c; font-weight: bold; }
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-ch4-market-concl){:host {
+  --ink: #1a1a1a;
+  --muted: #666666;
+  --accent: #0066cc;
+  --warm: #ff6600;
+  --line: #e0e0e0;
+  --paper: #ffffff;
+  --success: #28a745;
+  --tech-blue: #0047AB;
+  --warning-orange: #FF8C00;
+  --success-green: #228B22;
+}
+
+.chapter-section {
+  max-width: 900px;
+  margin: 0 auto 48px auto;
+  padding: 24px 16px;
+  background: var(--paper);
+  border-left: 4px solid var(--tech-blue);
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 20px 0;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--line);
+}
+
+.subsection-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 24px 0 16px 0;
+}
+
+.body-text {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--ink);
+  margin: 0 0 16px 0;
+  text-align: justify;
+}
+
+.content-block {
+  margin: 0 0 32px 0;
+}
+
+.source-container {
+  margin: 16px 0;
+}
+
+.source-btn {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 13px;
+  background: var(--paper);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.source-btn:hover {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+.source-btn:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.competitor-comparison {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 24px 0;
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.competitor-card {
+  background: var(--paper);
+  padding: 16px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  text-align: center;
+}
+
+.company-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--tech-blue);
+  margin: 0 0 8px 0;
+}
+
+.station-count {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 4px 0;
+}
+
+.since-year {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0 0 4px 0;
+}
+
+.service-level {
+  font-size: 13px;
+  color: var(--success-green);
+  font-weight: 500;
+}
+
+.limitation-note {
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
+  margin: 16px 0 0 0;
+  padding: 12px;
+  background: #fff3cd;
+  border-left: 3px solid var(--warning-orange);
+  border-radius: 4px;
+}
+
+.interactive-stepper {
+  background: #f0f4f8;
+  padding: 24px;
+  border-radius: 8px;
+  margin: 24px 0;
+  border: 1px solid var(--line);
+}
+
+.teaching-label {
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
+  margin: 0 0 16px 0;
+  padding: 8px;
+  background: #e3f2fd;
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+}
+
+.stepper-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 20px 0;
+}
+
+.step-btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  background: var(--paper);
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.step-btn:hover {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+.step-btn:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.step-btn[aria-pressed="true"] {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+.reset-btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  background: var(--paper);
+  border: 2px solid var(--muted);
+  color: var(--muted);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: auto;
+}
+
+.reset-btn:hover {
+  background: var(--muted);
+  color: var(--paper);
+}
+
+.reset-btn:focus {
+  outline: 2px solid var(--muted);
+  outline-offset: 2px;
+}
+
+.step-display {
+  background: var(--paper);
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  min-height: 200px;
+}
+
+.step-content {
+  display: none;
+}
+
+.step-content.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.step-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--tech-blue);
+  margin: 0 0 12px 0;
+}
+
+.step-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink);
+  margin: 0 0 16px 0;
+}
+
+.flow-diagram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  margin: 16px 0;
+}
+
+.flow-node {
+  padding: 8px 16px;
+  background: var(--tech-blue);
+  color: var(--paper);
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.flow-node.terminal {
+  background: var(--accent);
+}
+
+.flow-node.edge {
+  background: var(--tech-blue);
+}
+
+.flow-node.reference {
+  background: var(--warning-orange);
+}
+
+.flow-node.result {
+  background: var(--success-green);
+}
+
+.flow-node.client {
+  background: var(--accent);
+}
+
+.flow-node.map {
+  background: var(--success-green);
+}
+
+.flow-arrow {
+  font-size: 18px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.product-components {
+  margin: 24px 0 0 0;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 6px;
+}
+
+.component-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.component-list li {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink);
+  margin: 0 0 12px 0;
+  padding-left: 20px;
+  position: relative;
+}
+
+.component-list li:before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.assumptions-box {
+  margin: 24px 0 0 0;
+  padding: 16px;
+  background: #fff3cd;
+  border-left: 3px solid var(--warning-orange);
+  border-radius: 4px;
+}
+
+.assumptions-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 12px 0;
+}
+
+.assumptions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.assumptions-list li {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink);
+  margin: 0 0 8px 0;
+  padding-left: 20px;
+  position: relative;
+}
+
+.assumptions-list li:before {
+  content: "⚠";
+  position: absolute;
+  left: 0;
+  color: var(--warning-orange);
+}
+
+.fusion-features {
+  margin: 32px 0;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.feature-card {
+  background: var(--paper);
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--tech-blue);
+}
+
+.feature-number {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  background: var(--tech-blue);
+  color: var(--paper);
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+}
+
+.feature-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 12px 0;
+}
+
+.feature-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ink);
+  margin: 0;
+}
+
+.conclusion-takeaway {
+  background: #e8f5e9;
+  padding: 24px;
+  border-radius: 8px;
+  border-left: 4px solid var(--success-green);
+  margin: 32px 0;
+}
+
+.takeaway-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--success-green);
+  margin: 0 0 12px 0;
+}
+
+.takeaway-text {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink);
+  font-weight: 600;
+  margin: 0;
+}
+
+.limitations-box {
+  margin: 24px 0 0 0;
+  padding: 16px;
+  background: #fff3cd;
+  border-left: 3px solid var(--warning-orange);
+  border-radius: 4px;
+}
+
+.limitations-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 12px 0;
+}
+
+.limitations-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.limitations-list li {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink);
+  margin: 0 0 8px 0;
+  padding-left: 20px;
+  position: relative;
+}
+
+.limitations-list li:before {
+  content: "⚠";
+  position: absolute;
+  left: 0;
+  color: var(--warning-orange);
+}
+
+@media (max-width: 480px) {
+  .chapter-section {
+    padding: 16px 12px;
+  }
+  
+  .section-title {
+    font-size: 20px;
+  }
+  
+  .body-text {
+    font-size: 15px;
+  }
+  
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stepper-controls {
+    flex-direction: column;
+  }
+  
+  .reset-btn {
+    margin-left: 0;
+  }
+  
+  .flow-diagram {
+    flex-direction: column;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}</style></head><body><main class="paper-reading"><header class="paper-hero"><h1>面向 5G 移动通信网的高精度定位技术探讨</h1><p class="paper-thesis">传统 GNSS 与 4G 技术无法满足室内高精度无缝覆盖需求，5G 通过超密集组网、下行策略及一体化异构融合架构，提供了可行的技术路径与商业解决方案。</p><nav aria-label="讲解章节"><a href="#problem-statement">定位困境与 4G 局限</a><a href="#5g-key-tech">5G 物理层与策略突破</a><a href="#integrated-arch">一体化架构与异构融合</a><a href="#market-solutions">市场落地与结论</a></nav></header><div class="paper-chapter" id="chapter-ch1-problem"><section id="ch1-problem--ch1-problem" data-node="ch1-problem--ch1-problem" class="chapter-container">
+  <header class="chapter-header">
+    <h1 class="chapter-title">定位困境与 4G 局限</h1>
+    <p class="chapter-takeaway">室外 GNSS 信号室内失效，传统室内点定位成本高覆盖小；4G 技术因同步研究不足与架构单一，无法实现高精度。</p>
+  </header>
+
+  <section id="problem-statement" data-node="problem-statement" class="content-block">
+    <h2 class="section-title">高精度定位面临的核心问题</h2>
+    <div class="evidence-grid">
+      <div class="evidence-card">
+        <h3 class="card-title">GNSS 室内失效</h3>
+        <p class="card-text">现阶段，以全球卫星导航系统为基础的定位技术已取得不错效果，但在实际应用中，受不同类型建筑物影响，卫星定位信号会遭受遮挡，导致室内定位精度存在问题。</p>
+        <button type="button" class="source-btn" data-source="S007">原文 · p.1</button>
+      </div>
+      <div class="evidence-card">
+        <h3 class="card-title">点定位技术局限</h3>
+        <p class="card-text">目前采用的室内点定位技术，经常出现整体覆盖范围小和部署成本相对较高等多项问题，不利于技术的广泛应用。</p>
+        <button type="button" class="source-btn" data-source="S010">原文 · p.1</button>
+      </div>
+    </div>
+    <div class="key-claim">
+      <p class="claim-text"><strong>核心问题：</strong>采取何种措施提高室内定位精度，实现室内定位与室外定位连续无缝覆盖，是现阶段高精度定位需要解决的一项重点问题。</p>
+    </div>
+  </section>
+
+  <section id="4g-limitations" data-node="4g-limitations" class="content-block">
+    <h2 class="section-title">4G 定位技术的标准与不足</h2>
+    
+    <div class="interaction-panel">
+      <div class="step-controls">
+        <button type="button" class="step-btn active" data-step="0">现有技术基础</button>
+        <button type="button" class="step-btn" data-step="1">改进尝试</button>
+        <button type="button" class="step-btn" data-step="2">根本局限</button>
+      </div>
+      
+      <div class="step-content">
+        <div class="step-panel active" data-step="0">
+          <h3 class="step-title">现有技术基础</h3>
+          <p class="step-text">4G 定位主要依赖定时提前量、上行时间差及增强观察时间差（OTDOA）等技术，在室外表现良好但室内受限。</p>
+          <button type="button" class="source-btn" data-source="S012">原文 · p.1</button>
+        </div>
+        
+        <div class="step-panel" data-step="1">
+          <h3 class="step-title">改进尝试</h3>
+          <ul class="improvement-list">
+            <li>在共享 PCI 场景下增加观察时间差技术，识别不同节点</li>
+            <li>基于定位参考信号的信标技术</li>
+            <li>将定位参考信号与小区参考信号结合改善 TDOA 精度</li>
+          </ul>
+          <div class="source-group">
+            <button type="button" class="source-btn" data-source="S014">原文 · p.1</button>
+            <button type="button" class="source-btn" data-source="S022">原文 · p.2</button>
+            <button type="button" class="source-btn" data-source="S023">原文 · p.2</button>
+          </div>
+        </div>
+        
+        <div class="step-panel" data-step="2">
+          <h3 class="step-title">根本局限</h3>
+          <div class="limitation-grid">
+            <div class="limitation-item critical">
+              <div class="limit-icon">⚠</div>
+              <h4 class="limit-title">同步技术不足</h4>
+              <p class="limit-desc">未对同步技术内容进行深入研究，未严格依据标准进行制定，导致技术仍停留在传统通信方式上。</p>
+              <button type="button" class="source-btn" data-source="S024">原文 · p.2</button>
+            </div>
+            <div class="limitation-item critical">
+              <div class="limit-icon">⚠</div>
+              <h4 class="limit-title">架构单一</h4>
+              <p class="limit-desc">架构层面缺少不同类型定位技术的合理结合，仅采用单一类型定位技术，无法满足应用需求。</p>
+              <button type="button" class="source-btn" data-source="S025">原文 · p.2</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="acceptance-check">
+        <p class="check-label">验收检查：4G 定位无法满足高精度的两个核心原因</p>
+        <div class="check-items">
+          <div class="check-item" data-checked="false">
+            <span class="check-mark">○</span>
+            <span class="check-text">同步技术研究不足</span>
+          </div>
+          <div class="check-item" data-checked="false">
+            <span class="check-mark">○</span>
+            <span class="check-text">架构单一缺乏多技术融合</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section></div><div class="paper-chapter" id="chapter-ch2-5g-tech"><section id="ch2-5g-tech--ch2-5g-tech" class="chapter-container" data-node="ch2-5g-tech--ch2-5g-tech">
+  <header class="chapter-header">
+    <h1>5G 物理层与策略突破</h1>
+    <p class="chapter-takeaway">5G 利用 UDN、PRSID、毫米波及下行策略提升精度与覆盖。</p>
+  </header>
+
+  <section id="5g-key-tech" class="content-block" data-node="5g-key-tech">
+    <h2>5G 定位关键技术机制</h2>
+    <div class="tech-stack-interaction">
+      <div class="interaction-controls">
+        <button type="button" id="ch2-5g-tech--step-prev" class="control-btn" aria-label="上一步">←</button>
+        <div class="step-indicators" role="tablist" aria-label="技术步骤选择">
+          <button type="button" class="step-indicator active" data-step="0" role="tab" aria-selected="true">1. 信号源识别</button>
+          <button type="button" class="step-indicator" data-step="1" role="tab" aria-selected="false">2. 频率特性</button>
+          <button type="button" class="step-indicator" data-step="2" role="tab" aria-selected="false">3. 天线特性</button>
+        </div>
+        <button type="button" id="ch2-5g-tech--step-next" class="control-btn" aria-label="下一步">→</button>
+      </div>
+      
+      <div class="visual-stage">
+        <svg id="ch2-5g-tech--tech-svg" viewBox="0 0 600 300" aria-label="5G 技术机制示意图">
+          <defs>
+            <marker id="ch2-5g-tech--arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,6 L9,3 z" fill="var(--ink)" />
+            </marker>
+          </defs>
+          <!-- Dynamic content will be injected by JS -->
+          <g id="ch2-5g-tech--svg-content"></g>
+        </svg>
+      </div>
+
+      <div class="content-panel">
+        <h3 id="ch2-5g-tech--step-title">信号源识别机制</h3>
+        <p id="ch2-5g-tech--step-text">为解决超密集组网中基带信息复制导致的终端无法判断信号来源问题，需为每个远端无线射频单元分配独立的 PRSID。</p>
+        <div class="source-actions">
+          <button type="button" class="source-btn" data-source="S040">原文 · p.2</button>
+          <button type="button" class="source-btn" data-source="S041">原文 · p.2</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="uplink-downlink" class="content-block" data-node="uplink-downlink">
+    <h2>上行与下行定位策略优化</h2>
+    <div class="strategy-comparison">
+      <div class="strategy-card uplink">
+        <h3>上行定位 (Uplink)</h3>
+        <p class="mechanism">终端发射信号 → 基站接收</p>
+        <p class="detail">传统室内定位主要方案，依赖终端发射功率。</p>
+        <button type="button" class="source-btn" data-source="S049">原文 · p.2</button>
+      </div>
+      
+      <div class="strategy-divider">
+        <span>VS</span>
+      </div>
+
+      <div class="strategy-card downlink highlighted">
+        <h3>下行定位 (Downlink)</h3>
+        <p class="mechanism">基站发射信号 → 终端接收</p>
+        <ul class="benefits">
+          <li>利用 5G 大带宽、低延迟</li>
+          <li>基站发射功率优势</li>
+          <li>扩大室内覆盖范围</li>
+          <li>降低对网络密度的依赖</li>
+        </ul>
+        <button type="button" class="source-btn" data-source="S049">原文 · p.2</button>
+      </div>
+    </div>
+    <p class="narrative-text">在 5G 环境下，下行定位策略展现出独特优势。通过充分利用 5G 网络的大带宽、低延迟特性以及基站的发射功率优势，可以有效扩大室内定位的覆盖范围，并降低对网络部署密度的依赖。</p>
+  </section>
+</section></div><div class="paper-chapter" id="chapter-ch3-arch-fusion"><section id="ch3-arch-fusion--ch3-arch-fusion" class="chapter-container" data-node="ch3-arch-fusion--ch3-arch-fusion">
+  <header class="chapter-header">
+    <h1>一体化架构与异构融合</h1>
+    <p class="chapter-takeaway">核心结论：一体化解决同步问题，异构融合通过智能决策提升稳定性。</p>
+  </header>
+
+  <!-- Node: integrated-arch -->
+  <article id="integrated-arch" class="node-section" data-node="integrated-arch">
+    <h2>通信定位一体化网络架构</h2>
+    <div class="content-block">
+      <p>当前通信行业的标准基站网络在运行时面临高精度同步的技术瓶颈，这限制了定位精度的提升。一体化网络架构被提出作为解决这一同步问题的关键方案。</p>
+      <div class="source-row">
+        <button type="button" class="btn-source" data-source="S051">原文 · p.2</button>
+      </div>
+    </div>
+
+    <div class="interactive-diagram" id="ch3-arch-fusion--arch-diagram">
+      <div class="diagram-controls">
+        <button type="button" id="ch3-arch-fusion--btn-arch-step-1" class="control-btn active">1. 识别同步瓶颈</button>
+        <button type="button" id="ch3-arch-fusion--btn-arch-step-2" class="control-btn">2. 实施功能融合</button>
+        <button type="button" id="ch3-arch-fusion--btn-arch-step-3" class="control-btn">3. 构建异构基础</button>
+      </div>
+      
+      <div class="diagram-stage">
+        <div class="stage-visual" id="ch3-arch-fusion--arch-visual">
+          <!-- Dynamic Content Injected by JS -->
+          <svg viewBox="0 0 600 300" class="blueprint-svg">
+            <defs>
+              <pattern id="ch3-arch-fusion--grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="var(--line)" stroke-width="0.5" opacity="0.3"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#ch3-arch-fusion--grid)" />
+            <g id="ch3-arch-fusion--arch-svg-content"></g>
+          </svg>
+        </div>
+        <div class="stage-description" id="ch3-arch-fusion--arch-desc">
+          <h3>识别同步瓶颈</h3>
+          <p>确认标准基站网络存在高精度同步困难，这是限制定位精度的主要障碍。</p>
+          <button type="button" class="btn-source" data-source="S051">来源依据</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="claims-list">
+      <div class="claim-item">
+        <strong>核心特征：</strong> 实现通信与定位功能的深度融合，支持网元共站及设备独立形态。
+        <button type="button" class="btn-source" data-source="S052">原文 · p.2</button>
+        <button type="button" class="btn-source" data-source="S053">原文 · p.2</button>
+      </div>
+      <div class="claim-item">
+        <strong>异构基础：</strong> 融合内网、频带及 TBS 等不同类型技术，建设异构定位网络。
+        <button type="button" class="btn-source" data-source="S055">原文 · p.2</button>
+      </div>
+    </div>
+  </article>
+
+  <!-- Node: hetero-fusion -->
+  <article id="hetero-fusion" class="node-section" data-node="hetero-fusion">
+    <h2>异构融合技术与决策机制</h2>
+    <div class="content-block">
+      <p>异构融合定位系统强调对多种定位技术的智能融合，而非简单的网络叠加。其目标是通过综合应用技术来实现最优定位效果。</p>
+      <button type="button" class="btn-source" data-source="S060">原文 · p.3</button>
+    </div>
+
+    <div class="ch3-arch-fusion--fusion-mechanism" id="ch3-arch-fusion--fusion-mechanism">
+      <div class="mechanism-flow">
+        <div class="flow-node" data-step="1">
+          <span class="node-label">多源输入</span>
+          <span class="node-desc">室外 + 补充技术</span>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node active" data-step="2">
+          <span class="node-label">智能融合</span>
+          <span class="node-desc">多层次架构</span>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" data-step="3">
+          <span class="node-label">反馈决策</span>
+          <span class="node-desc">预估/预测/拟合</span>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" data-step="4">
+          <span class="node-label">稳定输出</span>
+          <span class="node-desc">异常减少</span>
+        </div>
+      </div>
+      
+      <div class="mechanism-details">
+        <h3>反馈式融合定位决策</h3>
+        <p>机制包含位置结果的预估和预测，并通过拟合结果间的反馈决策，利用空间分析等智能方法，最大程度减少异常定位结果。</p>
+        <button type="button" class="btn-source" data-source="S063">原文 · p.3</button>
+        <div class="toggle-container">
+          <label>
+            <input type="checkbox" id="ch3-arch-fusion--toggle-feedback"> 
+            模拟反馈修正过程
+          </label>
+        </div>
+        <div id="ch3-arch-fusion--feedback-simulation" class="simulation-box hidden">
+          <div class="sim-row"><span>原始数据:</span> <span class="val-noise">含噪声/异常</span></div>
+          <div class="sim-row"><span>拟合分析:</span> <span class="val-process">空间一致性检查</span></div>
+          <div class="sim-row"><span>最终结果:</span> <span class="val-clean">高稳定性坐标</span></div>
+        </div>
+      </div>
+    </div>
+  </article>
+</section></div><div class="paper-chapter" id="chapter-ch4-market-concl"><section id="market-solutions" class="chapter-section" data-node="market-solutions">
+  <h2 class="section-title">主要竞品与市场解决方案</h2>
+  <div class="content-block">
+    <p class="body-text">在高精度定位市场中，主要生产商包括五家代表性企业。千寻位置从 2016 年开始提供商用服务，其建设的基准站数量已超过 2500 个，旨在提供高质量定位服务。</p>
+    <p class="body-text">星舆科技（海格通信旗下）自 2018 年在广东、湖南等地试点建设超 100 个基准站，随后持续扩展至超过 3000 个，实现了全国范围的定位覆盖。</p>
+    <p class="body-text">三大运营商方面，中国电信在全国不同地区建设了高精准度定位系统，可为 5G 用户提供厘米级服务；中国联通通过与华大北斗、中兴通讯合作展示设备；中国移动则利用现有基站资源降低成本并提供毫米级静态与厘米级动态定位。</p>
+    <div class="source-container">
+      <button type="button" class="source-btn" data-source="S065" aria-label="查看原文证据">原文 · p.3</button>
+    </div>
+  </div>
+  <div class="competitor-comparison" role="region" aria-label="竞品基准站数量对比">
+    <h3 class="subsection-title">基准站规模对比（2021 年文献记载）</h3>
+    <div class="comparison-grid">
+      <div class="competitor-card" data-company="qx">
+        <div class="company-name">千寻位置</div>
+        <div class="station-count">2500+</div>
+        <div class="since-year">2016 年起</div>
+        <div class="service-level">商用服务</div>
+      </div>
+      <div class="competitor-card" data-company="xy">
+        <div class="company-name">星舆科技</div>
+        <div class="station-count">3000+</div>
+        <div class="since-year">2018 年起</div>
+        <div class="service-level">全国定位</div>
+      </div>
+      <div class="competitor-card" data-company="ct">
+        <div class="company-name">中国电信</div>
+        <div class="station-count">地区覆盖</div>
+        <div class="since-year">已建成</div>
+        <div class="service-level">厘米级</div>
+      </div>
+      <div class="competitor-card" data-company="cm">
+        <div class="company-name">中国移动</div>
+        <div class="station-count">现有基站</div>
+        <div class="since-year">资源整合</div>
+        <div class="service-level">毫米/厘米级</div>
+      </div>
+    </div>
+    <p class="limitation-note">注：文中数据反映的是 2021 年 1 月之前的建设状况。基准站数量是衡量服务能力的关键指标，但未提及具体分布密度对精度的影响。</p>
+  </div>
+</section>
+
+<section id="cmcc-product" class="chapter-section" data-node="cmcc-product">
+  <h2 class="section-title">中移智行高精度产品体系</h2>
+  <div class="content-block">
+    <p class="body-text">中移智行高精度定位产品体系包含三个部分：终端产品（如专业高精度接收机、硬件定制产品及手持终端）、高精准定位服务设施以及高精度定位基础设施。</p>
+    <div class="source-container">
+      <button type="button" class="source-btn" data-source="S067" aria-label="查看原文证据">原文 · p.3</button>
+    </div>
+  </div>
+  
+  <div class="interactive-stepper" role="region" aria-label="差分解算流程互动">
+    <h3 class="subsection-title">差分解算流程演示</h3>
+    <p class="teaching-label">教学示例，非论文训练权重</p>
+    
+    <div class="stepper-controls">
+      <button type="button" class="step-btn" data-step="1" aria-label="步骤 1：终端上报">步骤 1</button>
+      <button type="button" class="step-btn" data-step="2" aria-label="步骤 2：差分解算">步骤 2</button>
+      <button type="button" class="step-btn" data-step="3" aria-label="步骤 3：服务反馈">步骤 3</button>
+      <button type="button" class="reset-btn" id="ch4-market-concl--ch4-market-concl-reset" aria-label="复位流程">复位</button>
+    </div>
+    
+    <div class="step-display" id="ch4-market-concl--ch4-market-concl-step-display">
+      <div class="step-content active" data-step="1">
+        <h4 class="step-title">步骤 1：终端上报</h4>
+        <p class="step-text">用户对 5G 网络进行合理应用，将起初位置坐标信息内容快速、精准地上传到边缘计算平台上。</p>
+        <div class="flow-diagram">
+          <div class="flow-node terminal">终端</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node edge">边缘计算平台</div>
+        </div>
+        <div class="source-container">
+          <button type="button" class="source-btn" data-source="S068" aria-label="查看原文证据">原文 · p.3</button>
+        </div>
+      </div>
+      
+      <div class="step-content" data-step="2">
+        <h4 class="step-title">步骤 2：差分解算</h4>
+        <p class="step-text">平台通过对上传的各项坐标信息及通过基准站上传的差异码进行合理应用，合理差分解算，进而获取到高精准位置数据。</p>
+        <div class="flow-diagram">
+          <div class="flow-node edge">边缘计算平台</div>
+          <div class="flow-arrow">+</div>
+          <div class="flow-node reference">基准站差异码</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node result">高精准位置</div>
+        </div>
+        <div class="source-container">
+          <button type="button" class="source-btn" data-source="S068" aria-label="查看原文证据">原文 · p.3</button>
+        </div>
+      </div>
+      
+      <div class="step-content" data-step="3">
+        <h4 class="step-title">步骤 3：服务反馈</h4>
+        <p class="step-text">将信息反馈给客户，完成服务。同时平台融合信息形成区域信息位示图，为用户提供大量数据服务。</p>
+        <div class="flow-diagram">
+          <div class="flow-node edge">边缘计算平台</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node client">客户</div>
+          <div class="flow-arrow">+</div>
+          <div class="flow-node map">区域位示图</div>
+        </div>
+        <div class="source-container">
+          <button type="button" class="source-btn" data-source="S068" aria-label="查看原文证据">原文 · p.3</button>
+          <button type="button" class="source-btn" data-source="S069" aria-label="查看原文证据">原文 · p.3</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="product-components">
+      <h4 class="subsection-title">三个组成部分</h4>
+      <ul class="component-list">
+        <li><strong>终端产品：</strong>专业高精度接收机、硬件定制产品、手持终端</li>
+        <li><strong>高精准定位服务设施：</strong>通过授权 CORS 账号实现厘米级精准定位</li>
+        <li><strong>高精度定位基础设施：</strong>整合 5G 基准站资源，在高质量卫星条件下达到厘米级精度</li>
+      </ul>
+      <div class="source-container">
+        <button type="button" class="source-btn" data-source="S067" aria-label="查看原文证据">原文 · p.3</button>
+      </div>
+    </div>
+    
+    <div class="assumptions-box">
+      <h4 class="assumptions-title">前提条件与局限</h4>
+      <ul class="assumptions-list">
+        <li>假设卫星条件质量较高，这是达到厘米级精度的前提条件之一</li>
+        <li>未详细说明具体的差分算法模型（如 RTK 或 PPP），仅描述了流程逻辑</li>
+        <li>需使用授权的 CORS 账号，依赖互联网传输</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="conclusion-synthesis" class="chapter-section" data-node="conclusion-synthesis">
+  <h2 class="section-title">结论：一体化与异构融合的必然性</h2>
+  <div class="content-block">
+    <p class="body-text">随着 5G 技术研究深入，虽然应用效果较好，但现代人们对室内外定位精准性提出了更高要求，采用传统定位技术显然无法满足应用需求。</p>
+    <p class="body-text">5G 网络自身具有超密集组网和低延迟等特点，为高精度定位技术的发展与应用提供了条件。从实际情况来看，建设一体化与异构融合定位网络架构能够实现高精度定位。</p>
+    <p class="body-text">异构融合定位系统在实际应用期间并非简单的对各种定位网络进行叠加处理，而是要将多种不同定位技术进行智能融合，通过对综合定位技术的应用，进而实现最优定位。</p>
+    <div class="source-container">
+      <button type="button" class="source-btn" data-source="S082" aria-label="查看原文证据">原文 · p.4</button>
+    </div>
+  </div>
+  
+  <div class="fusion-features" role="region" aria-label="智能异构融合架构特点">
+    <h3 class="subsection-title">智能异构融合定位技术架构特点</h3>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-number">1</div>
+        <h4 class="feature-title">异构一体化融合定位架构</h4>
+        <p class="feature-text">将异构一体化融合机制建立在架构层面，对多种有机融合机制进行合理应用，进而确保最终输出定位结果的合理性。</p>
+        <div class="source-container">
+          <button type="button" class="source-btn" data-source="S061" aria-label="查看原文证据">原文 · p.3</button>
+        </div>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-number">2</div>
+        <h4 class="feature-title">多层次融合</h4>
+        <p class="feature-text">将多种支持室外定位技术以及补充定位技术进行合理融合。针对采用的不同定位技术，在融合上要支持基本定位技术为基础，进而确保多层融合的合理性。</p>
+        <div class="source-container">
+          <button type="button" class="source-btn" data-source="S062" aria-label="查看原文证据">原文 · p.3</button>
+        </div>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-number">3</div>
+        <h4 class="feature-title">反馈式融合定位决策机制</h4>
+        <p class="feature-text">融合定位架构主要包含了具体位置结果预估和预测，进而在此基础上，拟合结果间的具体反馈决策机制，通过对预测、空间等智能分析方法进行应用，最大程度减少各种异常定位结果的出现，提升定位稳定性和可靠性。</p>
+        <div class="source-container">
+          <button type="button" class="source-btn" data-source="S063" aria-label="查看原文证据">原文 · p.3</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="conclusion-takeaway">
+    <h3 class="takeaway-title">核心结论</h3>
+    <p class="takeaway-text">主要厂商已提供厘米级服务，一体化异构融合是必然路径。</p>
+    <div class="limitations-box">
+      <h4 class="limitations-title">论证局限</h4>
+      <ul class="limitations-list">
+        <li>结论基于 5G 网络特性的理论推导与一般性观察，文中未提供具体的对比实验数据证明其优于其他方案</li>
+        <li>异构融合的具体实施标准和技术细节在文中未展开，仅给出了架构特点</li>
+        <li>文中数据反映的是 2021 年 1 月之前的市场状态</li>
+      </ul>
+    </div>
+  </div>
+</section></div><footer class="reading-limitations"><h2>带着边界理解这篇论文</h2><p>文中未提供具体的 4G 与 5G 定位精度对比实验数据，主要依赖理论推导。</p><p>异构融合的具体算法细节（如拟合模型）未展开，仅描述了架构逻辑。</p><p>市场数据反映的是 2021 年 1 月之前的建设状况，可能已过时。</p><p>第 4 页 OCR 文本混入了其他论文内容（电除尘高频电源），引用时需依据节点提取的准确段落。</p></footer></main><script nonce="Bi_W5GCq_1rjddq39KjNpM2N7jgRJYWY">const PM_CONFIG={"edition": "c67cefb0-eec6-4cb5-a977-c4cdf634405e", "document": "pdf-fe9119a9c453151a", "channel": "inspection", "data": {"tables": [], "sources": {"S001": {"id": "pdf-fe9119a9c453151a-p1-b0", "page": 1, "quote": "Jan. 10, 2021  Vol.38  No.1 \nTelecom Power Technology"}, "S002": {"id": "pdf-fe9119a9c453151a-p1-b1", "page": 1, "quote": "运营探讨\ndoi：10.19399/j.cnki.tpt.2021.01.072"}, "S003": {"id": "pdf-fe9119a9c453151a-p1-b2", "page": 1, "quote": "面向5G 移动通信网的高精度定位技术探讨"}, "S004": {"id": "pdf-fe9119a9c453151a-p1-b3", "page": 1, "quote": "2021 年1 月10 日第38 卷 第1 期"}, "S005": {"id": "pdf-fe9119a9c453151a-p1-b5", "page": 1, "quote": "所谓高精度定位技术就是通过对RTK 分差技术、\n基准站以及GNSS 卫星等各种辅助手段进行应用，从\n而更加合理地应用5G 移动通信技术，更好地完成定\n位服务。从目前发展情况来看，高精度定位技术已经\n在工业物流、农业生产、自动驾驶以及紧急援救等多\n个领域中都得到了广泛应用，而且取得了较好的应用\n效果，可见该项技术具有不错的应用前景。"}, "S006": {"id": "pdf-fe9119a9c453151a-p1-b6", "page": 1, "quote": "1  5G 移动通信高精度定位技术面临的问题"}, "S007": {"id": "pdf-fe9119a9c453151a-p1-b7", "page": 1, "quote": "现阶段，以全球卫星导航系统为基础的定位技\n术已经得到了广泛应用，并且取得了不错的应用效\n果。但是，从实际应用情况来看，在定位过程中受各\n种不同类型建筑物影响，卫星定位信号将会遭受到遮\n挡，导致室内定位精度存在问题，难以满足人们对定\n位的高精度要求"}, "S008": {"id": "pdf-fe9119a9c453151a-p1-b8", "page": 1, "quote": "[1]。目前，室内定位采用的点定位"}, "S009": {"id": "pdf-fe9119a9c453151a-p1-b9", "page": 1, "quote": "收稿日期：2020-11-19\n作者简介：李娜娜（1985-），女，河南焦作人，研究生，助教，\n主要研究方向为物联网、通信及信号处理。"}, "S010": {"id": "pdf-fe9119a9c453151a-p1-b11", "page": 1, "quote": "技术，经常出现整体覆盖范围小和部署成本相对较高\n等多项问题，不利于对定位技术的应用。采取何种措\n施提高室内定位精度，实现室内定位与室外定位连续\n无缝覆盖是现阶段高精度定位需要解决的一项重点 \n问题"}, "S011": {"id": "pdf-fe9119a9c453151a-p1-b13", "page": 1, "quote": "2  4G 定位技术重点内容概述"}, "S012": {"id": "pdf-fe9119a9c453151a-p1-b14", "page": 1, "quote": "2.1  4G 定位标准与关键技术\n传统移动定位信息技术通常采用的是定时提前\n量定位、上行时间差定位以及增强观察时间定位等各\n项技术。在具体应用过程中，这些技术在室外定位\n方面取得的效果十分突出，但是受多项因素限制，无\n法满足室内高精度定位需求，这也就对高精度定位技\n术应用造成了一定限制，难以达到人们的应用要求标\n准"}, "S013": {"id": "pdf-fe9119a9c453151a-p1-b15", "page": 1, "quote": "[3]。随着科技的不断发展，各大运营商都提高了\n对4G 网络室内定位精度内容的重视。该项内容主要\n体现在如下3 个方面。"}, "S014": {"id": "pdf-fe9119a9c453151a-p1-b16", "page": 1, "quote": "一是在共享PCI 场景下，增加观察时间差的一\n项先进技术。该技术可对不同场景内的具体节点加以\n识别，使定位精度能够得到进一步提高，进而满足应"}, "S015": {"id": "pdf-fe9119a9c453151a-p1-b18", "page": 1, "quote": "李娜娜\n（河南牧业经济学院，河南 郑州 454000）"}, "S016": {"id": "pdf-fe9119a9c453151a-p1-b19", "page": 1, "quote": "摘要：近年来，随着科技的飞速发展，我国5G 移动通信技术也显著进步，技术的成熟使5G 移动通信技术在\n许多行业中都得到了广泛应用，而且取得了较好的应用效果。目前，人们在对5G 移动通信技术进行应用过程中，对\n高精度定位技术提出了较高要求，定位技术要在满足室内定位基础上，实现室外无缝覆盖，从而满足用户对于定位\n的实际需求。鉴于5G 技术是在4G 技术基础上发展而来的，因此在对4G 定位技术进行分析基础上，针对现阶段的\n5G 移动通信中定位技术进行了全面研究，希望可以对整个行业发展以及工作人员开展各项工作都能够有所帮助。\n关键词：移动通信；高精度；定位技术；超密集组网"}, "S017": {"id": "pdf-fe9119a9c453151a-p1-b20", "page": 1, "quote": "Discussion on High-Precision Positioning Technology for 5G Mobile Communication"}, "S018": {"id": "pdf-fe9119a9c453151a-p1-b21", "page": 1, "quote": "LI Nana\n（Henan College of Animal Husbandry Economics，Zhengzhou 454000，China）"}, "S019": {"id": "pdf-fe9119a9c453151a-p1-b22", "page": 1, "quote": "Abstract：In recent years，with the rapid development of science and technology，my country's 5G mobile \ncommunication technology has also made significant progress. The maturity of technology has made 5G mobile \ncommunication technology widely used in many industries and achieved good application results. At present，in the \nprocess of applying 5G mobile communication technology，people put forward high requirements for high-precision \npositioning technology. The positioning technology must achieve seamless outdoor coverage on the basis of meeting \nindoor positioning，so as to meet the actual needs of users for positioning. In view of the fact that 5G technology is \ndeveloped on the basis of 4G technology，the following is based on the analysis of 4G positioning technology，and a \ncomprehensive study of the positioning technology in the current stage of 5G mobile communication is carried out. I \nhope that the content of the article will develop the entire industry. As well as the staff to carry out various tasks can be \nhelpful."}, "S020": {"id": "pdf-fe9119a9c453151a-p1-b23", "page": 1, "quote": "Keywords：mobile communication；high precision；positioning technology；ultra-dense networking"}, "S021": {"id": "pdf-fe9119a9c453151a-p2-b0", "page": 2, "quote": "2021 年1 月10 日第38 卷 第1 期\nJan. 10, 2021  Vol.38  No.1 \nTelecom Power Technology"}, "S022": {"id": "pdf-fe9119a9c453151a-p2-b2", "page": 2, "quote": "二是以定位参考信号为基础而来的一项信标技\n术。通过合理方式对该项技术进行合理应用，能够使\n终端有效识别额外定位参考信号，最终达到高定位精\n度目的"}, "S023": {"id": "pdf-fe9119a9c453151a-p2-b3", "page": 2, "quote": "[4]。\n三是定位参考信号与小区参考信号进行合理结\n合的一项高精度定位技术。通过对该项技术应用，能\n够精准获取到参考信号时间差测量值，进而完成对到\n达时间差（Time Difference of Arrival，TDOA）定位精\n度的有效改善，确保定位精准，满足应用需求"}, "S024": {"id": "pdf-fe9119a9c453151a-p2-b4", "page": 2, "quote": "[5]。\n2.2  4G 定位技术存在的不足之处\n从4G 定位技术的具体应用情况来看，人们并未\n对同步技术内容进行深入研究，也未严格依据标准进\n行制定，这也就导致采用的定位技术仍然还停留在传\n统通信方式上，难以满足应用需求。因此，4G 定位\n技术在实际应用时，在具体定位方面未得到显著提升，\n无法满足应用需求"}, "S025": {"id": "pdf-fe9119a9c453151a-p2-b5", "page": 2, "quote": "[6]。此外，采用的4G 定位技术在\n架构层面缺少不同类型定位技术的合理结合，现阶段\n采用的只是一种单一类型的定位技术，这也是4G 定\n位技术在应用时存在的不足之处。"}, "S026": {"id": "pdf-fe9119a9c453151a-p2-b6", "page": 2, "quote": "3  5G 移动通信网精准定位技术概述"}, "S027": {"id": "pdf-fe9119a9c453151a-p2-b7", "page": 2, "quote": "在对4G定位精技术标准与不足进行概述基础上，\n对5G 定位技术加以分析，提高定位精准性，进而使"}, "S028": {"id": "pdf-fe9119a9c453151a-p2-b8", "page": 2, "quote": "5G 移动通信网能够为人们提供更加高质量的服务，"}, "S029": {"id": "pdf-fe9119a9c453151a-p2-b9", "page": 2, "quote": "使人们生活和工作等各项内容都能够变得更加便捷、"}, "S030": {"id": "pdf-fe9119a9c453151a-p2-b11", "page": 2, "quote": "3.1  5G 定位关键技术"}, "S031": {"id": "pdf-fe9119a9c453151a-p2-b12", "page": 2, "quote": "3.1.1 超密集组网定位"}, "S032": {"id": "pdf-fe9119a9c453151a-p2-b13", "page": 2, "quote": "超密集组网在实际应用期间可以为5G 定位提供"}, "S033": {"id": "pdf-fe9119a9c453151a-p2-b14", "page": 2, "quote": "合理的网络支持，但从现阶段发展情况来看，相关人"}, "S034": {"id": "pdf-fe9119a9c453151a-p2-b15", "page": 2, "quote": "员和工作部门还要加强对单射频单元问题的研究。针"}, "S035": {"id": "pdf-fe9119a9c453151a-p2-b16", "page": 2, "quote": "对不同场景中的中远端无线射频单元，只可以复制"}, "S036": {"id": "pdf-fe9119a9c453151a-p2-b17", "page": 2, "quote": "基带信息，并且对复制信息内容进行转发，而终端"}, "S037": {"id": "pdf-fe9119a9c453151a-p2-b18", "page": 2, "quote": "无法判断各项信息内容是从哪个无线射频发射的，这"}, "S038": {"id": "pdf-fe9119a9c453151a-p2-b19", "page": 2, "quote": "[7]。因此，在不同"}, "S039": {"id": "pdf-fe9119a9c453151a-p2-b20", "page": 2, "quote": "一现象的存在会影响高精度定位"}, "S040": {"id": "pdf-fe9119a9c453151a-p2-b21", "page": 2, "quote": "场景中每个远端无线射频单元中都要分配一个独立的"}, "S041": {"id": "pdf-fe9119a9c453151a-p2-b22", "page": 2, "quote": "PRSID，合理分辨基带信号，进而实现精准定位。"}, "S042": {"id": "pdf-fe9119a9c453151a-p2-b23", "page": 2, "quote": "3.1.2 TDOA 与AOA 定位"}, "S043": {"id": "pdf-fe9119a9c453151a-p2-b24", "page": 2, "quote": "TDOA 与AOA 是目前室内定位技术中常用两种基"}, "S044": {"id": "pdf-fe9119a9c453151a-p2-b25", "page": 2, "quote": "本技术，在实际应用过程中具有如下特点。第一，5G"}, "S045": {"id": "pdf-fe9119a9c453151a-p2-b26", "page": 2, "quote": "通信技术在应用时采用的是毫米或高频通信波，具有"}, "S046": {"id": "pdf-fe9119a9c453151a-p2-b27", "page": 2, "quote": "一定的指向性，能够满足人们对于高精度定位的需求。"}, "S047": {"id": "pdf-fe9119a9c453151a-p2-b28", "page": 2, "quote": "第二，5G采用大规模天线技术，具有更高分辨率的波束，"}, "S048": {"id": "pdf-fe9119a9c453151a-p2-b30", "page": 2, "quote": "也可以实现更高精度的测距和测角特性"}, "S049": {"id": "pdf-fe9119a9c453151a-p2-b32", "page": 2, "quote": "3.1.3 上行与下行定位\n上行与下行定位技术是4G 网络运行过程中最基\n本的定位方式，并且上行定位曾一度被行业看好是解\n决室内定位的主要解决方案。上行利用终端合理发射\n定位信号，通过基站完成相应定位，保证定位的精 \n准性；下行利用基站将定位信号发送出去，然后利用\n终端完成相应定位。在实际定位期间，对下行定位方\n法进行应用，合理应用5G 网络具有的大带宽、低延\n迟以及密集组网等多项特点，通过对基站发射功率优\n势的全面应用，扩大室内定位覆盖范围，大幅度降低\n了下行定位技术在应用时对于网络密度的依赖程度，\n进而更好地完成定位"}, "S050": {"id": "pdf-fe9119a9c453151a-p2-b33", "page": 2, "quote": "[9]。\n3.2  5G 定位网络结构分析\n室内一体化定位服务是一项对技术要求很高的\n工作。要想实现一体化定位服务，在采用5G 技术时，\n要提高定位精度，同时还要借助5G 移动通信网络与\n平台的优势，实现定位与通信功能一体化，更加精\n准地完成定位。本文将从一体化与技术融合两个方面\n入手，完成对5G 定位精度网络结构具体情况的合理\n分析。\n3.2.1 一体化网络架构分析\n整体网络架构要以通信网络作为基础，可以同\n时实现通信与定位两项功能，能够为人们提供高质量\n服务。"}, "S051": {"id": "pdf-fe9119a9c453151a-p2-b34", "page": 2, "quote": "（1）从目前我国通信行业整体发展情况来看，\n我国标准基站网络在运行时无法实现高精度同步，而\n通过对一体化网络的应用，可以使不同基站的高精度\n同步问题得到解决，从而完成精准定位。"}, "S052": {"id": "pdf-fe9119a9c453151a-p2-b35", "page": 2, "quote": "（2）通过一体化网络能够将通信与定位两者合\n理融合在一起，实现双重功能，而且可以依据具体情\n况，针对这两种功能网元进行合理设计，确保最终设\n计内容的合理性。"}, "S053": {"id": "pdf-fe9119a9c453151a-p2-b36", "page": 2, "quote": "（3）一体化定位网元可以与基站实现共站，可\n以为后续各项工作顺利开展提供了强有力的支持。"}, "S054": {"id": "pdf-fe9119a9c453151a-p2-b37", "page": 2, "quote": "（4）在整个网络中将采用的定位设备独立出来，\n通过独立形态提高5G 网络具体定位时覆盖面积，满\n足需求。"}, "S055": {"id": "pdf-fe9119a9c453151a-p2-b38", "page": 2, "quote": "（5）通过对一体化网络架构的合理应用，能够\n完成对不同类型技术的全面融合，进而在考虑各项要\n求基础上，建设出异构定位网络，其主要包含的技术\n有内网、频带以及TBS 等各种不同类型的定位技术，\n每一项技术都会对定位精准性造成一定影响，因此必\n须要保证采用每一项技术的合理性。"}, "S056": {"id": "pdf-fe9119a9c453151a-p2-b39", "page": 2, "quote": "（6）一体化网络中会应用到不同类型的定位技\n术，每一项技术都可以支持5G 网接入，而且能够在"}, "S057": {"id": "pdf-fe9119a9c453151a-p3-b0", "page": 3, "quote": "李娜娜：面向5G 移动通信网的"}, "S058": {"id": "pdf-fe9119a9c453151a-p3-b1", "page": 3, "quote": "高精度定位技术探讨"}, "S059": {"id": "pdf-fe9119a9c453151a-p3-b2", "page": 3, "quote": "2021 年1 月10 日第38 卷 第1 期"}, "S060": {"id": "pdf-fe9119a9c453151a-p3-b3", "page": 3, "quote": "网络终端完成融合定位。\n3.2.2 异构融合技术网络架构\n异构融合定位系统在实际应用期间并非简单的\n对各种定位网络进行叠加处理，而且要将多不同定位\n技术进行智能融合，通过对综合定位技术的应用，进\n而实现最优定位。智能异构融合定位技术架构具有如\n下特点。"}, "S061": {"id": "pdf-fe9119a9c453151a-p3-b4", "page": 3, "quote": "（1）异构一体化融合定位架构。将异构一体化\n融合机制建立在架构层面，对多种有机融合机制进行\n合理应用，进而确保最终输出定位结果的合理性。"}, "S062": {"id": "pdf-fe9119a9c453151a-p3-b5", "page": 3, "quote": "（2）多层次融合。将多种支持室外定位技术以\n及补充定位技术进行合理融合。针对采用的不同定位\n技术，在融合上要支持基本定位技术为基础，进而确\n保多层融合的合理性。"}, "S063": {"id": "pdf-fe9119a9c453151a-p3-b6", "page": 3, "quote": "（3）反馈式融合定位决策机制。融合定位架构\n主要包含了具体位置结果预估和预测，进而在此基础\n上，拟合结果间的具体反馈决策机制，通过对预测、\n空间等智能分析方法进行应用，最大程度减少各种异\n常定位结果的出现，提升定位稳定性和可靠性。"}, "S064": {"id": "pdf-fe9119a9c453151a-p3-b7", "page": 3, "quote": "4  以5G 网络为基础的高精度定位解决方案"}, "S065": {"id": "pdf-fe9119a9c453151a-p3-b8", "page": 3, "quote": "4.1  调研竞品市场\n高精度定位领域中，主要产品生产商有如下\n5 家。\n4.1.1 千寻位置\n从2016 年起提供商用服务，建设的基准站超过\n了2 500 个，能够为人们提供高质量定位服务。\n4.1.2 星舆科技\n2018 年，海格通信旗下的公司分别在广东、湖\n南等地区建设了超过100 个基准站试点，后期又持续\n建设了基准站，基准站超过了3 000 个，通过对这些\n基准站进行应用，实现全国定位。\n4.1.3 中国电信\n在全国范围内不同地区建设了定位系统，这些\n定位系统在应用时定位精准度高，可以为5G 用户提\n供精度达到厘米级的定位服务。\n4.1.4 中国联通\n中国联通实际发展期间与华大北斗相互合作，\n成立了“5G+ 北斗高精度定位开放实验室”。同时，\n中国联通也与中兴通讯进行合作，向人们展示了各种\n高精度定位设备。将这些先进的高精度设备合理应用\n到5G 中，能够更加精准地完成定位，从而为人们提\n供高质量服务。\n4.1.5 中国移动\n中国移动高精准定位产品为人们提供了的毫米"}, "S066": {"id": "pdf-fe9119a9c453151a-p3-b9", "page": 3, "quote": "Telecom Power Technology\nJan. 10, 2021  Vol.38  No.1"}, "S067": {"id": "pdf-fe9119a9c453151a-p3-b10", "page": 3, "quote": "级别的静态定位，而对于动态定位，精度可以达到厘\n米级别。目前，全国范围内已经建设了大量基站，汇\n集了大量站址、机房以及传输等各项内容的边际成本，\n这也就大幅度降低了建站和维护成本。\n4.2  中移智行高精度定位产品\n合理应用北斗卫星导航系统，进而向人们提供\n定位信息内容。通过适当整合中国移动建设5G 基准\n站的各项资源，再合理应用核心云与数据技术等各项\n先进技术，建设一张全国网络，形成一个能够为人们\n提供高质量服务云平台，满足应用需求。中移智行高\n精度定位产品由3 个部分构成，具体如下。\n4.2.1 终端产品\n终端产品主要包括专业用途高精度接收机和硬\n件定制性产品。通过对这些产品进行合理应用，能够\n为人们提供定位硬件+ 服务、手持定位终端等信息，\n从而更好地完成定位。\n4.2.2 高精准定位服务设施\n高精度定位服务设施在应用时能够在短期内为\n人们提供高精度服务。在进行定位时，客户终端通过\n对互联网的合理应用，对已经经过授权的CORS 账号\n进行应用，最终实现厘米级精准定位，为人们提供高\n质量服务，为日后各项工作开展提供更强有力支持。\n4.2.3 高精度定位基础设施\n进行高精度定位基础服务时，可以在具有高质量\n卫星条件基础上，提高终端实时坐标信息的精度，使\n其能够达到厘米级，该精准度完全可以满足人们需求。"}, "S068": {"id": "pdf-fe9119a9c453151a-p3-b11", "page": 3, "quote": "用户对5G 网络进行合理应用，将起初位置坐标\n信息内容快速、精准地上传到边缘计算平台上。完成\n信息上传后，平台通过对上传的各项坐标信息及通过\n基准站上传的差异码进行合理应用，合理差分解算，\n进而获取到高精准位置数据，再将信息反馈给客户，\n完成服务。"}, "S069": {"id": "pdf-fe9119a9c453151a-p3-b12", "page": 3, "quote": "边缘计算平台在运行期间对所有终端上报的位\n置信息进行接收，然后对各项信息内容进行计算，通\n过融合形成区域信息位示图。通过对该示意图进行应\n用，可以为我国智慧交通的运行提供信息，保证交通\n顺畅，降低交通事故发生率，同时也可以为用户提供\n大量数据服务。"}, "S070": {"id": "pdf-fe9119a9c453151a-p3-b14", "page": 3, "quote": "近年来，随着人们对5G 移动通信技术研究的不\n断深入，该项技术变得更加成熟，而且在许多行业中\n也得到了广泛应用，并取得了较好的应用效果。但 \n是，现代人们对室内外定位的精准性提出了更高要求，"}, "S071": {"id": "pdf-fe9119a9c453151a-p3-b15", "page": 3, "quote": "（下转第240 页）"}, "S072": {"id": "pdf-fe9119a9c453151a-p4-b0", "page": 4, "quote": "2021 年1 月10 日第38 卷 第1 期\nJan. 10, 2021  Vol.38  No.1 \nTelecom Power Technology"}, "S073": {"id": "pdf-fe9119a9c453151a-p4-b1", "page": 4, "quote": "5  改造效果分析"}, "S074": {"id": "pdf-fe9119a9c453151a-p4-b2", "page": 4, "quote": "将#1 电除尘高频电源电控部分改造后，年故障\n率显著降低，2018 年发生故障26 次，2019 年发生故\n障28 次，2020 年上半年发生故障12 次，改造后至\n今未发生高频电源故障停运，由于故障率降低减少的\n维护费用为3.0×10"}, "S075": {"id": "pdf-fe9119a9c453151a-p4-b3", "page": 4, "quote": "5 元/ 年。升级改造#1 炉除尘器\n高频电源，设备可靠性提高，增强了电源的节能效果，\n实现节电69.6%，除尘效率提高29.5%"}, "S076": {"id": "pdf-fe9119a9c453151a-p4-b4", "page": 4, "quote": "[10-14]。"}, "S077": {"id": "pdf-fe9119a9c453151a-p4-b6", "page": 4, "quote": "华电国际邹县发电厂#1 炉电除尘一电场共4 台\n高频电源升级改造后，电除尘运行稳定可靠，效果\n显著。第三方性能测试得出如下结论：一是用电单\n耗由488.7 kW 降为148.7 kW，取得了很好的节能效\n果，平均节电率改善69.6％；二是电除尘出口浓度由 \n112 mg/Nmj降低为79 mg/Nmj，平均除尘效率显著提高，\n实现粉尘排放量降低29.5%。"}, "S078": {"id": "pdf-fe9119a9c453151a-p4-b8", "page": 4, "quote": "[1] 陶秋根，刘鹤忠，邓文祥，等. 徐州电厂静电除尘器"}, "S079": {"id": "pdf-fe9119a9c453151a-p4-b9", "page": 4, "quote": "改造及高频电源的技术应用[J]. 电力勘测设计，2018\n（1）：26-30.\n[2] 文 博，常 新. 海烟气调质及高频电源技术在电除"}, "S080": {"id": "pdf-fe9119a9c453151a-p4-b10", "page": 4, "quote": "尘改造中综合应用探讨[J]. 冶金动力，2017（12）：\n26-30.\n[3] 李帅英，武保会，牛国平，等.600 MW 燃煤机组大"}, "S081": {"id": "pdf-fe9119a9c453151a-p4-b11", "page": 4, "quote": "（上接第237 页）"}, "S082": {"id": "pdf-fe9119a9c453151a-p4-b12", "page": 4, "quote": "采用传统定位技术显然无法满足应用需求，因此要加\n强相应内容的探讨与分析。5G 网络自身具有超密集\n组网和延迟低等特点，为高精度定位技术的发展与应\n用提供了条件。从实际情况来看，建设一体化与异构\n融合定位网络架构能够实现高精度定位。"}, "S083": {"id": "pdf-fe9119a9c453151a-p4-b14", "page": 4, "quote": "[1] 孙金阳.5G 通信技术在森林灭火工作中的研究[J]. 信"}, "S084": {"id": "pdf-fe9119a9c453151a-p4-b15", "page": 4, "quote": "息通信，2020（7）：276-277.\n[2] 孙 辉.5G 发展与视频应用相结合的初步探讨[J]. 广"}, "S085": {"id": "pdf-fe9119a9c453151a-p4-b16", "page": 4, "quote": "播电视信息，2020（6）：39-41.\n[3] 王 \n毅，陈启鑫，张 \n宁，等.5G 通信与泛在电力\n物联网的融合：应用分析与研究展望[J]. 电网技术，\n2019，43（5）：1575-1585."}, "S086": {"id": "pdf-fe9119a9c453151a-p4-b18", "page": 4, "quote": "气污染物超低排放技术应用[J]. 热力发电，2016，45\n（12）：25-29.\n[4] 姚明宇，聂剑平，张立欣，等. 燃煤电站锅炉烟气污"}, "S087": {"id": "pdf-fe9119a9c453151a-p4-b19", "page": 4, "quote": "染物一体化协同治理技术[J]. 热力发电，2016，45（3）：\n８-12.\n[5] 何立刚，周喆星. 脉冲电源与高频电源技术在静电除"}, "S088": {"id": "pdf-fe9119a9c453151a-p4-b20", "page": 4, "quote": "尘中的组合运用[J]. 科技创新与应用，2017（2）：\n139.\n[6] 王 典. 高频电源电子线路故障诊断方法[J]. 科技风，"}, "S089": {"id": "pdf-fe9119a9c453151a-p4-b21", "page": 4, "quote": "2019（12）：177.\n[7] 章小卫，周京华，张和平. 高精度大电流电容器纹波"}, "S090": {"id": "pdf-fe9119a9c453151a-p4-b22", "page": 4, "quote": "测试专用高频电源[J]. 电力电子技术，2019，53（6）：\n58-61.\n[8] 赵 峰，邓 涛，马 英. 电除尘高频电源的工作原"}, "S091": {"id": "pdf-fe9119a9c453151a-p4-b23", "page": 4, "quote": "理及应用探讨[J]. 纯碱工业，2019（3）：17-20.\n[9] 皋德华. 高频电源频发故障原因分析及采取措施[J]."}, "S092": {"id": "pdf-fe9119a9c453151a-p4-b24", "page": 4, "quote": "电力安全技术，2019，21（3）：17-22.\n[10] 黄大元.1 000 MW 机组电除尘高频电源低压绕组接地"}, "S093": {"id": "pdf-fe9119a9c453151a-p4-b25", "page": 4, "quote": "故障原因分析与预防[J]. 神华科技，2018，16（9）：\n65-66，94. \n[11] 周建伟，顾立群. 电除尘器高频电源和脉冲电源应"}, "S094": {"id": "pdf-fe9119a9c453151a-p4-b26", "page": 4, "quote": "用分析[J]. 能源研究与信息，2018，34（3）：141-\n145，150.\n[12] 唐恒达. 电除尘电源控制器设备运行故障原因分析及"}, "S095": {"id": "pdf-fe9119a9c453151a-p4-b27", "page": 4, "quote": "优化调整[J]. 冶金动力，2020（5）：10-12. \n[13] 魏 敏，姚国华. 高频电源在低低温电除尘中的运行"}, "S096": {"id": "pdf-fe9119a9c453151a-p4-b28", "page": 4, "quote": "方式探究[J]. 电力与能源，2020，41（2）：244-247\n[14] 宋晓波. 高频电源静电除尘器节能提效控制策略在"}, "S097": {"id": "pdf-fe9119a9c453151a-p4-b29", "page": 4, "quote": "三河电厂的应用[J]. 电气技术，2016（3）：78-80，\n89."}, "S098": {"id": "pdf-fe9119a9c453151a-p4-b30", "page": 4, "quote": "[4] 张 军，刘 鹏.5G通信传输网络的建设策略分析[J]."}, "S099": {"id": "pdf-fe9119a9c453151a-p4-b31", "page": 4, "quote": "数码世界，2020（8）：20-21.\n[5] 王 艳，宗 兴.5G 移动通信给广播电视带来的影响"}, "S100": {"id": "pdf-fe9119a9c453151a-p4-b32", "page": 4, "quote": "及发展机遇[J]. 中国新通信，2020，22（2）：2.\n[6] 高 \n杨，冯景锋. 构建基于“5G 通信+5G 广播”的\n智慧广电新型网络[J]. 广播与电视技术，2020，47（1）：\n12-18.\n[7] 毕 倬.5G 移动通信网络关键技术及分析[J]. 信息与"}, "S101": {"id": "pdf-fe9119a9c453151a-p4-b33", "page": 4, "quote": "电脑（理论版），2019（14）：166-167，175.\n[8] 王 \n毅，陈启鑫，张 \n宁，等.5G 通信与泛在电力\n物联网的融合：应用分析与研究展望[J]. 电网技术，\n2019，43（5）：1575-1585.\n[9] 白 洋，田 瀚，阚中锋，等.5G 移动通信技术在电"}, "S102": {"id": "pdf-fe9119a9c453151a-p4-b34", "page": 4, "quote": "力通信系统的应用前瞻[J]. 城市建设理论研究（电子\n版），2018（9）：25."}}, "nodes": [{"id": "problem-statement", "title": "高精度定位面临的核心问题", "concepts": ["concept-3d14452f0d6d8e0c", "concept-76c3e7e4e0cc9ae1"]}, {"id": "4g-limitations", "title": "4G 定位技术的标准与不足", "concepts": ["concept-3f392aad0adb382f", "concept-372a73b31dc0f8e8"]}, {"id": "5g-key-tech", "title": "5G 定位关键技术机制", "concepts": ["concept-0348083f89fdea4f", "concept-174acd0116abfcc0"]}, {"id": "uplink-downlink", "title": "上行与下行定位策略优化", "concepts": ["concept-ffee62533e5ca9d8", "concept-c2b7ce5da4ec7c7a"]}, {"id": "integrated-arch", "title": "通信定位一体化网络架构", "concepts": ["concept-92161fca97764170", "concept-66da595d51d3b9c2"]}, {"id": "hetero-fusion", "title": "异构融合技术与决策机制", "concepts": ["concept-3c5f59c06f8c44da", "concept-b96d91938b8f4925"]}, {"id": "market-solutions", "title": "主要竞品与市场解决方案", "concepts": ["concept-f02231be35a43a98"]}, {"id": "cmcc-product", "title": "中移智行高精度产品体系", "concepts": ["concept-7738110c9e154400", "concept-9e73b6b0e129d0b2"]}, {"id": "conclusion-synthesis", "title": "结论：一体化与异构融合的必然性", "concepts": ["concept-9cf2dcd4bde348d5", "concept-70829ec640860b2d"]}], "concepts": {"concept-3d14452f0d6d8e0c": {"id": "concept-3d14452f0d6d8e0c", "title": "全球卫星导航系统 (GNSS)", "layer": "基础概念", "lead": "室外定位的主流技术基础", "text": "利用卫星信号进行地理位置确定的系统，包括 GPS、北斗等。", "why": "文中明确指出该技术是现阶段广泛应用的基础，但其在室内存在物理局限。", "source_ids": ["pdf-fe9119a9c453151a-p1-b7"], "next": null, "domain": "Mobile Communication & Positioning Technology", "document_id": "pdf-fe9119a9c453151a", "node_id": "problem-statement"}, "concept-76c3e7e4e0cc9ae1": {"id": "concept-76c3e7e4e0cc9ae1", "title": "无缝覆盖", "layer": "应用目标", "lead": "定位服务的理想状态", "text": "指用户在从室外移动到室内，或在不同室内区域移动时，定位服务不中断且精度保持一致的状态。", "why": "这是文章提出的核心需求，用于解决当前室内外定位割裂的问题。", "source_ids": ["pdf-fe9119a9c453151a-p1-b11"], "next": null, "domain": "Mobile Communication & Positioning Technology", "document_id": "pdf-fe9119a9c453151a", "node_id": "problem-statement"}, "concept-3f392aad0adb382f": {"id": "concept-3f392aad0adb382f", "title": "增强观察时间差 (OTDOA)", "layer": "技术标准", "lead": "4G 时代的關鍵定位机制", "text": "一种通过测量来自多个基站的参考信号到达时间差来确定用户位置的技术。", "why": "文中将其列为 4G 关键技术，并指出通过结合参考信号可改善其精度，但仍受限于同步问题。", "source_ids": ["pdf-fe9119a9c453151a-p1-b14", "pdf-fe9119a9c453151a-p2-b3"], "next": null, "domain": "Mobile Communication & Positioning Technology", "document_id": "pdf-fe9119a9c453151a", "node_id": "4g-limitations"}, "concept-372a73b31dc0f8e8": {"id": "concept-372a73b31dc0f8e8", "title": "共享 PCI 场景", "layer": "网络干扰", "lead": "4G 定位中的识别难题", "text": "物理小区标识（PCI）在不同小区间重复使用导致的信号混淆场景，影响节点识别。", "why": "文中特别提到在此场景下需增加观察时间差技术来解决节点识别问题。", "source_ids": ["pdf-fe9119a9c453151a-p1-b16"], "next": null, "domain": "Mobile Communication & Positioning Technology", "document_id": "pdf-fe9119a9c453151a", "node_id": "4g-limitations"}, "concept-0348083f89fdea4f": {"id": "concept-0348083f89fdea4f", "title": "超密集组网 (UDN)", "layer": "网络架构", "lead": "5G 提升容量与定位精度的基础架构", "text": "通过大量部署低功率节点（如微基站、射频单元）来提高网络密度和覆盖质量的组网方式。", "why": "文中指出 UDN 是 5G 定位的关键场景，但也带来了信号源识别的新挑战（需独立 PRSID）。", "source_ids": ["pdf-fe9119a9c453151a-p2-b13", "pdf-fe9119a9c453151a-p2-b21"], "next": null, "domain": "Mobile Communication & Positioning Technology", "document_id": "pdf-fe9119a9c453151a", "node_id": "5g-key-tech"}, "concept-174acd0116abfcc0": {"id": "concept-174acd0116abfcc0", "title": "定位参考信号 ID (PRSID)", "layer": "信号标识", "lead": "区分密集网络中信号源的关键标识", "text": "用于唯一标识定位参考信号的 ID，确保终端能准确识别信号来自哪个具体的无线射频单元。", "why": "这是解决 UDN 中基带信息复制导致混淆的核心机制。", "source_ids": ["pdf-fe9119a9c453151a-p2-b21", "pdf-fe9119a9c453151a-p2-b22"], "next": null, "domain": "Mobile Communication & Positioning Technology", "document_id": "pdf-fe9119a9c453151a", "node_id": "5g-key-tech"}, "concept-ffee62533e5ca9d8": {"id": "concept-ffee62533e5ca9d8", "title": "下行定位 (Downlink Positioning)", "layer": "Protocol Mechanism", "lead": "基站发，终端收", "text": "一种定位模式，其中位置参考信号由网络侧（基站）发送，用户设备（终端）接收这些信号并测量时间差或信号强度来计算自身位置。", "why": "理解此概念是分析如何利用基站功率优势扩大室内覆盖的前提。", "source_ids": ["pdf-fe9119a9c453151a-p2-b32"], "next": null, "domain": "Mobile Communication & Positioning Technology", "document_id": "pdf-fe9119a9c453151a", "node_id": "uplink-downlink"}, "concept-c2b7ce5da4ec7c7a": {"id": "concept-c2b7ce5da4ec7c7a", "title": "网络密度依赖 (Network Density Dependency)", "layer": "Deployment Constraint", "lead": "基站数量与精度的关系", "text": "指定位精度对基站部署数量的敏感程度。传统方案往往需要极高密度的基站来实现高精度室内定位，增加了建设成本。", "why": "文中明确指出 5G 下行策略的目标之一是降低这种依赖，从而优化成本效益。", "source_ids": ["pdf-fe9119a9c453151a-p2-b32"], "next": null, "domain": "Mobile Communication & Positioning Technology", "document_id": "pdf-fe9119a9c453151a", "node_id": "uplink-downlink"}, "concept-92161fca97764170": {"id": "concept-92161fca97764170", "title": "一体化网络架构 (Integrated Network Architecture)", "layer": "System Design", "lead": "通信与定位合一", "text": "一种网络设计范式，其中通信基础设施同时承担定位功能，通过共享资源和同步机制来解决单独部署定位系统时的同步难题。", "why": "这是解决文中提到的基站高精度同步问题的核心方案。", "source_ids": ["pdf-fe9119a9c453151a-p2-b33", "pdf-fe9119a9c453151a-p2-b34"], "next": null, "domain": "Mobile Communication & Positioning Technology", "document_id": "pdf-fe9119a9c453151a", "node_id": "integrated-arch"}, "concept-66da595d51d3b9c2": {"id": "concept-66da595d51d3b9c2", "title": "共站部署 (Co-site Deployment)", "layer": "Infrastructure Strategy", "lead": "设备共享站点", "text": "指定位网元与通信基站安装在同一物理站点的策略，旨在减少重复建设并利用现有的站点资源支持定位服务。", "why": "文中明确提到一体化定位网元可以与基站实现共站，以支持各项工作顺利开展。", "source_ids": ["pdf-fe9119a9c453151a-p2-b36"], "next": null, "domain": "Mobile Communication & Positioning Technology", "document_id": "pdf-fe9119a9c453151a", "node_id": "integrated-arch"}, "concept-3c5f59c06f8c44da": {"id": "concept-3c5f59c06f8c44da", "title": "反馈式融合定位决策 (Feedback Fusion Decision)", "layer": "Algorithm Logic", "lead": "预测 - 拟合 - 修正", "text": "一种决策机制，通过对位置结果进行预估和预测，比较拟合结果之间的差异并进行反馈调节，以剔除异常值并优化最终定位输出。", "why": "这是文中提到的提升定位稳定性和可靠性的关键智能机制。", "source_ids": ["pdf-fe9119a9c453151a-p3-b6"], "next": null, "domain": "Mobile Communication & Positioning Technology", "document_id": "pdf-fe9119a9c453151a", "node_id": "hetero-fusion"}, "concept-b96d91938b8f4925": {"id": "concept-b96d91938b8f4925", "title": "异构一体化融合 (Heterogeneous Integration)", "layer": "Architecture Pattern", "lead": "多源技术有机融合", "text": "指在架构层面建立机制，将不同性质（如室内/室外、不同频段）的定位技术进行有机结合，确保输出结果的合理性。", "why": "区别于简单的信号叠加，这是实现复杂环境下高精度定位的架构基础。", "source_ids": ["pdf-fe9119a9c453151a-p3-b4"], "next": null, "domain": "Mobile Communication & Positioning Technology", "document_id": "pdf-fe9119a9c453151a", "node_id": "hetero-fusion"}, "concept-f02231be35a43a98": {"id": "concept-f02231be35a43a98", "title": "CORS 基准站", "layer": "Infrastructure", "lead": "连续运行参考站系统是高精度定位的基础设施。", "text": "指连续运行参考站（Continuously Operating Reference Stations），通过长期连续接收卫星信号，提供差分改正数据以消除误差，从而实现高精度定位。文中提到的各厂商建设的“基准站”即为此类设施。", "why": "理解各厂商竞争力的关键在于其基准站的建设规模，这直接决定了服务的覆盖范围和精度稳定性。", "source_ids": ["pdf-fe9119a9c453151a-p3-b8", "pdf-fe9119a9c453151a-p3-b10"], "next": null, "domain": "Mobile Communication & Positioning Technology", "document_id": "pdf-fe9119a9c453151a", "node_id": "market-solutions"}, "concept-7738110c9e154400": {"id": "concept-7738110c9e154400", "title": "边缘计算平台", "layer": "System Architecture", "lead": "在靠近数据源头的网络边缘侧进行数据处理的核心组件。", "text": "在中移智行体系中，该平台负责接收终端上报的位置信息和基准站的差异码，执行差分解算算法，并将结果反馈给用户。它还负责融合多终端信息生成区域位示图。", "why": "这是实现实时、低延迟高精度定位解算的关键环节，区别于传统的云端集中处理。", "source_ids": ["pdf-fe9119a9c453151a-p3-b11", "pdf-fe9119a9c453151a-p3-b12"], "next": null, "domain": "Mobile Communication & Positioning Technology", "document_id": "pdf-fe9119a9c453151a", "node_id": "cmcc-product"}, "concept-9e73b6b0e129d0b2": {"id": "concept-9e73b6b0e129d0b2", "title": "差分解算", "layer": "Algorithm", "lead": "利用基准站已知位置误差来修正用户终端定位误差的技术。", "text": "通过应用基准站上传的差异码（差分数据），对用户上传的坐标信息进行计算修正，从而消除公共误差，获取高精准位置数据。", "why": "这是实现从普通定位到厘米级高精度定位的核心算法步骤。", "source_ids": ["pdf-fe9119a9c453151a-p3-b11"], "next": null, "domain": "Mobile Communication & Positioning Technology", "document_id": "pdf-fe9119a9c453151a", "node_id": "cmcc-product"}, "concept-9cf2dcd4bde348d5": {"id": "concept-9cf2dcd4bde348d5", "title": "异构融合", "layer": "System Strategy", "lead": "将多种不同定位技术进行智能融合的策略。", "text": "指并非简单叠加各种定位网络，而是通过智能融合机制，将多种支持室外定位技术及补充定位技术合理融合，以基本定位技术为基础，实现最优定位。", "why": "这是解决单一技术无法满足复杂场景高精度需求的核心方法论。", "source_ids": ["pdf-fe9119a9c453151a-p3-b3", "pdf-fe9119a9c453151a-p3-b5"], "next": null, "domain": "Mobile Communication & Positioning Technology", "document_id": "pdf-fe9119a9c453151a", "node_id": "conclusion-synthesis"}, "concept-70829ec640860b2d": {"id": "concept-70829ec640860b2d", "title": "反馈式融合定位决策机制", "layer": "Control Logic", "lead": "通过预测与反馈优化定位结果的决策机制。", "text": "包含具体位置结果预估和预测，在此基础上拟合结果间的具体反馈决策机制，通过对预测、空间等智能分析方法进行应用，最大程度减少各种异常定位结果的出现。", "why": "该机制用于提升定位系统的稳定性和可靠性，防止异常跳变。", "source_ids": ["pdf-fe9119a9c453151a-p3-b6"], "next": null, "domain": "Mobile Communication & Positioning Technology", "document_id": "pdf-fe9119a9c453151a", "node_id": "conclusion-synthesis"}}}};/* Trusted host bridge. Authors only access read-only evidence and local DOM. */
+(()=>{
+ const C=PM_CONFIG;
+ const deepFreeze=o=>{if(o&&typeof o==='object'){Object.values(o).forEach(deepFreeze);Object.freeze(o);}return o;};
+ Object.defineProperty(window,'paperMindData',{value:deepFreeze(C.data),writable:false,configurable:false});
+ const nodes=new Set(C.data.nodes.map(n=>n.id)),concepts=new Set(C.data.nodes.flatMap(n=>n.concepts));
+ let initialized=false,height=0,scheduled=false;
+ function emit(type,payload={}){if(parent!==window)parent.postMessage({type,edition:C.edition,document:C.document,channel:C.channel,...payload},'*');}
+ function measure(){if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;const h=Math.ceil(document.documentElement.scrollHeight);if(h!==height){height=h;emit('resize',{height:h});}});}
+ function source(id){const s=C.data.sources[id];if(!s)return;if(parent!==window){emit('cite',{id:s.id});return;}document.getElementById('pm-local-source')?.remove();const box=document.createElement('aside');box.id='pm-local-source';box.setAttribute('role','dialog');box.setAttribute('aria-label','原文出处');const title=document.createElement('strong');title.textContent='原文 · 第 '+s.page+' 页';const quote=document.createElement('blockquote');quote.textContent=s.quote;const close=document.createElement('button');close.textContent='返回讲解';close.addEventListener('click',()=>box.remove());box.append(title,quote,close);document.body.append(box);close.focus();}
+ function nodeOf(el){return el.closest('[data-node]')?.dataset.node||C.data.nodes[0]?.id;}
+ function readingTools(){for(const b of document.querySelectorAll('button[data-source]')){const s=C.data.sources[b.dataset.source];if(s)b.textContent='原文 · p.'+s.page;}if(parent===window){for(const b of document.querySelectorAll('[data-ask],[data-concept],[data-undo]'))b.hidden=true;return;}for(const n of C.data.nodes){const anchor=document.getElementById(n.id);if(!anchor||anchor.querySelector('button[data-ask]'))continue;const tools=document.createElement('div');tools.className='pm-reading-tools';tools.dataset.node=n.id;const ask=document.createElement('button');ask.dataset.ask='请解释'+n.title+'的原理、推导与成立条件';ask.textContent='沿着这里继续问';tools.append(ask);for(const id of n.concepts||[]){const b=document.createElement('button');b.dataset.concept=id;b.textContent=C.data.concepts?.[id]?.title||'查阅相关概念';tools.append(b);}anchor.append(tools);}}
+ document.addEventListener('click',event=>{
+  const button=event.target.closest('button,a');if(!button)return;
+  if(button.dataset.source){event.preventDefault();source(button.dataset.source);}
+  else if(button.dataset.concept&&concepts.has(button.dataset.concept))emit('concept',{id:button.dataset.concept,node:nodeOf(button)});
+  else if(button.dataset.ask&&event.isTrusted)emit('ask',{text:button.dataset.ask.slice(0,2000),node:nodeOf(button)});
+  else if(button.dataset.undo&&event.isTrusted)emit('undo',{id:button.dataset.undo});
+  else if(button.matches('a[href^="#"]')){event.preventDefault();const el=document.getElementById(button.getAttribute('href').slice(1));if(el){if(parent===window)el.scrollIntoView();else emit('scroll',{top:el.getBoundingClientRect().top+scrollY});}}
+ });
+ document.addEventListener('mouseup',()=>{const text=window.getSelection()?.toString().trim();if(text&&text.length>=4&&text.length<=2000)emit('selection',{text,node:nodeOf(window.getSelection()?.anchorNode?.parentElement||document.body)});});
+ function supplements(items){document.querySelectorAll('.pm-user-note').forEach(n=>n.remove());for(const item of items){if(!nodes.has(item.node_id))continue;const anchor=document.getElementById(item.node_id);if(!anchor)continue;const note=document.createElement('aside');note.className='pm-user-note';note.dataset.node=item.node_id;const h=document.createElement('h4');h.textContent='我的讲解补充';const p=document.createElement('p');p.textContent=item.text;note.append(h,p);for(const id of item.source_ids||[]){const alias=Object.keys(C.data.sources).find(k=>C.data.sources[k].id===id);if(alias){const b=document.createElement('button');b.dataset.source=alias;b.textContent='原文 · p.'+C.data.sources[alias].page;note.append(b);}}if(item.can_undo){const b=document.createElement('button');b.dataset.undo=item.id;b.textContent='撤回补充';note.append(b);}anchor.append(note);}measure();}
+ window.addEventListener('message',event=>{const d=event.data;if(event.source!==parent||!d||d.channel!==C.channel)return;
+  if(d.type==='navigate'&&nodes.has(d.node)){const el=document.getElementById(d.node);if(el){for(let p=el.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;emit('scroll',{top:el.getBoundingClientRect().top+scrollY});}}
+  if(d.type==='viewport'&&Number.isFinite(d.top)){let chosen=C.data.nodes[0]?.id;for(const n of C.data.nodes){const el=document.getElementById(n.id);if(el&&el.getBoundingClientRect().top+scrollY<=d.top+160)chosen=n.id;}if(chosen)emit('active',{node:chosen});}
+  if(d.type==='supplements'&&Array.isArray(d.items))supplements(d.items.slice(0,100));
+ });
+ window.addEventListener('pm-initialized',()=>{readingTools();initialized=true;document.body.dataset.pmReady='true';emit('ready');measure();});
+ window.addEventListener('error',event=>{document.body.dataset.pmError=String(event.message);emit('error',{message:String(event.message).slice(0,300)});});
+ new ResizeObserver(measure).observe(document.body);measure();
+})();
+</script><script nonce="Bi_W5GCq_1rjddq39KjNpM2N7jgRJYWY">try{(()=>{const root=document.getElementById("chapter-ch1-problem");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("ch1-problem--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+  
+  const chapterContainer = document.getElementById('ch1-problem--ch1-problem');
+  if (!chapterContainer) return;
+  
+  const paperMindData = window.paperMindData || { sources: {}, nodes: [] };
+  
+  const stepButtons = chapterContainer.querySelectorAll('.step-btn');
+  const stepPanels = chapterContainer.querySelectorAll('.step-panel');
+  const checkItems = chapterContainer.querySelectorAll('.check-item');
+  const sourceButtons = chapterContainer.querySelectorAll('.source-btn');
+  
+  function activateStep(stepIndex) {
+    stepButtons.forEach((btn, idx) => {
+      btn.classList.toggle('active', idx === stepIndex);
+    });
+    stepPanels.forEach((panel, idx) => {
+      panel.classList.toggle('active', idx === stepIndex);
+    });
+    
+    if (stepIndex === 2) {
+      checkItems.forEach(item => {
+        item.setAttribute('data-checked', 'true');
+      });
+    } else {
+      checkItems.forEach(item => {
+        item.setAttribute('data-checked', 'false');
+      });
+    }
+  }
+  
+  stepButtons.forEach((btn, idx) => {
+    btn.addEventListener('click', () => {
+      activateStep(idx);
+    });
+  });
+  
+  sourceButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const sourceId = btn.getAttribute('data-source');
+      if (paperMindData.sources && paperMindData.sources[sourceId]) {
+        const source = paperMindData.sources[sourceId];
+        const event = new CustomEvent('paperMind:source:view', {
+          detail: { sourceId, source },
+          bubbles: true
+        });
+        btn.dispatchEvent(event);
+      }
+    });
+  });
+  
+  const resetBtn = document.createElement('button');
+  resetBtn.type = 'button';
+  resetBtn.className = 'step-btn';
+  resetBtn.textContent = '复位';
+  resetBtn.style.marginTop = '16px';
+  resetBtn.addEventListener('click', () => {
+    activateStep(0);
+  });
+  
+  const interactionPanel = chapterContainer.querySelector('.interaction-panel');
+  if (interactionPanel) {
+    interactionPanel.appendChild(resetBtn);
+  }
+  
+  activateStep(0);
+  
+  const observer = new MutationObserver(() => {
+    const currentActive = chapterContainer.querySelector('.step-panel.active');
+    if (currentActive) {
+      const stepIndex = Array.from(stepPanels).indexOf(currentActive);
+      if (stepIndex === 2) {
+        checkItems.forEach(item => {
+          item.setAttribute('data-checked', 'true');
+        });
+      }
+    }
+  });
+  
+  observer.observe(chapterContainer, { childList: true, subtree: true });
+  
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reducedMotion) {
+    const style = document.createElement('style');
+    style.textContent = '* { transition: none !important; animation: none !important; }';
+    chapterContainer.appendChild(style);
+  }
+})();
+})(d);})();
+(()=>{const root=document.getElementById("chapter-ch2-5g-tech");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("ch2-5g-tech--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  const state = {
+    currentStep: 0,
+    totalSteps: 3
+  };
+
+  const stepsData = [
+    {
+      title: "信号源识别机制",
+      text: "为解决超密集组网中基带信息复制导致的终端无法判断信号来源问题，需为每个远端无线射频单元分配独立的 PRSID。",
+      sources: ["S040", "S041"],
+      draw: drawStep0
+    },
+    {
+      title: "物理层增益：频率特性",
+      text: "利用 5G 毫米波或高频通信波的天然指向性，增强信号的空间分辨能力。",
+      sources: ["S045", "S046"],
+      draw: drawStep1
+    },
+    {
+      title: "物理层增益：天线特性",
+      text: "通过大规模天线技术生成高分辨率波束，直接提升 TDOA 测距和 AOA 测角的精度。",
+      sources: ["S047", "S048"],
+      draw: drawStep2
+    }
+  ];
+
+  const svgContent = document.getElementById('ch2-5g-tech--svg-content');
+  const stepTitle = document.getElementById('ch2-5g-tech--step-title');
+  const stepText = document.getElementById('ch2-5g-tech--step-text');
+  const sourceActions = document.querySelector('.content-panel .source-actions');
+  const indicators = document.querySelectorAll('.step-indicator');
+  const btnPrev = document.getElementById('ch2-5g-tech--step-prev');
+  const btnNext = document.getElementById('ch2-5g-tech--step-next');
+
+  function updateUI() {
+    const data = stepsData[state.currentStep];
+    
+    // Update Text
+    stepTitle.textContent = data.title;
+    stepText.textContent = data.text;
+    
+    // Update Sources
+    sourceActions.innerHTML = '';
+    data.sources.forEach(sid => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'source-btn';
+      btn.dataset.source = sid;
+      btn.textContent = '原文 · p.2';
+      sourceActions.appendChild(btn);
+    });
+
+    // Update Indicators
+    indicators.forEach((ind, idx) => {
+      if (idx === state.currentStep) {
+        ind.classList.add('active');
+        ind.setAttribute('aria-selected', 'true');
+      } else {
+        ind.classList.remove('active');
+        ind.setAttribute('aria-selected', 'false');
+      }
+    });
+
+    // Update Buttons
+    btnPrev.disabled = state.currentStep === 0;
+    btnNext.disabled = state.currentStep === state.totalSteps - 1;
+
+    // Draw SVG
+    svgContent.innerHTML = '';
+    data.draw(svgContent);
+  }
+
+  function drawStep0(container) {
+    // UDN + PRSID: Multiple nodes, distinct IDs
+    const colors = ['#0055aa', '#0077cc', '#0099ee'];
+    for (let i = 0; i < 3; i++) {
+      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      const x = 100 + i * 150;
+      const y = 150;
+      
+      // Node
+      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      circle.setAttribute('cx', x);
+      circle.setAttribute('cy', y);
+      circle.setAttribute('r', 30);
+      circle.setAttribute('fill', colors[i]);
+      circle.setAttribute('stroke', '#1a1a1a');
+      circle.setAttribute('stroke-width', 2);
+      
+      // Label
+      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      text.setAttribute('x', x);
+      text.setAttribute('y', y + 5);
+      text.setAttribute('text-anchor', 'middle');
+      text.setAttribute('fill', '#fff');
+      text.setAttribute('font-size', '12');
+      text.textContent = `PRSID-${i+1}`;
+      
+      // Signal Wave
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', `M${x},${y-40} Q${x+20},${y-60} ${x+40},${y-40}`);
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke', '#ff9900');
+      path.setAttribute('stroke-width', 2);
+      path.setAttribute('stroke-dasharray', '4,4');
+      
+      g.appendChild(path);
+      g.appendChild(circle);
+      g.appendChild(text);
+      container.appendChild(g);
+    }
+    
+    const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    label.setAttribute('x', 300);
+    label.setAttribute('y', 280);
+    label.setAttribute('text-anchor', 'middle');
+    label.setAttribute('fill', '#666');
+    label.textContent = '超密集组网 (UDN) + 独立 PRSID';
+    container.appendChild(label);
+  }
+
+  function drawStep1(container) {
+    // mmWave Directivity
+    const x = 300;
+    const y = 150;
+    
+    // Base Station
+    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    rect.setAttribute('x', x - 40);
+    rect.setAttribute('y', y - 40);
+    rect.setAttribute('width', 80);
+    rect.setAttribute('height', 80);
+    rect.setAttribute('fill', '#0055aa');
+    rect.setAttribute('stroke', '#1a1a1a');
+    
+    // Beam
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', `M${x},${y} L${x-100},${y-100} L${x+100},${y-100} Z`);
+    path.setAttribute('fill', 'rgba(0, 85, 170, 0.3)');
+    path.setAttribute('stroke', '#0055aa');
+    
+    // Target
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', x);
+    circle.setAttribute('cy', y - 120);
+    circle.setAttribute('r', 10);
+    circle.setAttribute('fill', '#ff9900');
+    
+    container.appendChild(rect);
+    container.appendChild(path);
+    container.appendChild(circle);
+    
+    const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    label.setAttribute('x', 300);
+    label.setAttribute('y', 280);
+    label.setAttribute('text-anchor', 'middle');
+    label.setAttribute('fill', '#666');
+    label.textContent = '毫米波/高频通信：指向性';
+    container.appendChild(label);
+  }
+
+  function drawStep2(container) {
+    // Massive MIMO
+    const x = 300;
+    const y = 150;
+    
+    // Antenna Array
+    for (let i = 0; i < 4; i++) {
+      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rect.setAttribute('x', x - 60 + i * 40);
+      rect.setAttribute('y', y - 20);
+      rect.setAttribute('width', 30);
+      rect.setAttribute('height', 40);
+      rect.setAttribute('fill', '#0077cc');
+      rect.setAttribute('stroke', '#1a1a1a');
+      container.appendChild(rect);
+      
+      // Narrow Beam from each
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', `M${x - 45 + i * 40},${y - 20} L${x - 55 + i * 40},${y - 100} L${x - 35 + i * 40},${y - 100} Z`);
+      path.setAttribute('fill', 'rgba(0, 119, 204, 0.4)');
+      path.setAttribute('stroke', '#0077cc');
+      container.appendChild(path);
+    }
+    
+    const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    label.setAttribute('x', 300);
+    label.setAttribute('y', 280);
+    label.setAttribute('text-anchor', 'middle');
+    label.setAttribute('fill', '#666');
+    label.textContent = '大规模天线：高分辨率波束';
+    container.appendChild(label);
+  }
+
+  function nextStep() {
+    if (state.currentStep < state.totalSteps - 1) {
+      state.currentStep++;
+      updateUI();
+    }
+  }
+
+  function prevStep() {
+    if (state.currentStep > 0) {
+      state.currentStep--;
+      updateUI();
+    }
+  }
+
+  // Event Listeners
+  btnNext.addEventListener('click', nextStep);
+  btnPrev.addEventListener('click', prevStep);
+  
+  indicators.forEach(ind => {
+    ind.addEventListener('click', (e) => {
+      const step = parseInt(e.target.dataset.step, 10);
+      if (!isNaN(step) && step >= 0 && step < state.totalSteps) {
+        state.currentStep = step;
+        updateUI();
+      }
+    });
+  });
+
+  // Keyboard Navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') nextStep();
+    if (e.key === 'ArrowLeft') prevStep();
+  });
+
+  // Initialize
+  updateUI();
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-ch3-arch-fusion");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("ch3-arch-fusion--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  const scope = document.getElementById('ch3-arch-fusion--ch3-arch-fusion');
+  if (!scope) return;
+
+  // --- Integrated Arch Interaction ---
+  const archSteps = [
+    {
+      title: "识别同步瓶颈",
+      text: "确认标准基站网络存在高精度同步困难，这是限制定位精度的主要障碍。",
+      source: "S051",
+      svg: `
+        <rect x="50" y="50" width="100" height="60" fill="#e3f2fd" stroke="#2196f3" stroke-width="2"/>
+        <text x="100" y="85" text-anchor="middle" font-size="12" fill="#1565c0">标准基站 A</text>
+        <rect x="250" y="50" width="100" height="60" fill="#e3f2fd" stroke="#2196f3" stroke-width="2"/>
+        <text x="300" y="85" text-anchor="middle" font-size="12" fill="#1565c0">标准基站 B</text>
+        <line x1="150" y1="80" x2="250" y2="80" stroke="#f44336" stroke-width="2" stroke-dasharray="5,5"/>
+        <text x="200" y="70" text-anchor="middle" font-size="10" fill="#d32f2f">同步困难</text>
+        <circle cx="200" cy="150" r="40" fill="none" stroke="#9e9e9e" stroke-width="2" stroke-dasharray="4,4"/>
+        <text x="200" y="155" text-anchor="middle" font-size="12" fill="#757575">定位盲区</text>
+      `
+    },
+    {
+      title: "实施功能融合",
+      text: "部署一体化网络，将通信与定位功能合并，允许网元共站及独立形态设备存在。",
+      source: "S052",
+      svg: `
+        <rect x="50" y="50" width="100" height="60" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+        <text x="100" y="75" text-anchor="middle" font-size="12" fill="#2e7d32">通信网元</text>
+        <text x="100" y="95" text-anchor="middle" font-size="10" fill="#2e7d32">+ 定位网元</text>
+        <rect x="250" y="50" width="100" height="60" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+        <text x="300" y="75" text-anchor="middle" font-size="12" fill="#2e7d32">通信网元</text>
+        <text x="300" y="95" text-anchor="middle" font-size="10" fill="#2e7d32">+ 定位网元</text>
+        <line x1="150" y1="80" x2="250" y2="80" stroke="#4caf50" stroke-width="2"/>
+        <text x="200" y="70" text-anchor="middle" font-size="10" fill="#388e3c">高精度同步</text>
+        <rect x="175" y="140" width="50" height="30" fill="#fff3e0" stroke="#ff9800" stroke-width="2" rx="4"/>
+        <text x="200" y="160" text-anchor="middle" font-size="10" fill="#ef6c00">独立设备</text>
+      `
+    },
+    {
+      title: "构建异构基础",
+      text: "利用融合架构集成多种定位技术（内网、频带等），形成异构定位网络以覆盖不同需求。",
+      source: "S055",
+      svg: `
+        <circle cx="200" cy="100" r="80" fill="none" stroke="#2196f3" stroke-width="2"/>
+        <text x="200" y="95" text-anchor="middle" font-size="12" fill="#1565c0">一体化核心</text>
+        <line x1="200" y1="20" x2="200" y2="50" stroke="#2196f3" stroke-width="2"/>
+        <circle cx="200" cy="20" r="10" fill="#bbdefb"/>
+        <text x="200" y="15" text-anchor="middle" font-size="8" fill="#0d47a1">内网</text>
+        
+        <line x1="280" y1="100" x2="310" y2="100" stroke="#2196f3" stroke-width="2"/>
+        <circle cx="310" cy="100" r="10" fill="#bbdefb"/>
+        <text x="310" y="105" text-anchor="middle" font-size="8" fill="#0d47a1">频带</text>
+
+        <line x1="120" y1="100" x2="90" y2="100" stroke="#2196f3" stroke-width="2"/>
+        <circle cx="90" cy="100" r="10" fill="#bbdefb"/>
+        <text x="90" y="105" text-anchor="middle" font-size="8" fill="#0d47a1">TBS</text>
+      `
+    }
+  ];
+
+  const archButtons = scope.querySelectorAll('#ch3-arch-fusion--arch-diagram .control-btn');
+  const archVisual = scope.querySelector('#ch3-arch-fusion--arch-svg-content');
+  const archDescTitle = scope.querySelector('#ch3-arch-fusion--arch-desc h3');
+  const archDescText = scope.querySelector('#ch3-arch-fusion--arch-desc p');
+  const archDescSource = scope.querySelector('#ch3-arch-fusion--arch-desc .btn-source');
+
+  function updateArchStep(index) {
+    const step = archSteps[index];
+    archVisual.innerHTML = step.svg;
+    archDescTitle.textContent = step.title;
+    archDescText.textContent = step.text;
+    if(archDescSource) archDescSource.setAttribute('data-source', step.source);
+    
+    archButtons.forEach((btn, i) => {
+      if (i === index) btn.classList.add('active');
+      else btn.classList.remove('active');
+    });
+  }
+
+  archButtons.forEach((btn, index) => {
+    btn.addEventListener('click', () => updateArchStep(index));
+  });
+
+  // Initialize first step
+  updateArchStep(0);
+
+  // --- Hetero Fusion Interaction ---
+  const fusionNodes = scope.querySelectorAll('.flow-node');
+  const feedbackToggle = scope.querySelector('#ch3-arch-fusion--toggle-feedback');
+  const feedbackSim = scope.querySelector('#ch3-arch-fusion--feedback-simulation');
+
+  // Highlight flow on hover/click for clarity
+  fusionNodes.forEach((node, index) => {
+    node.addEventListener('mouseenter', () => {
+      fusionNodes.forEach(n => n.classList.remove('active'));
+      node.classList.add('active');
+    });
+  });
+
+  if (feedbackToggle && feedbackSim) {
+    feedbackToggle.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        feedbackSim.classList.remove('hidden');
+      } else {
+        feedbackSim.classList.add('hidden');
+      }
+    });
+  }
+
+  // --- Source Button Handling ---
+  const sourceButtons = scope.querySelectorAll('.btn-source');
+  sourceButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      // Event bubbles to host for handling
+      const sourceId = btn.getAttribute('data-source');
+      if (sourceId) {
+        const event = new CustomEvent('papermind-source-request', {
+          detail: { sourceId: sourceId },
+          bubbles: true
+        });
+        btn.dispatchEvent(event);
+      }
+    });
+  });
+
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-ch4-market-concl");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("ch4-market-concl--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+  
+  const chapterId = 'ch4-market-concl';
+  
+  function initStepper() {
+    const stepperContainer = document.querySelector('.interactive-stepper');
+    if (!stepperContainer) return;
+    
+    const stepButtons = stepperContainer.querySelectorAll('.step-btn');
+    const stepContents = stepperContainer.querySelectorAll('.step-content');
+    const resetBtn = document.getElementById(`${chapterId}-reset`);
+    
+    function showStep(stepNumber) {
+      stepButtons.forEach(btn => {
+        const btnStep = parseInt(btn.getAttribute('data-step'), 10);
+        btn.setAttribute('aria-pressed', btnStep === stepNumber ? 'true' : 'false');
+      });
+      
+      stepContents.forEach(content => {
+        const contentStep = parseInt(content.getAttribute('data-step'), 10);
+        content.classList.toggle('active', contentStep === stepNumber);
+      });
+    }
+    
+    stepButtons.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const stepNumber = parseInt(this.getAttribute('data-step'), 10);
+        showStep(stepNumber);
+      });
+      
+      btn.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const stepNumber = parseInt(this.getAttribute('data-step'), 10);
+          showStep(stepNumber);
+        }
+      });
+    });
+    
+    if (resetBtn) {
+      resetBtn.addEventListener('click', function() {
+        showStep(1);
+      });
+      
+      resetBtn.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          showStep(1);
+        }
+      });
+    }
+    
+    showStep(1);
+  }
+  
+  function initSourceButtons() {
+    const sourceButtons = document.querySelectorAll('.source-btn[data-source]');
+    
+    sourceButtons.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const sourceId = this.getAttribute('data-source');
+        if (window.paperMindData && window.paperMindData.sources && window.paperMindData.sources[sourceId]) {
+          const sourceData = window.paperMindData.sources[sourceId];
+          console.log('Source requested:', sourceId, sourceData);
+        }
+      });
+      
+      btn.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          this.click();
+        }
+      });
+    });
+  }
+  
+  function initKeyboardNavigation() {
+    document.addEventListener('keydown', function(e) {
+      const activeElement = document.activeElement;
+      
+      if (activeElement.classList.contains('step-btn')) {
+        const stepButtons = Array.from(document.querySelectorAll('.step-btn'));
+        const currentIndex = stepButtons.indexOf(activeElement);
+        
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          const nextIndex = (currentIndex + 1) % stepButtons.length;
+          stepButtons[nextIndex].focus();
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          const prevIndex = (currentIndex - 1 + stepButtons.length) % stepButtons.length;
+          stepButtons[prevIndex].focus();
+        }
+      }
+    });
+  }
+  
+  function validateData() {
+    if (!window.paperMindData) {
+      console.warn('paperMindData not available');
+      return false;
+    }
+    
+    const requiredNodes = ['market-solutions', 'cmcc-product', 'conclusion-synthesis'];
+    const availableNodes = window.paperMindData.nodes ? window.paperMindData.nodes.map(n => n.id) : [];
+    
+    requiredNodes.forEach(nodeId => {
+      if (!availableNodes.includes(nodeId)) {
+        console.warn(`Node ${nodeId} not found in paperMindData`);
+      }
+    });
+    
+    return true;
+  }
+  
+  function init() {
+    validateData();
+    initStepper();
+    initSourceButtons();
+    initKeyboardNavigation();
+    
+    const sections = document.querySelectorAll('.chapter-section');
+    sections.forEach(section => {
+      const nodeId = section.getAttribute('data-node');
+      if (nodeId) {
+        section.id = nodeId;
+      }
+    });
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();})(d);})();;const pmDone=()=>{if(document.body.dataset.pmError)return;document.body.dataset.pmInitialized="true";window.dispatchEvent(new Event("pm-initialized"));};if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",pmDone,{once:true});else pmDone();}catch(error){document.body.dataset.pmError=error.message;window.dispatchEvent(new ErrorEvent("error",{message:error.message}));}</script></body></html>

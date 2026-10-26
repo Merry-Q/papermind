@@ -1,0 +1,1608 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'nonce-nQBz9bBSaWshg4imVndjrp516eA6AXoF'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; frame-src 'none'; object-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'"><title>模拟论证 · paperMind 交互讲解</title><style>*,*::before,*::after{box-sizing:border-box}html{scroll-behavior:auto}body{margin:0;min-width:0}button,input,select{font:inherit}button{cursor:pointer}canvas,svg{max-width:100%}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid #315cc8;outline-offset:4px}#pm-local-source{position:fixed;inset:auto 12px 12px;background:#fff;color:#26364b;border:1px solid #61748c;padding:22px;z-index:99999;max-height:65vh;overflow:auto;font:15px/1.8 system-ui}#pm-local-source button{padding:8px 12px;margin-top:12px}#pm-local-source blockquote{white-space:pre-wrap;margin:12px 0}.pm-user-note{margin:24px 0;padding:20px;background:#edf2ff;color:#26364b;font:15px/1.9 system-ui}.pm-user-note h4{margin:0 0 10px}.pm-user-note p{white-space:pre-wrap}.pm-user-note button{margin:5px;padding:6px 10px}.pm-reading-tools{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:24px;padding-top:14px;border-top:1px solid #d6dcd9}.pm-reading-tools button{border:0;background:transparent;color:#265976;text-decoration:underline;text-underline-offset:4px;font-size:13px;padding:6px 0}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+:root{--ink:#233342;--muted:#596877;--accent:#265976;--warm:#ad472d;--line:#d6dcd9;--paper:#fcfbf8;--soft:#edf2f1}
+body{background:var(--paper);color:var(--ink);font-family:"Microsoft YaHei",system-ui,sans-serif;font-size:16px;line-height:1.95}
+.paper-reading{max-width:1120px;margin:auto;padding:40px clamp(18px,5vw,58px) 80px;overflow-wrap:anywhere}
+.paper-reading h1{font:normal clamp(32px,5vw,58px)/1.12 Georgia,"Noto Serif SC",serif;letter-spacing:-.025em;margin:18px 0 26px;text-wrap:balance}
+.paper-reading h2{font-size:clamp(25px,3.5vw,34px);font-weight:500;line-height:1.4;margin:0 0 20px;text-wrap:balance}
+.paper-reading h3{font-size:20px;font-weight:500;line-height:1.5}.paper-reading p{margin:12px 0 18px}
+.paper-hero{padding:16px 0 38px;border-bottom:1px solid var(--line)}
+.paper-hero .paper-thesis{font-size:18px;line-height:1.95;max-width:55ch}.paper-hero nav{display:flex;flex-wrap:wrap;gap:8px 22px;margin:26px 0 0}
+.paper-hero nav a{font-size:13px;color:var(--accent);text-decoration:underline;text-underline-offset:6px}
+.paper-chapter{padding:48px 0 34px;border-bottom:1px solid var(--line);min-width:0}
+.paper-chapter :where(section,article,div,figure,fieldset){min-width:0}
+.paper-chapter :where(table){display:block;max-width:100%;overflow:auto}
+.paper-chapter :where(pre){white-space:pre-wrap;overflow-wrap:anywhere}
+.paper-reading button{border:1px solid var(--line);background:transparent;color:var(--accent);padding:8px 14px;min-height:38px;border-radius:4px;font-size:13px;line-height:1.5}
+.paper-reading button:hover{background:var(--soft)}.paper-reading button:disabled{opacity:.5;cursor:default}
+.paper-reading input[type=range]{accent-color:var(--accent);max-width:100%;min-width:0}.paper-reading input[type=number]{width:90px}
+.paper-reading select,.paper-reading input[type=number]{padding:7px 9px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font-size:14px;border-radius:4px;max-width:100%}
+.paper-reading input[type=checkbox]{accent-color:var(--warm)}.paper-reading label{font-size:14px;line-height:1.7}
+.paper-reading svg,.paper-reading canvas{display:block;max-width:100%;height:auto}
+.paper-reading details{padding:14px 0;border-top:1px solid var(--line);margin-top:20px}.paper-reading summary{cursor:pointer;color:var(--accent);font-size:14px}
+.paper-reading table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.paper-reading th,.paper-reading td{padding:9px 7px;text-align:left;border-bottom:1px solid var(--line)}
+.paper-reading button[data-source]{font-size:12px;color:var(--accent);border:0;padding:6px 0;margin-right:16px;text-decoration:underline;text-underline-offset:4px}
+.paper-reading ::selection{background:#f3d5ac;color:#233342}.paper-reading :focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.paper-reading .reading-limitations{font-size:14px;color:var(--muted);padding-top:28px}.paper-reading .reading-limitations h2{font-size:24px}
+@media(max-width:480px){.paper-reading{padding-top:24px}.paper-chapter{padding-top:32px}.paper-hero .paper-thesis{font-size:16px}.paper-reading{font-size:15px}.paper-reading h2{font-size:25px}.paper-reading table{font-size:12px}}
+
+@scope (#chapter-ch-assumptions){.lab-workbench {
+  --ink: #0F172A;
+  --muted: #64748B;
+  --accent: #06B6D4;
+  --warm: #F59E0B;
+  --line: #E2E8F0;
+  --paper: #F8FAFC;
+  
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  padding: 2rem;
+  line-height: 1.6;
+}
+
+.section-header {
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+
+.section-header h1 {
+  font-size: 2rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+}
+
+.section-lead {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 800px;
+}
+
+.lab-node {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.lab-node h2 {
+  font-size: 1.5rem;
+  margin: 0 0 1rem 0;
+  color: var(--ink);
+  border-left: 4px solid var(--accent);
+  padding-left: 1rem;
+}
+
+.node-content p {
+  font-size: 15px;
+  margin-bottom: 1rem;
+  text-align: justify;
+}
+
+.interactive-step-container {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+}
+
+.step-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.step-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--line);
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.step-btn.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.step-display {
+  min-height: 80px;
+  padding: 1rem;
+  background: white;
+  border-radius: 4px;
+  border: 1px solid var(--line);
+}
+
+.step-text {
+  font-size: 15px;
+  margin: 0 0 1rem 0;
+}
+
+.source-btn {
+  background: var(--ink);
+  color: white;
+  border: none;
+  padding: 0.25rem 0.75rem;
+  border-radius: 3px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.formula-block {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.formula-display {
+  font-family: 'Times New Roman', serif;
+  font-size: 1.2rem;
+  color: var(--ink);
+}
+
+.simulation-lab {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.lab-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.control-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+input[type="range"] {
+  width: 100%;
+  height: 6px;
+  background: var(--line);
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 0.25rem;
+}
+
+.current-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  text-align: center;
+}
+
+.lab-visualization {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.bar-chart-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.bar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bar-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.bar-wrapper {
+  height: 30px;
+  background: var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.cost-bar {
+  background: var(--warm);
+  width: 0%;
+}
+
+.capacity-bar {
+  background: var(--accent);
+  width: 100%;
+}
+
+.bar-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.ratio-display {
+  text-align: center;
+  padding: 1rem;
+  background: var(--paper);
+  border-radius: 4px;
+  border: 1px solid var(--line);
+}
+
+.ratio-label {
+  font-size: 13px;
+  color: var(--muted);
+  margin-right: 0.5rem;
+}
+
+.ratio-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.ratio-note {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 0.25rem;
+}
+
+.lab-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.reset-btn {
+  background: var(--muted);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.reset-btn:hover {
+  background: var(--ink);
+}
+
+@media (max-width: 768px) {
+  .lab-controls {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .lab-workbench {
+    padding: 1rem;
+  }
+  
+  .section-header h1 {
+    font-size: 1.5rem;
+  }
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:block;max-width:100%;overflow-x:auto}.step-controls,.lab-actions{flex-wrap:wrap}.formula-display{max-width:100%;overflow-x:auto} .lab-node h2{border-left:0;padding-left:0}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-ch-formalism){.lab-workbench {
+  --ink: #0F172A;
+  --muted: #64748B;
+  --accent: #06B6D4;
+  --paper: #F8FAFC;
+  --line: #E2E8F0;
+  --warm: #F59E0B;
+  
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  padding: 2rem 1.5rem;
+  line-height: 1.6;
+  font-size: 16px;
+  max-width: 900px;
+  margin: 0 auto;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.section-header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--ink);
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.section-lead {
+  font-size: 1.1rem;
+  color: var(--muted);
+  margin-bottom: 2rem;
+  max-width: 700px;
+}
+
+.formalism-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .formalism-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.formula-panel, .principle-panel {
+  background: #fff;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.formula-panel h2, .principle-panel h2 {
+  font-size: 1.25rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--ink);
+}
+
+.math-display {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 1.4rem;
+  text-align: center;
+  padding: 1.5rem 0;
+  background: #f1f5f9;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.math-fraction {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.math-numerator {
+  border-bottom: 2px solid var(--ink);
+  padding: 0 0.5rem;
+  display: block;
+  text-align: center;
+}
+
+.math-denominator {
+  padding: 0.5rem 0.5rem 0;
+  display: block;
+  text-align: center;
+}
+
+.math-inline {
+  font-family: 'Times New Roman', Times, serif;
+  font-style: italic;
+  color: var(--accent);
+}
+
+.variable-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.var-symbol {
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  min-width: 2rem;
+  color: var(--accent);
+}
+
+.var-desc {
+  flex: 1;
+  color: var(--muted);
+}
+
+.source-btn {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.8rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.source-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: #f0f9ff;
+}
+
+.interaction-panel {
+  background: #fff;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.interaction-panel h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: var(--ink);
+}
+
+.interaction-note {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+.slider-group {
+  margin-bottom: 1.5rem;
+}
+
+.slider-group label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--ink);
+}
+
+.val-display {
+  font-family: monospace;
+  color: var(--accent);
+}
+
+input[type="range"] {
+  width: 100%;
+  height: 6px;
+  background: var(--line);
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.log-scale-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 0.25rem;
+}
+
+.result-display {
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.result-item:last-child {
+  margin-bottom: 0;
+}
+
+.result-item.highlight {
+  border-top: 1px solid var(--line);
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.res-value {
+  font-family: monospace;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.reset-btn {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.reset-btn:hover {
+  background: #334155;
+}
+
+.principle-content p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.source-ref {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  input[type="range"]::-webkit-slider-thumb {
+    transition: none;
+  }
+  .source-btn {
+    transition: none;
+  }
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-ch-branches){#ch-branches--ch-branches {
+  --ink: var(--ink, #0F172A);
+  --muted: var(--muted, #64748B);
+  --accent: var(--accent, #06B6D4);
+  --warm: var(--warm, #F59E0B);
+  --line: var(--line, #E2E8F0);
+  --paper: var(--paper, #F8FAFC);
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  padding: 2rem 1rem;
+  line-height: 1.6;
+}
+
+#ch-branches--ch-branches h2 {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+#ch-branches--ch-branches .lead {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 70ch;
+  margin-bottom: 2rem;
+}
+
+/* Trilemma Gate Layout */
+#ch-branches--ch-branches .trilemma-gate {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+#ch-branches--ch-branches .gate-node {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+#ch-branches--ch-branches .gate-node:hover,
+#ch-branches--ch-branches .gate-node.active {
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.1);
+  transform: translateY(-2px);
+}
+
+#ch-branches--ch-branches .gate-node.active {
+  background: rgba(6, 182, 212, 0.03);
+}
+
+#ch-branches--ch-branches .gate-symbol {
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  font-family: 'Times New Roman', serif;
+}
+
+#ch-branches--ch-branches .gate-node h3 {
+  font-size: 1.25rem;
+  margin: 0 0 0.5rem 0;
+  color: var(--ink);
+}
+
+#ch-branches--ch-branches .gate-desc {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+#ch-branches--ch-branches .btn-expand {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#ch-branches--ch-branches .btn-expand:hover {
+  background: var(--line);
+}
+
+/* Evidence Panel */
+#ch-branches--ch-branches .evidence-panel {
+  background: #fff;
+  border-left: 4px solid var(--accent);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: none;
+}
+
+#ch-branches--ch-branches .evidence-panel.visible {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+#ch-branches--ch-branches .panel-content h4 {
+  margin-top: 0;
+  color: var(--ink);
+  font-size: 1.1rem;
+}
+
+#ch-branches--ch-branches .panel-content p {
+  font-size: 1rem;
+  color: #334155;
+  margin-bottom: 1rem;
+}
+
+#ch-branches--ch-branches .source-trail {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+#ch-branches--ch-branches .source-btn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+  margin-right: 0.5rem;
+}
+
+/* Interaction Zone */
+#ch-branches--ch-branches .interaction-zone {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+#ch-branches--ch-branches .controls {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1.5rem;
+}
+
+#ch-branches--ch-branches .controls label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+#ch-branches--ch-branches .stack-viz-container {
+  position: relative;
+  margin: 1rem 0;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: #fafafa;
+}
+
+#ch-branches--ch-branches canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+#ch-branches--ch-branches .stack-legend {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+  justify-content: center;
+}
+
+#ch-branches--ch-branches .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+#ch-branches--ch-branches .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+#ch-branches--ch-branches .dot.base { background: #0F172A; }
+#ch-branches--ch-branches .dot.sim { background: #06B6D4; }
+#ch-branches--ch-branches .dot.shadow { background: #94A3B8; }
+
+#ch-branches--ch-branches .math-readout {
+  font-family: 'Courier New', monospace;
+  background: #f1f5f9;
+  padding: 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+#ch-branches--ch-branches .note {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+}
+
+#ch-branches--ch-branches .btn-reset {
+  margin-top: 1rem;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+#ch-branches--ch-branches .btn-reset:hover {
+  opacity: 0.9;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  #ch-branches--ch-branches .trilemma-gate {
+    grid-template-columns: 1fr;
+  }
+  #ch-branches--ch-branches .controls {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-ch-conclusion){.branch-controls{display:flex;flex-wrap:wrap;gap:16px;margin:24px 0}.branch-controls label{display:flex;align-items:center;gap:8px}.branch-statements{padding-left:24px}.branch-statements li{margin:20px 0}.branch-graph{display:block;width:100%;max-width:720px;margin:28px auto}#ch-conclusion--branch-result{display:block;font-size:18px;line-height:1.8;padding:20px 0;border-block:1px solid var(--line)}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}</style></head><body><main class="paper-reading"><header class="paper-hero"><h1>模拟论证</h1><p class="paper-thesis">基于后人类文明拥有巨大计算能力的经验假设，逻辑上必然导出三个互斥命题中至少有一个为真：人类极可能在到达后人类阶段前灭绝、后人类文明极不可能运行祖先模拟、或者我们几乎肯定生活在模拟中。</p><nav aria-label="讲解章节"><a href="#substrate-independence">前提构建：意识与算力</a><a href="#prob-formalism">核心推导：概率坍缩</a><a href="#interpret-doom">三分困境：解释与分支</a><a href="#core-trilemma">置信度分配与终局</a></nav></header><div class="paper-chapter" id="chapter-ch-assumptions"><section id="ch-assumptions--ch-assumptions" data-node="ch-assumptions--ch-assumptions" class="lab-workbench">
+  <header class="section-header">
+    <h1>前提构建：意识与算力</h1>
+    <p class="section-lead">若承认意识可独立于碳基基底存在，且后人类算力足以在极低成本下模拟整个人类历史，则运行大量祖先模拟在物理上是可行的。</p>
+  </header>
+
+  <article id="substrate-independence" data-node="substrate-independence" class="lab-node">
+    <h2>基底独立性假设 (Substrate-Independence)</h2>
+    <div class="node-content">
+      <p>心灵哲学中的一个常见假设是基底独立性。其核心思想是，心理状态并不依赖于特定的物质载体（如大脑中的碳基神经元）。只要计算机系统能够以足够精细的粒度（例如突触级别）结构性地复制人脑的计算过程，它就足以产生主观体验。</p>
+      <p>这一假设并不需要强功能主义或计算主义的全部力量，也不需要系统能通过图灵测试，仅需承认结构复制足以生成体验即可。</p>
+      
+      <div class="interactive-step-container">
+        <h3>假设推导步骤</h3>
+        <div class="step-controls">
+          <button type="button" class="step-btn active" data-step="0">步骤 1：定义</button>
+          <button type="button" class="step-btn" data-step="1">步骤 2：条件</button>
+          <button type="button" class="step-btn" data-step="2">步骤 3：化学因素</button>
+        </div>
+        <div class="step-display" id="ch-assumptions--substrate-step-display">
+          <p class="step-text">心理状态可以随 supervene 于广泛的物理基底之上，不仅限于碳基生物神经网络。</p>
+          <div class="step-source">
+            <button type="button" class="source-btn" data-source="S007">原文 · p.2</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article id="comp-power-lower-bound" data-node="comp-power-lower-bound" class="lab-node">
+    <h2>后人类计算能力下限估算</h2>
+    <div class="node-content">
+      <p>利用已知的设计原理（而非推测的新物理现象），可以建立后人类计算能力的下限。例如，糖块大小的系统每秒可执行 10^21 条指令，行星质量的计算机可达 10^42 次操作。</p>
+      <p>模拟人脑所需的算力估算约为 10^14 到 10^17 次操作/秒。相比之下，行星质量计算机用不到百万分之一的算力运行一秒，即可模拟整个人类历史的精神活动。</p>
+      
+      <div class="formula-block">
+        <div class="formula-display">
+          <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>100</mn><mo>×</mo><msup><mn>10</mn><mn>9</mn></msup><mtext> humans</mtext><mo>×</mo><mn>50</mn><mtext> years</mtext><mo>×</mo><mn>3</mn><mo>×</mo><msup><mn>10</mn><mn>7</mn></msup><mtext> secs/year</mtext><mo>×</mo><mo stretchy="false">[</mo><msup><mn>10</mn><mn>14</mn></msup><mo separator="true">,</mo><msup><mn>10</mn><mn>17</mn></msup><mo stretchy="false">]</mo><mtext> ops/sec</mtext><mo>≈</mo><mo stretchy="false">[</mo><msup><mn>10</mn><mn>33</mn></msup><mo separator="true">,</mo><msup><mn>10</mn><mn>36</mn></msup><mo stretchy="false">]</mo><mtext> ops</mtext></mrow><annotation encoding="application/x-tex">100 \times 10^9 \text{ humans} \times 50 \text{ years} \times 3 \times 10^7 \text{ secs/year} \times [10^{14}, 10^{17}] \text{ ops/sec} \approx [10^{33}, 10^{36}] \text{ ops}</annotation></semantics></math></span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article id="sim-cost-estimate" data-node="sim-cost-estimate" class="lab-node">
+    <h2>模拟人类心智的计算成本估算</h2>
+    <div class="node-content">
+      <p>模拟人脑的计算需求主要取决于对神经元或突触功能的复刻程度。基于视网膜对比度增强等已理解功能的推算，全脑模拟约需 10^14 次运算/秒；若基于突触数量及 firing frequency 估算，则需 10^16-10^17 次运算/秒。</p>
+      <p>环境模拟的成本可通过优化策略大幅降低。无需模拟整个宇宙的量子细节，只需保证模拟人类在正常交互中不察觉异常即可。</p>
+
+      <div class="simulation-lab">
+        <div class="lab-controls">
+          <div class="control-group">
+            <label for="ch-assumptions--granularity-slider">计算粒度 (Granularity)</label>
+            <input type="range" id="ch-assumptions--granularity-slider" min="0" max="2" value="1" step="1">
+            <div class="slider-labels">
+              <span>视网膜功能</span>
+              <span>突触级别</span>
+              <span>分子细节</span>
+            </div>
+            <div class="current-value" id="ch-assumptions--granularity-value">突触级别</div>
+          </div>
+
+          <div class="control-group">
+            <label for="ch-assumptions--computer-scale-slider">后人类计算机规模</label>
+            <input type="range" id="ch-assumptions--computer-scale-slider" min="0" max="2" value="2" step="1">
+            <div class="slider-labels">
+              <span>糖块大小</span>
+              <span>行星质量</span>
+              <span>戴森球</span>
+            </div>
+            <div class="current-value" id="ch-assumptions--scale-value">行星质量</div>
+          </div>
+        </div>
+
+        <div class="lab-visualization">
+          <div class="bar-chart-container">
+            <div class="bar-group">
+              <div class="bar-label">模拟全人类历史所需算力</div>
+              <div class="bar-wrapper">
+                <div class="bar cost-bar" id="ch-assumptions--cost-bar"></div>
+              </div>
+              <div class="bar-value" id="ch-assumptions--cost-value">10^35 ops</div>
+            </div>
+            <div class="bar-group">
+              <div class="bar-label">后人类可用算力上限</div>
+              <div class="bar-wrapper">
+                <div class="bar capacity-bar" id="ch-assumptions--capacity-bar"></div>
+              </div>
+              <div class="bar-value" id="ch-assumptions--capacity-value">10^42 ops</div>
+            </div>
+          </div>
+          
+          <div class="ratio-display">
+            <span class="ratio-label">模拟成本 / 可用算力:</span>
+            <span class="ch-assumptions--ratio-value" id="ch-assumptions--ratio-value">10^-7</span>
+            <span class="ratio-note">(教学示例，非论文训练权重)</span>
+          </div>
+        </div>
+
+        <div class="lab-actions">
+          <button type="button" class="reset-btn" id="ch-assumptions--reset-sim">复位实验</button>
+          <button type="button" class="source-btn" data-source="S030">查看原文依据 · p.6</button>
+        </div>
+      </div>
+    </div>
+  </article>
+</section></div><div class="paper-chapter" id="chapter-ch-formalism"><section id="ch-formalism--ch-formalism" data-node="ch-formalism--ch-formalism" class="lab-workbench">
+  <header class="section-header">
+    <h1>核心推导：概率坍缩</h1>
+    <p class="section-lead">数学公式显示，若后人类运行模拟的数量极大，则生活在模拟中的观察者比例将趋近于 1；结合平淡无奇原则，该客观比例直接等同于个人的主观置信度。</p>
+  </header>
+
+  <div class="formalism-container">
+    <div class="formula-panel" id="prob-formalism" data-node="prob-formalism">
+      <h2>1. 概率形式化 (Probability Formalism)</h2>
+      <div class="math-display">
+        <span class="math-label">f<sub>sim</sub> = </span>
+        <span class="math-fraction">
+          <span class="math-numerator">P<sub>f</sub> · f<sub>I</sub> · N<sub>I</sub></span>
+          <span class="math-denominator">(P<sub>f</sub> · f<sub>I</sub> · N<sub>I</sub>) + 1</span>
+        </span>
+      </div>
+      <div class="variable-legend">
+        <div class="legend-item">
+          <span class="var-symbol">P<sub>f</sub></span>
+          <span class="var-desc">到达后人类阶段的文明比例</span>
+          <button type="button" class="source-btn" data-source="S034">原文 · p.6</button>
+        </div>
+        <div class="legend-item">
+          <span class="var-symbol">f<sub>I</sub></span>
+          <span class="var-desc">有兴趣运行模拟的后人类比例</span>
+          <button type="button" class="source-btn" data-source="S040">原文 · p.7</button>
+        </div>
+        <div class="legend-item">
+          <span class="var-symbol">N<sub>I</sub></span>
+          <span class="var-desc">有兴趣文明的平均模拟数量</span>
+          <button type="button" class="source-btn" data-source="S040">原文 · p.7</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="interaction-panel" id="ch-formalism--ch-formalism-controls">
+      <h3>参数控制 (教学示例)</h3>
+      <p class="interaction-note">调整滑块观察分母中"1"的忽略过程。注意：此处数值为教学演示，非论文训练权重。</p>
+      
+      <div class="slider-group">
+        <label for="ch-formalism--slider-pf">
+          <span>P<sub>f</sub> (后人类比例)</span>
+          <span class="val-display" id="ch-formalism--val-pf">0.20</span>
+        </label>
+        <input type="range" id="ch-formalism--slider-pf" min="0" max="1" step="0.01" value="0.2">
+      </div>
+
+      <div class="slider-group">
+        <label for="ch-formalism--slider-fi">
+          <span>f<sub>I</sub> (兴趣比例)</span>
+          <span class="val-display" id="ch-formalism--val-fi">0.50</span>
+        </label>
+        <input type="range" id="ch-formalism--slider-fi" min="0" max="1" step="0.01" value="0.5">
+      </div>
+
+      <div class="slider-group">
+        <label for="ch-formalism--slider-ni">
+          <span>N<sub>I</sub> (平均模拟数)</span>
+          <span class="val-display" id="ch-formalism--val-ni">10<sup>3</sup></span>
+        </label>
+        <input type="range" id="ch-formalism--slider-ni" min="0" max="9" step="0.1" value="3" data-log-base="10">
+        <div class="log-scale-labels">
+          <span>10<sup>0</sup></span>
+          <span>10<sup>4.5</sup></span>
+          <span>10<sup>9</sup></span>
+        </div>
+      </div>
+
+      <div class="result-display">
+        <div class="result-item">
+          <span class="res-label">分子 (P<sub>f</sub>·f<sub>I</sub>·N<sub>I</sub>):</span>
+          <span class="res-value" id="ch-formalism--res-numerator" data-value="100">100</span>
+        </div>
+        <div class="result-item">
+          <span class="res-label">分母 (+1):</span>
+          <span class="res-value" id="ch-formalism--res-denominator" data-value="101">101</span>
+        </div>
+        <div class="result-item highlight">
+          <span class="res-label">f<sub>sim</sub> (模拟比例):</span>
+          <span class="res-value" id="ch-formalism--res-fsim" data-value="0.9901">0.9901</span>
+        </div>
+      </div>
+      <button type="button" class="reset-btn" id="ch-formalism--reset-formalism">复位参数</button>
+    </div>
+  </div>
+
+  <div class="principle-panel" id="bland-indifference" data-node="bland-indifference">
+    <h2>2. 平淡无奇原则 (Bland Indifference Principle)</h2>
+    <div class="principle-content">
+      <p>若已知比例为 <span class="math-inline">x</span> 的同类体验者生活在模拟中，且无额外信息表明自己的体验更可能是生物的，则应赋予“我在模拟中”这一假设 <span class="math-inline">x</span> 的置信度。</p>
+      <div class="math-display">
+        <span class="math-label">Cr(SIM | f<sub>sim</sub>=x) = </span>
+        <span class="math-value" id="ch-formalism--credence-value" data-value="0.9901">0.9901</span>
+      </div>
+      <p class="source-ref">
+        <button type="button" class="source-btn" data-source="S047">原文 · p.7-8</button>
+        <button type="button" class="source-btn" data-source="S055">原文 · p.9 (赌注思想实验)</button>
+      </p>
+    </div>
+  </div>
+</section></div><div class="paper-chapter" id="chapter-ch-branches"><section id="ch-branches--ch-branches" class="lab-bench" data-node="ch-branches--ch-branches">
+  <header class="section-header">
+    <h2>三分困境：解释与分支</h2>
+    <p class="lead">若模拟论证的前提成立，则以下三个命题中至少有一个为真。选择不同分支，观察其对现实结构的推演。</p>
+  </header>
+
+  <div class="trilemma-gate" id="ch-branches--gate-container">
+    <section id="interpret-doom" data-node="interpret-doom" class="pm-node-anchor"><div class="gate-node" data-branch="doom" data-node="interpret-doom">
+      <div class="gate-symbol">Ø</div>
+      <h3>分支一：大灭绝</h3>
+      <p class="gate-desc">文明在达到后人类阶段前终结。</p>
+      <button type="button" class="btn-expand" aria-label="展开大灭绝机制">展开机制</button>
+    </div></section>
+    <section id="interpret-convergence" data-node="interpret-convergence" class="pm-node-anchor"><div class="gate-node" data-branch="convergence" data-node="interpret-convergence">
+      <div class="gate-symbol">∩</div>
+      <h3>分支二：强收敛</h3>
+      <p class="gate-desc">后人类文明普遍不运行祖先模拟。</p>
+      <button type="button" class="btn-expand" aria-label="展开强收敛推演">展开推演</button>
+    </div></section>
+    <section id="interpret-sim-reality" data-node="interpret-sim-reality" class="pm-node-anchor"><div class="gate-node" data-branch="sim-reality" data-node="interpret-sim-reality">
+      <div class="gate-symbol">∑</div>
+      <h3>分支三：模拟现实</h3>
+      <p class="gate-desc">我们几乎肯定生活在模拟中。</p>
+      <button type="button" class="btn-expand" aria-label="展开模拟层级">展开层级</button>
+    </div></section>
+  </div>
+
+  <div class="evidence-panel" id="ch-branches--evidence-display" aria-live="polite">
+    <div class="panel-content">
+      <h4 id="ch-branches--panel-title">选择分支查看详情</h4>
+      <div id="ch-branches--panel-body"></div>
+      <div class="source-trail" id="ch-branches--panel-sources"></div>
+    </div>
+  </div>
+
+  <div class="interaction-zone" id="ch-branches--sim-stack-zone" style="display:none;" data-node="interpret-sim-reality">
+    <h4>虚拟机器堆叠可视化 (教学示例)</h4>
+    <p class="caption">切换模拟模式，观察所需计算基数与层级结构的变化。</p>
+    <div class="controls">
+      <label>
+        <input type="radio" name="sim-mode" value="full" checked> 完整祖先模拟
+      </label>
+      <label>
+        <input type="radio" name="sim-mode" value="shadow"> 影子人模拟 (Shadow-People)
+      </label>
+    </div>
+    <div class="stack-viz-container">
+      <canvas id="ch-branches--stack-canvas" width="600" height="300" aria-label="模拟层级堆叠示意图"></canvas>
+      <div class="stack-legend">
+        <div class="legend-item"><span class="dot base"></span>基础现实 (Basement)</div>
+        <div class="legend-item"><span class="dot sim"></span>模拟层级</div>
+        <div class="legend-item"><span class="dot shadow"></span>影子人 (无意识背景)</div>
+      </div>
+    </div>
+    <div class="math-readout">
+      <p>相对数量级估算：<span id="ch-branches--ratio-display">1 : 1</span></p>
+      <p class="note">注：影子人假设需约 1000 亿倍数量优势才能在统计上占优 (S069)。</p>
+    </div>
+    <button type="button" id="ch-branches--reset-sim" class="btn-reset">复位视图</button>
+  </div>
+</section><p class="chapter-evidence">本节原文依据：<button type="button" data-source="S059">原文</button><button type="button" data-source="S062">原文</button><button type="button" data-source="S065">原文</button><button type="button" data-source="S066">原文</button></p></div><div class="paper-chapter" id="chapter-ch-conclusion"><section id="core-trilemma" data-node="core-trilemma"><h2>至少一条成立，并不等于已经知道哪条成立</h2>
+<p>在基底独立性、模拟所需算力及同类观察者参照类等前提下，作者提出三分论证：以下三种解释中至少一种接近成立。它们不是由这篇论文测量出的现实概率，也不自动构成互斥的三分类。</p>
+<ol class="branch-statements"><li><strong>P1：前人类阶段的终止</strong><p>人类文明极可能在达到后人类阶段前灭绝。</p></li><li><strong>P2：极少祖先模拟</strong><p>后人类文明极不可能运行大量祖先模拟。</p></li><li><strong>P3：模拟中的观察者</strong><p>在相应观察者比例及无额外区分信息的前提下，我们几乎肯定处于模拟中。</p></li></ol>
+<h3>操作推演假设，查看剩余关系</h3><p>勾选仅表示暂定某一分支不成立，不表示现实中已找到排除它的证据。</p>
+<div class="branch-controls"><label><input type="checkbox" id="ch-conclusion--branch-exclude-1">暂定 P1 不成立</label><label><input type="checkbox" id="ch-conclusion--branch-exclude-2">暂定 P2 不成立</label><label><input type="checkbox" id="ch-conclusion--branch-exclude-3">暂定 P3 不成立</label><button type="button" id="ch-conclusion--branch-reset">恢复全部分支</button></div>
+<svg class="branch-graph" viewBox="0 0 600 170" aria-label="至少一项成立与三个分支的关系图"><text x="300" y="30" text-anchor="middle" font-size="24">至少一项成立</text><g id="ch-conclusion--branch-path-1"><path d="M300 45L100 105" stroke="#265976" stroke-width="3"/><circle cx="100" cy="130" r="28" fill="#edf2f1"/><text x="100" y="138" text-anchor="middle" font-size="25">P1</text></g><g id="ch-conclusion--branch-path-2"><path d="M300 45L300 105" stroke="#265976" stroke-width="3"/><circle cx="300" cy="130" r="28" fill="#edf2f1"/><text x="300" y="138" text-anchor="middle" font-size="25">P2</text></g><g id="ch-conclusion--branch-path-3"><path d="M300 45L500 105" stroke="#265976" stroke-width="3"/><circle cx="500" cy="130" r="28" fill="#edf2f1"/><text x="500" y="138" text-anchor="middle" font-size="25">P3</text></g></svg>
+<output id="ch-conclusion--branch-result" aria-live="polite"></output><p>图示只做条件推演。若同时暂定三条均不成立，这组假设就与“至少一条成立”的论证前提冲突；不能据此计算一个现实概率。</p><button type="button" data-source="S004">原文</button><button type="button" data-source="S073">原文</button><button type="button" data-source="S074">原文</button><button type="button" data-source="S075">原文</button></section>
+<section id="credence-allocation" data-node="credence-allocation"><h2>从分支关系到个人置信度，还需要额外前提</h2><p>作者讨论了在缺少有区分力的信息时，如何在三种解释之间分配信任。均衡分配是文中讨论的哲学立场，不是实验得到的三组频率；存在有区分力的信息时，判断也依赖这些信息的真实性及其与各分支的关系。</p><p>本页不根据关键词、陨石故事或用户的一次选择生成置信度。平淡无奇原则将同类观察者中模拟者的比例转成个人置信度，也依赖参照类和没有额外区分信息的条件。</p><p>作者的最终条件推论是：除非我们现在生活在模拟中，否则后代几乎不会运行祖先模拟。它不能被简化为“论文证明现实是模拟”。</p><button type="button" data-source="S004">原文</button><button type="button" data-source="S073">原文</button><button type="button" data-source="S074">原文</button><button type="button" data-source="S075">原文</button></section></div><footer class="reading-limitations"><h2>带着边界理解这篇论文</h2><p>论证依赖于&#x27;基底独立性&#x27;假设，若意识必须依赖碳基生物化学过程，则整个概率推导失效。</p><p>计算能力估算基于已知物理定律和纳米技术设计，未考虑未知的物理限制或无法克服的工程障碍。</p><p>&#x27;平淡无奇原则&#x27;仅适用于缺乏区分自身是模拟还是生物的特异性信息时，若有此类信息（如系统错误、物理定律异常），原则不适用。</p><p>论证未处理&#x27;影子人&#x27;（无意识的模拟人）的大规模存在可能性，除非其数量远超完整模拟，否则不影响核心结论。</p><p>置信度均匀分配是基于当前&#x27;无知状态&#x27;的启发式策略，并非客观概率的绝对真理，新证据出现需重新评估。</p></footer></main><script nonce="nQBz9bBSaWshg4imVndjrp516eA6AXoF">const PM_CONFIG={"edition": "fbc90b04-29cf-482a-9ec4-0dbcf25b9f5e", "document": "pdf-be823e12764a35cd", "channel": "inspection", "data": {"tables": [{"id": "p6-notation-table", "title": "Notation introduced for the simulation argument", "population": "Posthuman civilizations and their ancestor-simulations", "columns": ["Symbol", "Definition"], "rows": [{"id": "f_P", "label": "f_P", "values": {"Symbol": "f_P", "Definition": "Fraction of all human-level technological civilizations that survive to reach a posthuman stage"}}, {"id": "N_bar", "label": "\\overline{N}", "values": {"Symbol": "\\overline{N}", "Definition": "Average number of ancestor-simulations run by a posthuman civilization"}}, {"id": "H_bar", "label": "\\overline{H}", "values": {"Symbol": "\\overline{H}", "Definition": "Average number of individuals that have lived in a civilization before it reaches a posthuman stage"}}], "notes": ["Footnote 10: '100 billion humans × 50 years/human × 30 million secs/year × [10^4, 10^7] operations in each human brain per second ≈ [10^33, 10^36] operations.'"], "page": 6}], "sources": {"S001": {"id": "pdf-be823e12764a35cd-p1-b0", "page": 1, "quote": "ARE YOU LIVING IN A COMPUTER SIMULATION?"}, "S002": {"id": "pdf-be823e12764a35cd-p1-b1", "page": 1, "quote": "BY NICK BOSTROM"}, "S003": {"id": "pdf-be823e12764a35cd-p1-b2", "page": 1, "quote": "[Published in Philosophical Quarterly (2003) Vol. 53, No. 211, pp. 243‐255. (First version: 2001)]"}, "S004": {"id": "pdf-be823e12764a35cd-p1-b3", "page": 1, "quote": "This paper argues that at least one of the following propositions is true: (1) \nthe  human  species  is  very  likely  to  go  extinct  before  reaching  a \n“posthuman” stage; (2) any posthuman civilization is extremely unlikely \nto run a significant number of simulations of their evolutionary history (or \nvariations  thereof);  (3)  we  are  almost  certainly  living  in  a  computer \nsimulation. It follows that the belief that there is a significant chance that \nwe  will  one  day  become  posthumans  who  run  ancestor‐simulations  is \nfalse, unless we are currently living in a simulation. A number of other \nconsequences of this result are also discussed."}, "S005": {"id": "pdf-be823e12764a35cd-p1-b4", "page": 1, "quote": "I. INTRODUCTION \n \nMany works of science fiction as well as some forecasts by serious technologists \nand  futurologists  predict  that  enormous  amounts  of  computing  power  will  be \navailable in the future. Let us suppose for a moment that these predictions are \ncorrect.  One  thing  that  later  generations  might  do  with  their  super‐powerful \ncomputers is run detailed simulations of their forebears or of people like their \nforebears. Because their computers would be so powerful, they could run a great \nmany such simulations. Suppose that these simulated people are conscious (as \nthey would be if the simulations were sufficiently fine‐grained and if a certain \nquite  widely  accepted  position  in  the  philosophy  of  mind  is  correct).  Then  it \ncould be the case that the vast majority of minds like ours do not belong to the \noriginal race but rather to people simulated by the advanced descendants of an \noriginal race. It is then possible to argue that, if this were the case, we would be \nrational  to  think  that  we  are  likely  among  the  simulated  minds  rather  than \namong  the  original  biological  ones.  Therefore,  if  we  don’t  think  that  we  are \ncurrently living in a computer simulation, we are not entitled to believe that we \nwill have descendants who will run lots of such simulations of their forebears. \nThat is the basic idea. The rest of this paper will spell it out more carefully."}, "S006": {"id": "pdf-be823e12764a35cd-p2-b0", "page": 2, "quote": "Apart form the interest this thesis may hold for those who are engaged in \nfuturistic  speculation,  there  are  also  more  purely  theoretical  rewards.  The \nargument  provides  a  stimulus  for  formulating  some  methodological  and \nmetaphysical  questions,  and  it  suggests  naturalistic  analogies  to  certain \ntraditional  religious  conceptions,  which  some  may  find  amusing  or  thought‐\nprovoking. \n \nThe structure of the paper is as follows. First, we formulate an assumption \nthat we need to import from the philosophy of mind in order to get the argument \nstarted. Second, we consider some empirical reasons for thinking that running \nvastly  many  simulations  of  human  minds  would  be  within  the  capability  of  a \nfuture  civilization  that  has  developed  many  of  those  technologies  that  can \nalready be shown to be compatible with known physical laws and engineering \nconstraints. This part is not philosophically necessary but it provides an incentive \nfor  paying attention to the  rest.  Then  follows the core  of  the argument, which \nmakes use of some simple probability theory, and a section providing support \nfor a weak indifference principle that the argument employs. Lastly, we discuss \nsome interpretations of the disjunction, mentioned in the abstract, that forms the \nconclusion of the simulation argument."}, "S007": {"id": "pdf-be823e12764a35cd-p2-b1", "page": 2, "quote": "II. THE ASSUMPTION OF SUBSTRATE‐INDEPENDENCE \n \nA  common  assumption  in  the  philosophy  of  mind  is  that  of  substrate‐\nindependence. The idea is that mental states can supervene on any of a broad class \nof  physical  substrates.  Provided  a  system  implements  the  right  sort  of \ncomputational  structures  and  processes,  it  can  be  associated  with  conscious \nexperiences.  It  is  not  an  essential  property  of  consciousness  that  it  is \nimplemented  on  carbon‐based  biological  neural  networks  inside  a  cranium: \nsilicon‐based processors inside a computer could in principle do the trick as well."}, "S008": {"id": "pdf-be823e12764a35cd-p2-b2", "page": 2, "quote": "Arguments for this thesis have been given in the literature, and although \nit is not entirely uncontroversial, we shall here take it as a given."}, "S009": {"id": "pdf-be823e12764a35cd-p2-b3", "page": 2, "quote": "The argument we shall present does not, however, depend on any very \nstrong version of functionalism or computationalism. For example, we need not \nassume  that  the  thesis  of  substrate‐independence  is  necessarily  true  (either \nanalytically or metaphysically) – just that, in fact, a computer running a suitable \nprogram  would  be  conscious.  Moreover,  we  need  not  assume  that  in  order  to \ncreate a mind on a computer it would be sufficient to program it in such a way \nthat it behaves like a human in all situations, including passing the Turing test \netc. We need only the weaker assumption that it would suffice for the generation \nof subjective experiences that the computational processes of a human brain are \nstructurally  replicated  in  suitably  fine‐grained  detail,  such  as  on  the  level  of"}, "S010": {"id": "pdf-be823e12764a35cd-p3-b0", "page": 3, "quote": "individual synapses. This attenuated version of substrate‐independence is quite \nwidely accepted."}, "S011": {"id": "pdf-be823e12764a35cd-p3-b1", "page": 3, "quote": "Neurotransmitters,  nerve  growth  factors,  and  other  chemicals  that  are \nsmaller than a synapse clearly play a role in human cognition and learning. The \nsubstrate‐independence thesis is not that the effects of these chemicals are small \nor irrelevant, but rather that they affect subjective experience only via their direct \nor indirect influence on computational activities. For example, if there can be no \ndifference  in  subjective  experience  without  there  also  being  a  difference  in \nsynaptic discharges, then the requisite detail of simulation is at the synaptic level \n(or higher)."}, "S012": {"id": "pdf-be823e12764a35cd-p3-b2", "page": 3, "quote": "III. THE TECHNOLOGICAL LIMITS OF COMPUTATION \n \nAt our current stage of technological development, we have neither sufficiently \npowerful  hardware  nor  the  requisite  software  to  create  conscious  minds  in \ncomputers.  But  persuasive  arguments  have  been  given  to  the  effect  that  if \ntechnological  progress  continues  unabated  then  these  shortcomings  will \neventually be overcome. Some authors argue that this stage may be only a few \ndecades  away.1  Yet  present  purposes  require  no  assumptions  about  the  time‐\nscale. The simulation argument works equally well for those who think that it \nwill  take  hundreds  of  thousands  of  years  to  reach  a  “posthuman”  stage  of \ncivilization,  where  humankind  has  acquired  most  of  the  technological \ncapabilities that one can currently show to be consistent with physical laws and \nwith material and energy constraints."}, "S013": {"id": "pdf-be823e12764a35cd-p3-b3", "page": 3, "quote": "Such a mature stage of technological development will make it possible to \nconvert  planets  and  other  astronomical  resources  into  enormously  powerful \ncomputers.  It  is  currently  hard  to  be  confident  in  any  upper  bound  on  the \ncomputing power that may be available to posthuman civilizations. As we are \nstill  lacking  a  “theory  of  everything”,  we  cannot  rule  out  the  possibility  that \nnovel physical phenomena, not allowed for in current physical theories, may be \nutilized to transcend those constraints2 that in our current understanding impose"}, "S014": {"id": "pdf-be823e12764a35cd-p3-b4", "page": 3, "quote": "1  See  e.g.  K.  E.  Drexler,  Engines  of  Creation:  The  Coming  Era  of  Nanotechnology,  London,  Forth \nEstate, 1985; N. Bostrom, “How Long Before Superintelligence?” International Journal of Futures \nStudies,  vol.  2,  (1998);  R.  Kurzweil,  The  Age  of  Spiritual  Machines:  When  computers  exceed  human \nintelligence, New York, Viking Press, 1999; H. Moravec, Robot: Mere Machine to Transcendent Mind, \nOxford University Press, 1999."}, "S015": {"id": "pdf-be823e12764a35cd-p3-b5", "page": 3, "quote": "2  Such  as  the  Bremermann‐Bekenstein  bound  and  the  black  hole  limit  (H.  J.  Bremermann, \n“Minimum energy requirements of information transfer and computing.” International Journal of \nTheoretical Physics 21: 203‐217 (1982); J. D. Bekenstein, “Entropy content and information flow in \nsystems with limited energy.” Physical Review D 30: 1669‐1679 (1984); A. Sandberg, “The Physics"}, "S016": {"id": "pdf-be823e12764a35cd-p4-b0", "page": 4, "quote": "theoretical  limits  on  the  information  processing  attainable  in  a  given  lump  of \nmatter.  We  can  with  much  greater  confidence  establish  lower  bounds  on \nposthuman  computation,  by  assuming  only  mechanisms  that  are  already \nunderstood. For example, Eric Drexler has outlined a design for a system the size \nof a sugar cube (excluding cooling and power supply) that would perform 1021 \ninstructions per second.3 Another author gives a rough estimate of 1042 operations \nper second for a computer with a mass on order of a large planet.4 (If we could \ncreate quantum computers, or learn to build computers out of nuclear matter or \nplasma, we could push closer to the theoretical limits. Seth Lloyd calculates an \nupper bound for a 1 kg computer of 5*1050 logical operations per second carried \nout  on  ~1031  bits.5  However,  it  suffices  for  our  purposes  to  use  the  more \nconservative estimate that presupposes only currently known design‐principles.)"}, "S017": {"id": "pdf-be823e12764a35cd-p4-b1", "page": 4, "quote": "The amount of computing power needed to emulate a human mind can \nlikewise  be  roughly  estimated.  One  estimate,  based  on  how  computationally \nexpensive it is to replicate the functionality of a piece of nervous tissue that we \nhave  already understood  and whose functionality  has  been  replicated  in silico, \ncontrast enhancement in the retina, yields a figure of ~1014 operations per second \nfor  the  entire  human  brain.6  An  alternative  estimate,  based  the  number  of \nsynapses  in  the  brain  and  their  firing  frequency,  gives  a  figure  of  ~1016‐1017 \noperations per second.7 Conceivably, even more could be required if we want to \nsimulate  in  detail  the  internal  workings  of  synapses  and  dendritic  trees. \nHowever, it is likely that the human central nervous system has a high degree of \nredundancy on the mircoscale to compensate for the unreliability and noisiness \nof its neuronal components. One would therefore expect a substantial efficiency \ngain when using more reliable and versatile non‐biological processors."}, "S018": {"id": "pdf-be823e12764a35cd-p4-b2", "page": 4, "quote": "Memory  seems  to  be  a  no  more  stringent  constraint  than  processing \npower.8 Moreover, since the maximum human sensory bandwidth is ~108 bits per \nsecond,  simulating  all  sensory  events  incurs  a  negligible  cost  compared  to \nsimulating  the  cortical  activity.  We  can  therefore  use  the  processing  power"}, "S019": {"id": "pdf-be823e12764a35cd-p4-b3", "page": 4, "quote": "of  Information  Processing  Superobjects:  The  Daily  Life  among  the  Jupiter  Brains.”  Journal  of \nEvolution and Technology, vol. 5 (1999))."}, "S020": {"id": "pdf-be823e12764a35cd-p4-b4", "page": 4, "quote": "3  K.  E.  Drexler,  Nanosystems:  Molecular  Machinery,  Manufacturing,  and  Computation,  New  York, \nJohn Wiley & Sons, Inc., 1992."}, "S021": {"id": "pdf-be823e12764a35cd-p4-b5", "page": 4, "quote": "4 \nR. \nJ. \nBradbury, \n“Matrioshka \nBrains.” \nWorking \nmanuscript \n(2002), \nhttp://www.aeiveos.com/~bradbury/MatrioshkaBrains/MatrioshkaBrains.html."}, "S022": {"id": "pdf-be823e12764a35cd-p4-b6", "page": 4, "quote": "5 S. Lloyd, “Ultimate physical limits to computation.” Nature 406 (31 August): 1047‐1054 (2000)."}, "S023": {"id": "pdf-be823e12764a35cd-p4-b7", "page": 4, "quote": "6 H. Moravec, Mind Children, Harvard University Press (1989)."}, "S024": {"id": "pdf-be823e12764a35cd-p4-b8", "page": 4, "quote": "7 Bostrom (1998), op. cit."}, "S025": {"id": "pdf-be823e12764a35cd-p4-b9", "page": 4, "quote": "8 See references in foregoing footnotes."}, "S026": {"id": "pdf-be823e12764a35cd-p5-b0", "page": 5, "quote": "required  to  simulate  the  central  nervous  system  as  an  estimate  of  the  total \ncomputational cost of simulating a human mind."}, "S027": {"id": "pdf-be823e12764a35cd-p5-b1", "page": 5, "quote": "If  the  environment  is  included  in  the  simulation,  this  will  require \nadditional computing power – how much depends on the scope and granularity \nof the simulation. Simulating the entire universe down to the quantum level is \nobviously infeasible, unless radically new physics is discovered. But in order to \nget  a  realistic  simulation  of  human  experience,  much  less  is  needed  –  only \nwhatever is required to ensure that the simulated humans, interacting in normal \nhuman ways with their simulated environment, don’t notice any irregularities. \nThe microscopic structure of the inside of the Earth can be safely omitted. Distant \nastronomical objects can have highly compressed representations: verisimilitude \nneed  extend  to  the  narrow  band  of  properties  that  we  can  observe  from  our \nplanet or solar system spacecraft. On the surface of Earth, macroscopic objects in \ninhabited  areas  may  need  to  be  continuously  simulated,  but  microscopic \nphenomena  could  likely  be  filled  in  ad  hoc.  What  you  see  through  an  electron \nmicroscope  needs  to  look  unsuspicious,  but  you  usually  have  no  way  of \nconfirming  its  coherence  with  unobserved  parts  of  the  microscopic  world. \nExceptions  arise  when  we  deliberately  design  systems  to  harness  unobserved \nmicroscopic phenomena that operate in accordance with known principles to get \nresults that we are able to independently verify. The paradigmatic case of this is \na  computer.  The  simulation  may  therefore  need  to  include  a  continuous \nrepresentation of computers down to the level of individual logic elements. This \npresents  no  problem,  since  our  current  computing  power  is  negligible  by \nposthuman standards."}, "S028": {"id": "pdf-be823e12764a35cd-p5-b2", "page": 5, "quote": "Moreover, a posthuman simulator would have enough computing power \nto  keep  track  of  the  detailed  belief‐states  in  all  human  brains  at  all  times. \nTherefore, when it saw that a human was about to make an observation of the \nmicroscopic  world,  it  could  fill  in  sufficient  detail  in  the  simulation  in  the \nappropriate domain on an as‐needed basis. Should any error occur, the director \ncould easily edit the states of any brains that have become aware of an anomaly \nbefore it spoils the simulation. Alternatively, the director could skip back a few \nseconds and rerun the simulation in a way that avoids the problem. \n \nIt  thus  seems  plausible  that  the  main  computational  cost  in  creating \nsimulations that are indistinguishable from physical reality for human minds in \nthe simulation resides in simulating organic brains down to the neuronal or sub‐\nneuronal level.9 While it is not possible to get a very exact estimate of the cost of a \nrealistic  simulation  of  human  history,  we  can  use  ~1033  ‐  1036  operations  as  a"}, "S029": {"id": "pdf-be823e12764a35cd-p5-b3", "page": 5, "quote": "9 As we build more and faster computers, the cost of simulating our machines might eventually \ncome to dominate the cost of simulating nervous systems."}, "S030": {"id": "pdf-be823e12764a35cd-p6-b0", "page": 6, "quote": "rough estimate10. As we gain more experience with virtual reality, we will get a \nbetter grasp of the computational requirements for making such worlds appear \nrealistic to their visitors. But in any case, even if our estimate is off by several \norders of magnitude, this does not matter much for our argument. We noted that \na  rough  approximation  of  the  computational  power  of  a  planetary‐mass \ncomputer  is  1042  operations  per  second,  and  that  assumes  only already  known \nnanotechnological designs, which are probably far from optimal. A single such a \ncomputer  could  simulate  the  entire  mental  history  of  humankind  (call  this  an \nancestor‐simulation) by using less than one millionth of its processing power for \none  second.  A  posthuman  civilization  may  eventually  build  an  astronomical \nnumber of such computers. We can conclude that the computing power available \nto  a  posthuman  civilization  is  sufficient  to  run  a  huge  number  of  ancestor‐\nsimulations  even  it  allocates  only  a  minute  fraction  of  its  resources  to  that \npurpose. We can draw this conclusion even while leaving a substantial margin of \nerror in all our estimates."}, "S031": {"id": "pdf-be823e12764a35cd-p6-b1", "page": 6, "quote": " Posthuman  civilizations  would  have  enough  computing  power  to  run"}, "S032": {"id": "pdf-be823e12764a35cd-p6-b2", "page": 6, "quote": "hugely many ancestor‐simulations even while using only a tiny fraction of \ntheir resources for that purpose."}, "S033": {"id": "pdf-be823e12764a35cd-p6-b3", "page": 6, "quote": "IV. THE CORE OF THE SIMULATION ARGUMENT \n \nThe basic idea of this paper can be expressed roughly as follows: If there were a \nsubstantial chance that our civilization will ever get to the posthuman stage and \nrun  many  ancestor‐simulations,  then  how  come  you  are  not  living  in  such  a \nsimulation? \n \nWe shall develop this idea into a rigorous argument. Let us introduce the \nfollowing notation:"}, "S034": {"id": "pdf-be823e12764a35cd-p6-b4", "page": 6, "quote": "Pf : Fraction of all human‐level technological civilizations that survive to \nreach a posthuman stage"}, "S035": {"id": "pdf-be823e12764a35cd-p6-b5", "page": 6, "quote": "N :  Average  number  of  ancestor‐simulations  run  by  a  posthuman \ncivilization"}, "S036": {"id": "pdf-be823e12764a35cd-p6-b6", "page": 6, "quote": "H : Average number of individuals that have lived in a civilization before \nit reaches a posthuman stage"}, "S037": {"id": "pdf-be823e12764a35cd-p6-b7", "page": 6, "quote": "10  100  billion  humans50  years/human30  million  secs/year[1014,  1017]  operations  in  each \nhuman brain per second  [1033, 1036] operations."}, "S038": {"id": "pdf-be823e12764a35cd-p7-b0", "page": 7, "quote": "The  actual  fraction  of  all  observers  with  human‐type  experiences  that  live  in \nsimulations is then"}, "S039": {"id": "pdf-be823e12764a35cd-p7-b3", "page": 7, "quote": "P\nsim\n\n\n)\n("}, "S040": {"id": "pdf-be823e12764a35cd-p7-b5", "page": 7, "quote": "Writing \nIf   for  the  fraction  of  posthuman  civilizations  that  are  interested  in \nrunning ancestor‐simulations (or that contain at least some individuals who are \ninterested  in  that  and  have  sufficient  resources  to  run  a  significant  number  of \nsuch simulations), and \nI\nN  for the average number of ancestor‐simulations run \nby such interested civilizations, we have"}, "S041": {"id": "pdf-be823e12764a35cd-p7-b6", "page": 7, "quote": "I\nI N\nf\nN \n \n \nand thus:"}, "S042": {"id": "pdf-be823e12764a35cd-p7-b7", "page": 7, "quote": "N\nf\nf\nf\n   \n \n \n (*)"}, "S043": {"id": "pdf-be823e12764a35cd-p7-b8", "page": 7, "quote": "I\nI\nP\nsim\nN\nf\nf"}, "S044": {"id": "pdf-be823e12764a35cd-p7-b9", "page": 7, "quote": "1\n)\n(\n\n"}, "S045": {"id": "pdf-be823e12764a35cd-p7-b11", "page": 7, "quote": "Because  of  the  immense  computing  power  of  posthuman  civilizations, \nI\nN   is \nextremely large, as we saw in the previous section. By inspecting (*) we can then \nsee that at least one of the following three propositions must be true:"}, "S046": {"id": "pdf-be823e12764a35cd-p7-b12", "page": 7, "quote": "(1) \n0\n\nPf\n \n(2) \n0\n\nIf\n \n(3) \n1\n\nsim\nf"}, "S047": {"id": "pdf-be823e12764a35cd-p7-b13", "page": 7, "quote": "V. A BLAND INDIFFERENCE PRINCIPLE \n \nWe can take a further step and conclude that conditional on the truth of (3), one’s \ncredence in the hypothesis that one is in a simulation should be close to unity. \nMore generally, if we knew that a fraction x of all observers with human‐type \nexperiences live in simulations, and we don’t have any information that indicate \nthat  our  own  particular  experiences  are  any  more  or  less  likely  than  other \nhuman‐type  experiences  to  have  been  implemented  in  vivo  rather  than  in \nmachina, then our credence that we are in a simulation should equal x:"}, "S048": {"id": "pdf-be823e12764a35cd-p8-b0", "page": 8, "quote": "x\nx\nf\nSIM\nCr\nsim\n\n)\n|\n(\n \n \n \n(#)"}, "S049": {"id": "pdf-be823e12764a35cd-p8-b1", "page": 8, "quote": "This step is sanctioned by a very weak indifference principle. Let us distinguish \ntwo cases. The first case, which is the easiest, is where all the minds in question \nare  like  your  own  in  the  sense  that  they  are  exactly  qualitatively  identical  to \nyours: they have exactly the same information and the same experiences that you \nhave. The second case is where the minds are “like” each other only in the loose \nsense of being the sort of minds that are typical of human creatures, but they are \nqualitatively distinct from one another and each has a distinct set of experiences. \nI  maintain  that  even  in  the  latter  case,  where  the  minds  are  qualitatively \ndifferent,  the  simulation  argument  still  works,  provided  that  you  have  no \ninformation  that  bears  on  the  question  of  which  of  the  various  minds  are \nsimulated and which are implemented biologically. \n \nA detailed defense of a stronger principle, which implies the above stance \nfor both cases as trivial special instances, has been given in the literature.11 Space \ndoes not permit a recapitulation of that defense here, but we can bring out one of \nthe underlying intuitions by bringing to our attention to an analogous situation \nof a more familiar kind. Suppose that x% of the population has a certain genetic \nsequence S within the part of their DNA commonly designated as “junk DNA”. \nSuppose, further, that there are no manifestations of S (short of what would turn \nup in a gene assay) and that there are no known correlations between having S \nand any observable characteristic. Then, quite clearly, unless you have had your \nDNA sequenced, it is rational to assign a credence of x% to the hypothesis that \nyou have S. And this is so quite irrespective of the fact that the people who have \nS have qualitatively different minds and experiences from the people who don’t \nhave S. (They are different simply because all humans have different experiences \nfrom one another, not because of any known link between S and what kind of \nexperiences one has.)"}, "S050": {"id": "pdf-be823e12764a35cd-p8-b2", "page": 8, "quote": "The  same  reasoning  holds  if  S  is  not  the  property  of  having  a  certain \ngenetic  sequence  but  instead  the  property  of  being  in  a  simulation,  assuming \nonly  that  we  have  no  information  that  enables  us  to  predict  any  differences \nbetween the experiences of simulated minds and those of the original biological \nminds."}, "S051": {"id": "pdf-be823e12764a35cd-p8-b3", "page": 8, "quote": "It should be stressed that the bland indifference principle expressed by (#) \nprescribes indifference only between hypotheses about which observer you are, \nwhen you have no information about which of these observers you are. It does"}, "S052": {"id": "pdf-be823e12764a35cd-p8-b4", "page": 8, "quote": "11 In e.g. N. Bostrom, “The Doomsday argument, Adam & Eve, UN++, and Quantum Joe.” Synthese \n127(3): 359‐387 (2001); and most fully in my book Anthropic Bias: Observation Selection Effects in \nScience and Philosophy, Routledge, New York, 2002."}, "S053": {"id": "pdf-be823e12764a35cd-p9-b0", "page": 9, "quote": "not in general prescribe indifference between hypotheses when you lack specific \ninformation about which of the hypotheses is true. In contrast to Laplacean and \nother  more  ambitious  principles  of  indifference,  it  is  therefore  immune  to \nBertrand’s  paradox  and  similar  predicaments  that  tend  to  plague  indifference \nprinciples of unrestricted scope."}, "S054": {"id": "pdf-be823e12764a35cd-p9-b1", "page": 9, "quote": "Readers  familiar  with  the  Doomsday  argument12  may  worry  that  the \nbland  principle  of  indifference  invoked  here  is  the  same  assumption  that  is \nresponsible  for  getting  the  Doomsday  argument  off  the  ground,  and  that  the \ncounterintuitiveness of some of the implications of the latter incriminates or casts \ndoubt on the validity of the former. This is not so. The Doomsday argument rests \non  a  much  stronger  and  more  controversial  premiss,  namely  that  one  should \nreason as if one were a random sample from the set of all people who will ever \nhave lived (past, present, and future) even though we know that we are living in the \nearly  twenty‐first  century  rather  than  at  some  point  in  the  distant  past  or  the \nfuture. The bland indifference principle, by contrast, applies only to cases where \nwe have no information about which group of people we belong to."}, "S055": {"id": "pdf-be823e12764a35cd-p9-b2", "page": 9, "quote": "If betting  odds  provide some guidance to  rational  belief, it  may also be \nworth to ponder that if everybody were to place a bet on whether they are in a \nsimulation  or  not,  then  if  people  use  the  bland  principle  of  indifference,  and \nconsequently place their money on being in a simulation if they know that that’s \nwhere almost all people are, then almost everyone will win their bets. If they bet \non not being in a simulation, then almost everyone will lose. It seems better that \nthe bland indifference principle be heeded."}, "S056": {"id": "pdf-be823e12764a35cd-p9-b3", "page": 9, "quote": "Further,  one  can  consider  a  sequence  of  possible  situations  in  which  an \nincreasing fraction of all people live in simulations: 98%, 99%, 99.9%, 99.9999%, \nand  so  on.  As  one  approaches  the  limiting  case  in  which  everybody  is  in  a \nsimulation  (from  which  one  can  deductively  infer  that  one  is  in  a  simulation \noneself),  it  is  plausible  to  require  that  the  credence  one  assigns  to  being  in  a \nsimulation  gradually  approach  the  limiting  case  of  complete  certainty  in  a \nmatching manner."}, "S057": {"id": "pdf-be823e12764a35cd-p9-b4", "page": 9, "quote": "VI. INTERPRETATION \n \nThe possibility represented by proposition (1) is fairly straightforward. If (1) is \ntrue, then humankind will almost certainly fail to reach a posthuman level; for \nvirtually  no  species  at  our  level  of  development  become  posthuman,  and  it  is \nhard to see any justification for thinking that our own species will be especially \nprivileged or protected from future disasters. Conditional on (1), therefore, we"}, "S058": {"id": "pdf-be823e12764a35cd-p9-b5", "page": 9, "quote": "12 See e.g. J. Leslie, “Is the End of the World Nigh? ” Philosophical Quarterly 40, 158: 65‐72 (1990)."}, "S059": {"id": "pdf-be823e12764a35cd-p10-b0", "page": 10, "quote": "must  give  a  high  credence  to  DOOM,  the  hypothesis  that  humankind  will  go \nextinct before reaching a posthuman level:"}, "S060": {"id": "pdf-be823e12764a35cd-p10-b1", "page": 10, "quote": "1\n)\n0\n|\n(\n\n\nPf\nDOOM\nCr"}, "S061": {"id": "pdf-be823e12764a35cd-p10-b2", "page": 10, "quote": "One can imagine hypothetical situations were we have such evidence as \nwould  trump  knowledge  of \nPf .  For  example,  if  we  discovered  that  we  were \nabout  to  be  hit  by  a  giant  meteor,  this  might  suggest  that  we  had  been \nexceptionally unlucky. We could then assign a credence to DOOM larger than \nour  expectation  of  the  fraction  of  human‐level  civilizations  that  fail  to  reach \nposthumanity. In the actual case, however, we seem to lack evidence for thinking \nthat we are special in this regard, for better or worse. \n \nProposition (1) doesn’t by itself imply that we are likely to go extinct soon, \nonly  that  we  are  unlikely  to  reach  a  posthuman  stage.  This  possibility  is \ncompatible  with  us  remaining  at,  or  somewhat  above,  our  current  level  of \ntechnological development for a long time before going extinct. Another way for \n(1) to be true is if it is likely that technological civilization will collapse. Primitive \nhuman societies might then remain on Earth indefinitely."}, "S062": {"id": "pdf-be823e12764a35cd-p10-b3", "page": 10, "quote": "There  are  many  ways  in  which  humanity  could  become  extinct  before \nreaching posthumanity. Perhaps the most natural interpretation of (1) is that we \nare  likely  to  go  extinct  as  a  result  of  the  development  of  some  powerful  but \ndangerous  technology.13  One  candidate  is  molecular  nanotechnology,  which  in \nits  mature  stage  would  enable  the  construction  of  self‐replicating  nanobots \ncapable of feeding on dirt and organic matter – a kind of mechanical bacteria. \nSuch nanobots, designed for malicious ends, could cause the extinction of all life \non our planet.14 \n \nThe second alternative in the simulation argument’s conclusion is that the \nfraction  of  posthuman  civilizations  that  are  interested  in  running  ancestor‐\nsimulation is negligibly small. In order for (2) to be true, there must be a strong \nconvergence  among  the  courses  of  advanced  civilizations.  If  the  number  of \nancestor‐simulations created by the interested civilizations is extremely large, the \nrarity  of  such  civilizations  must  be  correspondingly  extreme.  Virtually  no \nposthuman  civilizations  decide  to  use  their  resources  to  run  large  numbers  of \nancestor‐simulations.  Furthermore,  virtually  all  posthuman  civilizations  lack"}, "S063": {"id": "pdf-be823e12764a35cd-p10-b4", "page": 10, "quote": "13 See my paper “Existential Risks: Analyzing Human Extinction Scenarios and Related Hazards.” \nJournal  of  Evolution  and  Technology,  vol.  9  (2001)  for  a  survey  and  analysis  of  the  present  and \nanticipated future threats to human survival."}, "S064": {"id": "pdf-be823e12764a35cd-p10-b5", "page": 10, "quote": "14  See  e.g.  Drexler  (1985)  op  cit.,  and  R.  A.  Freitas  Jr.,  “Some  Limits  to  Global  Ecophagy  by \nBiovorous Nanoreplicators, with Public Policy Recommendations.” Zyvex preprint April (2000), \nhttp://www.foresight.org/NanoRev/Ecophagy.html."}, "S065": {"id": "pdf-be823e12764a35cd-p11-b0", "page": 11, "quote": "individuals  who  have  sufficient  resources  and  interest  to  run  ancestor‐\nsimulations;  or  else  they  have  reliably  enforced  laws  that  prevent  such \nindividuals from acting on their desires. \n \nWhat force could bring about such convergence? One can speculate that \nadvanced civilizations all develop along a trajectory that leads to the recognition \nof  an  ethical  prohibition  against  running  ancestor‐simulations  because  of  the \nsuffering that is inflicted on the inhabitants of the simulation. However, from our \npresent point of view, it is not clear that creating a human race is immoral. On \nthe  contrary,  we tend  to  view  the  existence  of  our  race  as  constituting  a  great \nethical  value.  Moreover,  convergence  on  an  ethical  view  of  the  immorality  of \nrunning  ancestor‐simulations  is  not  enough:  it  must  be  combined  with \nconvergence  on  a  civilization‐wide  social  structure  that  enables  activities \nconsidered immoral to be effectively banned. \n \nAnother  possible  convergence  point  is  that  almost  all  individual \nposthumans in virtually all posthuman civilizations develop in a direction where \nthey lose their desires to run ancestor‐simulations. This would require significant \nchanges  to  the  motivations  driving  their  human  predecessors,  for  there  are \ncertainly many humans who would like to run ancestor‐simulations if they could \nafford to do so. But perhaps many of our human desires will be regarded as silly \nby anyone who becomes a posthuman.  Maybe the  scientific  value  of ancestor‐\nsimulations  to  a  posthuman  civilization  is  negligible  (which  is  not  too \nimplausible  given  its  unfathomable  intellectual  superiority),  and  maybe \nposthumans  regard  recreational  activities  as  merely  a  very  inefficient  way  of \ngetting  pleasure  –  which  can  be  obtained  much  more  cheaply  by  direct \nstimulation of the brain’s reward centers. One conclusion that follows from (2) is \nthat posthuman societies will be very different from human societies: they will \nnot contain relatively wealthy independent agents who have the full gamut of \nhuman‐like desires and are free to act on them. \n \nThe  possibility  expressed  by  alternative  (3)  is  the  conceptually  most \nintriguing  one.  If  we  are  living  in  a  simulation,  then  the  cosmos  that  we  are \nobserving is just a tiny piece of the totality of physical existence. The physics in \nthe universe where the computer is situated that is running the simulation may \nor may not resemble the physics of the world that we observe. While the world \nwe see is in some sense “real”, it is not located at the fundamental level of reality. \n \nIt may be possible for simulated civilizations to become posthuman. They \nmay then run their own ancestor‐simulations on powerful computers they build \nin  their  simulated  universe.  Such  computers  would  be  “virtual  machines”,  a \nfamiliar concept in computer science. (Java script web‐applets, for instance, run \non  a  virtual  machine  –  a  simulated  computer  –  inside  your  desktop.)  Virtual \nmachines can be stacked: it’s possible to simulate a machine simulating another"}, "S066": {"id": "pdf-be823e12764a35cd-p12-b0", "page": 12, "quote": "machine, and so on, in arbitrarily many steps of iteration. If we do go on to create \nour own ancestor‐simulations, this would be strong evidence against (1) and (2), \nand we would therefore have to conclude that we live in a simulation. Moreover, \nwe  would  have  to  suspect  that  the  posthumans  running  our  simulation  are \nthemselves simulated beings; and their creators, in turn, may also be simulated \nbeings. \n \nReality  may  thus  contain  many  levels.  Even  if  it  is  necessary  for  the \nhierarchy to bottom out at some stage – the metaphysical status of this claim is \nsomewhat obscure – there may be room for a large number of levels of reality, \nand the number could be increasing over time. (One consideration that counts \nagainst  the  multi‐level  hypothesis  is  that  the  computational  cost  for  the \nbasement‐level  simulators  would  be  very  great.  Simulating  even  a  single \nposthuman civilization might be prohibitively expensive. If so, then we should \nexpect  our  simulation  to  be  terminated  when  we  are  about  to  become \nposthuman.) \n \nAlthough  all  the  elements  of  such  a  system  can  be  naturalistic,  even \nphysical, it is possible to draw some loose analogies with religious conceptions of \nthe world. In some ways, the posthumans running a simulation are like gods in \nrelation  to  the  people  inhabiting  the  simulation:  the  posthumans  created  the \nworld  we  see;  they  are  of  superior  intelligence;  they  are  “omnipotent”  in  the \nsense  that  they  can  interfere  in  the  workings  of  our  world  even  in  ways  that \nviolate  its  physical  laws;  and  they  are “omniscient”  in  the  sense  that  they  can \nmonitor everything that happens. However, all the demigods except those at the \nfundamental level of reality are subject to sanctions by the more powerful gods \nliving at lower levels."}, "S067": {"id": "pdf-be823e12764a35cd-p12-b1", "page": 12, "quote": "Further rumination on these themes could climax in a naturalistic theogony \nthat would study the structure of this hierarchy, and the constraints imposed on \nits inhabitants by the possibility that their actions on their own level may affect \nthe treatment they receive from dwellers of deeper levels. For example, if nobody \ncan be sure that they are at the basement‐level, then everybody would have to \nconsider the possibility that their actions will be rewarded or punished, based \nperhaps  on  moral  criteria,  by  their  simulators.  An  afterlife  would  be  a  real \npossibility.  Because  of  this  fundamental  uncertainty,  even  the  basement \ncivilization  may  have  a  reason  to  behave  ethically.  The  fact  that  it  has  such  a \nreason for moral behavior would of course add to everybody else’s reason for \nbehaving morally, and so on, in truly virtuous circle. One might get a kind of \nuniversal  ethical  imperative,  which  it  would  be  in  everybody’s  self‐interest  to \nobey, as it were “from nowhere”."}, "S068": {"id": "pdf-be823e12764a35cd-p12-b2", "page": 12, "quote": "In addition to ancestor‐simulations, one may also consider the possibility \nof  more  selective  simulations  that  include  only  a  small  group  of  humans  or  a"}, "S069": {"id": "pdf-be823e12764a35cd-p13-b0", "page": 13, "quote": "single  individual.  The  rest  of  humanity  would  then  be  zombies  or  “shadow‐\npeople”  –  humans  simulated  only  at  a  level  sufficient  for  the  fully  simulated \npeople  not  to  notice  anything  suspicious.  It  is  not  clear  how  much  cheaper \nshadow‐people would be to simulate than real people. It is not even obvious that \nit is possible for an entity to behave indistinguishably from a real human and yet \nlack  conscious  experience.  Even  if  there  are  such  selective  simulations,  you \nshould  not  think that  you  are in one of  them  unless  you think they are  much \nmore numerous than complete simulations. There would have to be about 100 \nbillion times as many “me‐simulations” (simulations of the life of only a single \nmind) as there are ancestor‐simulations in order for most simulated persons to be \nin me‐simulations."}, "S070": {"id": "pdf-be823e12764a35cd-p13-b1", "page": 13, "quote": "There  is  also  the  possibility  of  simulators  abridging  certain  parts  of  the \nmental lives of simulated beings and giving them false memories of the sort of \nexperiences that they would typically have had during the omitted interval. If so, \none can consider the following (farfetched) solution to the problem of evil: that \nthere is no suffering in the world and all memories of suffering are illusions. Of \ncourse, this hypothesis can be seriously entertained only at those times when you \nare not currently suffering. \n \nSupposing  we  live  in  a  simulation,  what  are  the  implications  for  us \nhumans?  The  foregoing  remarks  notwithstanding,  the  implications  are  not  all \nthat radical. Our best guide to how our posthuman creators have chosen to set \nup  our  world  is  the  standard  empirical  study  of  the  universe  we  see.  The \nrevisions to most parts of our belief networks would be rather slight and subtle – \nin proportion to our lack of confidence in our ability to understand the ways of \nposthumans.  Properly  understood,  therefore,  the  truth  of  (3)  should  have  no \ntendency to make us “go crazy” or to prevent us from going about our business \nand making plans and predictions for tomorrow. The chief empirical importance \nof  (3)  at  the  current  time  seems  to  lie  in  its  role  in  the  tripartite  conclusion \nestablished above.15 We may hope that (3) is true since that would decrease the \nprobability  of  (1),  although  if  computational  constraints  make  it  likely  that \nsimulators  would  terminate  a  simulation  before  it  reaches  a  posthuman  level, \nthen out best hope would be that (2) is true."}, "S071": {"id": "pdf-be823e12764a35cd-p13-b2", "page": 13, "quote": "If we learn more about posthuman motivations and resource constraints, \nmaybe as a result of developing towards becoming posthumans ourselves, then \nthe  hypothesis  that  we  are  simulated  will  come  to  have  a  much  richer  set  of \nempirical implications."}, "S072": {"id": "pdf-be823e12764a35cd-p13-b3", "page": 13, "quote": "15 For some reflections by another author on the consequences of (3), which were sparked by a \nprivately circulated earlier version of this paper, see R. Hanson, “How to Live in a Simulation.” \nJournal of Evolution and Technology, vol. 7 (2001)."}, "S073": {"id": "pdf-be823e12764a35cd-p14-b0", "page": 14, "quote": "VII. CONCLUSION \n \nA  technologically  mature  “posthuman”  civilization  would  have  enormous \ncomputing power. Based on this empirical fact, the simulation argument shows \nthat at least one of the following propositions is true: (1) The fraction of human‐\nlevel  civilizations  that  reach  a  posthuman  stage  is  very  close  to  zero;  (2)  The \nfraction  of  posthuman  civilizations  that  are  interested  in  running  ancestor‐\nsimulations is very close to zero; (3) The fraction of all people with our kind of \nexperiences that are living in a simulation is very close to one."}, "S074": {"id": "pdf-be823e12764a35cd-p14-b1", "page": 14, "quote": "If  (1)  is  true,  then  we  will  almost  certainly  go  extinct  before  reaching \nposthumanity. If (2) is true, then there must be a strong convergence among the \ncourses of advanced civilizations so that virtually none contains any relatively \nwealthy individuals who desire to run ancestor‐simulations and are free to do so. \nIf (3) is true, then we almost certainly live in a simulation. In the dark forest of \nour  current  ignorance,  it  seems  sensible  to  apportion  one’s  credence  roughly \nevenly between (1), (2), and (3)."}, "S075": {"id": "pdf-be823e12764a35cd-p14-b2", "page": 14, "quote": "Unless  we  are  now  living  in  a  simulation,  our  descendants  will  almost \ncertainly never run an ancestor‐simulation. \n \n \nAcknowledgements \nI’m grateful to  many people  for comments, and  especially to Amara  Angelica, \nRobert Bradbury, Milan Cirkovic, Robin Hanson, Hal Finney, Robert A. Freitas \nJr., John Leslie, Mitch Porter, Keith DeRose, Mike Treder, Mark Walker, Eliezer \nYudkowsky, and several anonymous referees."}, "S076": {"id": "pdf-be823e12764a35cd-p14-b3", "page": 14, "quote": "www.nickbostrom.com www.simulation‐argument.com"}}, "nodes": [{"id": "core-trilemma", "title": "核心三分论断 (The Core Trilemma)", "concepts": ["concept-b603ee9a9a798f84"]}, {"id": "substrate-independence", "title": "基底独立性假设 (Substrate-Independence)", "concepts": ["concept-4ab753295d4af504"]}, {"id": "comp-power-lower-bound", "title": "后人类计算能力下限估算", "concepts": ["concept-56094e15f22fdb99"]}, {"id": "sim-cost-estimate", "title": "模拟人类心智的计算成本估算", "concepts": ["concept-c85f6f72846dc398", "concept-510090e0c6494bab"]}, {"id": "prob-formalism", "title": "概率形式化推导 (Probability Formalism)", "concepts": ["concept-5a072121d6712517", "concept-9c51d686a9e0ee44"]}, {"id": "bland-indifference", "title": "平淡无奇原则 (Bland Indifference Principle)", "concepts": ["concept-c9c7f58a3fecf7b6", "concept-7de4829c7428e66b"]}, {"id": "interpret-doom", "title": "解释分支一：大灭绝 (DOOM)", "concepts": ["concept-e444c50f1335045d", "concept-54685a6af4865548"]}, {"id": "interpret-convergence", "title": "解释分支二：强收敛 (Convergence)", "concepts": ["concept-3cf7ed1a8bfe2ba3", "concept-ee91026e1bfb4471"]}, {"id": "interpret-sim-reality", "title": "解释分支三：模拟现实 (Simulation Reality)", "concepts": ["concept-701e4d667439ede1", "concept-76749725bad306bb"]}, {"id": "credence-allocation", "title": "置信度分配与结论", "concepts": ["concept-f59fbb58c7ac4af1", "concept-85b4d5622a9295fc"]}], "concepts": {"concept-b603ee9a9a798f84": {"id": "concept-b603ee9a9a798f84", "title": "后人类阶段 (Posthuman Stage)", "layer": "Futurology / Civilizational Development", "lead": "指人类文明获得目前物理定律允许的大部分技术能力的成熟阶段。", "text": "在此阶段，文明能够将行星等资源转化为极其强大的计算机，拥有远超当前的计算冗余。这是运行大规模祖先模拟的前提条件。", "why": "理解此概念是评估命题 (1)（是否能在到达此阶段前幸存）和命题 (2)（到达后是否有意愿运行模拟）的关键。", "source_ids": ["pdf-be823e12764a35cd-p3-b2", "pdf-be823e12764a35cd-p14-b0"], "next": null, "domain": "Philosophy of Mind / Probability Theory / Futurology", "document_id": "pdf-be823e12764a35cd", "node_id": "core-trilemma"}, "concept-4ab753295d4af504": {"id": "concept-4ab753295d4af504", "title": "随附性 (Supervenience)", "layer": "Philosophy of Mind", "lead": "描述高层属性（如心理状态）与低层属性（如物理状态）之间依赖关系的哲学概念。", "text": "在此语境下，指心理状态随附于物理基底的计算结构。只要底层的计算结构相同，无论基底是碳还是硅，高层的心理状态就相同。", "why": "这是基底独立性假设的理论基础，解释了为何不同物理材料能产生相同的意识体验。", "source_ids": ["pdf-be823e12764a35cd-p2-b1"], "next": null, "domain": "Philosophy of Mind / Probability Theory / Futurology", "document_id": "pdf-be823e12764a35cd", "node_id": "substrate-independence"}, "concept-56094e15f22fdb99": {"id": "concept-56094e15f22fdb99", "title": "祖先模拟 (Ancestor-Simulation)", "layer": "Simulation Theory", "lead": "指对过去人类或其类似者的详细演化历史的计算机模拟。", "text": "这种模拟旨在重现 forebears（祖先）的生活和意识体验。由于后人类计算能力巨大，他们可以运行大量的此类模拟，导致模拟意识体数量远超原始生物意识体。", "why": "这是核心三分论断中命题 (2) 和 (3) 讨论的对象，也是计算能力估算的直接应用场景。", "source_ids": ["pdf-be823e12764a35cd-p1-b4", "pdf-be823e12764a35cd-p6-b0"], "next": null, "domain": "Philosophy of Mind / Probability Theory / Futurology", "document_id": "pdf-be823e12764a35cd", "node_id": "comp-power-lower-bound"}, "concept-c85f6f72846dc398": {"id": "concept-c85f6f72846dc398", "title": "按需渲染 (On-Demand Rendering)", "layer": "Simulation Strategy", "lead": "一种优化模拟计算资源的技术策略。", "text": "在模拟环境中，仅当观察者（模拟人）实际关注或测量某事物时，才计算并生成该事物的详细状态；未观察部分保持低分辨率或不计算状态。", "why": "此概念解释了为何模拟整个宇宙的成本不可行，但模拟人类体验却成本低廉，是论证模拟可行性的关键机制。", "source_ids": ["pdf-be823e12764a35cd-p5-b1", "pdf-be823e12764a35cd-p5-b2"], "next": null, "domain": "Philosophy of Mind / Probability Theory / Futurology", "document_id": "pdf-be823e12764a35cd", "node_id": "sim-cost-estimate"}, "concept-510090e0c6494bab": {"id": "concept-510090e0c6494bab", "title": "祖先模拟 (Ancestor-Simulation)", "layer": "Simulation Type", "lead": "指对过去人类历史进程的完整计算机模拟。", "text": "特指后人类文明为了研究历史、社会学或其他目的，运行的包含大量具有人类类型体验的观察者的模拟程序。", "why": "这是本文讨论的核心对象，其成本估算是推导后续概率论证的基础。", "source_ids": ["pdf-be823e12764a35cd-p6-b0", "pdf-be823e12764a35cd-p6-b2"], "next": null, "domain": "Philosophy of Mind / Probability Theory / Futurology", "document_id": "pdf-be823e12764a35cd", "node_id": "sim-cost-estimate"}, "concept-5a072121d6712517": {"id": "concept-5a072121d6712517", "title": "后人类文明 (Posthuman Civilization)", "layer": "Futurology", "lead": "指技术能力远超当前人类水平的未来文明形态。", "text": "在此论证中，特指拥有巨量计算资源（如行星质量计算机），能够运行大规模高保真祖先模拟的文明阶段。", "why": "这是概率模型中的关键前提，其存在性和行为模式（Pf, fI）直接决定结论。", "source_ids": ["pdf-be823e12764a35cd-p6-b0", "pdf-be823e12764a35cd-p6-b4"], "next": null, "domain": "Philosophy of Mind / Probability Theory / Futurology", "document_id": "pdf-be823e12764a35cd", "node_id": "prob-formalism"}, "concept-9c51d686a9e0ee44": {"id": "concept-9c51d686a9e0ee44", "title": "观察者参考类 (Observer Reference Class)", "layer": "Probability Theory", "lead": "概率计算中被视为等同的观察者集合。", "text": "此处指所有具有“人类类型体验”的观察者，无论其是生物大脑还是模拟代码实现，都被纳入同一统计池计算比例。", "why": "公式 f_sim 的有效性依赖于将模拟人与真人视为同一参考类，这是后续认识论推导的基础。", "source_ids": ["pdf-be823e12764a35cd-p7-b0", "pdf-be823e12764a35cd-p7-b13"], "next": null, "domain": "Philosophy of Mind / Probability Theory / Futurology", "document_id": "pdf-be823e12764a35cd", "node_id": "prob-formalism"}, "concept-c9c7f58a3fecf7b6": {"id": "concept-c9c7f58a3fecf7b6", "title": "置信度 (Credence)", "layer": "Epistemology", "lead": "主体对某一假设为真的主观概率评估。", "text": "在此语境下，指个人相信“自己生活在模拟中”这一命题的程度，数值上应匹配客观统计比例（若无私有信息）。", "why": "连接客观统计结果（f_sim）与主观信念的关键概念，是论证最终结论（我们可能在模拟中）的必要环节。", "source_ids": ["pdf-be823e12764a35cd-p7-b13", "pdf-be823e12764a35cd-p8-b0"], "next": null, "domain": "Philosophy of Mind / Probability Theory / Futurology", "document_id": "pdf-be823e12764a35cd", "node_id": "bland-indifference"}, "concept-7de4829c7428e66b": {"id": "concept-7de4829c7428e66b", "title": "生物实现 vs 机器实现 (In Vivo vs In Machina)", "layer": "Philosophy of Mind", "lead": "区分意识体验的物理载体。", "text": "In vivo 指由生物神经元产生的体验，In machina 指由计算机代码模拟产生的体验。论证核心在于若无信息区分二者，则不应偏好任一假设。", "why": "这是应用无差别原则的前提条件，即我们无法通过内省判断自己属于哪一类。", "source_ids": ["pdf-be823e12764a35cd-p7-b13", "pdf-be823e12764a35cd-p8-b2"], "next": null, "domain": "Philosophy of Mind / Probability Theory / Futurology", "document_id": "pdf-be823e12764a35cd", "node_id": "bland-indifference"}, "concept-e444c50f1335045d": {"id": "concept-e444c50f1335045d", "title": "后人类阶段 (Posthuman Level)", "layer": "Futurology / Evolutionary Trajectory", "lead": "指文明发展的一个假设性高级阶段，拥有远超当前人类的技术能力和资源掌控力。", "text": "在模拟论证中，'后人类阶段'是指文明能够运行大规模祖先模拟所需的技术成熟度。若文明无法达到此阶段（Pf ≈ 0），则意味着其在进化过程中因某种原因中断或毁灭。", "why": "理解此概念是评估命题 (1) 的前提，它定义了'成功'的标准以及灭绝发生的界限。", "source_ids": ["pdf-be823e12764a35cd-p9-b4", "pdf-be823e12764a35cd-p10-b2"], "next": null, "domain": "Philosophy of Mind / Probability Theory / Futurology", "document_id": "pdf-be823e12764a35cd", "node_id": "interpret-doom"}, "concept-54685a6af4865548": {"id": "concept-54685a6af4865548", "title": "DOOM 假设", "layer": "Probability Theory / Existential Risk", "lead": "指人类在达到后人类阶段之前就会灭绝的假设。", "text": "这是模拟论证三难困境中的第一个选项。若该假设为真，则解释了为何我们观察不到大量的祖先模拟（因为几乎没有文明能活到运行它们的时候）。", "why": "这是命题 (1) 的直接推论，代表了人类未来的一种悲观但逻辑自洽的可能性。", "source_ids": ["pdf-be823e12764a35cd-p10-b0"], "next": null, "domain": "Philosophy of Mind / Probability Theory / Futurology", "document_id": "pdf-be823e12764a35cd", "node_id": "interpret-doom"}, "concept-3cf7ed1a8bfe2ba3": {"id": "concept-3cf7ed1a8bfe2ba3", "title": "强收敛 (Strong Convergence)", "layer": "Sociology / Futurology", "lead": "指不同文明在发展过程中趋向于相同的行为模式或价值观的现象。", "text": "在模拟论证语境下，特指几乎所有后人类文明都一致选择不运行祖先模拟。这种收敛必须是普遍的，因为只要有一小部分文明愿意运行大量模拟，fI 就不会接近 0。", "why": "这是命题 (2) 成立的核心机制，解释了为何在文明存续的情况下依然没有大量模拟存在。", "source_ids": ["pdf-be823e12764a35cd-p10-b3"], "next": null, "domain": "Philosophy of Mind / Probability Theory / Futurology", "document_id": "pdf-be823e12764a35cd", "node_id": "interpret-convergence"}, "concept-ee91026e1bfb4471": {"id": "concept-ee91026e1bfb4471", "title": "祖先模拟 (Ancestor Simulation)", "layer": "Computer Science / Philosophy", "lead": "指由后人类文明运行的、对其进化历史中祖先生活的详细模拟。", "text": "这类模拟旨在重现过去的人类历史和社会。命题 (2) 讨论的是为何后人类可能停止或从未开始此类项目，涉及伦理、兴趣和资源分配问题。", "why": "这是整个论证的核心对象，其运行频率（fI）直接决定了我们是否生活在模拟中。", "source_ids": ["pdf-be823e12764a35cd-p10-b3", "pdf-be823e12764a35cd-p11-b0"], "next": null, "domain": "Philosophy of Mind / Probability Theory / Futurology", "document_id": "pdf-be823e12764a35cd", "node_id": "interpret-convergence"}, "concept-701e4d667439ede1": {"id": "concept-701e4d667439ede1", "title": "虚拟机器堆叠 (Virtual Machine Stacking)", "layer": "Computer Science / Metaphysics", "lead": "指在模拟环境中运行另一个模拟的能力，形成递归的现实层级。", "text": "如同在现代计算机中虚拟机可嵌套运行，模拟宇宙中的文明也可创建自己的模拟宇宙。这导致了现实层级的无限延伸可能性，每一层都对下一层表现为'物理现实'。", "why": "这是理解命题 (3) 中现实结构复杂性的关键，解释了为何'神'本身也可能是被创造的。", "source_ids": ["pdf-be823e12764a35cd-p11-b0", "pdf-be823e12764a35cd-p12-b0"], "next": null, "domain": "Philosophy of Mind / Probability Theory / Futurology", "document_id": "pdf-be823e12764a35cd", "node_id": "interpret-sim-reality"}, "concept-76749725bad306bb": {"id": "concept-76749725bad306bb", "title": "影子人 (Shadow-People)", "layer": "Philosophy of Mind / Simulation Theory", "lead": "指在选择性模拟中，为了节省资源而未被完全模拟意识体验的背景人物。", "text": "在只模拟特定个体的场景中，其他人可能只是行为上无异于常人但缺乏内在体验的'僵尸'。原文指出，除非此类模拟数量极大（约 1000 亿倍于完整模拟），否则我们不应认为自己身处其中。", "why": "这一概念界定了模拟粒度的极限，并提出了关于意识和计算成本的哲学问题。", "source_ids": ["pdf-be823e12764a35cd-p13-b0"], "next": null, "domain": "Philosophy of Mind / Probability Theory / Futurology", "document_id": "pdf-be823e12764a35cd", "node_id": "interpret-sim-reality"}, "concept-f59fbb58c7ac4af1": {"id": "concept-f59fbb58c7ac4af1", "title": "置信度 (Credence)", "layer": "Probability Theory / Epistemology", "lead": "主观概率度的量化表达", "text": "在认识论和概率论中，置信度指代理性主体对某个命题为真的相信程度的数值化表示（通常在 0 到 1 之间）。在此论证中，它不代表客观频率，而是代表在信息不完全情况下，理性观察者应如何分配其信念权重。", "why": "理解该词是把握作者为何建议“均匀分配”的关键，这并非断言三个命题客观概率相等，而是在无知状态下的理性决策策略。", "source_ids": ["pdf-be823e12764a35cd-p14-b1"], "next": null, "domain": "Philosophy of Mind / Probability Theory / Futurology", "document_id": "pdf-be823e12764a35cd", "node_id": "credence-allocation"}, "concept-85b4d5622a9295fc": {"id": "concept-85b4d5622a9295fc", "title": "祖先模拟 (Ancestor-Simulation)", "layer": "Futurology / Philosophy of Mind", "lead": "后人类文明运行的关于其进化历史的模拟", "text": "指由技术高度发达的“后人类”文明创建的计算机模拟，旨在重现其祖先（如当前人类）的历史演化过程或意识体验。这是整个论证的核心假设对象，其可行性依赖于未来巨大的计算能力。", "why": "这是命题 (2) 和 (3) 的直接讨论对象，区分“祖先模拟”与其他类型的模拟对于理解论证的特定范围至关重要。", "source_ids": ["pdf-be823e12764a35cd-p14-b0", "pdf-be823e12764a35cd-p14-b1"], "next": null, "domain": "Philosophy of Mind / Probability Theory / Futurology", "document_id": "pdf-be823e12764a35cd", "node_id": "credence-allocation"}}}};/* Trusted host bridge. Authors only access read-only evidence and local DOM. */
+(()=>{
+ const C=PM_CONFIG;
+ const deepFreeze=o=>{if(o&&typeof o==='object'){Object.values(o).forEach(deepFreeze);Object.freeze(o);}return o;};
+ Object.defineProperty(window,'paperMindData',{value:deepFreeze(C.data),writable:false,configurable:false});
+ const nodes=new Set(C.data.nodes.map(n=>n.id)),concepts=new Set(C.data.nodes.flatMap(n=>n.concepts));
+ let initialized=false,height=0,scheduled=false;
+ function emit(type,payload={}){if(parent!==window)parent.postMessage({type,edition:C.edition,document:C.document,channel:C.channel,...payload},'*');}
+ function measure(){if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;const h=Math.ceil(document.documentElement.scrollHeight);if(h!==height){height=h;emit('resize',{height:h});}});}
+ function source(id){const s=C.data.sources[id];if(!s)return;if(parent!==window){emit('cite',{id:s.id});return;}document.getElementById('pm-local-source')?.remove();const box=document.createElement('aside');box.id='pm-local-source';box.setAttribute('role','dialog');box.setAttribute('aria-label','原文出处');const title=document.createElement('strong');title.textContent='原文 · 第 '+s.page+' 页';const quote=document.createElement('blockquote');quote.textContent=s.quote;const close=document.createElement('button');close.textContent='返回讲解';close.addEventListener('click',()=>box.remove());box.append(title,quote,close);document.body.append(box);close.focus();}
+ function nodeOf(el){return el.closest('[data-node]')?.dataset.node||C.data.nodes[0]?.id;}
+ function readingTools(){for(const b of document.querySelectorAll('button[data-source]')){const s=C.data.sources[b.dataset.source];if(s)b.textContent='原文 · p.'+s.page;}if(parent===window){for(const b of document.querySelectorAll('[data-ask],[data-concept],[data-undo]'))b.hidden=true;return;}for(const n of C.data.nodes){const anchor=document.getElementById(n.id);if(!anchor||anchor.querySelector('button[data-ask]'))continue;const tools=document.createElement('div');tools.className='pm-reading-tools';tools.dataset.node=n.id;const ask=document.createElement('button');ask.dataset.ask='请解释'+n.title+'的原理、推导与成立条件';ask.textContent='沿着这里继续问';tools.append(ask);for(const id of n.concepts||[]){const b=document.createElement('button');b.dataset.concept=id;b.textContent=C.data.concepts?.[id]?.title||'查阅相关概念';tools.append(b);}anchor.append(tools);}}
+ document.addEventListener('click',event=>{
+  const button=event.target.closest('button,a');if(!button)return;
+  if(button.dataset.source){event.preventDefault();source(button.dataset.source);}
+  else if(button.dataset.concept&&concepts.has(button.dataset.concept))emit('concept',{id:button.dataset.concept,node:nodeOf(button)});
+  else if(button.dataset.ask&&event.isTrusted)emit('ask',{text:button.dataset.ask.slice(0,2000),node:nodeOf(button)});
+  else if(button.dataset.undo&&event.isTrusted)emit('undo',{id:button.dataset.undo});
+  else if(button.matches('a[href^="#"]')){event.preventDefault();const el=document.getElementById(button.getAttribute('href').slice(1));if(el){if(parent===window)el.scrollIntoView();else emit('scroll',{top:el.getBoundingClientRect().top+scrollY});}}
+ });
+ document.addEventListener('mouseup',()=>{const text=window.getSelection()?.toString().trim();if(text&&text.length>=4&&text.length<=2000)emit('selection',{text,node:nodeOf(window.getSelection()?.anchorNode?.parentElement||document.body)});});
+ function supplements(items){document.querySelectorAll('.pm-user-note').forEach(n=>n.remove());for(const item of items){if(!nodes.has(item.node_id))continue;const anchor=document.getElementById(item.node_id);if(!anchor)continue;const note=document.createElement('aside');note.className='pm-user-note';note.dataset.node=item.node_id;const h=document.createElement('h4');h.textContent='我的讲解补充';const p=document.createElement('p');p.textContent=item.text;note.append(h,p);for(const id of item.source_ids||[]){const alias=Object.keys(C.data.sources).find(k=>C.data.sources[k].id===id);if(alias){const b=document.createElement('button');b.dataset.source=alias;b.textContent='原文 · p.'+C.data.sources[alias].page;note.append(b);}}if(item.can_undo){const b=document.createElement('button');b.dataset.undo=item.id;b.textContent='撤回补充';note.append(b);}anchor.append(note);}measure();}
+ window.addEventListener('message',event=>{const d=event.data;if(event.source!==parent||!d||d.channel!==C.channel)return;
+  if(d.type==='navigate'&&nodes.has(d.node)){const el=document.getElementById(d.node);if(el){for(let p=el.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;emit('scroll',{top:el.getBoundingClientRect().top+scrollY});}}
+  if(d.type==='viewport'&&Number.isFinite(d.top)){let chosen=C.data.nodes[0]?.id;for(const n of C.data.nodes){const el=document.getElementById(n.id);if(el&&el.getBoundingClientRect().top+scrollY<=d.top+160)chosen=n.id;}if(chosen)emit('active',{node:chosen});}
+  if(d.type==='supplements'&&Array.isArray(d.items))supplements(d.items.slice(0,100));
+ });
+ window.addEventListener('pm-initialized',()=>{readingTools();initialized=true;document.body.dataset.pmReady='true';emit('ready');measure();});
+ window.addEventListener('error',event=>{document.body.dataset.pmError=String(event.message);emit('error',{message:String(event.message).slice(0,300)});});
+ new ResizeObserver(measure).observe(document.body);measure();
+})();
+</script><script nonce="nQBz9bBSaWshg4imVndjrp516eA6AXoF">try{(()=>{const root=document.getElementById("chapter-ch-assumptions");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("ch-assumptions--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+  
+  // 教学假设参数
+  const TEACHING_PARAMS = {
+    granularity: [
+      { label: '视网膜功能', opsPerBrain: 1e14, source: 'S017' },
+      { label: '突触级别', opsPerBrain: 1e16, source: 'S017' },
+      { label: '分子细节', opsPerBrain: 1e17, source: 'S017' }
+    ],
+    computerScale: [
+      { label: '糖块大小', capacity: 1e21, source: 'S016' },
+      { label: '行星质量', capacity: 1e42, source: 'S016' },
+      { label: '戴森球', capacity: 1e50, source: 'S016' }
+    ],
+    humanHistory: {
+      population: 100e9,
+      yearsPerPerson: 50,
+      secondsPerYear: 30e6
+    }
+  };
+  
+  // 状态管理
+  let state = {
+    granularityIndex: 1,
+    scaleIndex: 2
+  };
+  
+  // DOM 元素
+  const elements = {
+    granularitySlider: document.getElementById('ch-assumptions--granularity-slider'),
+    scaleSlider: document.getElementById('ch-assumptions--computer-scale-slider'),
+    granularityValue: document.getElementById('ch-assumptions--granularity-value'),
+    scaleValue: document.getElementById('ch-assumptions--scale-value'),
+    costBar: document.getElementById('ch-assumptions--cost-bar'),
+    capacityBar: document.getElementById('ch-assumptions--capacity-bar'),
+    costValue: document.getElementById('ch-assumptions--cost-value'),
+    capacityValue: document.getElementById('ch-assumptions--capacity-value'),
+    ratioValue: document.getElementById('ch-assumptions--ratio-value'),
+    resetBtn: document.getElementById('ch-assumptions--reset-sim'),
+    stepBtns: document.querySelectorAll('.step-btn'),
+    stepDisplay: document.getElementById('ch-assumptions--substrate-step-display')
+  };
+  
+  // 步骤内容
+  const stepContent = [
+    {
+      text: '心理状态可以随 supervene 于广泛的物理基底之上，不仅限于碳基生物神经网络。',
+      source: 'S007'
+    },
+    {
+      text: '不需要行为完全像人（通过图灵测试），只需在足够精细的粒度（如突触级别）上结构性地复制计算过程。',
+      source: 'S009'
+    },
+    {
+      text: '神经递质等化学物质通过影响计算活动（如突触放电）来作用于体验，因此只要模拟了这些计算影响，无需模拟化学分子本身。',
+      source: 'S011'
+    }
+  ];
+  
+  // 计算函数
+  function calculateSimulationCost() {
+    const opsPerBrain = TEACHING_PARAMS.granularity[state.granularityIndex].opsPerBrain;
+    const totalOps = TEACHING_PARAMS.humanHistory.population * 
+                     TEACHING_PARAMS.humanHistory.yearsPerPerson * 
+                     TEACHING_PARAMS.humanHistory.secondsPerYear * 
+                     opsPerBrain;
+    return totalOps;
+  }
+  
+  function getAvailableCapacity() {
+    return TEACHING_PARAMS.computerScale[state.scaleIndex].capacity;
+  }
+  
+  function formatScientific(num) {
+    if (num === 0) return '0';
+    const exponent = Math.floor(Math.log10(num));
+    const mantissa = num / Math.pow(10, exponent);
+    return mantissa.toFixed(1) + '×10^' + exponent;
+  }
+  
+  // 更新显示
+  function updateDisplay() {
+    const cost = calculateSimulationCost();
+    const capacity = getAvailableCapacity();
+    const ratio = cost / capacity;
+    
+    // 更新滑块标签
+    elements.granularityValue.textContent = TEACHING_PARAMS.granularity[state.granularityIndex].label;
+    elements.scaleValue.textContent = TEACHING_PARAMS.computerScale[state.scaleIndex].label;
+    
+    // 更新条形图
+    const maxDisplay = Math.max(cost, capacity);
+    const costPercent = (cost / maxDisplay) * 100;
+    const capacityPercent = (capacity / maxDisplay) * 100;
+    
+    elements.costBar.style.width = costPercent + '%';
+    elements.capacityBar.style.width = capacityPercent + '%';
+    
+    // 更新数值显示
+    elements.costValue.textContent = formatScientific(cost) + ' ops';
+    elements.capacityValue.textContent = formatScientific(capacity) + ' ops';
+    elements.ratioValue.textContent = formatScientific(ratio);
+  }
+  
+  // 事件处理
+  function handleGranularityChange(e) {
+    state.granularityIndex = parseInt(e.target.value);
+    updateDisplay();
+  }
+  
+  function handleScaleChange(e) {
+    state.scaleIndex = parseInt(e.target.value);
+    updateDisplay();
+  }
+  
+  function handleReset() {
+    state.granularityIndex = 1;
+    state.scaleIndex = 2;
+    elements.granularitySlider.value = 1;
+    elements.scaleSlider.value = 2;
+    updateDisplay();
+  }
+  
+  function handleStepChange(e) {
+    const stepIndex = parseInt(e.target.dataset.step);
+    
+    // 更新按钮状态
+    elements.stepBtns.forEach(btn => btn.classList.remove('active'));
+    e.target.classList.add('active');
+    
+    // 更新显示内容
+    const content = stepContent[stepIndex];
+    elements.stepDisplay.innerHTML = `
+      <p class="step-text">${content.text}</p>
+      <div class="step-source">
+        <button type="button" class="source-btn" data-source="${content.source}">原文 · p.${parseInt(content.source.substring(1))}</button>
+      </div>
+    `;
+    
+    // 重新绑定源按钮事件
+    const sourceBtn = elements.stepDisplay.querySelector('.source-btn');
+    if (sourceBtn) {
+      sourceBtn.addEventListener('click', function() {
+        // 源按钮行为由内核处理
+        const event = new CustomEvent('paperMind:source', {
+          detail: { sourceId: this.dataset.source }
+        });
+        document.dispatchEvent(event);
+      });
+    }
+  }
+  
+  // 初始化
+  function init() {
+    // 绑定事件
+    elements.granularitySlider.addEventListener('input', handleGranularityChange);
+    elements.scaleSlider.addEventListener('input', handleScaleChange);
+    elements.resetBtn.addEventListener('click', handleReset);
+    
+    elements.stepBtns.forEach(btn => {
+      btn.addEventListener('click', handleStepChange);
+    });
+    
+    // 绑定源按钮
+    document.querySelectorAll('.source-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const event = new CustomEvent('paperMind:source', {
+          detail: { sourceId: this.dataset.source }
+        });
+        document.dispatchEvent(event);
+      });
+    });
+    
+    // 初始显示
+    updateDisplay();
+  }
+  
+  // 启动
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-ch-formalism");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("ch-formalism--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+
+  const sliderPf = document.getElementById('ch-formalism--slider-pf');
+  const sliderFi = document.getElementById('ch-formalism--slider-fi');
+  const sliderNi = document.getElementById('ch-formalism--slider-ni');
+  const valPf = document.getElementById('ch-formalism--val-pf');
+  const valFi = document.getElementById('ch-formalism--val-fi');
+  const valNi = document.getElementById('ch-formalism--val-ni');
+  const resNumerator = document.getElementById('ch-formalism--res-numerator');
+  const resDenominator = document.getElementById('ch-formalism--res-denominator');
+  const resFsim = document.getElementById('ch-formalism--res-fsim');
+  const credenceValue = document.getElementById('ch-formalism--credence-value');
+  const resetBtn = document.getElementById('ch-formalism--reset-formalism');
+
+  if (!sliderPf || !sliderFi || !sliderNi) return;
+
+  function getNiValue() {
+    const base = 10;
+    const exp = parseFloat(sliderNi.value);
+    return Math.pow(base, exp);
+  }
+
+  function formatNumber(num) {
+    if (num >= 1e6) {
+      return num.toExponential(2);
+    }
+    return num.toLocaleString('en-US', { maximumFractionDigits: 4 });
+  }
+
+  function updateCalculation() {
+    const pf = parseFloat(sliderPf.value);
+    const fi = parseFloat(sliderFi.value);
+    const ni = getNiValue();
+
+    valPf.textContent = pf.toFixed(2);
+    valFi.textContent = fi.toFixed(2);
+    
+    const niDisplay = ni >= 1e6 ? `10^${Math.log10(ni).toFixed(1)}` : ni.toFixed(0);
+    valNi.innerHTML = ni >= 1e6 ? `10<sup>${Math.log10(ni).toFixed(1)}</sup>` : ni.toFixed(0);
+
+    const numerator = pf * fi * ni;
+    const denominator = numerator + 1;
+    const fsim = denominator === 0 ? 0 : numerator / denominator;
+
+    resNumerator.textContent = formatNumber(numerator);
+    resNumerator.setAttribute('data-value', numerator.toFixed(4));
+    resDenominator.textContent = formatNumber(denominator);
+    resDenominator.setAttribute('data-value', denominator.toFixed(4));
+    resFsim.textContent = fsim.toFixed(4);
+    resFsim.setAttribute('data-value', fsim.toFixed(4));
+    
+    if (credenceValue) {
+      credenceValue.textContent = fsim.toFixed(4);
+      credenceValue.setAttribute('data-value', fsim.toFixed(4));
+    }
+  }
+
+  function resetControls() {
+    sliderPf.value = 0.2;
+    sliderFi.value = 0.5;
+    sliderNi.value = 3;
+    updateCalculation();
+  }
+
+  sliderPf.addEventListener('input', updateCalculation);
+  sliderFi.addEventListener('input', updateCalculation);
+  sliderNi.addEventListener('input', updateCalculation);
+  
+  if (resetBtn) {
+    resetBtn.addEventListener('click', resetControls);
+  }
+
+  updateCalculation();
+
+  const sourceBtns = document.querySelectorAll('.source-btn');
+  sourceBtns.forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const sourceId = this.getAttribute('data-source');
+      if (window.paperMindData && window.paperMindData.sources && sourceId) {
+        console.log('Source requested:', sourceId);
+      }
+    });
+  });
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-ch-branches");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("ch-branches--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+
+  const scopeId = 'ch-branches--ch-branches';
+  const container = document.getElementById(scopeId);
+  if (!container) return;
+
+  const gates = container.querySelectorAll('.gate-node');
+  const evidencePanel = container.querySelector('#ch-branches--evidence-display');
+  const panelTitle = container.querySelector('#ch-branches--panel-title');
+  const panelBody = container.querySelector('#ch-branches--panel-body');
+  const panelSources = container.querySelector('#ch-branches--panel-sources');
+  const simZone = container.querySelector('#ch-branches--sim-stack-zone');
+  const canvas = container.querySelector('#ch-branches--stack-canvas');
+  const ctx = canvas ? canvas.getContext('2d') : null;
+  const ratioDisplay = container.querySelector('#ch-branches--ratio-display');
+  const resetBtn = container.querySelector('#ch-branches--reset-sim');
+  const modeRadios = container.querySelectorAll('input[name="sim-mode"]');
+
+  // Data from nodes
+  const nodeData = {
+    'interpret-doom': {
+      title: '解释分支一：大灭绝 (DOOM)',
+      content: '若命题 (1) 为真 (Pf ≈ 0)，意味着人类极可能在达到后人类阶段前灭绝。这并不必然意味着近期灭绝，但暗示了危险技术（如分子纳米技术）或文明崩溃的高风险。除非我们有特殊证据表明自己是幸运的例外，否则应假设面临同样的灭绝概率。',
+      sources: ['S059', 'S062']
+    },
+    'interpret-convergence': {
+      title: '解释分支二：强收敛 (Convergence)',
+      content: '若命题 (2) 为真 (fI ≈ 0)，意味着几乎所有后人类文明都因伦理禁令、兴趣丧失或社会结构变化而不运行祖先模拟。这要求后人类社会与人类社会存在本质差异，缺乏拥有完整人类欲望谱系的独立个体。',
+      sources: ['S062', 'S065']
+    },
+    'interpret-sim-reality': {
+      title: '解释分支三：模拟现实 (Simulation Reality)',
+      content: '若命题 (3) 为真 (f_sim ≈ 1)，则我们几乎肯定生活在模拟中。观测到的宇宙只是物理存在总量的一小部分。运行模拟的计算机所在的宇宙，其物理定律可能与我们观测到的完全不同。',
+      sources: ['S065', 'S066']
+    }
+  };
+
+  const sourceMap = window.paperMindData?.sources || {};
+
+  function renderSources(sourceIds) {
+    if (!sourceIds || sourceIds.length === 0) {
+      panelSources.innerHTML = '';
+      return;
+    }
+    const html = sourceIds.map(id => {
+      const src = sourceMap[id];
+      const label = src ? `p.${src.page}` : '来源未知';
+      return `<button type="button" class="source-btn" data-source="${id}">原文 · ${label}</button>`;
+    }).join('');
+    panelSources.innerHTML = html;
+  }
+
+  function activateGate(nodeId) {
+    gates.forEach(g => g.classList.remove('active'));
+    const activeGate = container.querySelector(`.gate-node[data-node="${nodeId}"]`);
+    if (activeGate) activeGate.classList.add('active');
+
+    const data = nodeData[nodeId];
+    if (!data) return;
+
+    panelTitle.textContent = data.title;
+    panelBody.innerHTML = `<p>${data.content}</p>`;
+    renderSources(data.sources);
+    evidencePanel.classList.add('visible');
+
+    if (nodeId === 'interpret-sim-reality') {
+      simZone.style.display = 'block';
+      drawStack('full');
+    } else {
+      simZone.style.display = 'none';
+    }
+  }
+
+  gates.forEach(gate => {
+    gate.addEventListener('click', () => {
+      const nodeId = gate.dataset.node;
+      activateGate(nodeId);
+    });
+    
+    const btn = gate.querySelector('.btn-expand');
+    if (btn) {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const nodeId = gate.dataset.node;
+        activateGate(nodeId);
+        // Scroll to evidence panel smoothly
+        evidencePanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  });
+
+  // Canvas Visualization Logic
+  function drawStack(mode) {
+    if (!ctx || !canvas) return;
+    const w = canvas.width;
+    const h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+
+    const baseColor = '#0F172A';
+    const simColor = '#06B6D4';
+    const shadowColor = '#94A3B8';
+
+    // Draw Base Reality
+    ctx.fillStyle = baseColor;
+    ctx.fillRect(20, h - 60, w - 40, 40);
+    ctx.fillStyle = '#fff';
+    ctx.font = '12px sans-serif';
+    ctx.fillText('Basement Reality (Fundamental)', 30, h - 35);
+
+    if (mode === 'full') {
+      // Draw stacked full simulations
+      let y = h - 80;
+      for (let i = 0; i < 3; i++) {
+        ctx.fillStyle = simColor;
+        ctx.globalAlpha = 0.8 - (i * 0.2);
+        ctx.fillRect(40 + (i * 10), y - 40, w - 60 - (i * 20), 30);
+        ctx.globalAlpha = 1.0;
+        ctx.fillStyle = '#0F172A';
+        ctx.fillText(`Simulation Level ${i + 1}`, 50 + (i * 10), y - 20);
+        y -= 50;
+      }
+      ratioDisplay.textContent = '1 : 1 (每层均为完整意识)';
+    } else {
+      // Draw Shadow People mode
+      let y = h - 80;
+      ctx.fillStyle = shadowColor;
+      ctx.globalAlpha = 0.6;
+      ctx.fillRect(40, y - 40, w - 60, 30);
+      ctx.globalAlpha = 1.0;
+      ctx.fillStyle = '#0F172A';
+      ctx.fillText('Shadow Layer (Zombies/Background)', 50, y - 20);
+      
+      // Highlight single conscious entity
+      ctx.fillStyle = simColor;
+      ctx.beginPath();
+      ctx.arc(w / 2, y - 25, 8, 0, Math.PI * 2);
+      ctx.fill();
+      
+      ratioDisplay.textContent = '1 : 100,000,000,000 (需极大数量倍数)';
+    }
+  }
+
+  modeRadios.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      drawStack(e.target.value);
+    });
+  });
+
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      modeRadios[0].checked = true;
+      drawStack('full');
+      simZone.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  // Initial State
+  evidencePanel.classList.remove('visible');
+  simZone.style.display = 'none';
+
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-ch-conclusion");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("ch-conclusion--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(()=>{const boxes=[1,2,3].map(i=>document.getElementById('branch-exclude-'+i)),result=document.getElementById('ch-conclusion--branch-result');function render(){const remaining=[];boxes.forEach((b,j)=>{document.getElementById('branch-path-'+(j+1)).setAttribute('opacity',b.checked?'.15':'1');if(!b.checked)remaining.push('P'+(j+1));});result.dataset.values=JSON.stringify(remaining);result.textContent=remaining.length===3?'目前只能说至少一项成立；还不能决定是哪一项。':remaining.length===0?'这组假设与“至少一项成立”相冲突，需要重新检查所作假设。':remaining.length===1?'在这些推演假设及论证前提下，剩余分支 '+remaining[0]+' 须成立。':'在这些推演假设下，至少 '+remaining.join(' 或 ')+' 中的一项成立。';}boxes.forEach(b=>b.addEventListener('change',render));document.getElementById('ch-conclusion--branch-reset').addEventListener('click',()=>{boxes.forEach(b=>b.checked=false);render();});render();})();})(d);})();;const pmDone=()=>{if(document.body.dataset.pmError)return;document.body.dataset.pmInitialized="true";window.dispatchEvent(new Event("pm-initialized"));};if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",pmDone,{once:true});else pmDone();}catch(error){document.body.dataset.pmError=error.message;window.dispatchEvent(new ErrorEvent("error",{message:error.message}));}</script></body></html>

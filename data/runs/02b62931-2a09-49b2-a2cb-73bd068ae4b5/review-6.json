@@ -1,0 +1,1 @@
+{"items": [{"node_id": "bias-validation-results", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "bias-social-implication", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "conclusion-synthesis", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}]}

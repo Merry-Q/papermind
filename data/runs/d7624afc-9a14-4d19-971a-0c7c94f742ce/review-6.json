@@ -1,0 +1,1 @@
+{"items": [{"node_id": "fever-classification", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "retrieval-ablations", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "index-hot-swapping", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}]}

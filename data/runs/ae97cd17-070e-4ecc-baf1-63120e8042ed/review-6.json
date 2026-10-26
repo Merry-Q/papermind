@@ -1,0 +1,1 @@
+{"items": [{"node_id": "continuous-entropy-power", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "shannon-hartley-law", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "rate-distortion-theory", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}]}

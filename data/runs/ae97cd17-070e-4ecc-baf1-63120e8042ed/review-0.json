@@ -1,0 +1,1 @@
+{"items": [{"node_id": "comm-problem-def", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "system-model", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "discrete-noiseless-capacity", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}]}

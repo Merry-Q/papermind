@@ -1,0 +1,1 @@
+{"items": [{"node_id": "residual_norm_formula", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "attention_definition", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "embedding_positional", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}]}

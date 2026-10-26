@@ -1,0 +1,14 @@
+import { spawn } from 'node:child_process';
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const pythonPath = process.platform === 'win32' ? '.venv/Scripts/python.exe' : '.venv/bin/python';
+const python = process.env.PAPERMIND_PYTHON || (existsSync(path.join(root, pythonPath)) ? path.join(root, pythonPath) : 'python');
+const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
+const backend = spawn(python, ['-m', 'uvicorn', 'backend.main:app', '--host', '127.0.0.1', '--port', '8000'], {cwd: root, stdio: 'inherit'});
+const frontend = spawn(npm, ['--prefix', 'frontend', 'run', 'dev'], {cwd: root, stdio: 'inherit', shell: process.platform === 'win32'});
+const stop = () => {backend.kill(); frontend.kill();};
+process.on('SIGINT', () => {stop(); process.exit(0);});
+process.on('SIGTERM', () => {stop(); process.exit(0);});
+for (const child of [backend, frontend]) child.on('error', error => {console.error(error.message); stop(); process.exit(1);});

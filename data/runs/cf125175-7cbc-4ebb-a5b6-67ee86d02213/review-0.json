@@ -1,0 +1,1 @@
+{"items": [{"node_id": "arch-overview", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "encoder-stack", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "decoder-stack", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}]}

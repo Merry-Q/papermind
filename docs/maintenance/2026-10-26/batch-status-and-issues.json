@@ -1,0 +1,731 @@
+{
+  "issue-ledger.json": {
+    "cases": [
+      {
+        "case": "rag",
+        "document": "pdf-23e3249e9a1e7541",
+        "edition": "00f64620-2440-4231-a559-459d6a9f2382",
+        "generation": "draft",
+        "browser": "probes_passed",
+        "host": "pass",
+        "fidelity": "pending",
+        "experience": "pending"
+      },
+      {
+        "case": "adaptive-dcs-somp",
+        "document": "pdf-b4deafe808239771",
+        "edition": "5b4b2f49-c50c-40e0-9d93-833782eb4350",
+        "generation": "draft",
+        "browser": "probes_passed",
+        "host": "failed",
+        "fidelity": "pending",
+        "experience": "pending"
+      },
+      {
+        "case": "shannon",
+        "document": "pdf-6e4e3411984f3edf",
+        "edition": "84e43ad0-3286-4487-b87d-edb348858dd3",
+        "generation": "failed",
+        "browser": "issues_recorded",
+        "host": "pending",
+        "fidelity": "pending",
+        "experience": "pending"
+      },
+      {
+        "case": "lyrics",
+        "document": "pdf-66fe209b72eb93c6",
+        "edition": "a4c1ebd3-7957-446b-99cc-200182278139",
+        "generation": "failed",
+        "browser": "issues_recorded",
+        "host": "pending",
+        "fidelity": "pending",
+        "experience": "pending"
+      },
+      {
+        "case": "moral-machine",
+        "document": "pdf-59c4f6158add045b",
+        "edition": "278f8557-f0da-4d9a-a83c-2abaf814a67d",
+        "generation": "running",
+        "browser": "pending",
+        "host": "pending",
+        "fidelity": "pending",
+        "experience": "pending"
+      },
+      {
+        "case": "simulation-argument",
+        "document": "pdf-be823e12764a35cd",
+        "edition": "1ca47681-7aa7-4b81-917b-7442ee2f155c",
+        "generation": "running",
+        "browser": "pending",
+        "host": "pending",
+        "fidelity": "pending",
+        "experience": "pending"
+      },
+      {
+        "case": "generative-ai-work",
+        "document": "pdf-ac0a4e183aa6f936",
+        "edition": null,
+        "generation": "pending",
+        "browser": "pending",
+        "host": "pending",
+        "fidelity": "pending",
+        "experience": "pending"
+      },
+      {
+        "case": "macroeconomics-ai",
+        "document": "pdf-b0183405d850db11",
+        "edition": null,
+        "generation": "pending",
+        "browser": "pending",
+        "host": "pending",
+        "fidelity": "pending",
+        "experience": "pending"
+      },
+      {
+        "case": "hyperbolic-location",
+        "document": "pdf-473e344b1814e453",
+        "edition": null,
+        "generation": "pending",
+        "browser": "pending",
+        "host": "pending",
+        "fidelity": "pending",
+        "experience": "pending"
+      },
+      {
+        "case": "transformer-excerpt",
+        "document": "pdf-1a02a680ff1cd6e0",
+        "edition": null,
+        "generation": "pending",
+        "browser": "pending",
+        "host": "pending",
+        "fidelity": "pending",
+        "experience": "pending"
+      },
+      {
+        "case": "5g-overview",
+        "document": "pdf-fe9119a9c453151a",
+        "edition": null,
+        "generation": "pending",
+        "browser": "pending",
+        "host": "pending",
+        "fidelity": "pending",
+        "experience": "pending"
+      }
+    ],
+    "issues": [
+      {
+        "case": "adaptive-dcs-somp",
+        "kind": "host",
+        "name": "Copilot remains a rightbar draft",
+        "detail": "locator.waitFor: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.chat-context') to be visible\u001b[22m\n",
+        "host": {
+          "url": "http://127.0.0.1:8000/?document=pdf-b4deafe808239771&readingV2=5b4b2f49-c50c-40e0-9d93-833782eb4350&readingInspection=1",
+          "messages": [
+            {
+              "type": "resize"
+            },
+            {
+              "type": "resize"
+            },
+            {
+              "type": "ready"
+            },
+            {
+              "type": "resize"
+            },
+            {
+              "type": "active",
+              "node": "problem-statement"
+            },
+            {
+              "type": "scroll"
+            },
+            {
+              "type": "active",
+              "node": "simulation-results"
+            },
+            {
+              "type": "active",
+              "node": "problem-statement"
+            },
+            {
+              "type": "cite"
+            },
+            {
+              "type": "resize"
+            },
+            {
+              "type": "ready"
+            },
+            {
+              "type": "resize"
+            },
+            {
+              "type": "active",
+              "node": "problem-statement"
+            },
+            {
+              "type": "active",
+              "node": "problem-statement"
+            },
+            {
+              "type": "active",
+              "node": "problem-statement"
+            }
+          ],
+          "clicks": [
+            {
+              "text": "仿真结果：收敛性与精度验证",
+              "tag": "SPAN"
+            },
+            {
+              "text": "查看 PDF 页面",
+              "tag": "BUTTON"
+            },
+            {
+              "text": "返回原阅读位置",
+              "tag": "BUTTON"
+            },
+            {
+              "text": "",
+              "tag": "IFRAME"
+            }
+          ]
+        },
+        "inside": {
+          "clicks": [],
+          "ask": [
+            {
+              "text": "请解释问题定义：现有 2D 及粗略估计方法的局限性的原理、推导与成立条件",
+              "node": "problem-statement"
+            },
+            {
+              "text": "请解释系统模型：基于 UCA 的 3D MIMO-mmWave 信道的原理、推导与成立条件",
+              "node": "system-model-3d"
+            }
+          ]
+        }
+      },
+      {
+        "case": "shannon",
+        "kind": "generation",
+        "detail": "章节结构检查失败：[{\"chapter\": \"ch2-system-model\", \"issue\": \"不允许的标签：filter；不允许的标签：fegaussianblur；不允许的标签：femerge；不允许的标签：femergenode；不允许的标签：femergenode；来源缺失或越界\"}]"
+      },
+      {
+        "case": "shannon",
+        "kind": "browser",
+        "name": "meaningful interaction chapter-ch3-discrete-capacity",
+        "detail": "No observed graphic, output data or relationship change. Inspect text-only traces before judging educational value."
+      },
+      {
+        "case": "shannon",
+        "kind": "browser",
+        "name": "meaningful interaction chapter-ch4-entropy-source",
+        "detail": "No observed graphic, output data or relationship change. Inspect text-only traces before judging educational value."
+      },
+      {
+        "case": "shannon",
+        "kind": "browser",
+        "name": "responsive 320",
+        "detail": "{\"viewport\":304,\"scrollWidth\":365,\"overflow\":[{\"id\":\"chapter-ch8-rate-distortion\",\"client\":268,\"scroll\":347}]}"
+      },
+      {
+        "case": "lyrics",
+        "kind": "generation",
+        "detail": "章节结构检查失败：[{\"chapter\": \"style-vocab-trend\", \"issue\": \"不允许的标签：style\"}, {\"chapter\": \"conclusion-synthesis\", \"issue\": \"缺少节点锚点：{'limitation-data-scale'}\"}]"
+      },
+      {
+        "case": "lyrics",
+        "kind": "browser",
+        "name": "node coverage, visible content and source IDs",
+        "detail": "empty or missing canonical node"
+      },
+      {
+        "case": "lyrics",
+        "kind": "browser",
+        "name": "control chapter-bias-methodology bias-methodology--pm-test-select",
+        "detail": "locator.selectOption: Timeout 2200ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('iframe').contentFrame().locator('#chapter-bias-methodology').locator('[data-pm-probe=\"probe-0\"]')\u001b[22m\n\u001b[2m    - locator resolved to <select class=\"pm-select\" data-pm-probe=\"probe-0\" id=\"bias-methodology--pm-test-select\">…</select>\u001b[22m\n\u001b[2m  - attempting select option action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - option being selected is not enabled\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - option being selected is not enabled\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    4 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - option being selected is not enabled\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n"
+      },
+      {
+        "case": "lyrics",
+        "kind": "browser",
+        "name": "meaningful interaction chapter-bias-validation-results",
+        "detail": "No observed graphic, output data or relationship change. Inspect text-only traces before judging educational value."
+      },
+      {
+        "case": "lyrics",
+        "kind": "browser",
+        "name": "meaningful interaction chapter-bias-social-implication",
+        "detail": "No observed graphic, output data or relationship change. Inspect text-only traces before judging educational value."
+      },
+      {
+        "case": "lyrics",
+        "kind": "browser",
+        "name": "responsive 320",
+        "detail": "{\"viewport\":304,\"scrollWidth\":331,\"overflow\":[{\"id\":\"chapter-data-construction\",\"client\":268,\"scroll\":313}]}"
+      },
+      {
+        "kind": "engineering",
+        "case": "shannon",
+        "chapter": "ch6-noisy-capacity",
+        "severity": "blocker",
+        "detail": "遗留脚本把容量设为 c=hx，与本章正文 max I(X;Y) 及BSC公式矛盾；等概输入时 p=.5 应C=0而当前C=1。",
+        "source": "原PDF p22容量定义；本章声明二元对称信道。"
+      },
+      {
+        "kind": "engineering",
+        "case": "shannon",
+        "chapter": "ch5-noiseless-theorem",
+        "severity": "blocker",
+        "detail": "用任意指数函数给典型集有限长概率，会误导为由H,R,n可确定的概率。需要声明并实际计算具体信源的典型集，或移除该数值。",
+        "source": "典型集极限定理不规定当前任意有限长概率曲线。"
+      },
+      {
+        "kind": "engineering",
+        "case": "shannon",
+        "chapter": "ch8-rate-distortion",
+        "severity": "minor",
+        "detail": "压缩比没有指定原始表示速率；需删除或给出明确教学基准，并补全高斯均方失真公式与bits/sample单位。"
+      },
+      {
+        "kind": "engineering",
+        "case": "shannon",
+        "chapter": "ch6-noisy-capacity",
+        "severity": "minor",
+        "detail": "遗留章节强加训练策略、消融措辞，不适用于此理论论文。"
+      },
+      {
+        "kind": "engineering",
+        "case": "rag",
+        "chapter": "chap-2-architecture",
+        "severity": "minor",
+        "detail": "实测桌面截图架构SVG嵌在较窄中列，文字过小；应给机制图完整阅读宽度。",
+        "evidence": "rag/first-pass/chapter-2.png"
+      }
+    ],
+    "first_pass_complete": false
+  },
+  "acceptance-complete.json": {
+    "candidates": {
+      "rag": {
+        "edition": "011ba157-97bb-47c1-91e2-2d4a759e49ca",
+        "artifact_hash": "8ce3407816e2f0e60de82ae0b8e92125fec6f49e6c799c90d2632c2cbb84682c"
+      },
+      "adaptive-dcs-somp": {
+        "edition": "5b4b2f49-c50c-40e0-9d93-833782eb4350",
+        "artifact_hash": "317b4d15df6ad819ffc46752355640b668850fd854f74503cfc57efd739e4b8e"
+      },
+      "shannon": {
+        "edition": "65692414-669d-4c7d-a1f8-45902c79136d",
+        "artifact_hash": "da63593b52eb6cbb0b337dbf95d42623d44af23d7d6fd62270fdc191a1937851"
+      },
+      "lyrics": {
+        "edition": "68d7a680-5a5c-42ce-b5fc-3b34cea683c5",
+        "artifact_hash": "85c26686bdd0d03b4ae9f80ea02eba2e6d846f34f4815939210a205505aaf58b"
+      },
+      "moral-machine": {
+        "edition": "a9958210-2077-4f59-b9e3-28e28dcbe47c",
+        "artifact_hash": "5b7fe36664e4b73fc42423ac36f1d51b8735c11eb8a7b7ef082a05d6d1c358bd"
+      },
+      "simulation-argument": {
+        "edition": "fbc90b04-29cf-482a-9ec4-0dbcf25b9f5e",
+        "artifact_hash": "487d80854e49df24ec2879acda50ac69031840f58587bf6f2c46ea0a29589a34"
+      },
+      "generative-ai-work": {
+        "edition": "917662fc-a4e6-4bcb-ac7f-f9cbe992a034",
+        "artifact_hash": "463923c0b4489bf60921abc7bb09f5f5f00dafbb19675a5f9f1e45dfb37e97ae"
+      },
+      "macroeconomics-ai": {
+        "edition": "dbbf5b7d-dbc8-4903-aac0-6960596fcc64",
+        "artifact_hash": "3fcfecbba5c8bd9aae007824f6f947c5bab0e5cc5cb0f9ef07c6a80d11fad644"
+      },
+      "hyperbolic-location": {
+        "edition": "f409fae8-7e5c-403d-8ca7-5eeacb9fa007",
+        "artifact_hash": "74e95cefe82a02e72aa51af4c39a83fc35b5d1bf76b121d202bc5b3485bc4a42"
+      },
+      "transformer-excerpt": {
+        "edition": "5df55aad-2051-4bb2-87f5-ae0d98db8ca6",
+        "artifact_hash": "43e4a4b57618f2c0866fe6a8d9f9c7f9ed1c48c03b27b3a84a03ea285330b9f4"
+      },
+      "5g-overview": {
+        "edition": "c67cefb0-eec6-4cb5-a977-c4cdf634405e",
+        "artifact_hash": "6d982bff760c1c1149b4a781cde17b774ebef13937b5fdfdd9a7d09c5e215513"
+      }
+    },
+    "reviews": [
+      {
+        "case": "generative-ai-work",
+        "edition": "917662fc-a4e6-4bcb-ac7f-f9cbe992a034",
+        "fidelity": "pass",
+        "experience": "revise"
+      },
+      {
+        "case": "hyperbolic-location",
+        "edition": "f409fae8-7e5c-403d-8ca7-5eeacb9fa007",
+        "fidelity": "pass",
+        "experience": "revise"
+      }
+    ],
+    "published": false
+  },
+  "acceptance-reviews.json": [
+    {
+      "case": "generative-ai-work",
+      "edition": "917662fc-a4e6-4bcb-ac7f-f9cbe992a034",
+      "fidelity": "pass",
+      "experience": "revise"
+    },
+    {
+      "case": "hyperbolic-location",
+      "edition": "f409fae8-7e5c-403d-8ca7-5eeacb9fa007",
+      "fidelity": "pass",
+      "experience": "revise"
+    }
+  ],
+  "final-review-summary.json": [
+    {
+      "case": "transformer-excerpt",
+      "status": "blocked"
+    },
+    {
+      "case": "5g-overview",
+      "edition": "1835a7ff-9894-4cc5-b4bd-058dd5df005c",
+      "fidelity": "pass",
+      "experience": "revise"
+    }
+  ],
+  "repair-summary-core.json": [
+    {
+      "case": "moral-machine",
+      "document_id": "pdf-59c4f6158add045b",
+      "parent": "278f8557-f0da-4d9a-a83c-2abaf814a67d",
+      "started_at": "2026-10-25T08:34:16.737461+00:00",
+      "edition": "a9958210-2077-4f59-b9e3-28e28dcbe47c",
+      "folder": "D:\\~张嘉琪\\新建文件夹\\产品经理\\paperMind\\data\\reading-v2\\a9958210-2077-4f59-b9e3-28e28dcbe47c",
+      "status": "draft",
+      "error": null,
+      "seconds": 638.23,
+      "finished_at": "2026-10-25T08:44:54.976597+00:00"
+    },
+    {
+      "case": "rag",
+      "document_id": "pdf-23e3249e9a1e7541",
+      "parent": "00f64620-2440-4231-a559-459d6a9f2382",
+      "started_at": "2026-10-25T08:29:37.942543+00:00",
+      "edition": "011ba157-97bb-47c1-91e2-2d4a759e49ca",
+      "folder": "D:\\~张嘉琪\\新建文件夹\\产品经理\\paperMind\\data\\reading-v2\\011ba157-97bb-47c1-91e2-2d4a759e49ca",
+      "status": "draft",
+      "checks": {
+        "structure": {
+          "status": "pass",
+          "anchors": 10,
+          "citations": 20
+        }
+      },
+      "error": null,
+      "preview_url": "http://127.0.0.1:8000/?document=pdf-23e3249e9a1e7541&readingV2=00f64620-2440-4231-a559-459d6a9f2382&readingInspection=1",
+      "seconds": 2.11,
+      "finished_at": "2026-10-25T08:29:40.048617+00:00"
+    },
+    {
+      "case": "lyrics",
+      "document_id": "pdf-66fe209b72eb93c6",
+      "parent": "a4c1ebd3-7957-446b-99cc-200182278139",
+      "started_at": "2026-10-25T08:29:40.430667+00:00",
+      "edition": "68d7a680-5a5c-42ce-b5fc-3b34cea683c5",
+      "folder": "D:\\~张嘉琪\\新建文件夹\\产品经理\\paperMind\\data\\reading-v2\\68d7a680-5a5c-42ce-b5fc-3b34cea683c5",
+      "status": "draft",
+      "error": null,
+      "seconds": 644.27,
+      "finished_at": "2026-10-25T08:40:24.706128+00:00"
+    },
+    {
+      "case": "shannon",
+      "document_id": "pdf-6e4e3411984f3edf",
+      "parent": "84e43ad0-3286-4487-b87d-edb348858dd3",
+      "started_at": "2026-10-25T08:29:40.065082+00:00",
+      "edition": "65692414-669d-4c7d-a1f8-45902c79136d",
+      "folder": "D:\\~张嘉琪\\新建文件夹\\产品经理\\paperMind\\data\\reading-v2\\65692414-669d-4c7d-a1f8-45902c79136d",
+      "status": "draft",
+      "error": null,
+      "seconds": 276.67,
+      "finished_at": "2026-10-25T08:34:16.728612+00:00"
+    },
+    {
+      "case": "simulation-argument",
+      "document_id": "pdf-be823e12764a35cd",
+      "parent": "1ca47681-7aa7-4b81-917b-7442ee2f155c",
+      "started_at": "2026-10-25T08:40:24.712968+00:00",
+      "edition": "fbc90b04-29cf-482a-9ec4-0dbcf25b9f5e",
+      "folder": "D:\\~张嘉琪\\新建文件夹\\产品经理\\paperMind\\data\\reading-v2\\fbc90b04-29cf-482a-9ec4-0dbcf25b9f5e",
+      "status": "draft",
+      "checks": {
+        "structure": {
+          "status": "pass",
+          "anchors": 10,
+          "citations": 10
+        }
+      },
+      "error": null,
+      "preview_url": "http://127.0.0.1:8000/?document=pdf-be823e12764a35cd&readingV2=1ca47681-7aa7-4b81-917b-7442ee2f155c&readingInspection=1",
+      "seconds": 493.58,
+      "finished_at": "2026-10-25T08:48:38.297341+00:00"
+    },
+    {
+      "case": "macroeconomics-ai",
+      "document_id": "pdf-b0183405d850db11",
+      "parent": "5f0ec9e7-5228-4faa-89c1-9149cf37a2e3",
+      "started_at": "2026-10-25T08:47:40.840861+00:00",
+      "edition": "dbbf5b7d-dbc8-4903-aac0-6960596fcc64",
+      "folder": "D:\\~张嘉琪\\新建文件夹\\产品经理\\paperMind\\data\\reading-v2\\dbbf5b7d-dbc8-4903-aac0-6960596fcc64",
+      "status": "draft",
+      "checks": {
+        "structure": {
+          "status": "pass",
+          "anchors": 9,
+          "citations": 36
+        }
+      },
+      "error": null,
+      "preview_url": "http://127.0.0.1:8000/?document=pdf-b0183405d850db11&readingV2=5f0ec9e7-5228-4faa-89c1-9149cf37a2e3&readingInspection=1",
+      "seconds": 593.78,
+      "finished_at": "2026-10-25T08:57:34.626913+00:00"
+    },
+    {
+      "case": "generative-ai-work",
+      "document_id": "pdf-ac0a4e183aa6f936",
+      "parent": "5f13bf8d-0478-401c-a32a-236136c8485f",
+      "started_at": "2026-10-25T08:44:54.986694+00:00",
+      "edition": "917662fc-a4e6-4bcb-ac7f-f9cbe992a034",
+      "folder": "D:\\~张嘉琪\\新建文件夹\\产品经理\\paperMind\\data\\reading-v2\\917662fc-a4e6-4bcb-ac7f-f9cbe992a034",
+      "status": "failed",
+      "error": "章节结构检查失败：[{\"chapter\": \"limitations_scope\", \"issue\": \"不允许的标签：blockquote；不允许的标签：blockquote；不允许的标签：blockquote\"}]",
+      "seconds": 165.86,
+      "finished_at": "2026-10-25T08:47:40.836343+00:00"
+    }
+  ],
+  "repair-summary-extra.json": [
+    {
+      "case": "hyperbolic-location",
+      "document_id": "pdf-473e344b1814e453",
+      "parent": "9732739c-3568-4c59-8701-d03e133a2c80",
+      "started_at": "2026-10-25T08:48:38.308639+00:00",
+      "edition": "f409fae8-7e5c-403d-8ca7-5eeacb9fa007",
+      "folder": "D:\\~张嘉琪\\新建文件夹\\产品经理\\paperMind\\data\\reading-v2\\f409fae8-7e5c-403d-8ca7-5eeacb9fa007",
+      "status": "failed",
+      "error": "章节结构检查失败：[{\"chapter\": \"chap-model\", \"issue\": \"不允许的标签：foreignobject\"}]",
+      "seconds": 617.11,
+      "finished_at": "2026-10-25T08:58:55.415231+00:00"
+    },
+    {
+      "case": "5g-overview",
+      "document_id": "pdf-fe9119a9c453151a",
+      "parent": "1835a7ff-9894-4cc5-b4bd-058dd5df005c",
+      "started_at": "2026-10-25T08:58:55.424064+00:00",
+      "edition": "c67cefb0-eec6-4cb5-a977-c4cdf634405e",
+      "folder": "D:\\~张嘉琪\\新建文件夹\\产品经理\\paperMind\\data\\reading-v2\\c67cefb0-eec6-4cb5-a977-c4cdf634405e",
+      "status": "draft",
+      "error": null,
+      "seconds": 726.2,
+      "finished_at": "2026-10-25T09:11:01.624687+00:00"
+    },
+    {
+      "case": "transformer-excerpt",
+      "document_id": "pdf-1a02a680ff1cd6e0",
+      "parent": null,
+      "started_at": "2026-10-25T08:57:34.632456+00:00",
+      "status": "draft",
+      "error": null,
+      "seconds": 144.59,
+      "finished_at": "2026-10-25T08:59:59.214496+00:00",
+      "edition": "5df55aad-2051-4bb2-87f5-ae0d98db8ca6",
+      "folder": "D:\\~张嘉琪\\新建文件夹\\产品经理\\paperMind\\data\\reading-v2\\5df55aad-2051-4bb2-87f5-ae0d98db8ca6"
+    }
+  ],
+  "first-pass-complete.json": {
+    "completed_at": "2026-10-25T09:12:03.058442+00:00",
+    "all_cases_checked": true,
+    "reviews": [
+      {
+        "case": "adaptive-dcs-somp",
+        "edition": "5b4b2f49-c50c-40e0-9d93-833782eb4350",
+        "fidelity": "pass",
+        "experience": "revise"
+      },
+      {
+        "case": "rag",
+        "edition": "00f64620-2440-4231-a559-459d6a9f2382",
+        "fidelity": "pass",
+        "experience": "revise"
+      },
+      {
+        "case": "lyrics",
+        "edition": "a4c1ebd3-7957-446b-99cc-200182278139",
+        "fidelity": "pass",
+        "experience": "revise"
+      },
+      {
+        "case": "shannon",
+        "edition": "84e43ad0-3286-4487-b87d-edb348858dd3",
+        "fidelity": "pass",
+        "experience": "revise"
+      },
+      {
+        "case": "moral-machine",
+        "edition": "278f8557-f0da-4d9a-a83c-2abaf814a67d",
+        "fidelity": "pass"
+      },
+      {
+        "case": "generative-ai-work",
+        "status": "blocked"
+      },
+      {
+        "case": "macroeconomics-ai",
+        "edition": "5f0ec9e7-5228-4faa-89c1-9149cf37a2e3",
+        "fidelity": "pass"
+      },
+      {
+        "case": "hyperbolic-location",
+        "status": "blocked"
+      },
+      {
+        "case": "transformer-excerpt",
+        "status": "blocked"
+      },
+      {
+        "case": "simulation-argument",
+        "edition": "1ca47681-7aa7-4b81-917b-7442ee2f155c",
+        "fidelity": "pass",
+        "experience": "revise"
+      },
+      {
+        "case": "5g-overview",
+        "edition": "1835a7ff-9894-4cc5-b4bd-058dd5df005c",
+        "fidelity": "pass",
+        "experience": "revise"
+      }
+    ],
+    "repairs_started": false,
+    "published": false
+  },
+  "first-pass-core-complete.json": {
+    "completed_at": "2026-10-25T09:08:50.624002+00:00",
+    "cases": [
+      "adaptive-dcs-somp",
+      "generative-ai-work",
+      "lyrics",
+      "macroeconomics-ai",
+      "moral-machine",
+      "rag",
+      "shannon",
+      "simulation-argument"
+    ],
+    "reviews": [
+      {
+        "case": "adaptive-dcs-somp",
+        "edition": "5b4b2f49-c50c-40e0-9d93-833782eb4350",
+        "fidelity": "pass",
+        "experience": "revise"
+      },
+      {
+        "case": "rag",
+        "edition": "00f64620-2440-4231-a559-459d6a9f2382",
+        "fidelity": "pass",
+        "experience": "revise"
+      },
+      {
+        "case": "lyrics",
+        "edition": "a4c1ebd3-7957-446b-99cc-200182278139",
+        "fidelity": "pass",
+        "experience": "revise"
+      },
+      {
+        "case": "shannon",
+        "edition": "84e43ad0-3286-4487-b87d-edb348858dd3",
+        "fidelity": "pass",
+        "experience": "revise"
+      },
+      {
+        "case": "moral-machine",
+        "edition": "278f8557-f0da-4d9a-a83c-2abaf814a67d",
+        "fidelity": "pass"
+      },
+      {
+        "case": "generative-ai-work",
+        "status": "blocked"
+      },
+      {
+        "case": "macroeconomics-ai",
+        "edition": "5f0ec9e7-5228-4faa-89c1-9149cf37a2e3",
+        "fidelity": "pass"
+      },
+      {
+        "case": "simulation-argument",
+        "edition": "1ca47681-7aa7-4b81-917b-7442ee2f155c",
+        "fidelity": "pass",
+        "experience": "revise"
+      }
+    ],
+    "note": "Original eight-paper batch complete; three additional uploads are a separate batch."
+  },
+  "review-summary.json": [
+    {
+      "case": "adaptive-dcs-somp",
+      "edition": "5b4b2f49-c50c-40e0-9d93-833782eb4350",
+      "fidelity": "pass",
+      "experience": "revise"
+    },
+    {
+      "case": "rag",
+      "edition": "00f64620-2440-4231-a559-459d6a9f2382",
+      "fidelity": "pass",
+      "experience": "revise"
+    },
+    {
+      "case": "lyrics",
+      "edition": "a4c1ebd3-7957-446b-99cc-200182278139",
+      "fidelity": "pass",
+      "experience": "revise"
+    },
+    {
+      "case": "shannon",
+      "edition": "84e43ad0-3286-4487-b87d-edb348858dd3",
+      "fidelity": "pass",
+      "experience": "revise"
+    },
+    {
+      "case": "moral-machine",
+      "edition": "278f8557-f0da-4d9a-a83c-2abaf814a67d",
+      "fidelity": "pass"
+    },
+    {
+      "case": "generative-ai-work",
+      "status": "blocked"
+    },
+    {
+      "case": "macroeconomics-ai",
+      "edition": "5f0ec9e7-5228-4faa-89c1-9149cf37a2e3",
+      "fidelity": "pass"
+    },
+    {
+      "case": "hyperbolic-location",
+      "status": "blocked"
+    },
+    {
+      "case": "transformer-excerpt",
+      "status": "blocked"
+    },
+    {
+      "case": "simulation-argument",
+      "edition": "1ca47681-7aa7-4b81-917b-7442ee2f155c",
+      "fidelity": "pass",
+      "experience": "revise"
+    },
+    {
+      "case": "5g-overview",
+      "edition": "1835a7ff-9894-4cc5-b4bd-058dd5df005c",
+      "fidelity": "pass",
+      "experience": "revise"
+    }
+  ]
+}

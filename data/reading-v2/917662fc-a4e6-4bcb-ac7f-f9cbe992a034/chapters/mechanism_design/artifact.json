@@ -1,0 +1,13 @@
+{
+  "title": "机制：隐性知识的编码与传播",
+  "description": "本章详解 AI 系统如何通过微调高绩效者数据，将隐性知识转化为实时建议，并展示其对低技能员工的赋能机制。包含三步流程交互与异质性证据可视化。",
+  "html": "<section id=\"mechanism_design\" data-node=\"mechanism_design\"><h2>AI 如何把部分隐性经验带入日常客服？</h2><p>系统基于历史客服会话学习，并在当前聊天中向客服提供实时回复建议。客服仍负责判断、修改和发送，允许忽略建议。模型可能把优秀客服的沟通模式带给新手；这也是作者提出的一条机制解释，而不是已被完全分离识别的唯一原因。</p><div class=\"source-options\"><button type=\"button\" data-mechanism=\"0\">查看学习来源</button><button type=\"button\" data-mechanism=\"1\">查看实时辅助</button><button type=\"button\" data-mechanism=\"2\">查看人的选择</button></div><div class=\"source-mechanism\"><div id=\"knowledge-stage-0\" class=\"source-stage\">历史会话与表现较好的处理方式 → 模型可提供的建议</div><div id=\"knowledge-stage-1\" class=\"source-stage\">当前客户问题 → AI 实时建议 → 客服阅读与评估</div><div id=\"knowledge-stage-2\" class=\"source-stage\">客服接受、修改或忽略建议 → 客户会话及其结果</div></div><output id=\"knowledge-mechanism-result\" class=\"source-result\"></output><p>新手和低技能组收益更大、经验曲线变快、沟通方式趋同，为知识传播机制提供提示性支持；并不证明只要复制话术就能得到同样提升。研究没有为历史高技能贡献者支付单独报酬，也提出了激励分配问题。</p><button type=\"button\" data-source=\"S042\">原文</button><button type=\"button\" data-source=\"S045\">原文</button><button type=\"button\" data-source=\"S249\">原文</button><button type=\"button\" data-source=\"S252\">原文</button><button type=\"button\" data-source=\"S287\">原文</button></section>",
+  "css": ".source-mechanism{display:grid;grid-template-columns:1fr;gap:18px;margin:24px 0}.source-stage{border-block:1px solid var(--line);padding:18px 0}.source-stage.is-active{background:var(--soft)}.source-options{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0}.source-result{display:block;line-height:1.9;padding:20px 0}.source-point{display:flex;gap:24px;align-items:baseline;flex-wrap:wrap;padding:18px 0;border-bottom:1px solid var(--line)}.source-point strong{font-size:25px;color:var(--accent)}",
+  "javascript": "(()=>{const notes=['模型从历史数据中的处理模式学习，无法仅凭这幅结构图确认学到的是哪条具体隐性知识。','建议是实时辅助，客服可以同时看到上下文；图中箭头表示系统流程，不是效果大小。','客服拥有最终处理权。使用权、实际遵循建议和结果之间不能直接画等号。'];function render(i){notes.forEach((_,j)=>document.getElementById('knowledge-stage-'+j).classList.toggle('is-active',i===j));const el=document.getElementById('knowledge-mechanism-result');el.dataset.value=String(i);el.textContent=notes[i];}document.querySelectorAll('[data-mechanism]').forEach(b=>b.addEventListener('click',()=>render(Number(b.dataset.mechanism))));render(0);})();",
+  "teaching_assumptions": [
+    "交互图展示原文报告的机制与已明确描述的结果，不补画缺失的逐月原始数据。"
+  ],
+  "limitations": [
+    "机制证据为提示性证据，不能把相关沟通模式与收益全部归因于单一因果通路。"
+  ]
+}

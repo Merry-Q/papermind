@@ -1,0 +1,675 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'nonce-uPTW1EcN5ZPEbrfSFS7unwdY79LVvVPi'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; frame-src 'none'; object-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'"><title>Attention Is All You Need：交互式阅读规划</title><style>*,*::before,*::after{box-sizing:border-box}html{scroll-behavior:auto}body{margin:0;min-width:0}button,input,select{font:inherit}button{cursor:pointer}canvas,svg{max-width:100%}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid #315cc8;outline-offset:4px}#pm-local-source{position:fixed;inset:auto 12px 12px;background:#fff;color:#26364b;border:1px solid #61748c;padding:22px;z-index:99999;max-height:65vh;overflow:auto;font:15px/1.8 system-ui}#pm-local-source button{padding:8px 12px;margin-top:12px}#pm-local-source blockquote{white-space:pre-wrap;margin:12px 0}.pm-user-note{margin:24px 0;padding:20px;background:#edf2ff;color:#26364b;font:15px/1.9 system-ui}.pm-user-note h4{margin:0 0 10px}.pm-user-note p{white-space:pre-wrap}.pm-user-note button{margin:5px;padding:6px 10px}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}:root {
+  --bg-color: #f7f7f5;
+  --text-color: #2d3748;
+  --primary: #2C5282;
+  --accent: #DD6B20;
+  --card-bg: #ffffff;
+  --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+#reading-workbench {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.hero-section {
+  text-align: center;
+  padding: 40px 0;
+  border-bottom: 2px solid #e2e8f0;
+  margin-bottom: 40px;
+}
+
+.hero-section h1 {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+.thesis-statement {
+  font-size: 1.2rem;
+  color: #4a5568;
+  max-width: 700px;
+  margin: 0 auto 20px;
+}
+
+.nav-controls button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  margin: 0 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.content-block {
+  background: var(--card-bg);
+  padding: 30px;
+  margin-bottom: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.content-block h2 {
+  color: var(--primary);
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 10px;
+  margin-top: 0;
+}
+
+.grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 600px) {
+  .grid-layout { grid-template-columns: 1fr; }
+}
+
+.source-btn {
+  background: #edf2f7;
+  color: var(--primary);
+  border: 1px solid #cbd5e0;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.chart-container, .lab-container, .pe-viz {
+  background: #fafafa;
+  padding: 15px;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+  text-align: center;
+}
+
+.bar-group {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 150px;
+  margin: 10px 0;
+  position: relative;
+}
+
+.bar {
+  width: 40px;
+  background: var(--primary);
+  transition: height 0.3s ease;
+  position: relative;
+}
+
+.bar.rnn-bar { background: #a0aec0; }
+.bar.trans-bar { background: var(--primary); }
+
+.bar-group span {
+  position: absolute;
+  bottom: -25px;
+  font-size: 12px;
+  width: 100px;
+  text-align: center;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.formula-box {
+  font-family: "Courier New", monospace;
+  background: #2d3748;
+  color: #fff;
+  padding: 15px;
+  border-radius: 4px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.teaching-note {
+  font-size: 12px;
+  color: #cbd5e0;
+  margin-top: 5px;
+}
+
+.arch-diagram svg {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+}
+
+.sublayer.masked {
+  fill: #fff5f5;
+  stroke: var(--accent) !important;
+}
+
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  height: 200px;
+  gap: 10px;
+  padding-top: 20px;
+  border-bottom: 1px solid #ccc;
+}
+
+.bar-item {
+  flex: 1;
+  background: var(--primary);
+  position: relative;
+  transition: height 0.5s;
+  min-height: 2px;
+}
+
+.bar-item span {
+  position: absolute;
+  bottom: -25px;
+  left: 0;
+  width: 100%;
+  font-size: 10px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.bar-item .value-label {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.discrepancy-note {
+  color: var(--accent);
+  font-size: 13px;
+  margin-top: 10px;
+  font-style: italic;
+}
+
+.controls label {
+  display: block;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.note {
+  font-size: 12px;
+  color: #718096;
+  margin-top: 10px;
+}</style></head><body><main id="reading-workbench">
+  <header class="hero-section">
+    <h1>Attention Is All You Need</h1>
+    <p class="thesis-statement">Transformer 通过完全摒弃循环和卷积，仅依赖自注意力机制，实现了序列建模中的常数级路径长度和高度并行化。</p>
+    <div class="nav-controls">
+      <button type="button" data-scroll="problem-statement">瓶颈</button>
+      <button type="button" data-scroll="transformer-architecture">架构</button>
+      <button type="button" data-scroll="attention-mechanisms">机制</button>
+      <button type="button" data-scroll="mt-results">结果</button>
+    </div>
+  </header>
+
+  <section id="problem-statement" data-node="problem-statement" class="content-block">
+    <h2>1. 序列模型的局限性</h2>
+    <div class="grid-layout">
+      <div class="text-col">
+        <p>RNN 的顺序计算特性导致无法并行化且难以学习长距离依赖；CNN 虽可并行但路径长度随距离增长。</p>
+        <button type="button" data-source="S023" class="source-btn">原文 · p.2</button>
+      </div>
+      <div class="viz-col">
+        <div class="chart-container" id="complexity-chart">
+          <div class="chart-label">序列长度 (n)</div>
+          <div class="bars">
+            <div class="bar-group">
+              <div class="bar rnn-bar" style="height: 20%"></div>
+              <span>RNN (O(n))</span>
+            </div>
+            <div class="bar-group">
+              <div class="bar trans-bar" style="height: 20%"></div>
+              <span>Transformer (O(1))</span>
+            </div>
+          </div>
+          <input type="range" id="seq-length-slider" min="10" max="100" value="20">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="transformer-architecture" data-node="transformer-architecture" class="content-block">
+    <h2>2. Transformer 架构概览</h2>
+    <div class="arch-diagram" id="arch-viz">
+      <svg viewBox="0 0 600 400" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#999" />
+          </marker>
+        </defs>
+        <g class="encoder-stack" transform="translate(50, 50)">
+          <rect x="0" y="0" width="200" height="300" fill="#f0f4f8" stroke="#2C5282" stroke-width="2" rx="5" />
+          <text x="100" y="-10" text-anchor="middle" font-weight="bold">Encoder (Nx6)</text>
+          <rect x="20" y="20" width="160" height="60" fill="#fff" stroke="#2C5282" class="sublayer" />
+          <text x="100" y="55" text-anchor="middle" font-size="12">Multi-Head Attention</text>
+          <rect x="20" y="100" width="160" height="60" fill="#fff" stroke="#2C5282" class="sublayer" />
+          <text x="100" y="135" text-anchor="middle" font-size="12">Feed Forward</text>
+        </g>
+        <g class="decoder-stack" transform="translate(350, 50)">
+          <rect x="0" y="0" width="200" height="300" fill="#f0f4f8" stroke="#2C5282" stroke-width="2" rx="5" />
+          <text x="100" y="-10" text-anchor="middle" font-weight="bold">Decoder (Nx6)</text>
+          <rect x="20" y="20" width="160" height="50" fill="#fff" stroke="#DD6B20" class="sublayer masked" />
+          <text x="100" y="50" text-anchor="middle" font-size="12">Masked MHA</text>
+          <rect x="20" y="80" width="160" height="50" fill="#fff" stroke="#2C5282" class="sublayer" />
+          <text x="100" y="110" text-anchor="middle" font-size="12">Encoder-Decoder Attn</text>
+        </g>
+      </svg>
+      <div class="controls">
+        <button type="button" id="toggle-mask">切换掩码可视化</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="attention-mechanisms" data-node="scaled-dot-product" class="content-block">
+    <h2>3. 注意力数学机制</h2>
+    <div class="formula-box">
+      <p>Attention(Q, K, V) = softmax(QK^T / √dk)V</p>
+      <div class="teaching-note">教学示例：非论文训练权重</div>
+    </div>
+    <div class="lab-container">
+      <div class="controls">
+        <label>dk (维度): <input type="range" id="dk-slider" min="16" max="512" value="64"></label>
+        <span id="dk-val">64</span>
+        <label><input type="checkbox" id="scale-check" checked> 启用缩放 (1/√dk)</label>
+      </div>
+      <canvas id="attention-canvas" width="400" height="200"></canvas>
+      <div id="attn-output-display">Output: 0.00</div>
+      <button type="button" id="attn-reset">复位</button>
+    </div>
+  </section>
+
+  <section id="positional-encoding" data-node="positional-encoding" class="content-block">
+    <h2>4. 位置编码注入</h2>
+    <div class="pe-viz">
+      <canvas id="pe-canvas" width="400" height="200"></canvas>
+      <div class="controls">
+        <label>位置 (pos): <input type="range" id="pe-pos" min="0" max="99" value="0"></label>
+        <span id="pe-pos-val">0</span>
+      </div>
+      <p class="formula">PE(pos, 2i) = sin(pos / 10000^(2i/d_model))</p>
+    </div>
+  </section>
+
+  <section id="complexity-analysis" data-node="complexity-analysis" class="content-block">
+    <h2>5. 计算复杂度对比</h2>
+    <div class="complexity-controls">
+      <label>n (序列长度): <input type="range" id="comp-n" min="10" max="1000" value="50"></label>
+      <label>d (维度): 
+        <select id="comp-d">
+          <option value="256">256</option>
+          <option value="512" selected>512</option>
+          <option value="1024">1024</option>
+        </select>
+      </label>
+    </div>
+    <div class="bars-container" id="complexity-bars">
+      <!-- Bars injected by JS -->
+    </div>
+    <p class="note">理论操作数对比，非实际耗时。当 n < d 时自注意力更优。</p>
+  </section>
+
+  <section id="mt-results" data-node="mt-results" class="content-block">
+    <h2>6. 机器翻译结果 (SOTA)</h2>
+    <div class="results-grid">
+      <div class="chart-box">
+        <h3>BLEU 分数对比 (WMT 2014)</h3>
+        <select id="task-select">
+          <option value="ende">English-to-German</option>
+          <option value="enfr">English-to-French</option>
+        </select>
+        <div id="bleu-chart" class="bar-chart"></div>
+        <p class="discrepancy-note" id="discrepancy-msg" style="display:none;">注意：原文正文报告 41.0，表格报告 41.8。</p>
+      </div>
+      <div class="data-box">
+        <h3>训练成本 (FLOPs)</h3>
+        <div id="flops-chart" class="bar-chart"></div>
+        <button type="button" data-source="S116" class="source-btn">查看 Table 2</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="ablation-studies" data-node="ablation-studies" class="content-block">
+    <h2>7. 消融实验</h2>
+    <select id="ablation-select">
+      <option value="base">Base Model</option>
+      <option value="A_1">Single Head (h=1)</option>
+      <option value="C_1">N=2 Layers</option>
+      <option value="D_1">No Dropout</option>
+    </select>
+    <div class="ablation-result">
+      <span>BLEU (dev): <strong id="ablation-bleu">25.8</strong></span>
+      <span>PPL (dev): <strong id="ablation-ppl">4.92</strong></span>
+    </div>
+    <p class="note">数据源自 Table 3 (newstest2013)。</p>
+  </section>
+</main><script nonce="uPTW1EcN5ZPEbrfSFS7unwdY79LVvVPi">const PM_CONFIG={"edition": "079275a4-bac5-4953-b1ff-e449a44ef573", "document": "pdf-bdfaa68d8984f0dc", "channel": "first-inspection", "data": {"tables": [{"id": "p6-Table_1", "title": "Maximum path lengths, per-layer complexity and minimum number of sequential operations for different layer types. $n$ is the sequence length, $d$ is the representation dimension, $k$ is the kernel size of convolutions and $r$ the size of the neighborhood in restricted self-attention.", "population": "", "columns": ["Layer Type", "Complexity per Layer", "Sequential Operations", "Maximum Path Length"], "rows": [{"id": "row_1", "label": "Self-Attention", "values": {"Layer Type": "Self-Attention", "Complexity per Layer": "$O(n^2 \\cdot d)$", "Sequential Operations": "$O(1)$", "Maximum Path Length": "$O(1)$"}}, {"id": "row_2", "label": "Recurrent", "values": {"Layer Type": "Recurrent", "Complexity per Layer": "$O(n \\cdot d^2)$", "Sequential Operations": "$O(n)$", "Maximum Path Length": "$O(n)$"}}, {"id": "row_3", "label": "Convolutional", "values": {"Layer Type": "Convolutional", "Complexity per Layer": "$O(k \\cdot n \\cdot d^2)$", "Sequential Operations": "$O(1)$", "Maximum Path Length": "$O(\\log_k(n))$"}}, {"id": "row_4", "label": "Self-Attention (restricted)", "values": {"Layer Type": "Self-Attention (restricted)", "Complexity per Layer": "$O(r \\cdot n \\cdot d)$", "Sequential Operations": "$O(1)$", "Maximum Path Length": "$O(n/r)$"}}], "notes": ["In the text: 'As noted in Table 1, a self-attention layer connects all positions with a constant number of sequentially executed operations, whereas a recurrent layer requires $O(n)$ sequential operations.'", "The table caption defines variables: $n$ = sequence length, $d$ = representation dimension, $k$ = kernel size of convolutions, $r$ = size of neighborhood in restricted self-attention."], "page": 6}, {"id": "p8-Table_2", "title": "Table 2: The Transformer achieves better BLEU scores than previous state-of-the-art models on the English-to-German and English-to-French newstest2014 tests at a fraction of the training cost.", "population": "WMT 2014 English-to-German and English-to-French newstest2014", "columns": ["Model", "BLEU", "BLEU", "Training Cost (FLOPS)", "Training Cost (FLOPS)"], "rows": [{"id": "row_1", "label": "ByteNet [18]", "values": {"Model": "ByteNet [18]", "BLEU": null, "Training Cost (FLOPS)": "EN-FR"}}, {"id": "row_2", "label": "Deep-Att + PosUnk [39]", "values": {"Model": "Deep-Att + PosUnk [39]", "BLEU": "39.2", "Training Cost (FLOPS)": "1.0 · 10^20"}}, {"id": "row_3", "label": "GNMT + RL [38]", "values": {"Model": "GNMT + RL [38]", "BLEU": "39.92", "Training Cost (FLOPS)": "1.4 · 10^20"}}, {"id": "row_4", "label": "ConvS2S [9]", "values": {"Model": "ConvS2S [9]", "BLEU": "40.46", "Training Cost (FLOPS)": "1.5 · 10^20"}}, {"id": "row_5", "label": "MoE [32]", "values": {"Model": "MoE [32]", "BLEU": "40.56", "Training Cost (FLOPS)": "1.2 · 10^20"}}, {"id": "row_6", "label": "Deep-Att + PosUnk Ensemble [39]", "values": {"Model": "Deep-Att + PosUnk Ensemble [39]", "BLEU": "40.4", "Training Cost (FLOPS)": "8.0 · 10^20"}}, {"id": "row_7", "label": "GNMT + RL Ensemble [38]", "values": {"Model": "GNMT + RL Ensemble [38]", "BLEU": "41.16", "Training Cost (FLOPS)": "1.1 · 10^21"}}, {"id": "row_8", "label": "ConvS2S Ensemble [9]", "values": {"Model": "ConvS2S Ensemble [9]", "BLEU": "41.29", "Training Cost (FLOPS)": "1.2 · 10^21"}}, {"id": "row_9", "label": "Transformer (base model)", "values": {"Model": "Transformer (base model)", "BLEU": "38.1", "Training Cost (FLOPS)": null}}, {"id": "row_10", "label": "Transformer (big)", "values": {"Model": "Transformer (big)", "BLEU": "41.8", "Training Cost (FLOPS)": null}}], "notes": ["Residual Dropout: We apply dropout [33] to the output of each sub-layer, before it is added to the sub-layer input and normalized. In addition, we apply dropout to the sums of the embeddings and the positional encodings in both the encoder and decoder stacks. For the base model, we use a rate of P_drop = 0.1.", "Label Smoothing: During training, we employed label smoothing of value ε_ls = 0.1 [36]. This hurts perplexity, as the model learns to be more unsure, but improves accuracy and BLEU score.", "Footnote 5: We used values of 2.8, 3.7, 6.0 and 9.5 TFLOPS for K80, K40, M40 and P100, respectively."], "page": 8}, {"id": "p9-Table3", "title": "Table 3: Variations on the Transformer architecture. Unlisted values are identical to those of the base model. All metrics are on the English-to-German translation development set, newstest2013. Listed perplexities are per-wordpiece, according to our byte-pair encoding, and should not be compared to per-word perplexities.", "population": "English-to-German translation development set, newstest2013", "columns": ["", "N", "d_model", "d_ff", "h", "d_k", "d_v", "P_drop", "ε_ls", "train steps", "PPL (dev)", "BLEU (dev)", "params ×10^6"], "rows": [{"id": "base", "label": "base", "values": {"": "base", "N": "6", "d_model": "512", "d_ff": "2048", "h": "8", "d_k": "64", "d_v": "64", "P_drop": "0.1", "ε_ls": "0.1", "train steps": "100K", "PPL (dev)": "4.92", "BLEU (dev)": "25.8", "params ×10^6": "65"}}, {"id": "A_1", "label": "(A)", "values": {"": "(A)", "N": null, "d_model": null, "d_ff": "1", "h": "512", "d_k": "512", "d_v": "512", "P_drop": null, "ε_ls": null, "train steps": null, "PPL (dev)": "5.29", "BLEU (dev)": "24.9", "params ×10^6": null}}, {"id": "A_2", "label": "(A)", "values": {"": "(A)", "N": null, "d_model": null, "d_ff": "4", "h": "128", "d_k": "128", "d_v": "128", "P_drop": null, "ε_ls": null, "train steps": null, "PPL (dev)": "5.00", "BLEU (dev)": "25.5", "params ×10^6": null}}, {"id": "A_3", "label": "(A)", "values": {"": "(A)", "N": null, "d_model": null, "d_ff": "16", "h": "32", "d_k": "32", "d_v": "32", "P_drop": null, "ε_ls": null, "train steps": null, "PPL (dev)": "4.91", "BLEU (dev)": "25.8", "params ×10^6": null}}, {"id": "A_4", "label": "(A)", "values": {"": "(A)", "N": null, "d_model": null, "d_ff": "32", "h": "16", "d_k": "16", "d_v": "16", "P_drop": null, "ε_ls": null, "train steps": null, "PPL (dev)": "5.01", "BLEU (dev)": "25.4", "params ×10^6": null}}, {"id": "B_1", "label": "(B)", "values": {"": "(B)", "N": null, "d_model": null, "d_ff": null, "h": "16", "d_k": null, "d_v": null, "P_drop": null, "ε_ls": null, "train steps": null, "PPL (dev)": "5.16", "BLEU (dev)": "25.1", "params ×10^6": "58"}}, {"id": "B_2", "label": "(B)", "values": {"": "(B)", "N": null, "d_model": null, "d_ff": null, "h": "32", "d_k": null, "d_v": null, "P_drop": null, "ε_ls": null, "train steps": null, "PPL (dev)": "5.01", "BLEU (dev)": "25.4", "params ×10^6": "60"}}, {"id": "C_1", "label": "(C)", "values": {"": "(C)", "N": "2", "d_model": null, "d_ff": null, "h": null, "d_k": null, "d_v": null, "P_drop": null, "ε_ls": null, "train steps": null, "PPL (dev)": "6.11", "BLEU (dev)": "23.7", "params ×10^6": "36"}}, {"id": "C_2", "label": "(C)", "values": {"": "(C)", "N": "4", "d_model": null, "d_ff": null, "h": null, "d_k": null, "d_v": null, "P_drop": null, "ε_ls": null, "train steps": null, "PPL (dev)": "5.19", "BLEU (dev)": "25.3", "params ×10^6": "50"}}, {"id": "C_3", "label": "(C)", "values": {"": "(C)", "N": "8", "d_model": null, "d_ff": null, "h": null, "d_k": null, "d_v": null, "P_drop": null, "ε_ls": null, "train steps": null, "PPL (dev)": "4.88", "BLEU (dev)": "25.5", "params ×10^6": "80"}}, {"id": "C_4", "label": "(C)", "values": {"": "(C)", "N": "256", "d_model": null, "d_ff": null, "h": null, "d_k": "32", "d_v": "32", "P_drop": null, "ε_ls": null, "train steps": null, "PPL (dev)": "5.75", "BLEU (dev)": "24.5", "params ×10^6": "28"}}, {"id": "C_5", "label": "(C)", "values": {"": "(C)", "N": "1024", "d_model": null, "d_ff": null, "h": null, "d_k": "128", "d_v": "128", "P_drop": null, "ε_ls": null, "train steps": null, "PPL (dev)": "4.66", "BLEU (dev)": "26.0", "params ×10^6": "168"}}, {"id": "C_6", "label": "(C)", "values": {"": "(C)", "N": "1024", "d_model": null, "d_ff": "1024", "h": null, "d_k": null, "d_v": null, "P_drop": null, "ε_ls": null, "train steps": null, "PPL (dev)": "5.12", "BLEU (dev)": "25.4", "params ×10^6": "53"}}, {"id": "C_7", "label": "(C)", "values": {"": "(C)", "N": "4096", "d_model": null, "d_ff": null, "h": null, "d_k": null, "d_v": null, "P_drop": null, "ε_ls": null, "train steps": null, "PPL (dev)": "4.75", "BLEU (dev)": "26.2", "params ×10^6": "90"}}, {"id": "D_1", "label": "(D)", "values": {"": "(D)", "N": null, "d_model": null, "d_ff": null, "h": null, "d_k": null, "d_v": null, "P_drop": "0.0", "ε_ls": null, "train steps": null, "PPL (dev)": "5.77", "BLEU (dev)": "24.6", "params ×10^6": null}}, {"id": "D_2", "label": "(D)", "values": {"": "(D)", "N": null, "d_model": null, "d_ff": null, "h": null, "d_k": null, "d_v": null, "P_drop": "0.2", "ε_ls": null, "train steps": null, "PPL (dev)": "4.95", "BLEU (dev)": "25.5", "params ×10^6": null}}, {"id": "D_3", "label": "(D)", "values": {"": "(D)", "N": null, "d_model": null, "d_ff": null, "h": null, "d_k": null, "d_v": null, "P_drop": null, "ε_ls": "0.0", "train steps": null, "PPL (dev)": "4.67", "BLEU (dev)": "25.3", "params ×10^6": null}}, {"id": "D_4", "label": "(D)", "values": {"": "(D)", "N": null, "d_model": null, "d_ff": null, "h": null, "d_k": null, "d_v": null, "P_drop": null, "ε_ls": "0.2", "train steps": null, "PPL (dev)": "5.47", "BLEU (dev)": "25.7", "params ×10^6": null}}, {"id": "E", "label": "(E)", "values": {"": "(E)", "N": null, "d_model": null, "d_ff": null, "h": null, "d_k": null, "d_v": null, "P_drop": null, "ε_ls": null, "train steps": null, "PPL (dev)": "4.92", "BLEU (dev)": "25.7", "params ×10^6": null}}, {"id": "big", "label": "big", "values": {"": "big", "N": "6", "d_model": "1024", "d_ff": "4096", "h": "16", "d_k": null, "d_v": null, "P_drop": "0.3", "ε_ls": null, "train steps": "300K", "PPL (dev)": "4.33", "BLEU (dev)": "26.4", "params ×10^6": "213"}}], "notes": ["Unlisted values are identical to those of the base model.", "All metrics are on the English-to-German translation development set, newstest2013.", "Listed perplexities are per-wordpiece, according to our byte-pair encoding, and should not be compared to per-word perplexities.", "In rows (A), varying number of attention heads and attention key/value dimensions, keeping amount of computation constant.", "In row (E), positional embedding instead of sinusoids."], "page": 9}, {"id": "p10-Table_4", "title": "Table 4: The Transformer generalizes well to English constituency parsing (Results are on Section 23 of WSJ)", "population": "English constituency parsing on WSJ", "columns": ["Parser", "Training", "WSJ 23 F1"], "rows": [{"id": "row_1", "label": "Vinyals & Kaiser et al. (2014) [37]", "values": {"Parser": "Vinyals & Kaiser et al. (2014) [37]", "Training": "WSJ only, discriminative", "WSJ 23 F1": "88.3"}}, {"id": "row_2", "label": "Petrov et al. (2006) [29]", "values": {"Parser": "Petrov et al. (2006) [29]", "Training": "WSJ only, discriminative", "WSJ 23 F1": "90.4"}}, {"id": "row_3", "label": "Zhu et al. (2013) [40]", "values": {"Parser": "Zhu et al. (2013) [40]", "Training": "WSJ only, discriminative", "WSJ 23 F1": "90.4"}}, {"id": "row_4", "label": "Dyer et al. (2016) [8]", "values": {"Parser": "Dyer et al. (2016) [8]", "Training": "WSJ only, discriminative", "WSJ 23 F1": "91.7"}}, {"id": "row_5", "label": "Transformer (4 layers)", "values": {"Parser": "Transformer (4 layers)", "Training": "WSJ only, discriminative", "WSJ 23 F1": "91.3"}}, {"id": "row_6", "label": "Zhu et al. (2013) [40]", "values": {"Parser": "Zhu et al. (2013) [40]", "Training": "semi-supervised", "WSJ 23 F1": "91.3"}}, {"id": "row_7", "label": "Huang & Harper (2009) [14]", "values": {"Parser": "Huang & Harper (2009) [14]", "Training": "semi-supervised", "WSJ 23 F1": "91.3"}}, {"id": "row_8", "label": "McClosky et al. (2006) [26]", "values": {"Parser": "McClosky et al. (2006) [26]", "Training": "semi-supervised", "WSJ 23 F1": "92.1"}}, {"id": "row_9", "label": "Vinyals & Kaiser et al. (2014) [37]", "values": {"Parser": "Vinyals & Kaiser et al. (2014) [37]", "Training": "semi-supervised", "WSJ 23 F1": "92.1"}}, {"id": "row_10", "label": "Transformer (4 layers)", "values": {"Parser": "Transformer (4 layers)", "Training": "semi-supervised", "WSJ 23 F1": "92.7"}}, {"id": "row_11", "label": "Luong et al. (2015) [23]", "values": {"Parser": "Luong et al. (2015) [23]", "Training": "multi-task", "WSJ 23 F1": "93.0"}}, {"id": "row_12", "label": "Dyer et al. (2016) [8]", "values": {"Parser": "Dyer et al. (2016) [8]", "Training": "generative", "WSJ 23 F1": "93.3"}}], "notes": ["Results are on Section 23 of WSJ", "Increased the maximum output length to input length + 300. We used a beam size of 21 and α = 0.3 for both WSJ only and the semi-supervised setting."], "page": 10}], "sources": {"S001": {"id": "pdf-bdfaa68d8984f0dc-p1-b0", "page": 1, "quote": "Provided proper attribution is provided, Google hereby grants permission to\nreproduce the tables and figures in this paper solely for use in journalistic or"}, "S002": {"id": "pdf-bdfaa68d8984f0dc-p1-b1", "page": 1, "quote": "scholarly works."}, "S003": {"id": "pdf-bdfaa68d8984f0dc-p1-b2", "page": 1, "quote": "arXiv:1706.03762v7  [cs.CL]  2 Aug 2023"}, "S004": {"id": "pdf-bdfaa68d8984f0dc-p1-b3", "page": 1, "quote": "Ashish Vaswani∗"}, "S005": {"id": "pdf-bdfaa68d8984f0dc-p1-b4", "page": 1, "quote": "Noam Shazeer∗"}, "S006": {"id": "pdf-bdfaa68d8984f0dc-p1-b5", "page": 1, "quote": "Google Brain\navaswani@google.com"}, "S007": {"id": "pdf-bdfaa68d8984f0dc-p1-b6", "page": 1, "quote": "Google Brain\nnoam@google.com"}, "S008": {"id": "pdf-bdfaa68d8984f0dc-p1-b7", "page": 1, "quote": "Llion Jones∗\nGoogle Research\nllion@google.com"}, "S009": {"id": "pdf-bdfaa68d8984f0dc-p1-b8", "page": 1, "quote": "Aidan N. Gomez∗†\nUniversity of Toronto\naidan@cs.toronto.edu"}, "S010": {"id": "pdf-bdfaa68d8984f0dc-p1-b9", "page": 1, "quote": "†Work performed while at Google Brain.\n‡Work performed while at Google Research."}, "S011": {"id": "pdf-bdfaa68d8984f0dc-p1-b10", "page": 1, "quote": "Niki Parmar∗\nGoogle Research\nnikip@google.com"}, "S012": {"id": "pdf-bdfaa68d8984f0dc-p1-b11", "page": 1, "quote": "Jakob Uszkoreit∗\nGoogle Research\nusz@google.com"}, "S013": {"id": "pdf-bdfaa68d8984f0dc-p1-b12", "page": 1, "quote": "Łukasz Kaiser∗"}, "S014": {"id": "pdf-bdfaa68d8984f0dc-p1-b13", "page": 1, "quote": "Google Brain\nlukaszkaiser@google.com"}, "S015": {"id": "pdf-bdfaa68d8984f0dc-p1-b14", "page": 1, "quote": "Abstract"}, "S016": {"id": "pdf-bdfaa68d8984f0dc-p1-b15", "page": 1, "quote": "Attention Is All You Need"}, "S017": {"id": "pdf-bdfaa68d8984f0dc-p1-b16", "page": 1, "quote": "Illia Polosukhin∗‡\nillia.polosukhin@gmail.com"}, "S018": {"id": "pdf-bdfaa68d8984f0dc-p1-b17", "page": 1, "quote": "The dominant sequence transduction models are based on complex recurrent or\nconvolutional neural networks that include an encoder and a decoder. The best\nperforming models also connect the encoder and decoder through an attention\nmechanism. We propose a new simple network architecture, the Transformer,\nbased solely on attention mechanisms, dispensing with recurrence and convolutions\nentirely. Experiments on two machine translation tasks show these models to\nbe superior in quality while being more parallelizable and requiring significantly\nless time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-\nto-German translation task, improving over the existing best results, including\nensembles, by over 2 BLEU. On the WMT 2014 English-to-French translation task,\nour model establishes a new single-model state-of-the-art BLEU score of 41.8 after\ntraining for 3.5 days on eight GPUs, a small fraction of the training costs of the\nbest models from the literature. We show that the Transformer generalizes well to\nother tasks by applying it successfully to English constituency parsing both with\nlarge and limited training data."}, "S019": {"id": "pdf-bdfaa68d8984f0dc-p1-b18", "page": 1, "quote": "∗Equal contribution. Listing order is random. Jakob proposed replacing RNNs with self-attention and started\nthe effort to evaluate this idea. Ashish, with Illia, designed and implemented the first Transformer models and\nhas been crucially involved in every aspect of this work. Noam proposed scaled dot-product attention, multi-head\nattention and the parameter-free position representation and became the other person involved in nearly every\ndetail. Niki designed, implemented, tuned and evaluated countless model variants in our original codebase and\ntensor2tensor. Llion also experimented with novel model variants, was responsible for our initial codebase, and\nefficient inference and visualizations. Lukasz and Aidan spent countless long days designing various parts of and\nimplementing tensor2tensor, replacing our earlier codebase, greatly improving results and massively accelerating\nour research."}, "S020": {"id": "pdf-bdfaa68d8984f0dc-p1-b19", "page": 1, "quote": "31st Conference on Neural Information Processing Systems (NIPS 2017), Long Beach, CA, USA."}, "S021": {"id": "pdf-bdfaa68d8984f0dc-p2-b0", "page": 2, "quote": "1\nIntroduction"}, "S022": {"id": "pdf-bdfaa68d8984f0dc-p2-b1", "page": 2, "quote": "Recurrent neural networks, long short-term memory [13] and gated recurrent [7] neural networks\nin particular, have been firmly established as state of the art approaches in sequence modeling and\ntransduction problems such as language modeling and machine translation [35, 2, 5]. Numerous\nefforts have since continued to push the boundaries of recurrent language models and encoder-decoder\narchitectures [38, 24, 15]."}, "S023": {"id": "pdf-bdfaa68d8984f0dc-p2-b2", "page": 2, "quote": "Recurrent models typically factor computation along the symbol positions of the input and output\nsequences. Aligning the positions to steps in computation time, they generate a sequence of hidden\nstates ht, as a function of the previous hidden state ht−1 and the input for position t. This inherently\nsequential nature precludes parallelization within training examples, which becomes critical at longer\nsequence lengths, as memory constraints limit batching across examples. Recent work has achieved\nsignificant improvements in computational efficiency through factorization tricks [21] and conditional\ncomputation [32], while also improving model performance in case of the latter. The fundamental\nconstraint of sequential computation, however, remains."}, "S024": {"id": "pdf-bdfaa68d8984f0dc-p2-b3", "page": 2, "quote": "Attention mechanisms have become an integral part of compelling sequence modeling and transduc-\ntion models in various tasks, allowing modeling of dependencies without regard to their distance in\nthe input or output sequences [2, 19]. In all but a few cases [27], however, such attention mechanisms\nare used in conjunction with a recurrent network."}, "S025": {"id": "pdf-bdfaa68d8984f0dc-p2-b4", "page": 2, "quote": "In this work we propose the Transformer, a model architecture eschewing recurrence and instead\nrelying entirely on an attention mechanism to draw global dependencies between input and output.\nThe Transformer allows for significantly more parallelization and can reach a new state of the art in\ntranslation quality after being trained for as little as twelve hours on eight P100 GPUs."}, "S026": {"id": "pdf-bdfaa68d8984f0dc-p2-b5", "page": 2, "quote": "2\nBackground"}, "S027": {"id": "pdf-bdfaa68d8984f0dc-p2-b6", "page": 2, "quote": "The goal of reducing sequential computation also forms the foundation of the Extended Neural GPU\n[16], ByteNet [18] and ConvS2S [9], all of which use convolutional neural networks as basic building\nblock, computing hidden representations in parallel for all input and output positions. In these models,\nthe number of operations required to relate signals from two arbitrary input or output positions grows\nin the distance between positions, linearly for ConvS2S and logarithmically for ByteNet. This makes\nit more difficult to learn dependencies between distant positions [12]. In the Transformer this is\nreduced to a constant number of operations, albeit at the cost of reduced effective resolution due\nto averaging attention-weighted positions, an effect we counteract with Multi-Head Attention as\ndescribed in section 3.2."}, "S028": {"id": "pdf-bdfaa68d8984f0dc-p2-b7", "page": 2, "quote": "Self-attention, sometimes called intra-attention is an attention mechanism relating different positions\nof a single sequence in order to compute a representation of the sequence. Self-attention has been\nused successfully in a variety of tasks including reading comprehension, abstractive summarization,\ntextual entailment and learning task-independent sentence representations [4, 27, 28, 22]."}, "S029": {"id": "pdf-bdfaa68d8984f0dc-p2-b8", "page": 2, "quote": "End-to-end memory networks are based on a recurrent attention mechanism instead of sequence-\naligned recurrence and have been shown to perform well on simple-language question answering and\nlanguage modeling tasks [34]."}, "S030": {"id": "pdf-bdfaa68d8984f0dc-p2-b9", "page": 2, "quote": "To the best of our knowledge, however, the Transformer is the first transduction model relying\nentirely on self-attention to compute representations of its input and output without using sequence-\naligned RNNs or convolution. In the following sections, we will describe the Transformer, motivate\nself-attention and discuss its advantages over models such as [17, 18] and [9]."}, "S031": {"id": "pdf-bdfaa68d8984f0dc-p2-b10", "page": 2, "quote": "3\nModel Architecture"}, "S032": {"id": "pdf-bdfaa68d8984f0dc-p2-b11", "page": 2, "quote": "Most competitive neural sequence transduction models have an encoder-decoder structure [5, 2, 35].\nHere, the encoder maps an input sequence of symbol representations (x1, ..., xn) to a sequence\nof continuous representations z = (z1, ..., zn). Given z, the decoder then generates an output\nsequence (y1, ..., ym) of symbols one element at a time. At each step the model is auto-regressive\n[10], consuming the previously generated symbols as additional input when generating the next."}, "S033": {"id": "pdf-bdfaa68d8984f0dc-p3-b0", "page": 3, "quote": "Figure 1: The Transformer - model architecture."}, "S034": {"id": "pdf-bdfaa68d8984f0dc-p3-b1", "page": 3, "quote": "The Transformer follows this overall architecture using stacked self-attention and point-wise, fully\nconnected layers for both the encoder and decoder, shown in the left and right halves of Figure 1,\nrespectively."}, "S035": {"id": "pdf-bdfaa68d8984f0dc-p3-b2", "page": 3, "quote": "3.1\nEncoder and Decoder Stacks"}, "S036": {"id": "pdf-bdfaa68d8984f0dc-p3-b3", "page": 3, "quote": "Encoder:\nThe encoder is composed of a stack of N = 6 identical layers. Each layer has two\nsub-layers. The first is a multi-head self-attention mechanism, and the second is a simple, position-\nwise fully connected feed-forward network. We employ a residual connection [11] around each of\nthe two sub-layers, followed by layer normalization [1]. That is, the output of each sub-layer is\nLayerNorm(x + Sublayer(x)), where Sublayer(x) is the function implemented by the sub-layer\nitself. To facilitate these residual connections, all sub-layers in the model, as well as the embedding\nlayers, produce outputs of dimension dmodel = 512."}, "S037": {"id": "pdf-bdfaa68d8984f0dc-p3-b4", "page": 3, "quote": "Decoder:\nThe decoder is also composed of a stack of N = 6 identical layers. In addition to the two\nsub-layers in each encoder layer, the decoder inserts a third sub-layer, which performs multi-head\nattention over the output of the encoder stack. Similar to the encoder, we employ residual connections\naround each of the sub-layers, followed by layer normalization. We also modify the self-attention\nsub-layer in the decoder stack to prevent positions from attending to subsequent positions. This\nmasking, combined with fact that the output embeddings are offset by one position, ensures that the\npredictions for position i can depend only on the known outputs at positions less than i."}, "S038": {"id": "pdf-bdfaa68d8984f0dc-p3-b5", "page": 3, "quote": "3.2\nAttention"}, "S039": {"id": "pdf-bdfaa68d8984f0dc-p3-b6", "page": 3, "quote": "An attention function can be described as mapping a query and a set of key-value pairs to an output,\nwhere the query, keys, values, and output are all vectors. The output is computed as a weighted sum"}, "S040": {"id": "pdf-bdfaa68d8984f0dc-p4-b0", "page": 4, "quote": "Scaled Dot-Product Attention\nMulti-Head Attention"}, "S041": {"id": "pdf-bdfaa68d8984f0dc-p4-b1", "page": 4, "quote": "Figure 2: (left) Scaled Dot-Product Attention. (right) Multi-Head Attention consists of several\nattention layers running in parallel."}, "S042": {"id": "pdf-bdfaa68d8984f0dc-p4-b2", "page": 4, "quote": "of the values, where the weight assigned to each value is computed by a compatibility function of the\nquery with the corresponding key."}, "S043": {"id": "pdf-bdfaa68d8984f0dc-p4-b3", "page": 4, "quote": "3.2.1\nScaled Dot-Product Attention"}, "S044": {"id": "pdf-bdfaa68d8984f0dc-p4-b4", "page": 4, "quote": "We call our particular attention \"Scaled Dot-Product Attention\" (Figure 2). The input consists of\nqueries and keys of dimension dk, and values of dimension dv. We compute the dot products of the\nquery with all keys, divide each by √dk, and apply a softmax function to obtain the weights on the\nvalues."}, "S045": {"id": "pdf-bdfaa68d8984f0dc-p4-b5", "page": 4, "quote": "In practice, we compute the attention function on a set of queries simultaneously, packed together\ninto a matrix Q. The keys and values are also packed together into matrices K and V . We compute\nthe matrix of outputs as:"}, "S046": {"id": "pdf-bdfaa68d8984f0dc-p4-b6", "page": 4, "quote": "Attention(Q, K, V ) = softmax(QKT"}, "S047": {"id": "pdf-bdfaa68d8984f0dc-p4-b9", "page": 4, "quote": "The two most commonly used attention functions are additive attention [2], and dot-product (multi-\nplicative) attention. Dot-product attention is identical to our algorithm, except for the scaling factor\nof\n1\n√dk . Additive attention computes the compatibility function using a feed-forward network with\na single hidden layer. While the two are similar in theoretical complexity, dot-product attention is\nmuch faster and more space-efficient in practice, since it can be implemented using highly optimized\nmatrix multiplication code."}, "S048": {"id": "pdf-bdfaa68d8984f0dc-p4-b10", "page": 4, "quote": "While for small values of dk the two mechanisms perform similarly, additive attention outperforms\ndot product attention without scaling for larger values of dk [3]. We suspect that for large values of\ndk, the dot products grow large in magnitude, pushing the softmax function into regions where it has\nextremely small gradients 4. To counteract this effect, we scale the dot products by\n1\n√dk ."}, "S049": {"id": "pdf-bdfaa68d8984f0dc-p4-b11", "page": 4, "quote": "3.2.2\nMulti-Head Attention"}, "S050": {"id": "pdf-bdfaa68d8984f0dc-p4-b12", "page": 4, "quote": "Instead of performing a single attention function with dmodel-dimensional keys, values and queries,\nwe found it beneficial to linearly project the queries, keys and values h times with different, learned\nlinear projections to dk, dk and dv dimensions, respectively. On each of these projected versions of\nqueries, keys and values we then perform the attention function in parallel, yielding dv-dimensional"}, "S051": {"id": "pdf-bdfaa68d8984f0dc-p4-b13", "page": 4, "quote": "i=1 qiki, has mean 0 and variance dk."}, "S052": {"id": "pdf-bdfaa68d8984f0dc-p4-b14", "page": 4, "quote": "4To illustrate why the dot products get large, assume that the components of q and k are independent random\nvariables with mean 0 and variance 1. Then their dot product, q · k = Pdk"}, "S053": {"id": "pdf-bdfaa68d8984f0dc-p5-b0", "page": 5, "quote": "output values. These are concatenated and once again projected, resulting in the final values, as\ndepicted in Figure 2."}, "S054": {"id": "pdf-bdfaa68d8984f0dc-p5-b1", "page": 5, "quote": "Multi-head attention allows the model to jointly attend to information from different representation\nsubspaces at different positions. With a single attention head, averaging inhibits this."}, "S055": {"id": "pdf-bdfaa68d8984f0dc-p5-b2", "page": 5, "quote": "Where the projections are parameter matrices W Q"}, "S056": {"id": "pdf-bdfaa68d8984f0dc-p5-b3", "page": 5, "quote": "3.2.3\nApplications of Attention in our Model"}, "S057": {"id": "pdf-bdfaa68d8984f0dc-p5-b4", "page": 5, "quote": "3.3\nPosition-wise Feed-Forward Networks"}, "S058": {"id": "pdf-bdfaa68d8984f0dc-p5-b5", "page": 5, "quote": "3.4\nEmbeddings and Softmax"}, "S059": {"id": "pdf-bdfaa68d8984f0dc-p5-b6", "page": 5, "quote": "i , V W V"}, "S060": {"id": "pdf-bdfaa68d8984f0dc-p5-b7", "page": 5, "quote": "i , KW K"}, "S061": {"id": "pdf-bdfaa68d8984f0dc-p5-b9", "page": 5, "quote": "i\n∈Rdmodel×dk, W V"}, "S062": {"id": "pdf-bdfaa68d8984f0dc-p5-b10", "page": 5, "quote": "i\n∈Rdmodel×dk, W K"}, "S063": {"id": "pdf-bdfaa68d8984f0dc-p5-b12", "page": 5, "quote": "MultiHead(Q, K, V ) = Concat(head1, ..., headh)W O"}, "S064": {"id": "pdf-bdfaa68d8984f0dc-p5-b13", "page": 5, "quote": "where headi = Attention(QW Q"}, "S065": {"id": "pdf-bdfaa68d8984f0dc-p5-b14", "page": 5, "quote": "i\n∈Rdmodel×dv\nand W O ∈Rhdv×dmodel."}, "S066": {"id": "pdf-bdfaa68d8984f0dc-p5-b15", "page": 5, "quote": "In this work we employ h = 8 parallel attention layers, or heads. For each of these we use\ndk = dv = dmodel/h = 64. Due to the reduced dimension of each head, the total computational cost\nis similar to that of single-head attention with full dimensionality."}, "S067": {"id": "pdf-bdfaa68d8984f0dc-p5-b16", "page": 5, "quote": "The Transformer uses multi-head attention in three different ways:"}, "S068": {"id": "pdf-bdfaa68d8984f0dc-p5-b17", "page": 5, "quote": "• In \"encoder-decoder attention\" layers, the queries come from the previous decoder layer,\nand the memory keys and values come from the output of the encoder. This allows every\nposition in the decoder to attend over all positions in the input sequence. This mimics the\ntypical encoder-decoder attention mechanisms in sequence-to-sequence models such as\n[38, 2, 9]."}, "S069": {"id": "pdf-bdfaa68d8984f0dc-p5-b18", "page": 5, "quote": "• The encoder contains self-attention layers. In a self-attention layer all of the keys, values\nand queries come from the same place, in this case, the output of the previous layer in the\nencoder. Each position in the encoder can attend to all positions in the previous layer of the\nencoder."}, "S070": {"id": "pdf-bdfaa68d8984f0dc-p5-b19", "page": 5, "quote": "• Similarly, self-attention layers in the decoder allow each position in the decoder to attend to\nall positions in the decoder up to and including that position. We need to prevent leftward\ninformation flow in the decoder to preserve the auto-regressive property. We implement this\ninside of scaled dot-product attention by masking out (setting to −∞) all values in the input\nof the softmax which correspond to illegal connections. See Figure 2."}, "S071": {"id": "pdf-bdfaa68d8984f0dc-p5-b20", "page": 5, "quote": "In addition to attention sub-layers, each of the layers in our encoder and decoder contains a fully\nconnected feed-forward network, which is applied to each position separately and identically. This\nconsists of two linear transformations with a ReLU activation in between."}, "S072": {"id": "pdf-bdfaa68d8984f0dc-p5-b21", "page": 5, "quote": "FFN(x) = max(0, xW1 + b1)W2 + b2\n(2)"}, "S073": {"id": "pdf-bdfaa68d8984f0dc-p5-b22", "page": 5, "quote": "While the linear transformations are the same across different positions, they use different parameters\nfrom layer to layer. Another way of describing this is as two convolutions with kernel size 1.\nThe dimensionality of input and output is dmodel = 512, and the inner-layer has dimensionality\ndff = 2048."}, "S074": {"id": "pdf-bdfaa68d8984f0dc-p5-b23", "page": 5, "quote": "Similarly to other sequence transduction models, we use learned embeddings to convert the input\ntokens and output tokens to vectors of dimension dmodel. We also use the usual learned linear transfor-\nmation and softmax function to convert the decoder output to predicted next-token probabilities. In\nour model, we share the same weight matrix between the two embedding layers and the pre-softmax\nlinear transformation, similar to [30]. In the embedding layers, we multiply those weights by √dmodel."}, "S075": {"id": "pdf-bdfaa68d8984f0dc-p6-b0", "page": 6, "quote": "Table 1: Maximum path lengths, per-layer complexity and minimum number of sequential operations\nfor different layer types. n is the sequence length, d is the representation dimension, k is the kernel\nsize of convolutions and r the size of the neighborhood in restricted self-attention."}, "S076": {"id": "pdf-bdfaa68d8984f0dc-p6-b1", "page": 6, "quote": "Layer Type\nComplexity per Layer\nSequential\nMaximum Path Length\nOperations\nSelf-Attention\nO(n2 · d)\nO(1)\nO(1)\nRecurrent\nO(n · d2)\nO(n)\nO(n)\nConvolutional\nO(k · n · d2)\nO(1)\nO(logk(n))\nSelf-Attention (restricted)\nO(r · n · d)\nO(1)\nO(n/r)"}, "S077": {"id": "pdf-bdfaa68d8984f0dc-p6-b2", "page": 6, "quote": "3.5\nPositional Encoding"}, "S078": {"id": "pdf-bdfaa68d8984f0dc-p6-b3", "page": 6, "quote": "Since our model contains no recurrence and no convolution, in order for the model to make use of the\norder of the sequence, we must inject some information about the relative or absolute position of the\ntokens in the sequence. To this end, we add \"positional encodings\" to the input embeddings at the\nbottoms of the encoder and decoder stacks. The positional encodings have the same dimension dmodel\nas the embeddings, so that the two can be summed. There are many choices of positional encodings,\nlearned and fixed [9]."}, "S079": {"id": "pdf-bdfaa68d8984f0dc-p6-b4", "page": 6, "quote": "In this work, we use sine and cosine functions of different frequencies:"}, "S080": {"id": "pdf-bdfaa68d8984f0dc-p6-b5", "page": 6, "quote": "PE(pos,2i) = sin(pos/100002i/dmodel)"}, "S081": {"id": "pdf-bdfaa68d8984f0dc-p6-b6", "page": 6, "quote": "PE(pos,2i+1) = cos(pos/100002i/dmodel)"}, "S082": {"id": "pdf-bdfaa68d8984f0dc-p6-b7", "page": 6, "quote": "where pos is the position and i is the dimension. That is, each dimension of the positional encoding\ncorresponds to a sinusoid. The wavelengths form a geometric progression from 2π to 10000 · 2π. We\nchose this function because we hypothesized it would allow the model to easily learn to attend by\nrelative positions, since for any fixed offset k, PEpos+k can be represented as a linear function of\nPEpos."}, "S083": {"id": "pdf-bdfaa68d8984f0dc-p6-b8", "page": 6, "quote": "We also experimented with using learned positional embeddings [9] instead, and found that the two\nversions produced nearly identical results (see Table 3 row (E)). We chose the sinusoidal version\nbecause it may allow the model to extrapolate to sequence lengths longer than the ones encountered\nduring training."}, "S084": {"id": "pdf-bdfaa68d8984f0dc-p6-b9", "page": 6, "quote": "4\nWhy Self-Attention"}, "S085": {"id": "pdf-bdfaa68d8984f0dc-p6-b10", "page": 6, "quote": "In this section we compare various aspects of self-attention layers to the recurrent and convolu-\ntional layers commonly used for mapping one variable-length sequence of symbol representations\n(x1, ..., xn) to another sequence of equal length (z1, ..., zn), with xi, zi ∈Rd, such as a hidden"}, "S086": {"id": "pdf-bdfaa68d8984f0dc-p6-b11", "page": 6, "quote": "layer in a typical sequence transduction encoder or decoder. Motivating our use of self-attention we\nconsider three desiderata."}, "S087": {"id": "pdf-bdfaa68d8984f0dc-p6-b12", "page": 6, "quote": "One is the total computational complexity per layer. Another is the amount of computation that can\nbe parallelized, as measured by the minimum number of sequential operations required."}, "S088": {"id": "pdf-bdfaa68d8984f0dc-p6-b13", "page": 6, "quote": "The third is the path length between long-range dependencies in the network. Learning long-range\ndependencies is a key challenge in many sequence transduction tasks. One key factor affecting the\nability to learn such dependencies is the length of the paths forward and backward signals have to\ntraverse in the network. The shorter these paths between any combination of positions in the input\nand output sequences, the easier it is to learn long-range dependencies [12]. Hence we also compare\nthe maximum path length between any two input and output positions in networks composed of the\ndifferent layer types."}, "S089": {"id": "pdf-bdfaa68d8984f0dc-p6-b14", "page": 6, "quote": "As noted in Table 1, a self-attention layer connects all positions with a constant number of sequentially\nexecuted operations, whereas a recurrent layer requires O(n) sequential operations. In terms of\ncomputational complexity, self-attention layers are faster than recurrent layers when the sequence"}, "S090": {"id": "pdf-bdfaa68d8984f0dc-p7-b0", "page": 7, "quote": "length n is smaller than the representation dimensionality d, which is most often the case with\nsentence representations used by state-of-the-art models in machine translations, such as word-piece\n[38] and byte-pair [31] representations. To improve computational performance for tasks involving\nvery long sequences, self-attention could be restricted to considering only a neighborhood of size r in\nthe input sequence centered around the respective output position. This would increase the maximum\npath length to O(n/r). We plan to investigate this approach further in future work."}, "S091": {"id": "pdf-bdfaa68d8984f0dc-p7-b1", "page": 7, "quote": "A single convolutional layer with kernel width k \u003c n does not connect all pairs of input and output\npositions. Doing so requires a stack of O(n/k) convolutional layers in the case of contiguous kernels,\nor O(logk(n)) in the case of dilated convolutions [18], increasing the length of the longest paths\nbetween any two positions in the network. Convolutional layers are generally more expensive than\nrecurrent layers, by a factor of k. Separable convolutions [6], however, decrease the complexity\nconsiderably, to O(k · n · d + n · d2). Even with k = n, however, the complexity of a separable\nconvolution is equal to the combination of a self-attention layer and a point-wise feed-forward layer,\nthe approach we take in our model."}, "S092": {"id": "pdf-bdfaa68d8984f0dc-p7-b2", "page": 7, "quote": "As side benefit, self-attention could yield more interpretable models. We inspect attention distributions\nfrom our models and present and discuss examples in the appendix. Not only do individual attention\nheads clearly learn to perform different tasks, many appear to exhibit behavior related to the syntactic\nand semantic structure of the sentences."}, "S093": {"id": "pdf-bdfaa68d8984f0dc-p7-b3", "page": 7, "quote": "5\nTraining"}, "S094": {"id": "pdf-bdfaa68d8984f0dc-p7-b4", "page": 7, "quote": "This section describes the training regime for our models."}, "S095": {"id": "pdf-bdfaa68d8984f0dc-p7-b5", "page": 7, "quote": "5.1\nTraining Data and Batching"}, "S096": {"id": "pdf-bdfaa68d8984f0dc-p7-b6", "page": 7, "quote": "We trained on the standard WMT 2014 English-German dataset consisting of about 4.5 million\nsentence pairs. Sentences were encoded using byte-pair encoding [3], which has a shared source-\ntarget vocabulary of about 37000 tokens. For English-French, we used the significantly larger WMT\n2014 English-French dataset consisting of 36M sentences and split tokens into a 32000 word-piece\nvocabulary [38]. Sentence pairs were batched together by approximate sequence length. Each training\nbatch contained a set of sentence pairs containing approximately 25000 source tokens and 25000\ntarget tokens."}, "S097": {"id": "pdf-bdfaa68d8984f0dc-p7-b7", "page": 7, "quote": "5.2\nHardware and Schedule"}, "S098": {"id": "pdf-bdfaa68d8984f0dc-p7-b8", "page": 7, "quote": "We trained our models on one machine with 8 NVIDIA P100 GPUs. For our base models using\nthe hyperparameters described throughout the paper, each training step took about 0.4 seconds. We\ntrained the base models for a total of 100,000 steps or 12 hours. For our big models,(described on the\nbottom line of table 3), step time was 1.0 seconds. The big models were trained for 300,000 steps\n(3.5 days)."}, "S099": {"id": "pdf-bdfaa68d8984f0dc-p7-b9", "page": 7, "quote": "5.3\nOptimizer"}, "S100": {"id": "pdf-bdfaa68d8984f0dc-p7-b10", "page": 7, "quote": "We used the Adam optimizer [20] with β1 = 0.9, β2 = 0.98 and ϵ = 10−9. We varied the learning\nrate over the course of training, according to the formula:"}, "S101": {"id": "pdf-bdfaa68d8984f0dc-p7-b11", "page": 7, "quote": "lrate = d−0.5"}, "S102": {"id": "pdf-bdfaa68d8984f0dc-p7-b12", "page": 7, "quote": "model · min(step_num−0.5, step_num · warmup_steps−1.5)\n(3)"}, "S103": {"id": "pdf-bdfaa68d8984f0dc-p7-b13", "page": 7, "quote": "This corresponds to increasing the learning rate linearly for the first warmup_steps training steps,\nand decreasing it thereafter proportionally to the inverse square root of the step number. We used\nwarmup_steps = 4000."}, "S104": {"id": "pdf-bdfaa68d8984f0dc-p7-b14", "page": 7, "quote": "5.4\nRegularization"}, "S105": {"id": "pdf-bdfaa68d8984f0dc-p7-b15", "page": 7, "quote": "We employ three types of regularization during training:"}, "S106": {"id": "pdf-bdfaa68d8984f0dc-p8-b0", "page": 8, "quote": "Table 2: The Transformer achieves better BLEU scores than previous state-of-the-art models on the\nEnglish-to-German and English-to-French newstest2014 tests at a fraction of the training cost."}, "S107": {"id": "pdf-bdfaa68d8984f0dc-p8-b1", "page": 8, "quote": "BLEU\nTraining Cost (FLOPs)"}, "S108": {"id": "pdf-bdfaa68d8984f0dc-p8-b3", "page": 8, "quote": "EN-DE\nEN-FR\nEN-DE\nEN-FR\nByteNet [18]\n23.75\nDeep-Att + PosUnk [39]\n39.2\n1.0 · 1020"}, "S109": {"id": "pdf-bdfaa68d8984f0dc-p8-b4", "page": 8, "quote": "GNMT + RL [38]\n24.6\n39.92\n2.3 · 1019\n1.4 · 1020"}, "S110": {"id": "pdf-bdfaa68d8984f0dc-p8-b5", "page": 8, "quote": "ConvS2S [9]\n25.16\n40.46\n9.6 · 1018\n1.5 · 1020"}, "S111": {"id": "pdf-bdfaa68d8984f0dc-p8-b6", "page": 8, "quote": "MoE [32]\n26.03\n40.56\n2.0 · 1019\n1.2 · 1020"}, "S112": {"id": "pdf-bdfaa68d8984f0dc-p8-b7", "page": 8, "quote": "Deep-Att + PosUnk Ensemble [39]\n40.4\n8.0 · 1020"}, "S113": {"id": "pdf-bdfaa68d8984f0dc-p8-b8", "page": 8, "quote": "GNMT + RL Ensemble [38]\n26.30\n41.16\n1.8 · 1020\n1.1 · 1021"}, "S114": {"id": "pdf-bdfaa68d8984f0dc-p8-b9", "page": 8, "quote": "ConvS2S Ensemble [9]\n26.36\n41.29\n7.7 · 1019\n1.2 · 1021"}, "S115": {"id": "pdf-bdfaa68d8984f0dc-p8-b10", "page": 8, "quote": "Transformer (base model)\n27.3\n38.1\n3.3 · 1018"}, "S116": {"id": "pdf-bdfaa68d8984f0dc-p8-b11", "page": 8, "quote": "Transformer (big)\n28.4\n41.8\n2.3 · 1019"}, "S117": {"id": "pdf-bdfaa68d8984f0dc-p8-b12", "page": 8, "quote": "Residual Dropout\nWe apply dropout [33] to the output of each sub-layer, before it is added to the\nsub-layer input and normalized. In addition, we apply dropout to the sums of the embeddings and the\npositional encodings in both the encoder and decoder stacks. For the base model, we use a rate of\nPdrop = 0.1."}, "S118": {"id": "pdf-bdfaa68d8984f0dc-p8-b13", "page": 8, "quote": "Label Smoothing\nDuring training, we employed label smoothing of value ϵls = 0.1 [36]. This\nhurts perplexity, as the model learns to be more unsure, but improves accuracy and BLEU score."}, "S119": {"id": "pdf-bdfaa68d8984f0dc-p8-b14", "page": 8, "quote": "6\nResults"}, "S120": {"id": "pdf-bdfaa68d8984f0dc-p8-b15", "page": 8, "quote": "6.1\nMachine Translation"}, "S121": {"id": "pdf-bdfaa68d8984f0dc-p8-b16", "page": 8, "quote": "On the WMT 2014 English-to-German translation task, the big transformer model (Transformer (big)\nin Table 2) outperforms the best previously reported models (including ensembles) by more than 2.0\nBLEU, establishing a new state-of-the-art BLEU score of 28.4. The configuration of this model is\nlisted in the bottom line of Table 3. Training took 3.5 days on 8 P100 GPUs. Even our base model\nsurpasses all previously published models and ensembles, at a fraction of the training cost of any of\nthe competitive models."}, "S122": {"id": "pdf-bdfaa68d8984f0dc-p8-b17", "page": 8, "quote": "On the WMT 2014 English-to-French translation task, our big model achieves a BLEU score of 41.0,\noutperforming all of the previously published single models, at less than 1/4 the training cost of the\nprevious state-of-the-art model. The Transformer (big) model trained for English-to-French used\ndropout rate Pdrop = 0.1, instead of 0.3."}, "S123": {"id": "pdf-bdfaa68d8984f0dc-p8-b18", "page": 8, "quote": "For the base models, we used a single model obtained by averaging the last 5 checkpoints, which\nwere written at 10-minute intervals. For the big models, we averaged the last 20 checkpoints. We\nused beam search with a beam size of 4 and length penalty α = 0.6 [38]. These hyperparameters\nwere chosen after experimentation on the development set. We set the maximum output length during\ninference to input length + 50, but terminate early when possible [38]."}, "S124": {"id": "pdf-bdfaa68d8984f0dc-p8-b19", "page": 8, "quote": "Table 2 summarizes our results and compares our translation quality and training costs to other model\narchitectures from the literature. We estimate the number of floating point operations used to train a\nmodel by multiplying the training time, the number of GPUs used, and an estimate of the sustained\nsingle-precision floating-point capacity of each GPU 5."}, "S125": {"id": "pdf-bdfaa68d8984f0dc-p8-b20", "page": 8, "quote": "6.2\nModel Variations"}, "S126": {"id": "pdf-bdfaa68d8984f0dc-p8-b21", "page": 8, "quote": "To evaluate the importance of different components of the Transformer, we varied our base model\nin different ways, measuring the change in performance on English-to-German translation on the"}, "S127": {"id": "pdf-bdfaa68d8984f0dc-p8-b22", "page": 8, "quote": "5We used values of 2.8, 3.7, 6.0 and 9.5 TFLOPS for K80, K40, M40 and P100, respectively."}, "S128": {"id": "pdf-bdfaa68d8984f0dc-p9-b0", "page": 9, "quote": "Table 3: Variations on the Transformer architecture. Unlisted values are identical to those of the base\nmodel. All metrics are on the English-to-German translation development set, newstest2013. Listed\nperplexities are per-wordpiece, according to our byte-pair encoding, and should not be compared to\nper-word perplexities."}, "S129": {"id": "pdf-bdfaa68d8984f0dc-p9-b1", "page": 9, "quote": "N\ndmodel\ndff\nh\ndk\ndv\nPdrop\nϵls\ntrain\nPPL\nBLEU\nparams\nsteps\n(dev)\n(dev)\n×106"}, "S130": {"id": "pdf-bdfaa68d8984f0dc-p9-b2", "page": 9, "quote": "base\n6\n512\n2048\n8\n64\n64\n0.1\n0.1\n100K\n4.92\n25.8\n65"}, "S131": {"id": "pdf-bdfaa68d8984f0dc-p9-b4", "page": 9, "quote": "1\n512\n512\n5.29\n24.9\n4\n128\n128\n5.00\n25.5\n16\n32\n32\n4.91\n25.8\n32\n16\n16\n5.01\n25.4"}, "S132": {"id": "pdf-bdfaa68d8984f0dc-p9-b5", "page": 9, "quote": "(B)\n16\n5.16\n25.1\n58\n32\n5.01\n25.4\n60"}, "S133": {"id": "pdf-bdfaa68d8984f0dc-p9-b7", "page": 9, "quote": "2\n6.11\n23.7\n36\n4\n5.19\n25.3\n50\n8\n4.88\n25.5\n80\n256\n32\n32\n5.75\n24.5\n28\n1024\n128\n128\n4.66\n26.0\n168\n1024\n5.12\n25.4\n53\n4096\n4.75\n26.2\n90"}, "S134": {"id": "pdf-bdfaa68d8984f0dc-p9-b9", "page": 9, "quote": "0.0\n5.77\n24.6\n0.2\n4.95\n25.5\n0.0\n4.67\n25.3\n0.2\n5.47\n25.7\n(E)\npositional embedding instead of sinusoids\n4.92\n25.7\nbig\n6\n1024\n4096\n16\n0.3\n300K\n4.33\n26.4\n213"}, "S135": {"id": "pdf-bdfaa68d8984f0dc-p9-b10", "page": 9, "quote": "development set, newstest2013. We used beam search as described in the previous section, but no\ncheckpoint averaging. We present these results in Table 3."}, "S136": {"id": "pdf-bdfaa68d8984f0dc-p9-b11", "page": 9, "quote": "In Table 3 rows (A), we vary the number of attention heads and the attention key and value dimensions,\nkeeping the amount of computation constant, as described in Section 3.2.2. While single-head\nattention is 0.9 BLEU worse than the best setting, quality also drops off with too many heads."}, "S137": {"id": "pdf-bdfaa68d8984f0dc-p9-b12", "page": 9, "quote": "In Table 3 rows (B), we observe that reducing the attention key size dk hurts model quality. This\nsuggests that determining compatibility is not easy and that a more sophisticated compatibility\nfunction than dot product may be beneficial. We further observe in rows (C) and (D) that, as expected,\nbigger models are better, and dropout is very helpful in avoiding over-fitting. In row (E) we replace our\nsinusoidal positional encoding with learned positional embeddings [9], and observe nearly identical\nresults to the base model."}, "S138": {"id": "pdf-bdfaa68d8984f0dc-p9-b13", "page": 9, "quote": "6.3\nEnglish Constituency Parsing"}, "S139": {"id": "pdf-bdfaa68d8984f0dc-p9-b14", "page": 9, "quote": "To evaluate if the Transformer can generalize to other tasks we performed experiments on English\nconstituency parsing. This task presents specific challenges: the output is subject to strong structural\nconstraints and is significantly longer than the input. Furthermore, RNN sequence-to-sequence\nmodels have not been able to attain state-of-the-art results in small-data regimes [37]."}, "S140": {"id": "pdf-bdfaa68d8984f0dc-p9-b15", "page": 9, "quote": "We trained a 4-layer transformer with dmodel = 1024 on the Wall Street Journal (WSJ) portion of the\nPenn Treebank [25], about 40K training sentences. We also trained it in a semi-supervised setting,\nusing the larger high-confidence and BerkleyParser corpora from with approximately 17M sentences\n[37]. We used a vocabulary of 16K tokens for the WSJ only setting and a vocabulary of 32K tokens\nfor the semi-supervised setting."}, "S141": {"id": "pdf-bdfaa68d8984f0dc-p9-b16", "page": 9, "quote": "We performed only a small number of experiments to select the dropout, both attention and residual\n(section 5.4), learning rates and beam size on the Section 22 development set, all other parameters\nremained unchanged from the English-to-German base translation model. During inference, we"}, "S142": {"id": "pdf-bdfaa68d8984f0dc-p10-b0", "page": 10, "quote": "Table 4: The Transformer generalizes well to English constituency parsing (Results are on Section 23\nof WSJ)"}, "S143": {"id": "pdf-bdfaa68d8984f0dc-p10-b1", "page": 10, "quote": "Parser\nTraining\nWSJ 23 F1\nVinyals & Kaiser el al. (2014) [37]\nWSJ only, discriminative\n88.3\nPetrov et al. (2006) [29]\nWSJ only, discriminative\n90.4\nZhu et al. (2013) [40]\nWSJ only, discriminative\n90.4\nDyer et al. (2016) [8]\nWSJ only, discriminative\n91.7\nTransformer (4 layers)\nWSJ only, discriminative\n91.3\nZhu et al. (2013) [40]\nsemi-supervised\n91.3\nHuang & Harper (2009) [14]\nsemi-supervised\n91.3\nMcClosky et al. (2006) [26]\nsemi-supervised\n92.1\nVinyals & Kaiser el al. (2014) [37]\nsemi-supervised\n92.1\nTransformer (4 layers)\nsemi-supervised\n92.7\nLuong et al. (2015) [23]\nmulti-task\n93.0\nDyer et al. (2016) [8]\ngenerative\n93.3"}, "S144": {"id": "pdf-bdfaa68d8984f0dc-p10-b2", "page": 10, "quote": "increased the maximum output length to input length + 300. We used a beam size of 21 and α = 0.3\nfor both WSJ only and the semi-supervised setting."}, "S145": {"id": "pdf-bdfaa68d8984f0dc-p10-b3", "page": 10, "quote": "Our results in Table 4 show that despite the lack of task-specific tuning our model performs sur-\nprisingly well, yielding better results than all previously reported models with the exception of the\nRecurrent Neural Network Grammar [8]."}, "S146": {"id": "pdf-bdfaa68d8984f0dc-p10-b4", "page": 10, "quote": "In contrast to RNN sequence-to-sequence models [37], the Transformer outperforms the Berkeley-\nParser [29] even when training only on the WSJ training set of 40K sentences."}, "S147": {"id": "pdf-bdfaa68d8984f0dc-p10-b5", "page": 10, "quote": "7\nConclusion"}, "S148": {"id": "pdf-bdfaa68d8984f0dc-p10-b6", "page": 10, "quote": "In this work, we presented the Transformer, the first sequence transduction model based entirely on\nattention, replacing the recurrent layers most commonly used in encoder-decoder architectures with\nmulti-headed self-attention."}, "S149": {"id": "pdf-bdfaa68d8984f0dc-p10-b7", "page": 10, "quote": "For translation tasks, the Transformer can be trained significantly faster than architectures based\non recurrent or convolutional layers. On both WMT 2014 English-to-German and WMT 2014\nEnglish-to-French translation tasks, we achieve a new state of the art. In the former task our best\nmodel outperforms even all previously reported ensembles."}, "S150": {"id": "pdf-bdfaa68d8984f0dc-p10-b8", "page": 10, "quote": "We are excited about the future of attention-based models and plan to apply them to other tasks. We\nplan to extend the Transformer to problems involving input and output modalities other than text and\nto investigate local, restricted attention mechanisms to efficiently handle large inputs and outputs\nsuch as images, audio and video. Making generation less sequential is another research goals of ours."}, "S151": {"id": "pdf-bdfaa68d8984f0dc-p10-b9", "page": 10, "quote": "The code we used to train and evaluate our models is available at https://github.com/\ntensorflow/tensor2tensor."}, "S152": {"id": "pdf-bdfaa68d8984f0dc-p10-b10", "page": 10, "quote": "Acknowledgements\nWe are grateful to Nal Kalchbrenner and Stephan Gouws for their fruitful\ncomments, corrections and inspiration."}, "S153": {"id": "pdf-bdfaa68d8984f0dc-p10-b11", "page": 10, "quote": "References"}, "S154": {"id": "pdf-bdfaa68d8984f0dc-p10-b12", "page": 10, "quote": "[1] Jimmy Lei Ba, Jamie Ryan Kiros, and Geoffrey E Hinton. Layer normalization. arXiv preprint"}, "S155": {"id": "pdf-bdfaa68d8984f0dc-p10-b13", "page": 10, "quote": "arXiv:1607.06450, 2016."}, "S156": {"id": "pdf-bdfaa68d8984f0dc-p10-b14", "page": 10, "quote": "[2] Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly"}, "S157": {"id": "pdf-bdfaa68d8984f0dc-p10-b15", "page": 10, "quote": "learning to align and translate. CoRR, abs/1409.0473, 2014."}, "S158": {"id": "pdf-bdfaa68d8984f0dc-p10-b16", "page": 10, "quote": "[3] Denny Britz, Anna Goldie, Minh-Thang Luong, and Quoc V. Le. Massive exploration of neural"}, "S159": {"id": "pdf-bdfaa68d8984f0dc-p10-b17", "page": 10, "quote": "machine translation architectures. CoRR, abs/1703.03906, 2017."}, "S160": {"id": "pdf-bdfaa68d8984f0dc-p10-b18", "page": 10, "quote": "[4] Jianpeng Cheng, Li Dong, and Mirella Lapata. Long short-term memory-networks for machine"}, "S161": {"id": "pdf-bdfaa68d8984f0dc-p10-b19", "page": 10, "quote": "reading. arXiv preprint arXiv:1601.06733, 2016."}, "S162": {"id": "pdf-bdfaa68d8984f0dc-p11-b0", "page": 11, "quote": "[5] Kyunghyun Cho, Bart van Merrienboer, Caglar Gulcehre, Fethi Bougares, Holger Schwenk,"}, "S163": {"id": "pdf-bdfaa68d8984f0dc-p11-b1", "page": 11, "quote": "and Yoshua Bengio. Learning phrase representations using rnn encoder-decoder for statistical\nmachine translation. CoRR, abs/1406.1078, 2014."}, "S164": {"id": "pdf-bdfaa68d8984f0dc-p11-b2", "page": 11, "quote": "[6] Francois Chollet. Xception: Deep learning with depthwise separable convolutions. arXiv"}, "S165": {"id": "pdf-bdfaa68d8984f0dc-p11-b3", "page": 11, "quote": "preprint arXiv:1610.02357, 2016."}, "S166": {"id": "pdf-bdfaa68d8984f0dc-p11-b4", "page": 11, "quote": "[7] Junyoung Chung, Çaglar Gülçehre, Kyunghyun Cho, and Yoshua Bengio. Empirical evaluation"}, "S167": {"id": "pdf-bdfaa68d8984f0dc-p11-b5", "page": 11, "quote": "of gated recurrent neural networks on sequence modeling. CoRR, abs/1412.3555, 2014."}, "S168": {"id": "pdf-bdfaa68d8984f0dc-p11-b6", "page": 11, "quote": "[8] Chris Dyer, Adhiguna Kuncoro, Miguel Ballesteros, and Noah A. Smith. Recurrent neural"}, "S169": {"id": "pdf-bdfaa68d8984f0dc-p11-b7", "page": 11, "quote": "network grammars. In Proc. of NAACL, 2016."}, "S170": {"id": "pdf-bdfaa68d8984f0dc-p11-b8", "page": 11, "quote": "[9] Jonas Gehring, Michael Auli, David Grangier, Denis Yarats, and Yann N. Dauphin. Convolu-"}, "S171": {"id": "pdf-bdfaa68d8984f0dc-p11-b9", "page": 11, "quote": "tional sequence to sequence learning. arXiv preprint arXiv:1705.03122v2, 2017."}, "S172": {"id": "pdf-bdfaa68d8984f0dc-p11-b10", "page": 11, "quote": "[10] Alex Graves.\nGenerating sequences with recurrent neural networks.\narXiv preprint\narXiv:1308.0850, 2013."}, "S173": {"id": "pdf-bdfaa68d8984f0dc-p11-b11", "page": 11, "quote": "[11] Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for im-"}, "S174": {"id": "pdf-bdfaa68d8984f0dc-p11-b12", "page": 11, "quote": "age recognition. In Proceedings of the IEEE Conference on Computer Vision and Pattern\nRecognition, pages 770–778, 2016."}, "S175": {"id": "pdf-bdfaa68d8984f0dc-p11-b13", "page": 11, "quote": "[12] Sepp Hochreiter, Yoshua Bengio, Paolo Frasconi, and Jürgen Schmidhuber. Gradient flow in"}, "S176": {"id": "pdf-bdfaa68d8984f0dc-p11-b14", "page": 11, "quote": "recurrent nets: the difficulty of learning long-term dependencies, 2001."}, "S177": {"id": "pdf-bdfaa68d8984f0dc-p11-b15", "page": 11, "quote": "[13] Sepp Hochreiter and Jürgen Schmidhuber. Long short-term memory. Neural computation,"}, "S178": {"id": "pdf-bdfaa68d8984f0dc-p11-b16", "page": 11, "quote": "9(8):1735–1780, 1997."}, "S179": {"id": "pdf-bdfaa68d8984f0dc-p11-b17", "page": 11, "quote": "[14] Zhongqiang Huang and Mary Harper. Self-training PCFG grammars with latent annotations"}, "S180": {"id": "pdf-bdfaa68d8984f0dc-p11-b18", "page": 11, "quote": "across languages. In Proceedings of the 2009 Conference on Empirical Methods in Natural\nLanguage Processing, pages 832–841. ACL, August 2009."}, "S181": {"id": "pdf-bdfaa68d8984f0dc-p11-b19", "page": 11, "quote": "[15] Rafal Jozefowicz, Oriol Vinyals, Mike Schuster, Noam Shazeer, and Yonghui Wu. Exploring"}, "S182": {"id": "pdf-bdfaa68d8984f0dc-p11-b20", "page": 11, "quote": "the limits of language modeling. arXiv preprint arXiv:1602.02410, 2016."}, "S183": {"id": "pdf-bdfaa68d8984f0dc-p11-b21", "page": 11, "quote": "[16] Łukasz Kaiser and Samy Bengio. Can active memory replace attention? In Advances in Neural"}, "S184": {"id": "pdf-bdfaa68d8984f0dc-p11-b22", "page": 11, "quote": "Information Processing Systems, (NIPS), 2016."}, "S185": {"id": "pdf-bdfaa68d8984f0dc-p11-b23", "page": 11, "quote": "[17] Łukasz Kaiser and Ilya Sutskever. Neural GPUs learn algorithms. In International Conference"}, "S186": {"id": "pdf-bdfaa68d8984f0dc-p11-b24", "page": 11, "quote": "on Learning Representations (ICLR), 2016."}, "S187": {"id": "pdf-bdfaa68d8984f0dc-p11-b25", "page": 11, "quote": "[18] Nal Kalchbrenner, Lasse Espeholt, Karen Simonyan, Aaron van den Oord, Alex Graves, and Ko-"}, "S188": {"id": "pdf-bdfaa68d8984f0dc-p11-b26", "page": 11, "quote": "ray Kavukcuoglu. Neural machine translation in linear time. arXiv preprint arXiv:1610.10099v2,\n2017."}, "S189": {"id": "pdf-bdfaa68d8984f0dc-p11-b27", "page": 11, "quote": "[19] Yoon Kim, Carl Denton, Luong Hoang, and Alexander M. Rush. Structured attention networks."}, "S190": {"id": "pdf-bdfaa68d8984f0dc-p11-b28", "page": 11, "quote": "In International Conference on Learning Representations, 2017."}, "S191": {"id": "pdf-bdfaa68d8984f0dc-p11-b29", "page": 11, "quote": "[20] Diederik Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In ICLR, 2015."}, "S192": {"id": "pdf-bdfaa68d8984f0dc-p11-b30", "page": 11, "quote": "[21] Oleksii Kuchaiev and Boris Ginsburg. Factorization tricks for LSTM networks. arXiv preprint"}, "S193": {"id": "pdf-bdfaa68d8984f0dc-p11-b31", "page": 11, "quote": "arXiv:1703.10722, 2017."}, "S194": {"id": "pdf-bdfaa68d8984f0dc-p11-b32", "page": 11, "quote": "[22] Zhouhan Lin, Minwei Feng, Cicero Nogueira dos Santos, Mo Yu, Bing Xiang, Bowen"}, "S195": {"id": "pdf-bdfaa68d8984f0dc-p11-b33", "page": 11, "quote": "Zhou, and Yoshua Bengio. A structured self-attentive sentence embedding. arXiv preprint\narXiv:1703.03130, 2017."}, "S196": {"id": "pdf-bdfaa68d8984f0dc-p11-b34", "page": 11, "quote": "[23] Minh-Thang Luong, Quoc V. Le, Ilya Sutskever, Oriol Vinyals, and Lukasz Kaiser. Multi-task"}, "S197": {"id": "pdf-bdfaa68d8984f0dc-p11-b35", "page": 11, "quote": "sequence to sequence learning. arXiv preprint arXiv:1511.06114, 2015."}, "S198": {"id": "pdf-bdfaa68d8984f0dc-p11-b36", "page": 11, "quote": "[24] Minh-Thang Luong, Hieu Pham, and Christopher D Manning. Effective approaches to attention-"}, "S199": {"id": "pdf-bdfaa68d8984f0dc-p11-b37", "page": 11, "quote": "based neural machine translation. arXiv preprint arXiv:1508.04025, 2015."}, "S200": {"id": "pdf-bdfaa68d8984f0dc-p12-b0", "page": 12, "quote": "[25] Mitchell P Marcus, Mary Ann Marcinkiewicz, and Beatrice Santorini. Building a large annotated"}, "S201": {"id": "pdf-bdfaa68d8984f0dc-p12-b1", "page": 12, "quote": "corpus of english: The penn treebank. Computational linguistics, 19(2):313–330, 1993."}, "S202": {"id": "pdf-bdfaa68d8984f0dc-p12-b2", "page": 12, "quote": "[26] David McClosky, Eugene Charniak, and Mark Johnson. Effective self-training for parsing. In"}, "S203": {"id": "pdf-bdfaa68d8984f0dc-p12-b3", "page": 12, "quote": "Proceedings of the Human Language Technology Conference of the NAACL, Main Conference,\npages 152–159. ACL, June 2006."}, "S204": {"id": "pdf-bdfaa68d8984f0dc-p12-b4", "page": 12, "quote": "[27] Ankur Parikh, Oscar Täckström, Dipanjan Das, and Jakob Uszkoreit. A decomposable attention"}, "S205": {"id": "pdf-bdfaa68d8984f0dc-p12-b5", "page": 12, "quote": "model. In Empirical Methods in Natural Language Processing, 2016."}, "S206": {"id": "pdf-bdfaa68d8984f0dc-p12-b6", "page": 12, "quote": "[28] Romain Paulus, Caiming Xiong, and Richard Socher. A deep reinforced model for abstractive"}, "S207": {"id": "pdf-bdfaa68d8984f0dc-p12-b7", "page": 12, "quote": "summarization. arXiv preprint arXiv:1705.04304, 2017."}, "S208": {"id": "pdf-bdfaa68d8984f0dc-p12-b8", "page": 12, "quote": "[29] Slav Petrov, Leon Barrett, Romain Thibaux, and Dan Klein. Learning accurate, compact,"}, "S209": {"id": "pdf-bdfaa68d8984f0dc-p12-b9", "page": 12, "quote": "and interpretable tree annotation. In Proceedings of the 21st International Conference on\nComputational Linguistics and 44th Annual Meeting of the ACL, pages 433–440. ACL, July\n2006."}, "S210": {"id": "pdf-bdfaa68d8984f0dc-p12-b10", "page": 12, "quote": "[30] Ofir Press and Lior Wolf. Using the output embedding to improve language models. arXiv"}, "S211": {"id": "pdf-bdfaa68d8984f0dc-p12-b11", "page": 12, "quote": "preprint arXiv:1608.05859, 2016."}, "S212": {"id": "pdf-bdfaa68d8984f0dc-p12-b12", "page": 12, "quote": "[31] Rico Sennrich, Barry Haddow, and Alexandra Birch. Neural machine translation of rare words"}, "S213": {"id": "pdf-bdfaa68d8984f0dc-p12-b13", "page": 12, "quote": "with subword units. arXiv preprint arXiv:1508.07909, 2015."}, "S214": {"id": "pdf-bdfaa68d8984f0dc-p12-b14", "page": 12, "quote": "[32] Noam Shazeer, Azalia Mirhoseini, Krzysztof Maziarz, Andy Davis, Quoc Le, Geoffrey Hinton,"}, "S215": {"id": "pdf-bdfaa68d8984f0dc-p12-b15", "page": 12, "quote": "and Jeff Dean. Outrageously large neural networks: The sparsely-gated mixture-of-experts\nlayer. arXiv preprint arXiv:1701.06538, 2017."}, "S216": {"id": "pdf-bdfaa68d8984f0dc-p12-b16", "page": 12, "quote": "[33] Nitish Srivastava, Geoffrey E Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan Salakhutdi-"}, "S217": {"id": "pdf-bdfaa68d8984f0dc-p12-b17", "page": 12, "quote": "nov. Dropout: a simple way to prevent neural networks from overfitting. Journal of Machine\nLearning Research, 15(1):1929–1958, 2014."}, "S218": {"id": "pdf-bdfaa68d8984f0dc-p12-b18", "page": 12, "quote": "[34] Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, and Rob Fergus. End-to-end memory"}, "S219": {"id": "pdf-bdfaa68d8984f0dc-p12-b19", "page": 12, "quote": "networks. In C. Cortes, N. D. Lawrence, D. D. Lee, M. Sugiyama, and R. Garnett, editors,\nAdvances in Neural Information Processing Systems 28, pages 2440–2448. Curran Associates,"}, "S220": {"id": "pdf-bdfaa68d8984f0dc-p12-b20", "page": 12, "quote": "Inc., 2015."}, "S221": {"id": "pdf-bdfaa68d8984f0dc-p12-b21", "page": 12, "quote": "[35] Ilya Sutskever, Oriol Vinyals, and Quoc VV Le. Sequence to sequence learning with neural"}, "S222": {"id": "pdf-bdfaa68d8984f0dc-p12-b22", "page": 12, "quote": "networks. In Advances in Neural Information Processing Systems, pages 3104–3112, 2014."}, "S223": {"id": "pdf-bdfaa68d8984f0dc-p12-b23", "page": 12, "quote": "[36] Christian Szegedy, Vincent Vanhoucke, Sergey Ioffe, Jonathon Shlens, and Zbigniew Wojna."}, "S224": {"id": "pdf-bdfaa68d8984f0dc-p12-b24", "page": 12, "quote": "Rethinking the inception architecture for computer vision. CoRR, abs/1512.00567, 2015."}, "S225": {"id": "pdf-bdfaa68d8984f0dc-p12-b25", "page": 12, "quote": "[37] Vinyals & Kaiser, Koo, Petrov, Sutskever, and Hinton. Grammar as a foreign language. In"}, "S226": {"id": "pdf-bdfaa68d8984f0dc-p12-b26", "page": 12, "quote": "Advances in Neural Information Processing Systems, 2015."}, "S227": {"id": "pdf-bdfaa68d8984f0dc-p12-b27", "page": 12, "quote": "[38] Yonghui Wu, Mike Schuster, Zhifeng Chen, Quoc V Le, Mohammad Norouzi, Wolfgang"}, "S228": {"id": "pdf-bdfaa68d8984f0dc-p12-b28", "page": 12, "quote": "Macherey, Maxim Krikun, Yuan Cao, Qin Gao, Klaus Macherey, et al. Google’s neural machine\ntranslation system: Bridging the gap between human and machine translation. arXiv preprint\narXiv:1609.08144, 2016."}, "S229": {"id": "pdf-bdfaa68d8984f0dc-p12-b29", "page": 12, "quote": "[39] Jie Zhou, Ying Cao, Xuguang Wang, Peng Li, and Wei Xu. Deep recurrent models with"}, "S230": {"id": "pdf-bdfaa68d8984f0dc-p12-b30", "page": 12, "quote": "fast-forward connections for neural machine translation. CoRR, abs/1606.04199, 2016."}, "S231": {"id": "pdf-bdfaa68d8984f0dc-p12-b31", "page": 12, "quote": "[40] Muhua Zhu, Yue Zhang, Wenliang Chen, Min Zhang, and Jingbo Zhu. Fast and accurate"}, "S232": {"id": "pdf-bdfaa68d8984f0dc-p12-b32", "page": 12, "quote": "shift-reduce constituent parsing. In Proceedings of the 51st Annual Meeting of the ACL (Volume\n1: Long Papers), pages 434–443. ACL, August 2013."}, "S233": {"id": "pdf-bdfaa68d8984f0dc-p13-b0", "page": 13, "quote": "Attention Visualizations"}, "S234": {"id": "pdf-bdfaa68d8984f0dc-p13-b1", "page": 13, "quote": "governments"}, "S235": {"id": "pdf-bdfaa68d8984f0dc-p13-b2", "page": 13, "quote": "American"}, "S236": {"id": "pdf-bdfaa68d8984f0dc-p13-b3", "page": 13, "quote": "majority"}, "S237": {"id": "pdf-bdfaa68d8984f0dc-p13-b25", "page": 13, "quote": "American"}, "S238": {"id": "pdf-bdfaa68d8984f0dc-p13-b26", "page": 13, "quote": "majority"}, "S239": {"id": "pdf-bdfaa68d8984f0dc-p13-b28", "page": 13, "quote": "governments"}, "S240": {"id": "pdf-bdfaa68d8984f0dc-p13-b29", "page": 13, "quote": "registration"}, "S241": {"id": "pdf-bdfaa68d8984f0dc-p13-b33", "page": 13, "quote": "difficult"}, "S242": {"id": "pdf-bdfaa68d8984f0dc-p13-b52", "page": 13, "quote": "difficult"}, "S243": {"id": "pdf-bdfaa68d8984f0dc-p13-b66", "page": 13, "quote": "registration"}, "S244": {"id": "pdf-bdfaa68d8984f0dc-p13-b68", "page": 13, "quote": "Figure 3: An example of the attention mechanism following long-distance dependencies in the\nencoder self-attention in layer 5 of 6. Many of the attention heads attend to a distant dependency of\nthe verb ‘making’, completing the phrase ‘making...more difficult’. Attentions here shown only for\nthe word ‘making’. Different colors represent different heads. Best viewed in color."}, "S245": {"id": "pdf-bdfaa68d8984f0dc-p14-b0", "page": 14, "quote": "application"}, "S246": {"id": "pdf-bdfaa68d8984f0dc-p14-b21", "page": 14, "quote": "application"}, "S247": {"id": "pdf-bdfaa68d8984f0dc-p14-b22", "page": 14, "quote": "application"}, "S248": {"id": "pdf-bdfaa68d8984f0dc-p14-b43", "page": 14, "quote": "application"}, "S249": {"id": "pdf-bdfaa68d8984f0dc-p14-b109", "page": 14, "quote": "Figure 4: Two attention heads, also in layer 5 of 6, apparently involved in anaphora resolution. Top:\nFull attentions for head 5. Bottom: Isolated attentions from just the word ‘its’ for attention heads 5\nand 6. Note that the attentions are very sharp for this word."}, "S250": {"id": "pdf-bdfaa68d8984f0dc-p15-b0", "page": 15, "quote": "application"}, "S251": {"id": "pdf-bdfaa68d8984f0dc-p15-b23", "page": 15, "quote": "application"}, "S252": {"id": "pdf-bdfaa68d8984f0dc-p15-b24", "page": 15, "quote": "application"}, "S253": {"id": "pdf-bdfaa68d8984f0dc-p15-b47", "page": 15, "quote": "application"}, "S254": {"id": "pdf-bdfaa68d8984f0dc-p15-b109", "page": 15, "quote": "Figure 5: Many of the attention heads exhibit behaviour that seems related to the structure of the\nsentence. We give two such examples above, from two different heads from the encoder self-attention\nat layer 5 of 6. The heads clearly learned to perform different tasks."}, "S255": {"id": "web-1ea3ecf43e0cfca1", "page": 0, "quote": "from an instance of S. Some arrows to the leaves are omitted for readability (e.g. from zero_ne_one_class to has_one).\nFigure 1. The structure hierarchy underlying normed_field. An edge from S to T indicates that an instance of T can be derived"}, "S256": {"id": "web-5bba552f67b56f34", "page": 0, "quote": "tificial intelligence such as the generative pre-trained transformer in future education. Sustainability,\nThe role of commitments and the evolution of coordination in networks of technology firms. In\n[38] Yanwei You, Yuquan Chen, Yujun You, Qi Zhang, and Qiang Cao. Evolutionary game analysis of ar-\nresponsible behaviour across all scenarios, the speed and stability of norm formation vary substantially"}, "S257": {"id": "web-339b8b43e077596c", "page": 0, "quote": "is signiﬁcant beneﬁt to undertaking this eﬀort, including a substantial increase in the use, visibility,\nformation, and characterize and explain the diversity of planetary system architectures, planetary\nthe relevant data would need to be extracted) is also crucial for allowing reproducibility.\nadditional science cases such as investigating stellar dependencies in the planet population, and is"}, "S258": {"id": "web-56f1ca4c21959ccf", "page": 0, "quote": "virtual particles and antiparticles. The hyperbolic sine geodesics of dS4 spacetime can explain why\ngeodesics can be related by a relation similar to Heisenberg uncertainty one pertaining quantum\nis presented. The geodesics for test particles in AdS4 and dS4 spacetimes are respectively sinusoidal\nvacuum ﬂuctuations. The sinusoidal geodesics of AdS4 spacetime can describe the world lines of the"}, "S259": {"id": "web-83b9ee03a26ae69c", "page": 0, "quote": "Large and complex models have recently been developed that require many parameters and much time to solve various problems in natural language processing. This paper explores an efficient way to avoid models being too complicated and ensure nearly equal performance to models showing the state-of-the-art. We propose a single convolutional neural network (CNN) using the sinusoidal positional encoding (SPE) in text classification. The SPE provides useful position information of a word and can construct a more efficient model architecture than before in a CNN-based approach. Our model can significantly reduce the parameter size (at least 67%) and training time (up to 85%) while maintaining similar performance to the CNN-based approach on multiple benchmark datasets.\n%X Large and complex models have recently been developed that require many parameters and much time to solve various problems in natural language processing. This paper explores an efficient way to avoid models being too complicated and ensure nearly equal performance to models showing the state-of-the-art. We propose a single convolutional neural network (CNN) using the sinusoidal positional encoding (SPE) in text classification. The SPE provides useful position information of a word and can construct a more efficient model architecture than before in a CNN-based approach. Our model can significantly reduce the parameter size (at least 67%) and training time (up to 85%) while maintaining similar performance to the CNN-based approach on multiple benchmark datasets.\n    abstract = \"Large and complex models have recently been developed that require many parameters and much time to solve various problems in natural language processing. This paper explores an efficient way to avoid models being too complicated and ensure nearly equal performance to models showing the state-of-the-art. We propose a single convolutional neural network (CNN) using the sinusoidal positional encoding (SPE) in text classification. The SPE provides useful position information of a word and can construct a more efficient model architecture than before in a CNN-based approach. Our model can significantly reduce the parameter size (at least 67{\\%}) and training time (up to 85{\\%}) while maintaining similar performance to the CNN-based approach on multiple benchmark datasets.\"\n    \u003cabstract>Large and complex models have recently been developed that require many parameters and much time to solve various problems in natural language processing. This paper explores an efficient way to avoid models being too complicated and ensure nearly equal performance to models showing the state-of-the-art. We propose a single convolutional neural network (CNN) using the sinusoidal positional encoding (SPE) in text classification. The SPE provides useful position information of a word and can construct a more efficient model architecture than before in a CNN-based approach. Our model can significantly reduce the parameter size (at least 67%) and training time (up to 85%) while maintaining similar performance to the CNN-based approach on multiple benchmark datasets.\u003c/abstract>"}}, "nodes": [{"id": "problem-statement", "title": "序列模型的局限性", "concepts": ["concept-1f2beb45c5fae712", "concept-772c6a580e98e7ea"]}, {"id": "transformer-architecture", "title": "Transformer 架构概览", "concepts": ["concept-043a7fc2683d6b1a", "concept-cd77160f46f613aa"]}, {"id": "scaled-dot-product", "title": "缩放点积注意力机制", "concepts": ["concept-d8b865da01fdef8d", "concept-76f31c8357e01c35"]}, {"id": "multi-head-attention", "title": "多头注意力策略 (Multi-Head Attention Strategy)", "concepts": ["concept-4aa2b1aa06abf178", "concept-eb47df60bb1df95c"]}, {"id": "positional-encoding", "title": "位置编码注入 (Positional Encoding Injection)", "concepts": ["concept-cc7eb5690e15e133", "concept-38caac9bad7f5784"]}, {"id": "complexity-analysis", "title": "计算复杂度与路径长度 (Computational Complexity & Path Length)", "concepts": ["concept-117a14c8b73ec470", "concept-4bae5baf12b68e68"]}, {"id": "training-regime", "title": "训练配置与优化策略", "concepts": ["concept-d8b7440127807571", "concept-c8742c1c838e7746"]}, {"id": "mt-results", "title": "机器翻译最先进水平 (SOTA)", "concepts": ["concept-6a8f982d63370a32", "concept-918c67a1aa584cdb"]}, {"id": "ablation-studies", "title": "组件消融实验与变体分析", "concepts": ["concept-d79ae4982f5fbe30", "concept-ed63dc76802702dc"]}, {"id": "generalization-parsing", "title": "Transformer 在成分句法分析中的泛化能力", "concepts": ["concept-42e064ba0e36da9d", "concept-bb6207e966bdc8b0"]}]}};/* Trusted host bridge. Authors only access read-only evidence and local DOM. */
+(()=>{
+ const C=PM_CONFIG;
+ const deepFreeze=o=>{if(o&&typeof o==='object'){Object.values(o).forEach(deepFreeze);Object.freeze(o);}return o;};
+ Object.defineProperty(window,'paperMindData',{value:deepFreeze(C.data),writable:false,configurable:false});
+ const nodes=new Set(C.data.nodes.map(n=>n.id)),concepts=new Set(C.data.nodes.flatMap(n=>n.concepts));
+ let initialized=false,height=0,scheduled=false;
+ function emit(type,payload={}){if(parent!==window)parent.postMessage({type,edition:C.edition,document:C.document,channel:C.channel,...payload},'*');}
+ function measure(){if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;const h=Math.ceil(document.documentElement.scrollHeight);if(h!==height){height=h;emit('resize',{height:h});}});}
+ function source(id){const s=C.data.sources[id];if(!s)return;if(parent!==window){emit('cite',{id:s.id});return;}document.getElementById('pm-local-source')?.remove();const box=document.createElement('aside');box.id='pm-local-source';box.setAttribute('role','dialog');box.setAttribute('aria-label','原文出处');const title=document.createElement('strong');title.textContent='原文 · 第 '+s.page+' 页';const quote=document.createElement('blockquote');quote.textContent=s.quote;const close=document.createElement('button');close.textContent='返回讲解';close.addEventListener('click',()=>box.remove());box.append(title,quote,close);document.body.append(box);close.focus();}
+ function nodeOf(el){return el.closest('[data-node]')?.dataset.node||C.data.nodes[0]?.id;}
+ document.addEventListener('click',event=>{
+  const button=event.target.closest('button,a');if(!button)return;
+  if(button.dataset.source){event.preventDefault();source(button.dataset.source);}
+  else if(button.dataset.concept&&concepts.has(button.dataset.concept))emit('concept',{id:button.dataset.concept,node:nodeOf(button)});
+  else if(button.dataset.ask&&event.isTrusted)emit('ask',{text:button.dataset.ask.slice(0,2000),node:nodeOf(button)});
+  else if(button.dataset.undo&&event.isTrusted)emit('undo',{id:button.dataset.undo});
+  else if(button.matches('a[href^="#"]')){event.preventDefault();const el=document.getElementById(button.getAttribute('href').slice(1));if(el){if(parent===window)el.scrollIntoView();else emit('scroll',{top:el.getBoundingClientRect().top+scrollY});}}
+ });
+ document.addEventListener('mouseup',()=>{const text=window.getSelection()?.toString().trim();if(text&&text.length>=4&&text.length<=2000)emit('selection',{text,node:nodeOf(window.getSelection()?.anchorNode?.parentElement||document.body)});});
+ function supplements(items){document.querySelectorAll('.pm-user-note').forEach(n=>n.remove());for(const item of items){if(!nodes.has(item.node_id))continue;const anchor=document.getElementById(item.node_id);if(!anchor)continue;const note=document.createElement('aside');note.className='pm-user-note';note.dataset.node=item.node_id;const h=document.createElement('h4');h.textContent='我的讲解补充';const p=document.createElement('p');p.textContent=item.text;note.append(h,p);for(const id of item.source_ids||[]){const alias=Object.keys(C.data.sources).find(k=>C.data.sources[k].id===id);if(alias){const b=document.createElement('button');b.dataset.source=alias;b.textContent='原文 · p.'+C.data.sources[alias].page;note.append(b);}}if(item.can_undo){const b=document.createElement('button');b.dataset.undo=item.id;b.textContent='撤回补充';note.append(b);}anchor.append(note);}measure();}
+ window.addEventListener('message',event=>{const d=event.data;if(event.source!==parent||!d||d.channel!==C.channel)return;
+  if(d.type==='navigate'&&nodes.has(d.node)){const el=document.getElementById(d.node);if(el){for(let p=el.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;emit('scroll',{top:el.getBoundingClientRect().top+scrollY});}}
+  if(d.type==='viewport'&&Number.isFinite(d.top)){let chosen=C.data.nodes[0]?.id;for(const n of C.data.nodes){const el=document.getElementById(n.id);if(el&&el.getBoundingClientRect().top+scrollY<=d.top+160)chosen=n.id;}if(chosen)emit('active',{node:chosen});}
+  if(d.type==='supplements'&&Array.isArray(d.items))supplements(d.items.slice(0,100));
+ });
+ window.addEventListener('pm-initialized',()=>{initialized=true;document.body.dataset.pmReady='true';emit('ready');measure();});
+ window.addEventListener('error',event=>emit('error',{message:String(event.message).slice(0,300)}));
+ new ResizeObserver(measure).observe(document.body);measure();
+})();
+</script><script nonce="uPTW1EcN5ZPEbrfSFS7unwdY79LVvVPi">try{(function() {
+  const $ = (sel) => document.querySelector(sel);
+  const $$ = (sel) => document.querySelectorAll(sel);
+
+  // 1. Complexity Slider (Problem Statement)
+  const seqSlider = $('#seq-length-slider');
+  const rnnBar = $('.rnn-bar');
+  const transBar = $('.trans-bar');
+
+  function updateComplexity() {
+    const n = parseInt(seqSlider.value);
+    // RNN grows linearly, Transformer stays constant (O(1) path length concept)
+    const rnnHeight = Math.min(100, n);
+    rnnBar.style.height = rnnHeight + '%';
+    transBar.style.height = '20%'; // Constant baseline
+  }
+  if(seqSlider) seqSlider.addEventListener('input', updateComplexity);
+  updateComplexity();
+
+  // 2. Architecture Mask Toggle
+  const maskBtn = $('#toggle-mask');
+  const maskedLayers = $$('.sublayer.masked');
+  if(maskBtn) {
+    maskBtn.addEventListener('click', () => {
+      maskedLayers.forEach(el => {
+        const isMasked = el.style.fill === 'rgb(255, 245, 245)' || el.getAttribute('fill') === '#fff5f5';
+        if(isMasked) {
+          el.style.fill = '#fff';
+          el.style.opacity = '1';
+        } else {
+          el.style.fill = '#fff5f5';
+          el.style.opacity = '0.6';
+        }
+      });
+    });
+  }
+
+  // 3. Attention Mechanism Lab (Canvas)
+  const attnCanvas = $('#attention-canvas');
+  const dkSlider = $('#dk-slider');
+  const scaleCheck = $('#scale-check');
+  const dkVal = $('#dk-val');
+  const attnOutput = $('#attn-output-display');
+  const attnReset = $('#attn-reset');
+
+  if(attnCanvas && attnCanvas.getContext) {
+    const ctx = attnCanvas.getContext('2d');
+    let q = [1, 0, 2];
+    let k = [[1, 0, 1], [0, 1, -1], [-1, 1, 0]];
+    let v = [1, 2, -1];
+
+    function drawAttention() {
+      const dk = parseInt(dkSlider.value);
+      dkVal.textContent = dk;
+      const useScale = scaleCheck.checked;
+      const scale = useScale ? 1 / Math.sqrt(dk) : 1;
+
+      // Compute Scores (Q dot K^T)
+      // Simplified for demo: Q is 1x3, K is 3x3. Result 1x3.
+      const scores = k.map((row, i) => {
+        return (q[0]*row[0] + q[1]*row[1] + q[2]*row[2]) * scale;
+      });
+
+      // Softmax
+      const maxScore = Math.max(...scores);
+      const expScores = scores.map(s => Math.exp(s - maxScore));
+      const sumExp = expScores.reduce((a, b) => a + b, 0);
+      const weights = expScores.map(s => s / sumExp);
+
+      // Output (Weights dot V)
+      const output = weights.reduce((acc, w, i) => acc + w * v[i], 0);
+      attnOutput.textContent = `Output: ${output.toFixed(4)}`;
+
+      // Draw Bars
+      ctx.clearRect(0, 0, attnCanvas.width, attnCanvas.height);
+      const barWidth = 60;
+      const gap = 40;
+      const startX = 50;
+      const maxY = 150;
+
+      weights.forEach((w, i) => {
+        const h = w * maxY;
+        const x = startX + i * (barWidth + gap);
+        const y = 180 - h;
+        
+        ctx.fillStyle = '#2C5282';
+        ctx.fillRect(x, y, barWidth, h);
+        
+        ctx.fillStyle = '#000';
+        ctx.font = '12px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(`w${i}: ${w.toFixed(2)}`, x + barWidth/2, 195);
+        ctx.fillText(`s${i}: ${scores[i].toFixed(1)}`, x + barWidth/2, y - 5);
+      });
+    }
+
+    dkSlider.addEventListener('input', drawAttention);
+    scaleCheck.addEventListener('change', drawAttention);
+    if(attnReset) attnReset.addEventListener('click', () => {
+      dkSlider.value = 64;
+      scaleCheck.checked = true;
+      drawAttention();
+    });
+    drawAttention();
+  }
+
+  // 4. Positional Encoding Canvas
+  const peCanvas = $('#pe-canvas');
+  const pePosSlider = $('#pe-pos');
+  const pePosVal = $('#pe-pos-val');
+  
+  if(peCanvas && peCanvas.getContext) {
+    const ctx = peCanvas.getContext('2d');
+    const d_model = 64;
+    
+    function drawPE() {
+      const pos = parseInt(pePosSlider.value);
+      pePosVal.textContent = pos;
+      
+      ctx.clearRect(0, 0, peCanvas.width, peCanvas.height);
+      ctx.fillStyle = '#f0f4f8';
+      ctx.fillRect(0, 0, peCanvas.width, peCanvas.height);
+      
+      // Draw heatmap for current position across dimensions
+      const cellW = peCanvas.width / d_model;
+      
+      for(let i=0; i<d_model; i++) {
+        const val = (i % 2 === 0) 
+          ? Math.sin(pos / Math.pow(10000, (2*i)/d_model))
+          : Math.cos(pos / Math.pow(10000, (2*(i-1))/d_model));
+        
+        // Map -1..1 to color
+        const intensity = Math.floor(((val + 1) / 2) * 255);
+        ctx.fillStyle = `rgb(${255-intensity}, ${intensity}, ${100})`;
+        ctx.fillRect(i * cellW, 0, cellW + 1, peCanvas.height);
+      }
+      
+      // Draw marker line
+      ctx.strokeStyle = '#DD6B20';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      const markerX = (pos / 100) * peCanvas.width;
+      ctx.moveTo(markerX, 0);
+      ctx.lineTo(markerX, peCanvas.height);
+      ctx.stroke();
+    }
+    
+    pePosSlider.addEventListener('input', drawPE);
+    drawPE();
+  }
+
+  // 5. Complexity Analysis Bars
+  const compN = $('#comp-n');
+  const compD = $('#comp-d');
+  const compBars = $('#complexity-bars');
+  
+  function updateCompBars() {
+    const n = parseInt(compN.value);
+    const d = parseInt(compD.value);
+    
+    // Theoretical Ops (ignoring constants)
+    const selfAttn = n * n * d;
+    const recurrent = n * d * d;
+    const conv = 3 * n * d * d; // Approx
+    
+    const maxVal = Math.max(selfAttn, recurrent, conv);
+    
+    compBars.innerHTML = `
+      <div class="bar-group" style="flex-direction:column; height:150px;">
+        <div class="bar" style="height:${(selfAttn/maxVal)*100}%; background:#2C5282;"></div>
+        <span>Self-Attn<br>${selfAttn.toExponential(1)}</span>
+      </div>
+      <div class="bar-group" style="flex-direction:column; height:150px;">
+        <div class="bar" style="height:${(recurrent/maxVal)*100}%; background:#a0aec0;"></div>
+        <span>RNN<br>${recurrent.toExponential(1)}</span>
+      </div>
+      <div class="bar-group" style="flex-direction:column; height:150px;">
+        <div class="bar" style="height:${(conv/maxVal)*100}%; background:#ed8936;"></div>
+        <span>CNN<br>${conv.toExponential(1)}</span>
+      </div>
+    `;
+  }
+  
+  if(compN) compN.addEventListener('input', updateCompBars);
+  if(compD) compD.addEventListener('change', updateCompBars);
+  updateCompBars();
+
+  // 6. Results Data (Runtime Data Mock based on Paper Tables)
+  // Note: In real runtime, this would come from window.paperMindData.tables
+  const table2Data = {
+    ende: [
+      {model: 'Transformer (big)', bleu: 28.4, flops: 2.3e19},
+      {model: 'GNMT+RL Ens', bleu: 26.3, flops: 1.8e20},
+      {model: 'ConvS2S Ens', bleu: 26.36, flops: 7.7e19}
+    ],
+    enfr: [
+      {model: 'Transformer (big)', bleu: 41.8, flops: 2.3e19},
+      {model: 'GNMT+RL Ens', bleu: 41.16, flops: 1.1e21},
+      {model: 'ConvS2S Ens', bleu: 41.29, flops: 1.2e21}
+    ]
+  };
+
+  const taskSelect = $('#task-select');
+  const bleuChart = $('#bleu-chart');
+  const flopsChart = $('#flops-chart');
+  const discrepancyMsg = $('#discrepancy-msg');
+
+  function renderResults() {
+    if(!taskSelect) return;
+    const task = taskSelect.value;
+    const data = table2Data[task];
+    
+    // Show discrepancy note for EN-FR
+    if(task === 'enfr') {
+      discrepancyMsg.style.display = 'block';
+    } else {
+      discrepancyMsg.style.display = 'none';
+    }
+
+    // Render BLEU
+    const maxBleu = Math.max(...data.map(d => d.bleu));
+    bleuChart.innerHTML = data.map(d => `
+      <div class="bar-item" style="height:${(d.bleu/maxBleu)*100}%">
+        <div class="value-label">${d.bleu}</div>
+        <span>${d.model}</span>
+      </div>
+    `).join('');
+
+    // Render FLOPs (Log scale for visibility)
+    const maxFlops = Math.max(...data.map(d => d.flops));
+    flopsChart.innerHTML = data.map(d => `
+      <div class="bar-item" style="height:${(d.flops/maxFlops)*100}%; background:#DD6B20">
+        <div class="value-label">${d.flops.toExponential(1)}</div>
+        <span>${d.model}</span>
+      </div>
+    `).join('');
+  }
+
+  if(taskSelect) taskSelect.addEventListener('change', renderResults);
+  renderResults();
+
+  // 7. Ablation Studies
+  const ablationSelect = $('#ablation-select');
+  const ablationBleu = $('#ablation-bleu');
+  const ablationPpl = $('#ablation-ppl');
+  
+  // Data from Table 3
+  const ablationData = {
+    'base': {bleu: 25.8, ppl: 4.92},
+    'A_1': {bleu: 24.9, ppl: 5.29}, // Single head
+    'C_1': {bleu: 23.7, ppl: 6.11}, // N=2
+    'D_1': {bleu: 24.6, ppl: 5.77}  // No dropout
+  };
+
+  if(ablationSelect) {
+    ablationSelect.addEventListener('change', (e) => {
+      const d = ablationData[e.target.value];
+      ablationBleu.textContent = d.bleu;
+      ablationPpl.textContent = d.ppl;
+    });
+  }
+
+  // Navigation
+  $$('.nav-controls button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-scroll');
+      const el = document.getElementById(targetId);
+      if(el) el.scrollIntoView({behavior: 'smooth'});
+    });
+  });
+
+  // Source Buttons
+  $$('.source-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const sourceId = btn.getAttribute('data-source');
+      // In real runtime, this triggers the source viewer
+      console.log('Request source:', sourceId);
+      alert('请求来源：' + sourceId + '\n(由内核处理桥接)');
+    });
+  });
+
+})();;document.body.dataset.pmInitialized="true";window.dispatchEvent(new Event("pm-initialized"));}catch(error){document.body.dataset.pmError=error.message;window.dispatchEvent(new ErrorEvent("error",{message:error.message}));}</script></body></html>

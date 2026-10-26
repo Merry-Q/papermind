@@ -1,0 +1,2054 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'nonce-8aQDWUZyvm_dJuFBW6MhlY6mjcvtZxJT'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; frame-src 'none'; object-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'"><title>A Simple and Efficient Estimator for Hyperbolic Location · paperMind 交互讲解</title><style>*,*::before,*::after{box-sizing:border-box}html{scroll-behavior:auto}body{margin:0;min-width:0}button,input,select{font:inherit}button{cursor:pointer}canvas,svg{max-width:100%}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid #315cc8;outline-offset:4px}#pm-local-source{position:fixed;inset:auto 12px 12px;background:#fff;color:#26364b;border:1px solid #61748c;padding:22px;z-index:99999;max-height:65vh;overflow:auto;font:15px/1.8 system-ui}#pm-local-source button{padding:8px 12px;margin-top:12px}#pm-local-source blockquote{white-space:pre-wrap;margin:12px 0}.pm-user-note{margin:24px 0;padding:20px;background:#edf2ff;color:#26364b;font:15px/1.9 system-ui}.pm-user-note h4{margin:0 0 10px}.pm-user-note p{white-space:pre-wrap}.pm-user-note button{margin:5px;padding:6px 10px}.pm-reading-tools{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:24px;padding-top:14px;border-top:1px solid #d6dcd9}.pm-reading-tools button{border:0;background:transparent;color:#265976;text-decoration:underline;text-underline-offset:4px;font-size:13px;padding:6px 0}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+:root{--ink:#233342;--muted:#596877;--accent:#265976;--warm:#ad472d;--line:#d6dcd9;--paper:#fcfbf8;--soft:#edf2f1}
+body{background:var(--paper);color:var(--ink);font-family:"Microsoft YaHei",system-ui,sans-serif;font-size:16px;line-height:1.95}
+.paper-reading{max-width:1120px;margin:auto;padding:40px clamp(18px,5vw,58px) 80px;overflow-wrap:anywhere}
+.paper-reading h1{font:normal clamp(32px,5vw,58px)/1.12 Georgia,"Noto Serif SC",serif;letter-spacing:-.025em;margin:18px 0 26px;text-wrap:balance}
+.paper-reading h2{font-size:clamp(25px,3.5vw,34px);font-weight:500;line-height:1.4;margin:0 0 20px;text-wrap:balance}
+.paper-reading h3{font-size:20px;font-weight:500;line-height:1.5}.paper-reading p{margin:12px 0 18px}
+.paper-hero{padding:16px 0 38px;border-bottom:1px solid var(--line)}
+.paper-hero .paper-thesis{font-size:18px;line-height:1.95;max-width:55ch}.paper-hero nav{display:flex;flex-wrap:wrap;gap:8px 22px;margin:26px 0 0}
+.paper-hero nav a{font-size:13px;color:var(--accent);text-decoration:underline;text-underline-offset:6px}
+.paper-chapter{padding:48px 0 34px;border-bottom:1px solid var(--line);min-width:0}
+.paper-chapter :where(section,article,div,figure,fieldset){min-width:0}
+.paper-chapter :where(table){display:block;max-width:100%;overflow:auto}
+.paper-chapter :where(pre){white-space:pre-wrap;overflow-wrap:anywhere}
+.paper-reading button{border:1px solid var(--line);background:transparent;color:var(--accent);padding:8px 14px;min-height:38px;border-radius:4px;font-size:13px;line-height:1.5}
+.paper-reading button:hover{background:var(--soft)}.paper-reading button:disabled{opacity:.5;cursor:default}
+.paper-reading input[type=range]{accent-color:var(--accent);max-width:100%;min-width:0}.paper-reading input[type=number]{width:90px}
+.paper-reading select,.paper-reading input[type=number]{padding:7px 9px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font-size:14px;border-radius:4px;max-width:100%}
+.paper-reading input[type=checkbox]{accent-color:var(--warm)}.paper-reading label{font-size:14px;line-height:1.7}
+.paper-reading svg,.paper-reading canvas{display:block;max-width:100%;height:auto}
+.paper-reading details{padding:14px 0;border-top:1px solid var(--line);margin-top:20px}.paper-reading summary{cursor:pointer;color:var(--accent);font-size:14px}
+.paper-reading table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.paper-reading th,.paper-reading td{padding:9px 7px;text-align:left;border-bottom:1px solid var(--line)}
+.paper-reading button[data-source]{font-size:12px;color:var(--accent);border:0;padding:6px 0;margin-right:16px;text-decoration:underline;text-underline-offset:4px}
+.paper-reading ::selection{background:#f3d5ac;color:#233342}.paper-reading :focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.paper-reading .reading-limitations{font-size:14px;color:var(--muted);padding-top:28px}.paper-reading .reading-limitations h2{font-size:24px}
+@media(max-width:480px){.paper-reading{padding-top:24px}.paper-chapter{padding-top:32px}.paper-hero .paper-thesis{font-size:16px}.paper-reading{font-size:15px}.paper-reading h2{font-size:25px}.paper-reading table{font-size:12px}}
+
+@scope (#chapter-chap-problem){:host(.chapter-scope) {
+  --ink: #2c3e50;
+  --muted: #7f8c8d;
+  --accent: #2980b9;
+  --warm: #e74c3c;
+  --paper: #f9f9f9;
+  --line: #ecf0f1;
+  --si-color: #95a5a6;
+  --taylor-color: #f39c12;
+  --proposed-color: #27ae60;
+  --crlb-color: #2c3e50;
+  
+  display: block;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  padding: 2rem;
+  line-height: 1.6;
+}
+
+.chapter-header h1 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 0.5rem;
+}
+
+.lead {
+  font-size: 1.1rem;
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+@media (max-width: 768px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+h3 {
+  font-size: 1.3rem;
+  margin-top: 0;
+  color: var(--accent);
+}
+
+.method-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.method-card {
+  background: #fff;
+  border-left: 4px solid var(--ink);
+  padding: 1rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.method-taylor { border-color: var(--taylor-color); }
+.method-si { border-color: var(--si-color); }
+.method-dac { border-color: var(--warm); }
+
+.method-card h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.method-card ul {
+  margin: 0.5rem 0;
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+}
+
+.source-btn {
+  background: transparent;
+  border: 1px solid var(--muted);
+  color: var(--muted);
+  font-size: 0.8rem;
+  padding: 0.2rem 0.6rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  border-radius: 3px;
+}
+
+.source-btn:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.viz-container {
+  background: #fff;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.viz-caption {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.chart-legend {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.legend-item { display: flex; align-items: center; gap: 0.4rem; }
+.dot {
+  width: 10px; height: 10px; border-radius: 50%; display: inline-block;
+}
+.dot.si { background: var(--si-color); }
+.dot.taylor { background: var(--taylor-color); }
+.dot.proposed { background: var(--proposed-color); }
+.dot.crlb { background: var(--crlb-color); border: 1px dashed var(--crlb-color); background: transparent; }
+
+.bar-chart-container {
+  height: 250px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--ink);
+  position: relative;
+}
+
+.bar-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 18%;
+  height: 100%;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.bar {
+  width: 100%;
+  transition: height 0.3s ease;
+  min-height: 2px;
+  position: relative;
+}
+
+.bar:hover::after {
+  content: attr(data-val);
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 2px 4px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+.bar-label {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.controls {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+select {
+  padding: 0.4rem;
+  border: 1px solid var(--line);
+  font-size: 0.9rem;
+}
+
+.data-readout {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  min-height: 1.2em;
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-chap-model){:scope .chapter-container {
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--ink, #2c3e50);
+  background: var(--paper, #f9f9f9);
+  padding: 2rem;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+.chapter-header {
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--line, #e0e0e0);
+  padding-bottom: 1rem;
+}
+
+.chapter-title {
+  font-size: 1.8rem;
+  color: var(--ink, #2c3e50);
+  margin: 0 0 0.5rem 0;
+}
+
+.chapter-lead {
+  font-size: 1.1rem;
+  color: var(--muted, #666);
+  max-width: 800px;
+}
+
+.dual-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .dual-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+.visual-panel {
+  background: #fff;
+  border: 1px solid var(--line, #e0e0e0);
+  border-radius: 4px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.diagram-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--line, #e0e0e0);
+  margin-bottom: 1rem;
+}
+
+.geo-diagram {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.equation-box {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem;
+  border-left: 3px solid var(--accent, #3498db);
+  font-family: 'Times New Roman', serif;
+  font-size: 1.2rem;
+}
+
+.math-display {
+  font-weight: bold;
+  color: var(--ink, #2c3e50);
+}
+
+.math-expansion {
+  color: var(--muted, #666);
+  font-size: 0.9em;
+  margin-top: 0.2rem;
+}
+
+.controls-panel {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  background: var(--ink, #2c3e50);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background 0.2s;
+}
+
+.action-btn:hover {
+  background: var(--accent, #3498db);
+}
+
+.status-indicator {
+  font-size: 0.85rem;
+  color: var(--muted, #666);
+  margin-left: auto;
+  font-family: monospace;
+}
+
+.info-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info-block {
+  background: #fff;
+  padding: 1.5rem;
+  border: 1px solid var(--line, #e0e0e0);
+  border-radius: 4px;
+}
+
+.info-block h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  color: var(--ink, #2c3e50);
+  border-bottom: 1px solid var(--line, #e0e0e0);
+  padding-bottom: 0.5rem;
+}
+
+.math-block {
+  font-family: 'Times New Roman', serif;
+  font-size: 1.3rem;
+  text-align: center;
+  margin: 1rem 0;
+  color: var(--ink, #2c3e50);
+}
+
+.source-ref {
+  font-size: 0.8rem;
+  color: var(--muted, #666);
+  text-align: right;
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.highlight {
+  border-left: 4px solid var(--accent, #3498db);
+  background: rgba(52, 152, 219, 0.05);
+}
+
+.concept-btn {
+  background: transparent;
+  border: 1px solid var(--accent, #3498db);
+  color: var(--accent, #3498db);
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: 3px;
+  margin-top: 0.5rem;
+}
+
+.concept-btn:hover {
+  background: var(--accent, #3498db);
+  color: #fff;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.modal-overlay[aria-hidden="false"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 4px;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--muted, #666);
+}
+
+.distribution-chart {
+  width: 100%;
+  height: auto;
+  margin: 1rem 0;
+  border: 1px solid var(--line, #e0e0e0);
+  background: #fafafa;
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-chap-transform){:scope {
+  --ink: #2c3e50;
+  --muted: #7f8c8d;
+  --accent: #3498db;
+  --warm: #e67e22;
+  --line: #ecf0f1;
+  --paper: #fdfdfd;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.6;
+}
+.chapter-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+.chapter-header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--ink);
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 0.5rem;
+}
+.chapter-takeaway {
+  font-size: 1.1rem;
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+.content-block {
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  border-left: 3px solid var(--line);
+  background: #fafafa;
+}
+.content-block h2 {
+  font-size: 1.5rem;
+  margin-top: 0;
+  color: var(--ink);
+}
+.formula-box {
+  font-family: "Times New Roman", serif;
+  font-size: 1.2rem;
+  padding: 1rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  margin: 1rem 0;
+  text-align: center;
+  overflow-x: auto;
+}
+.interactive-stepper {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 1rem;
+  background: #fff;
+}
+.stepper-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.step-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--accent);
+  background: #fff;
+  color: var(--accent);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+.step-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+.step-btn.active {
+  background: var(--accent);
+  color: #fff;
+}
+.step-content {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+.step-content.active {
+  display: block;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.source-ref {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.source-ref button {
+  background: none;
+  border: 1px solid var(--muted);
+  color: var(--muted);
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin-right: 0.5rem;
+}
+.source-ref button:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.evidence-comparison {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  background: #f9f9f9;
+  border-radius: 6px;
+}
+.table-wrapper {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.data-table th, .data-table td {
+  border: 1px solid var(--line);
+  padding: 0.5rem;
+  text-align: center;
+}
+.data-table th {
+  background: #eee;
+  font-weight: bold;
+}
+.data-table tr:hover {
+  background: #f0f0f0;
+}
+.table-note {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-style: italic;
+}
+.limitations-box {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #fff8e1;
+  border-left: 4px solid var(--warm);
+  border-radius: 4px;
+}
+.limitations-box h3 {
+  margin-top: 0;
+  color: var(--warm);
+}
+.limitations-box ul {
+  padding-left: 1.5rem;
+  margin-bottom: 0;
+}
+.limitations-box li {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+@media (max-width: 600px) {
+  .chapter-container { padding: 1rem 0.5rem; }
+  .content-block { padding: 1rem; }
+  .formula-box { font-size: 1rem; padding: 0.5rem; }
+  .step-btn { font-size: 0.8rem; padding: 0.4rem 0.8rem; }
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-chap-special){.chapter-container {
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--ink, #2c3e50);
+  background: var(--paper, #f9f9f9);
+  padding: 2rem;
+  line-height: 1.6;
+}
+.chapter-header h1 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: var(--ink, #2c3e50);
+}
+.lead {
+  font-size: 1.1rem;
+  color: var(--muted, #666);
+  max-width: 800px;
+}
+.layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+@media (max-width: 768px) {
+  .layout-grid { grid-template-columns: 1fr; }
+}
+.visual-panel {
+  background: #fff;
+  border: 1px solid var(--line, #ddd);
+  padding: 1rem;
+  border-radius: 4px;
+}
+.canvas-wrapper {
+  width: 100%;
+  height: 300px;
+  background: #f0f4f8;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+  position: relative;
+}
+#chap-special--geo-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.controls-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.btn-primary {
+  background: var(--accent, #3498db);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+.btn-primary:hover { background: #2980b9; }
+.warning-box {
+  background: #ffebee;
+  border-left: 4px solid #e74c3c;
+  padding: 0.8rem;
+  font-size: 0.9rem;
+  color: #c0392b;
+}
+.derivation-panel {
+  background: #fff;
+  border: 1px solid var(--line, #ddd);
+  padding: 1.5rem;
+  border-radius: 4px;
+}
+.step-container {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px dashed #eee;
+}
+.step-container:last-child { border-bottom: none; }
+.step-container h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: var(--ink, #2c3e50);
+}
+.math {
+  font-family: "Times New Roman", serif;
+  font-style: italic;
+  background: #f0f4f8;
+  padding: 0 0.3rem;
+  border-radius: 2px;
+}
+.formula-block {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  padding: 1rem;
+  text-align: center;
+  font-family: "Times New Roman", serif;
+  margin: 0.8rem 0;
+  border-radius: 4px;
+}
+.source-btn {
+  background: transparent;
+  border: 1px solid var(--accent, #3498db);
+  color: var(--accent, #3498db);
+  padding: 0.3rem 0.6rem;
+  font-size: 0.85rem;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  margin-top: 0.5rem;
+}
+.source-btn:hover { background: #ebf5fb; }
+.evidence-section {
+  margin-top: 3rem;
+  background: #fff;
+  padding: 1.5rem;
+  border: 1px solid var(--line, #ddd);
+  border-radius: 4px;
+}
+.table-wrapper {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 0.6rem;
+  text-align: center;
+}
+th {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+tr:nth-child(even) { background: #fafafa; }
+.table-notes {
+  font-size: 0.85rem;
+  color: var(--muted, #666);
+  margin-top: 0.5rem;
+}
+.interaction-demo {
+  margin-top: 2rem;
+  background: #fff;
+  padding: 1.5rem;
+  border: 1px solid var(--line, #ddd);
+  border-radius: 4px;
+}
+.teaching-label {
+  font-size: 0.85rem;
+  color: var(--muted, #666);
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+.solver-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.solver-controls label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.solver-controls input {
+  padding: 0.4rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  width: 80px;
+}
+.result-box {
+  background: #f0f4f8;
+  padding: 1rem;
+  border-radius: 4px;
+  font-family: monospace;
+  min-height: 1.5rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-chap-validation){:host {
+  --ink: #2c3e50;
+  --muted: #7f8c8d;
+  --accent: #3498db;
+  --warm: #e74c3c;
+  --line: #bdc3c7;
+  --paper: #f8f9fa;
+  --font-base: 15px;
+  --font-ui: 13px;
+}
+
+.chapter-section {
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  padding: 2rem 1.5rem;
+  margin-bottom: 2rem;
+  border-left: 4px solid var(--accent);
+}
+
+.section-header h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--ink);
+}
+
+.section-summary {
+  font-size: var(--font-base);
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.interaction-panel {
+  background: #fff;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.control-group label {
+  font-size: var(--font-ui);
+  font-weight: 600;
+}
+
+.control-group select,
+.control-group input[type="range"] {
+  font-size: var(--font-ui);
+  padding: 0.25rem;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+}
+
+.reset-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: var(--font-ui);
+}
+
+.reset-btn:hover {
+  opacity: 0.9;
+}
+
+.data-visualization {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .data-visualization {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chart-container {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1rem;
+  position: relative;
+}
+
+.chart-legend {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  font-size: var(--font-ui);
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.data-table-container {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: auto;
+  max-height: 300px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-ui);
+}
+
+th, td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+
+th {
+  background: #f1f2f6;
+  font-weight: 600;
+}
+
+.evidence-notes {
+  background: #f1f2f6;
+  padding: 1rem;
+  border-radius: 4px;
+  font-size: var(--font-base);
+  color: var(--muted);
+}
+
+.source-btn {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: var(--font-ui);
+  margin-left: 0.5rem;
+}
+
+.source-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.threshold-marker {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background: #fff3cd;
+  border-left: 3px solid var(--warm);
+  font-size: var(--font-ui);
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.method-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1rem;
+}
+
+.method-card.highlight {
+  border-color: var(--accent);
+  background: #f0f8ff;
+}
+
+.method-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.method-card ul {
+  padding-left: 1.2rem;
+  font-size: var(--font-base);
+  color: var(--muted);
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}</style></head><body><main class="paper-reading"><header class="paper-hero"><h1>A Simple and Efficient Estimator for Hyperbolic Location</h1><p class="paper-thesis">本文提出了一种非迭代的双曲定位显式解法，通过引入中间变量将非线性方程组转化为两步加权最小二乘问题，在任意及线性阵列配置下均能逼近克拉美 - 罗下界（CRLB），且比传统迭代法具有更高的噪声阈值和计算稳定性。</p><nav aria-label="讲解章节"><a href="#problem-def">定位困境：非线性与现有方法的局限</a><a href="#model-formulation">数学建模：噪声统计与距离方程</a><a href="#linearization-transform">核心机制：线性化变换与两步估计</a><a href="#special-case-linear">特殊情况：线性阵列的奇异性处理</a><a href="#sim-validation-near">仿真验证：精度对比与阈值效应</a></nav></header><div class="paper-chapter" id="chapter-chap-problem"><section id="problem-def" data-node="problem-def" class="pm-node-anchor"><section id="chap-problem--chap-problem" data-node="problem-def" class="chapter-scope">
+  <header class="chapter-header">
+    <h1>定位困境：非线性与现有方法的局限</h1>
+    <p class="lead">双曲定位本质是非线性方程组求解。传统方法在初值依赖、冗余利用及噪声鲁棒性上存在显著缺陷。</p>
+  </header>
+
+  <div class="content-grid">
+    <div class="text-col">
+      <h3>非线性难题</h3>
+      <p>在声纳和雷达应用中，当传感器任意分布时，发射源位置由 TDOA 估计值定义的一组<strong>双曲线</strong>的交点决定。由于方程是非线性的，直接寻找交点并不容易。</p>
+      <p>虽然已有闭式解开发出来，但它们往往并非最优。分治法（DAC）虽能达到最优性能，但要求费雪信息量足够大，在高噪声下性能急剧恶化。</p>
+      
+      <div class="method-cards">
+        <div class="method-card method-taylor">
+          <h4>泰勒级数法 (Taylor-Series)</h4>
+          <ul>
+            <li><strong>机制：</strong> 迭代法，需初始猜测。</li>
+            <li><strong>缺陷：</strong> 计算密集，收敛不保证，易陷入局部极小值。</li>
+          </ul>
+          <button type="button" class="source-btn" data-source="S013">原文 · p.1</button>
+        </div>
+        
+        <div class="method-card method-si">
+          <h4>球面插值 (SI)</h4>
+          <ul>
+            <li><strong>机制：</strong> 闭式解，忽略变量间约束。</li>
+            <li><strong>缺陷：</strong> 无法充分利用多余传感器（冗余测量），非最优估计。</li>
+          </ul>
+          <button type="button" class="source-btn" data-source="S009">原文 · p.1</button>
+        </div>
+
+        <div class="method-card method-dac">
+          <h4>分治法 (DAC)</h4>
+          <ul>
+            <li><strong>机制：</strong> 分组随机近似。</li>
+            <li><strong>缺陷：</strong> 噪声阈值低，高噪环境下失效（阈值效应）。</li>
+          </ul>
+          <button type="button" class="source-btn" data-source="S013">原文 · p.1</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="viz-col">
+      <div class="viz-container">
+        <h3>传感器数量与精度 (MSE)</h3>
+        <p class="viz-caption">基于 Table I (任意阵列，近场源) 数据。MSE 越低越好。</p>
+        
+        <div class="chart-legend">
+          <span class="legend-item"><span class="dot si"></span> SI (A)</span>
+          <span class="legend-item"><span class="dot taylor"></span> Taylor (B)</span>
+          <span class="legend-item"><span class="dot proposed"></span> Proposed (C)</span>
+          <span class="legend-item"><span class="dot crlb"></span> CRLB (E)</span>
+        </div>
+
+        <div class="bar-chart-container" id="chap-problem--mse-chart">
+          <!-- Bars injected by JS -->
+        </div>
+
+        <div class="controls">
+          <label for="chap-problem--sensor-select">选择传感器数量 (M):</label>
+          <select id="chap-problem--sensor-select">
+            <option value="4">4 个传感器</option>
+            <option value="5">5 个传感器</option>
+            <option value="6">6 个传感器</option>
+            <option value="7">7 个传感器</option>
+            <option value="8">8 个传感器</option>
+            <option value="9">9 个传感器</option>
+            <option value="10">10 个传感器</option>
+          </select>
+          <button type="button" id="chap-problem--reset-chart">复位</button>
+        </div>
+        <output class="chap-problem--data-readout" id="chap-problem--data-readout"></output>
+      </div>
+    </div>
+  </div>
+</section></section></div><div class="paper-chapter" id="chapter-chap-model"><section id="model-formulation" data-node="model-formulation" class="pm-node-anchor"><section id="chap-model--chap-model" data-node="model-formulation" class="chapter-container">
+  <header class="chapter-header">
+    <h2 class="chapter-title">数学建模：噪声统计与距离方程</h2>
+    <p class="chapter-lead">建立传感器坐标、源坐标与 TDOA 之间的非线性距离方程。定义 TDOA 估计误差的统计属性：在信噪比（SNR）较高时，误差向量服从均值为零的高斯分布，其协方差矩阵 Q 可由信号功率谱和噪声功率谱推导得出。</p>
+  </header>
+
+  <div class="dual-panel">
+    <div class="visual-panel">
+      <div class="diagram-card">
+        <div class="equation-notes">
+            <div class="equation-box">
+              <div class="math-display"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>r</mi><mi>i</mi><mn>2</mn></msubsup><mo>=</mo><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>−</mo><mi>x</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup><mo>+</mo><mo stretchy="false">(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><mi>y</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">r_i^2 = (x_i - x)^2 + (y_i - y)^2</annotation></semantics></math></span></div>
+              <div class="math-expansion" id="chap-model--expansion-text">= K_i - 2x_i x - 2y_i y + x^2 + y^2</div>
+            </div>
+          </div><svg viewBox="0 0 400 300" class="geo-diagram">
+          <defs>
+            <pattern id="chap-model--grid" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="var(--line)" stroke-width="0.5" stroke-opacity="0.3"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#chap-model--grid)" />
+          
+          <!-- Sensors -->
+          <g class="sensors">
+            <circle cx="50" cy="250" r="6" fill="var(--ink)" />
+            <text x="50" y="270" text-anchor="middle" font-size="12" fill="var(--muted)">S1</text>
+            
+            <circle cx="350" cy="250" r="6" fill="var(--ink)" />
+            <text x="350" y="270" text-anchor="middle" font-size="12" fill="var(--muted)">S2</text>
+            
+            <circle cx="200" cy="50" r="6" fill="var(--ink)" />
+            <text x="200" y="35" text-anchor="middle" font-size="12" fill="var(--muted)">S3</text>
+          </g>
+
+          <!-- Source -->
+          <circle id="chap-model--source-point" cx="200" cy="180" r="8" fill="var(--accent)" stroke="var(--ink)" stroke-width="2" />
+          <text id="chap-model--source-label" x="220" y="180" font-size="14" fill="var(--ink)" font-weight="bold">(x, y)</text>
+
+          <!-- Distance Lines -->
+          <line id="chap-model--line-r1" x1="50" y1="250" x2="200" y2="180" stroke="var(--line)" stroke-dasharray="4" />
+          <line id="chap-model--line-r2" x1="350" y1="250" x2="200" y2="180" stroke="var(--line)" stroke-dasharray="4" />
+          <line id="chap-model--line-r3" x1="200" y1="50" x2="200" y2="180" stroke="var(--line)" stroke-dasharray="4" />
+
+          <!-- Dynamic Equation Overlay -->
+          
+        </svg>
+      </div>
+      
+      <div class="controls-panel">
+        <button type="button" id="chap-model--btn-noise" class="action-btn" data-source="S053">原文 · p.3</button>
+        <button type="button" id="chap-model--btn-geometry" class="action-btn" data-source="S030">原文 · p.2</button>
+        <div class="status-indicator" id="chap-model--noise-status">SNR: High (Gaussian Approx.)</div>
+      </div>
+    </div>
+
+    <div class="info-panel">
+      <div class="info-block">
+        <h3>1. 几何距离方程</h3>
+        <p>假设有 M 个传感器任意分布在二维平面上。源位于未知位置 (x, y)，传感器位于已知位置 (xi, yi)。源到传感器的距离平方可表示为：</p>
+        <div class="math-block"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>r</mi><mi>i</mi><mn>2</mn></msubsup><mo>=</mo><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>−</mo><mi>x</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup><mo>+</mo><mo stretchy="false">(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><mi>y</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">r_i^2 = (x_i - x)^2 + (y_i - y)^2</annotation></semantics></math></span></div>
+        <p class="source-ref" data-ref="S030">(S030)</p>
+      </div>
+
+      <div class="info-block">
+        <h3>2. 噪声统计特性</h3>
+        <p>TDOA 估计值包含噪声分量。由于 TDOA 估计器是无偏的，噪声向量 n 的均值为零。在高 SNR 条件下，通过广义互相关得到的 TDOA 渐近服从正态分布。</p>
+        <div class="math-block"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>∼</mo><mi mathvariant="script">N</mi><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mi>Q</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">n \sim \mathcal{N}(0, Q)</annotation></semantics></math></span></div>
+        <p class="source-ref" data-ref="S053">(S053)</p>
+      </div>
+
+      <div class="info-block highlight">
+        <h3>3. 协方差矩阵 Q</h3>
+        <p>协方差矩阵 Q 可由信号功率谱 S(w) 和噪声功率谱 N(w) 推导得出。这是后续加权最小二乘（WLS）解算的基础。</p>
+        <button type="button" class="concept-btn" data-concept="concept-e3f1e953ec8ce0b5">查看 Q 矩阵定义</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Noise Distribution -->
+  <div id="chap-model--noise-modal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-content">
+      <button class="close-btn" aria-label="Close">&times;</button>
+      <h3>TDOA 误差分布 (高 SNR)</h3>
+      <div class="modal-body">
+        <svg viewBox="0 0 300 150" class="distribution-chart">
+          <path d="M 10 140 Q 150 10 290 140" fill="none" stroke="var(--accent)" stroke-width="2" />
+          <line x1="10" y1="140" x2="290" y2="140" stroke="var(--ink)" stroke-width="1" />
+          <line x1="150" y1="140" x2="150" y2="10" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4" />
+          <text x="150" y="135" text-anchor="middle" font-size="12">0 (Mean)</text>
+          <text x="280" y="135" text-anchor="end" font-size="12">Error (n)</text>
+          <text x="150" y="25" text-anchor="middle" font-size="12" fill="var(--accent)">Gaussian PDF</text>
+        </svg>
+        <p>在高信噪比下，噪声向量 n 渐近服从均值为零的高斯分布，其协方差矩阵与 TDOA 估计值的协方差矩阵 Q 相同。</p>
+        <p class="source-ref" data-ref="S025">(S025, S053)</p>
+      </div>
+    </div>
+  </div>
+</section></section></div><div class="paper-chapter" id="chapter-chap-transform"><section id="chap-transform--chap-transform" data-node="chap-transform--chap-transform" class="chapter-container">
+  <header class="chapter-header">
+    <h1>核心机制：线性化变换与两步估计</h1>
+    <p class="chapter-takeaway">核心创新是通过减去参考传感器方程消去二次项，引入中间变量<span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>r</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">r_1</annotation></semantics></math></span>将非线性问题转化为线性问题。第一步假设变量独立求初值，第二步利用<span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>r</mi><mn>1</mn><mn>2</mn></msubsup><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">r_1^2=x^2+y^2</annotation></semantics></math></span>约束进行修正，以此近似最大似然估计。</p>
+  </header>
+
+  <article id="linearization-transform" data-node="linearization-transform" class="content-block">
+    <h2>方程线性化变换机制</h2>
+    <div class="interactive-stepper" id="chap-transform--stepper-transform">
+      <div class="stepper-controls">
+        <button type="button" class="step-btn" data-step="0">步骤 1：构建差分</button>
+        <button type="button" class="step-btn" data-step="1">步骤 2：独立求解</button>
+        <button type="button" class="step-btn" data-step="2">步骤 3：约束修正</button>
+      </div>
+      <div class="stepper-display">
+        <div class="step-content active" data-step-index="0">
+          <p>将第 i 个传感器的距离方程展开，并减去第 1 个传感器的方程。这一步消除了二次项 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">x^2 + y^2</annotation></semantics></math></span>，留下了包含 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo separator="true">,</mo><mi>y</mi></mrow><annotation encoding="application/x-tex">x, y</annotation></semantics></math></span> 和 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>r</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">r_1</annotation></semantics></math></span> 的线性项。</p>
+          <div class="formula-box"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>r</mi><mrow><mi>i</mi><mo separator="true">,</mo><mn>1</mn></mrow><mn>2</mn></msubsup><mo>+</mo><mn>2</mn><msub><mi>r</mi><mrow><mi>i</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub><msub><mi>r</mi><mn>1</mn></msub><mo>=</mo><mo>−</mo><mn>2</mn><msub><mi>x</mi><mrow><mi>i</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub><mi>x</mi><mo>−</mo><mn>2</mn><msub><mi>y</mi><mrow><mi>i</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub><mi>y</mi><mo>+</mo><msub><mi>K</mi><mi>i</mi></msub><mo>−</mo><msub><mi>K</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">r_{i,1}^2 + 2r_{i,1}r_1 = -2x_{i,1}x - 2y_{i,1}y + K_i - K_1</annotation></semantics></math></span></div>
+          <div class="source-ref"><button type="button" data-source="S040">原文 · p.3</button></div>
+        </div>
+        <div class="step-content" data-step-index="1">
+          <p>将方程重写为 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo>=</mo><msub><mi>G</mi><mi>a</mi></msub><msub><mi>z</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">h = G_a z_a</annotation></semantics></math></span> 的形式，其中 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>z</mi><mi>a</mi></msub><mo>=</mo><mo stretchy="false">[</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo separator="true">,</mo><msub><mi>r</mi><mn>1</mn></msub><msup><mo stretchy="false">]</mo><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">z_a = [x, y, r_1]^T</annotation></semantics></math></span>。此时方程在形式上是线性的，尽管变量间实际上存在非线性约束。</p>
+          <div class="formula-box">$$G_a = \begin{bmatrix} -2x_{2,1} & -2y_{2,1} &<span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>2</mn><msub><mi>r</mi><mrow><mn>2</mn><mo separator="true">,</mo><mn>1</mn></mrow></msub><mspace linebreak="newline"></mspace><mrow><mi mathvariant="normal">⋮</mi><mpadded height="0em" voffset="0em"><mspace mathbackground="black" width="0em" height="1.5em"></mspace></mpadded></mrow></mrow><annotation encoding="application/x-tex">-2r_{2,1} \\ \vdots</annotation></semantics></math></span>&<span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">⋮</mi><mpadded height="0em" voffset="0em"><mspace mathbackground="black" width="0em" height="1.5em"></mspace></mpadded></mrow><annotation encoding="application/x-tex">\vdots</annotation></semantics></math></span>&<span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">⋮</mi><mpadded height="0em" voffset="0em"><mspace mathbackground="black" width="0em" height="1.5em"></mspace></mpadded></mrow><mspace linebreak="newline"></mspace><mo>−</mo><mn>2</mn><msub><mi>x</mi><mrow><mi>M</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">\vdots \\ -2x_{M,1}</annotation></semantics></math></span>& -2y_{M,1} & -2r_{M,1} \end{bmatrix}, \quad z_a = \begin{bmatrix} x \\ y \\ r_1 \end{bmatrix}$$</div>
+          <div class="source-ref"><button type="button" data-source="S041">原文 · p.3</button> <button type="button" data-source="S046">原文 · p.3</button></div>
+        </div>
+        <div class="step-content" data-step-index="2">
+          <p>首先假设 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo separator="true">,</mo><msub><mi>r</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x, y, r_1</annotation></semantics></math></span> 独立，求解线性方程得到初始估计。然后利用 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>r</mi><mn>1</mn><mn>2</mn></msubsup><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">r_1^2 = x^2 + y^2</annotation></semantics></math></span> 这一约束关系，构建新的误差方程进行第二次最小二乘求解，从而修正估计值。</p>
+          <div class="source-ref"><button type="button" data-source="S056">原文 · p.3</button></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article id="step1-estimator" data-node="step1-estimator" class="content-block">
+    <h2>第一步：无约束加权最小二乘估计</h2>
+    <p>在双曲定位系统中，传统的迭代算法需要较好的初始猜测且计算量大。为解决这一问题，作者提出将非线性方程组转化为线性形式。当传感器数量 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mo>≥</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">M \ge 4</annotation></semantics></math></span> 时，系统超定，需采用最小二乘法求解。</p>
+    <div class="formula-box"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>z</mi><mi>a</mi></msub><mo>=</mo><mo stretchy="false">(</mo><msubsup><mi>G</mi><mi>a</mi><mi>T</mi></msubsup><msup><mi mathvariant="normal">Ψ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><msub><mi>G</mi><mi>a</mi></msub><msup><mo stretchy="false">)</mo><mrow><mo>−</mo><mn>1</mn></mrow></msup><msubsup><mi>G</mi><mi>a</mi><mi>T</mi></msubsup><msup><mi mathvariant="normal">Ψ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mi>h</mi></mrow><annotation encoding="application/x-tex">z_a = (G_a^T \Psi^{-1} G_a)^{-1} G_a^T \Psi^{-1} h</annotation></semantics></math></span></div>
+    <p>误差协方差矩阵 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Ψ</mi><mo>≈</mo><msup><mi>c</mi><mn>2</mn></msup><mi>B</mi><mi>Q</mi><mi>B</mi></mrow><annotation encoding="application/x-tex">\Psi \approx c^2 B Q B</annotation></semantics></math></span>，其中 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span> 为包含真实距离的对角阵。由于真实距离未知，若信源远离阵列，可用标量 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>r</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">r_0</annotation></semantics></math></span> 近似 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span>；若信源较近，则先用简化公式获得初值以估计 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span>。</p>
+    <div class="source-ref"><button type="button" data-source="S056">原文 · p.3</button> <button type="button" data-source="S059">原文 · p.3</button> <button type="button" data-source="S061">原文 · p.3</button></div>
+  </article>
+
+  <article id="constraint-exploitation" data-node="constraint-exploitation" class="content-block">
+    <h2>第二步：几何约束强化</h2>
+    <p>第一步得到的解 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>z</mi><mi>a</mi></msub><mo>=</mo><mo stretchy="false">[</mo><mover accent="true"><mi>x</mi><mo>^</mo></mover><mo separator="true">,</mo><mover accent="true"><mi>y</mi><mo>^</mo></mover><mo separator="true">,</mo><msub><mover accent="true"><mi>r</mi><mo>^</mo></mover><mn>1</mn></msub><msup><mo stretchy="false">]</mo><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">z_a = [\hat{x}, \hat{y}, \hat{r}_1]^T</annotation></semantics></math></span> 未考虑变量间的物理约束。实际上，<span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>r</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">r_1</annotation></semantics></math></span> 应等于 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup></mrow></msqrt></mrow><annotation encoding="application/x-tex">\sqrt{x^2 + y^2}</annotation></semantics></math></span>。作者将此约束转化为新的线性方程组，并再次应用广义最小二乘求解。</p>
+    <div class="formula-box"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>ψ</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo>=</mo><msup><mi>h</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo>−</mo><msup><mi>G</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><msub><mi>z</mi><mi>b</mi></msub><mo separator="true">,</mo><mspace width="1em"/><msup><mi mathvariant="normal">Ψ</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo>=</mo><mn>2</mn><msup><mi>B</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mtext>cov</mtext><mo stretchy="false">(</mo><msub><mi>z</mi><mi>a</mi></msub><mo stretchy="false">)</mo><msup><mi>B</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup></mrow><annotation encoding="application/x-tex">\psi&#x27; = h&#x27; - G&#x27; z_b, \quad \Psi&#x27; = 2 B&#x27; \text{cov}(z_a) B&#x27;</annotation></semantics></math></span></div>
+    <p>最终位置由 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>z</mi><mi>b</mi></msub></mrow><annotation encoding="application/x-tex">z_b</annotation></semantics></math></span> 的分量开方获得：<span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><msub><mi>x</mi><mn>1</mn></msub><mo>±</mo><msqrt><msub><mi>z</mi><mrow><mi>b</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub></msqrt><mo separator="true">,</mo><mi>y</mi><mo>=</mo><msub><mi>y</mi><mn>1</mn></msub><mo>±</mo><msqrt><msub><mi>z</mi><mrow><mi>b</mi><mo separator="true">,</mo><mn>2</mn></mrow></msub></msqrt></mrow><annotation encoding="application/x-tex">x = x_1 \pm \sqrt{z_{b,1}}, y = y_1 \pm \sqrt{z_{b,2}}</annotation></semantics></math></span>，并根据感兴趣区域选择合理符号。若出现虚数根，则设虚部为零。</p>
+    <div class="source-ref"><button type="button" data-source="S073">原文 · p.4</button> <button type="button" data-source="S082">原文 · p.4</button> <button type="button" data-source="S092">原文 · p.4</button></div>
+  </article>
+
+  <article id="covariance-derivation" data-node="covariance-derivation" class="content-block">
+    <h2>方差分析与 CRLB 对比</h2>
+    <p>基于第二步的解 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>z</mi><mi>b</mi></msub></mrow><annotation encoding="application/x-tex">z_b</annotation></semantics></math></span>，最终位置估计 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>z</mi><mi>p</mi></msub><mo>=</mo><mo stretchy="false">[</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><msup><mo stretchy="false">]</mo><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">z_p = [x, y]^T</annotation></semantics></math></span> 的误差可通过线性变换表示。忽略高阶误差项后，推导得位置协方差矩阵。</p>
+    <div class="formula-box"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>cov</mtext><mo stretchy="false">(</mo><msub><mi>z</mi><mi>p</mi></msub><mo stretchy="false">)</mo><mo>≈</mo><msup><mrow><mo fence="true">(</mo><msup><mi>G</mi><mrow><mo mathvariant="normal">′</mo><mi>T</mi></mrow></msup><msup><mi mathvariant="normal">Ψ</mi><mrow><mo mathvariant="normal">′</mo><mrow><mo>−</mo><mn>1</mn></mrow></mrow></msup><msup><mi>G</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo fence="true">)</mo></mrow><mrow><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\text{cov}(z_p) \approx \left( G&#x27;^T \Psi&#x27;^{-1} G&#x27; \right)^{-1}</annotation></semantics></math></span></div>
+    <p>为评估性能，作者推导了该定位问题的 CRLB。对比发现，当 TDOA 误差较小时，任意阵列下的估计器协方差与 CRLB 一致，表明其达到最优。对于线性阵列特殊情况，同样可证估计器协方差等于 CRLB。</p>
+    <div class="source-ref"><button type="button" data-source="S093">原文 · p.4</button> <button type="button" data-source="S118">原文 · p.5</button> <button type="button" data-source="S124">原文 · p.5</button> <button type="button" data-source="S129">原文 · p.6</button></div>
+  </article>
+
+  <section class="evidence-comparison">
+    <h3>仿真验证：均方误差 (MSE) 对比</h3>
+    <p>下表展示了任意阵列、近场源条件下，不同传感器数量 (M) 时的定位均方误差。方法 C 和 D 为本文提出的两步法，方法 E 为理论 CRLB。</p>
+    <div class="table-wrapper">
+      <table class="data-table" id="chap-transform--table-mse-near">
+        <thead>
+          <tr><th>MSE</th><th>M=3</th><th>M=4</th><th>M=5</th><th>M=6</th><th>M=7</th><th>M=8</th><th>M=9</th><th>M=10</th></tr>
+        </thead>
+        <tbody>
+          <!-- Rows populated by JS from window.paperMindData.tables -->
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">数据来源：Table I (p.8). A: SI 方法; B: Taylor 级数法; C: 本文方法 (简化); D: 本文方法 (完整); E: 理论 CRLB。</p>
+    <div class="source-ref"><button type="button" data-source="S171">原文 · p.8</button></div>
+  </section>
+
+  <section class="limitations-box">
+    <h3>局限性与条件</h3>
+    <ul>
+      <li>两步法是对真实最大似然估计的近似，仅在 TDOA 误差较小（高信噪比）时有效。</li>
+      <li>第二步推导中忽略了一阶以上的高阶误差项。</li>
+      <li>若 <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>z</mi><mi>b</mi></msub></mrow><annotation encoding="application/x-tex">z_b</annotation></semantics></math></span> 分量开方后出现虚数，需强制置零处理，这可能引入偏差。</li>
+      <li>理论协方差推导假设传感器位置精确无误。</li>
+    </ul>
+  </section>
+</section></div><div class="paper-chapter" id="chapter-chap-special"><section id="special-case-linear" data-node="special-case-linear" class="chapter-container">
+  <header class="chapter-header">
+    <h1>特殊情况：线性阵列几何中的奇异性处理</h1>
+    <p class="lead">当传感器共线时，常规矩阵奇异失效。本文通过变量代换将问题降维，获得与经典解一致的显式闭式解。</p>
+  </header>
+
+  <div class="layout-grid">
+    <div class="visual-panel">
+      <div class="canvas-wrapper">
+        <canvas id="chap-special--geo-canvas" width="600" height="400" aria-label="传感器几何布局示意图"></canvas>
+      </div>
+      <div class="controls-panel">
+        <label for="chap-special--geo-toggle">几何构型切换：</label>
+        <button type="button" id="chap-special--geo-toggle" class="btn-primary">切换为线性排列</button>
+        <div id="chap-special--singular-warning" class="warning-box" hidden>
+          <strong>警告：矩阵奇异</strong>
+          <p>传感器坐标满足 y = ax + b，常规求逆失效。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="derivation-panel">
+      <h2>代数变换过程</h2>
+      <div class="step-container" id="chap-special--step-1">
+        <h3>步骤 1：识别奇异性</h3>
+        <p>检查传感器坐标是否满足线性关系 <span class="math">y<sub>i</sub> = ax<sub>i</sub> + b</span>。若满足，包含位置信息的矩阵将变为奇异矩阵。</p>
+        <button type="button" class="source-btn" data-source="S097">原文 · p.5</button>
+        <button type="button" class="source-btn" data-source="S098">原文 · p.5</button>
+      </div>
+      <div class="step-container" id="chap-special--step-2">
+        <h3>步骤 2：变量代换</h3>
+        <p>定义新变量 <span class="math">w = x + ay</span>，将原方程组重写为关于 <span class="math">w</span> 和 <span class="math">T<sub>1</sub></span> 的线性方程（Eq. 27）。</p>
+        <div class="formula-block"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Eq. 27: Linear in </mtext><mi>w</mi><mtext> and </mtext><msub><mi>T</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">\text{Eq. 27: Linear in } w \text{ and } T_1</annotation></semantics></math></span></div>
+        <button type="button" class="source-btn" data-source="S099">原文 · p.5</button>
+      </div>
+      <div class="step-container" id="chap-special--step-3">
+        <h3>步骤 3：求解二次方程</h3>
+        <p>利用求得的 <span class="math">w</span> 和 <span class="math">T<sub>1</sub></span>，代入距离约束方程，构建关于 <span class="math">y</span> 的二次方程并求解。</p>
+        <div class="formula-block"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><mfrac><mrow><mo>−</mo><mi>E</mi><mo>±</mo><msqrt><mrow><msup><mi>E</mi><mn>2</mn></msup><mo>−</mo><mn>4</mn><mi>A</mi><mi>C</mi></mrow></msqrt></mrow><mrow><mn>2</mn><mi>A</mi></mrow></mfrac><mo separator="true">,</mo><mspace width="1em"/><mi>x</mi><mo>=</mo><mi>w</mi><mo>−</mo><mi>a</mi><mi>y</mi></mrow><annotation encoding="application/x-tex">y = \frac{-E \pm \sqrt{E^2 - 4AC}}{2A}, \quad x = w - ay</annotation></semantics></math></span></div>
+        <button type="button" class="source-btn" data-source="S101">原文 · p.5</button>
+        <button type="button" class="source-btn" data-source="S102">原文 · p.5</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="evidence-section">
+    <h2>实验证据：线性阵列下的 MSE 对比</h2>
+    <p>下表展示了在线性阵列构型下，本文方法（C, D）与泰勒级数法（B）及理论下界（E）的均方误差（MSE）对比。注意 SI 方法（A）因奇异性无法求解。</p>
+    <div class="table-wrapper">
+      <table id="chap-special--mse-table-linear" aria-label="线性阵列 MSE 对比表">
+        <thead>
+          <tr>
+            <th>方法</th>
+            <th>M = 3</th>
+            <th>M = 4</th>
+            <th>M = 5</th>
+            <th>M = 6</th>
+            <th>M = 7</th>
+            <th>M = 8</th>
+            <th>M = 9</th>
+            <th>M = 10</th>
+          </tr>
+        </thead>
+        <tbody id="chap-special--mse-table-body"></tbody>
+      </table>
+    </div>
+    <div class="table-notes">
+      <p>B: Taylor series method. C: proposed method. D: proposed method (simplified). E: theoretical MSE (CRLB).</p>
+      <button type="button" class="source-btn" data-source="S103">原文 · p.5</button>
+    </div>
+  </div>
+
+  <div class="interaction-demo">
+    <h2>教学演示：二次方程求解器</h2>
+    <p class="teaching-label">教学示例，非论文训练权重。调整参数观察解的变化。</p>
+    <div class="solver-controls">
+      <label for="chap-special--coef-a">系数 A:</label>
+      <input type="number" id="chap-special--coef-a" value="1" step="0.1">
+      <label for="chap-special--coef-e">系数 E:</label>
+      <input type="number" id="chap-special--coef-e" value="-2" step="0.1">
+      <label for="chap-special--coef-c">系数 C:</label>
+      <input type="number" id="chap-special--coef-c" value="-3" step="0.1">
+      <button type="button" id="chap-special--solve-btn">计算</button>
+      <button type="button" id="chap-special--reset-solver">复位</button>
+    </div>
+    <div id="chap-special--solver-result" class="result-box"></div>
+  </div>
+</section></div><div class="paper-chapter" id="chapter-chap-validation"><section id="sim-validation-near" data-node="sim-validation-near" class="chapter-section">
+  <div class="section-header">
+    <h2>仿真验证：近场源定位性能对比</h2>
+    <p class="section-summary">在任意阵列和线性阵列配置下，对比 SI 法、泰勒级数法与本文方法的均方误差（MSE）。结果显示，本文方法在近场源情况下能紧密达到 CRLB，且优于 SI 法；在线性阵列中，SI 法因奇异性失效，而本文方法与泰勒级数法表现相当。</p>
+  </div>
+
+  <div class="interaction-panel">
+    <div class="control-group">
+      <label for="chap-validation--scenario-select">场景配置：</label>
+      <select id="chap-validation--scenario-select">
+        <option value="near-arbitrary">近场 - 任意阵列 (Near Field - Arbitrary)</option>
+        <option value="near-linear">近场 - 线性阵列 (Near Field - Linear)</option>
+        <option value="far-arbitrary">远场 - 任意阵列 (Far Field - Arbitrary)</option>
+        <option value="far-linear">远场 - 线性阵列 (Far Field - Linear)</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label for="chap-validation--sensor-count">传感器数量 (M)：</label>
+      <input type="range" id="chap-validation--sensor-count" min="3" max="10" value="5" step="1">
+      <span id="chap-validation--sensor-count-display">5</span>
+    </div>
+    <button type="button" id="chap-validation--reset-near" class="reset-btn">复位视图</button>
+  </div>
+
+  <div class="data-visualization">
+    <div class="chart-container">
+      <canvas id="chap-validation--mse-chart" width="600" height="300" aria-label="MSE 对比柱状图"></canvas>
+      <div id="chap-validation--chart-legend" class="chap-validation--chart-legend"></div>
+    </div>
+    <div class="data-table-container">
+      <table id="chap-validation--mse-table" aria-label="MSE 数据表">
+        <thead>
+          <tr>
+            <th>方法</th>
+            <th>MSE 值</th>
+            <th>状态</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="evidence-notes">
+    <p>数据来源：表I、II为近场，表III、IV为远场；按上方实际选择切换。未报告的行或传感器数显示为缺失，不视为零。<button type="button" data-source="S182" class="source-btn">原文 · p.8</button> <button type="button" data-source="S189" class="source-btn">原文 · p.9</button></p>
+    <p>注：SI 法在线性阵列中因矩阵奇异性无法求解（no sol.）；泰勒级数法仿真中使用了理想初始值（真实位置）。</p>
+  </div>
+</section>
+
+<section id="sim-validation-far" data-node="sim-validation-far" class="chapter-section"><h2>远场与噪声阈值：表格点值和曲线趋势分开看</h2><p>上方场景选择器也提供原文表III、IV的远场结果。相同传感器数下，阵列几何与源位置会改变误差，不能把近场和远场放在同一数值基准上直接排名。</p><p>原文报告 DAC 在远场中的表现依赖其小位置方差近似；在 Figure 4 所用设置下，本文方法在更高噪声水平后才明显偏离 CRLB。这里不补画逐噪声 MSE，因为原文没有给出可直接读取的全部曲线点。</p><p>低 SNR 时，二阶 Bhattacharyya 界 BHB2 比 CRLB 更适合对照，作者将本文方法与 BHB2 的差异联系到被忽略的二阶误差项。这一解释仍受所用阵列、源位置和噪声假设限制。</p><button type="button" data-source="S204">原文</button><button type="button" data-source="S211">原文</button></section>
+
+<section id="computational-complexity" data-node="computational-complexity" class="chapter-section">
+  <div class="section-header">
+    <h2>计算复杂度与显式解优势</h2>
+    <p class="section-summary">本文提出的双曲线定位估计器具有非迭代、显式闭式解的特性，避免了迭代方法中常见的局部极小值问题和收敛性不确定性。其计算复杂度与球面插值法相当，但显著低于泰勒级数法。</p>
+  </div>
+
+  <div class="comparison-grid">
+    <div class="method-card">
+      <h3>泰勒级数法 (Taylor-series)</h3>
+      <ul>
+        <li>迭代算法，需初始猜测</li>
+        <li>每次迭代需计算距离倒数 (1/rᵢ)</li>
+        <li>计算量大，收敛性无保证</li>
+      </ul>
+      <button type="button" data-source="S013" class="source-btn">原文 · p.1</button>
+    </div>
+    <div class="method-card highlight">
+      <h3>本文方法 (Proposed)</h3>
+      <ul>
+        <li>非迭代，显式闭式解</li>
+        <li>仅需一次距离倒数计算 (近场)</li>
+        <li>计算量与 SI 法相当，无发散风险</li>
+      </ul>
+      <button type="button" data-source="S176" class="source-btn">原文 · p.8</button>
+    </div>
+  </div>
+
+  <div class="evidence-notes">
+    <p>数据来源：摘要与仿真结果分析。<button type="button" data-source="S005" class="source-btn">原文 · p.1</button> <button type="button" data-source="S213" class="source-btn">原文 · p.10</button></p>
+  </div>
+</section></div><footer class="reading-limitations"><h2>带着边界理解这篇论文</h2><p>方法性能依赖于小误差假设，即在 TDOA 噪声足够小以忽略高阶项时才严格达到 CRLB。</p><p>在极低信噪比下，性能略低于二阶 Bhattacharyya 界，因为算法忽略了两阶误差项。</p><p>仿真假设信号与噪声为白随机过程且各传感器信噪比相同，实际复杂噪声环境下的表现需进一步验证。</p><p>虽然扩展至三维在文中被提及为直接，但具体实现细节未在本文详细展开。</p><p>未考虑传感器位置本身的不确定性对定位误差的影响（尽管文中提及可纳入权重矩阵）。</p></footer></main><script nonce="8aQDWUZyvm_dJuFBW6MhlY6mjcvtZxJT">const PM_CONFIG={"edition": "f409fae8-7e5c-403d-8ca7-5eeacb9fa007", "document": "pdf-473e344b1814e453", "channel": "inspection", "data": {"tables": [{"id": "p8-Table_1", "title": "COMPARISON OF MSE FOR THE SI, TAYLOR-SERIES AND PROPOSED METHODS; ARBITRARY ARRAY AND NEAR SOURCE", "population": "", "columns": ["MSE", "M = 3", "M = 4", "M = 5", "M = 6", "M = 7", "M = 8", "M = 9", "M = 10"], "rows": [{"id": "Row_A", "label": "A", "values": {"MSE": "A", "M = 3": "no sol.", "M = 4": "1.5768", "M = 5": "0.1597", "M = 6": "0.1480", "M = 7": "0.1229", "M = 8": "0.1164", "M = 9": "0.1148", "M = 10": "0.1103"}}, {"id": "Row_B", "label": "B", "values": {"MSE": "B", "M = 3": "2.1726", "M = 4": "0.7061", "M = 5": "0.1460", "M = 6": "0.1341", "M = 7": "0.1144", "M = 8": "0.1057", "M = 9": "0.1034", "M = 10": "0.09462"}}, {"id": "Row_C", "label": "C", "values": {"MSE": "C", "M = 3": "2.1726", "M = 4": "0.7282", "M = 5": "0.1456", "M = 6": "0.1359", "M = 7": "0.1159", "M = 8": "0.1077", "M = 9": "0.1055", "M = 10": "0.09697"}}, {"id": "Row_D", "label": "D", "values": {"MSE": "D", "M = 3": "2.1726", "M = 4": "0.6986", "M = 5": "0.1451", "M = 6": "0.1337", "M = 7": "0.1141", "M = 8": "0.1055", "M = 9": "0.1034", "M = 10": "0.09480"}}, {"id": "Row_E", "label": "E", "values": {"MSE": "E", "M = 3": "1.9794", "M = 4": "0.6884", "M = 5": "0.1451", "M = 6": "0.1334", "M = 7": "0.1143", "M = 8": "0.1054", "M = 9": "0.1032", "M = 10": "0.09432"}}], "notes": ["A: SI method. B: Taylor series method. C: proposed method, [ (14b), (22b), (24) ]. D: proposed method, [ (14b), (14a), (22a), (24) ]. E: theoretical MSE of the new method = CRLB."], "page": 8}, {"id": "p9-TABLE_II", "title": "COMPARISON OF MSE FOR THE PROPOSED AND TAYLOR-SERIES METHODS: LINEAR ARRAY AND NEAR SOURCE", "population": "", "columns": ["MSE", "M = 3", "M = 4", "M = 5", "M = 6", "M = 7", "M = 8", "M = 9", "M = 10"], "rows": [{"id": "TABLE_II_B", "label": "B", "values": {"MSE": "B", "M = 3": "8.2574", "M = 4": "1.2836", "M = 5": "0.3566", "M = 6": "0.1222", "M = 7": "0.06155", "M = 8": "0.02854", "M = 9": "0.01746", "M = 10": "0.009540"}}, {"id": "TABLE_II_C", "label": "C", "values": {"MSE": "C", "M = 3": "8.2574", "M = 4": "1.1131", "M = 5": "0.3556", "M = 6": "0.1225", "M = 7": "0.06199", "M = 8": "0.02884", "M = 9": "0.01772", "M = 10": "0.009726"}}, {"id": "TABLE_II_D", "label": "D", "values": {"MSE": "D", "M = 3": "8.2574", "M = 4": "1.1117", "M = 5": "0.3545", "M = 6": "0.1219", "M = 7": "0.06148", "M = 8": "0.02852", "M = 9": "0.01746", "M = 10": "0.009541"}}, {"id": "TABLE_II_E", "label": "E", "values": {"MSE": "E", "M = 3": "7.2819", "M = 4": "1.1000", "M = 5": "0.3548", "M = 6": "0.1219", "M = 7": "0.06123", "M = 8": "0.02840", "M = 9": "0.01750", "M = 10": "0.009599"}}], "notes": ["B: Taylor series method. C: proposed method, (28) with Ψ = Q, (29). D: proposed method, (28) with Ψ = Q, (28), (29). E: theoretical MSE of the new method = CRLB."], "page": 9}, {"id": "p9-TABLE_III", "title": "COMPARISON OF MSE FOR THE SI, TAYLOR-SERIES AND PROPOSED METHODS; ARBITRARY ARRAY AND DISTANT SOURCE", "population": "", "columns": ["MSE", "M = 4", "M = 5", "M = 6", "M = 7", "M = 8", "M = 9", "M = 10"], "rows": [{"id": "TABLE_III_A", "label": "A", "values": {"MSE": "A", "M = 4": "101881", "M = 5": "213.93", "M = 6": "48.12", "M = 7": "40.40", "M = 8": "41.87", "M = 9": "40.11", "M = 10": "37.23"}}, {"id": "TABLE_III_B", "label": "B", "values": {"MSE": "B", "M = 4": "346.86", "M = 5": "147.57", "M = 6": "44.38", "M = 7": "38.64", "M = 8": "38.63", "M = 9": "36.55", "M = 10": "33.80"}}, {"id": "TABLE_III_C", "label": "C", "values": {"MSE": "C", "M = 4": "348.74", "M = 5": "144.84", "M = 6": "44.06", "M = 7": "38.41", "M = 8": "38.47", "M = 9": "36.50", "M = 10": "33.87"}}, {"id": "TABLE_III_E", "label": "E", "values": {"MSE": "E", "M = 4": "328.82", "M = 5": "143.94", "M = 6": "44.06", "M = 7": "38.54", "M = 8": "38.53", "M = 9": "36.47", "M = 10": "33.73"}}], "notes": ["A: SI method. B: Taylor series method. C: proposed method, [(14b), (22b), (24)]. E: theoretical MSE of the new method = CRLB."], "page": 9}, {"id": "p9-TABLE_IV", "title": "COMPARISON OF MSE FOR THE PROPOSED AND TAYLOR-SERIES METHODS; LINEAR ARRAY AND DISTANT SOURCE", "population": "", "columns": ["MSE", "M = 4", "M = 5", "M = 6", "M = 7", "M = 8", "M = 9", "M = 10"], "rows": [{"id": "TABLE_IV_B", "label": "B", "values": {"MSE": "B", "M = 4": "1797.13", "M = 5": "432.68", "M = 6": "159.50", "M = 7": "69.16", "M = 8": "34.56", "M = 9": "18.56", "M = 10": "10.85"}}, {"id": "TABLE_IV_C", "label": "C", "values": {"MSE": "C", "M = 4": "1588.31", "M = 5": "409.66", "M = 6": "153.92", "M = 7": "68.41", "M = 8": "34.44", "M = 9": "18.56", "M = 10": "10.86"}}, {"id": "TABLE_IV_E", "label": "E", "values": {"MSE": "E", "M = 4": "1437.25", "M = 5": "408.17", "M = 6": "154.05", "M = 7": "68.06", "M = 8": "34.25", "M = 9": "18.57", "M = 10": "10.90"}}], "notes": ["B: Taylor series method. C: proposed method, (28) with Ψ = Q, (29). E: theoretical MSE of the new method = CRLB."], "page": 9}], "sources": {"S001": {"id": "pdf-473e344b1814e453-p1-b0", "page": 1, "quote": "IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 42, NO. 8, AUGUST 1994 \n1905"}, "S002": {"id": "pdf-473e344b1814e453-p1-b1", "page": 1, "quote": "A Simple and Efficient Estimator"}, "S003": {"id": "pdf-473e344b1814e453-p1-b2", "page": 1, "quote": "for Hyperbolic Location"}, "S004": {"id": "pdf-473e344b1814e453-p1-b3", "page": 1, "quote": "Y. T. Chm, Senior Member, IEEE, and K. C. Ho, Member, IEEE"}, "S005": {"id": "pdf-473e344b1814e453-p1-b4", "page": 1, "quote": "Abstract-An \neffective technique in locating a source based on \nintersections of hyperbolic curves defined by the time differences \nof arrival of a signal received at a number of sensors is proposed. \nThe approach is noniterative and gives au explicit solution. It is \nan approximate realization of the maximum-likelihood estimator \nand is shown to attain the Cramer-Rao lower bound near the \nsmall error region. Comparisons of performance with existing \ntechniques of beamformer, sphericat-interpolation, divide and \nconquer, and iterative Taylor-series methods are made. The \nproposed technique performs significantly better than spherical- \ninterpolation, and has a higher noise threshold than divide and \nconquer before performance breaks away from the Cramer-Rao \nlower bound. It provides an explicit solution form that is not \navailable in the beamformmg and Taylor-series methods. Compu- \ntational complexity is comparable to spherical-interpolation but \nsubstantially less than the Taylor-series method."}, "S006": {"id": "pdf-473e344b1814e453-p1-b5", "page": 1, "quote": "I. INTRODUCTION"}, "S007": {"id": "pdf-473e344b1814e453-p1-b6", "page": 1, "quote": "N sonar and radar, it is often of interest to determine the \nI \nlocation of an object from its emissions [l]. A number \nof spatially separated sensors capture the emitted signal and \nthe time differences of arrival (TDOA’s) at the sensors are \ndetermined. Using the TDOA’s, emitter location relative to \nthe sensors can be calculated."}, "S008": {"id": "pdf-473e344b1814e453-p1-b7", "page": 1, "quote": "The position fix is simplified when the sensors are arranged \nin a linear fashion. Many optimum processing techniques \nhave been proposed, with different complexity and restrictions. \nCarter’s focused beamforming [l] requires a search over a set \nof possible source locations. Hahn’s method [2]-[3] assumes a \ndistant source. Abel and Smith [4] provide an explicit solution \nthat can achieve the Cram&-Rao Lower Bound (CRLB) in the \nsmall error region."}, "S009": {"id": "pdf-473e344b1814e453-p1-b8", "page": 1, "quote": "The situation is more complex when sensors are distributed \narbitrarily. In this case, emitter position is determined from the \nintersection of a set of hyperbolic curves defined by the TDOA \nestimates. Finding the solution is not easy as the equations are \nnonlinear. Fang [5] gave an exact solution when the number of \nTDOA measurements are equal to the number of unknowns \n(coordinates of transmitter). This solution, however, cannot \nmake use of extra measurements, available when there are \nextra sensors, to improve position accuracy. The more general \nsituation with extra measurements was considered by Friedlan-"}, "S010": {"id": "pdf-473e344b1814e453-p1-b9", "page": 1, "quote": "Manuscript received January 4, 1993; revised November 2, 1993. The \nassociate editor coordinating the review of this paper and approving it for \npublication was Prof. Isabel Lourtie."}, "S011": {"id": "pdf-473e344b1814e453-p1-b10", "page": 1, "quote": "The authors are with the Department of Electrical and Computer Engineer- \ning, Royal Military College of Canada, Kingston, Ontario, Canada. K7K 5LO."}, "S012": {"id": "pdf-473e344b1814e453-p1-b11", "page": 1, "quote": "IEEE Log Number 9401919."}, "S013": {"id": "pdf-473e344b1814e453-p1-b12", "page": 1, "quote": "der [6], Schau and Robiison [7], and Smith and Abel [8]-[9]. \nAlthough closed-form solutions have been developed, their \nestimators are not optimum. The divide and conquer (DAC) \nmethod [ 101 from Abel can achieve optimum performance, but \nit requires that the Fisher information is sufficiently large. To \nobtain a precise position estimate at reasonable noise levels, \nthe Taylor-series method [ 113-[ 121 is commonly employed. \nIt is an iterative method: it starts with an initial guess and \nimproves the estimate at each step by determining. the local \nlinear least-squares (LS) solution. An initial guess close to \nthe true solution is needed to avoid local minima. Selection \nof such a starting point is not simple in practice. Moreover, \nconvergence of the iterative process is not assured. It is also \ncomputationally intensive as LS computation is required in \neach iteration."}, "S014": {"id": "pdf-473e344b1814e453-p1-b13", "page": 1, "quote": "We give an alternative solution for hyperbolic position fix. \nThe solution is in closed-form, valid for both distant and close \nsources, and is an approximation of the maximum likelihood \n(ML) estimator when the TDOA estimation errors are small. \nTo illustrate, Section I1 considers a 2-D localization problem \nwith an arbitrary array manifold. In the special case of a linear \narray, the solution reduces to the one given by [4]. With three \nsensors to provide two TDOA estimates, an exact solution is \nobtained which is equivalent to the result in [7]. With four \nor more sensors, the original set of TDOA equations are \ntransformed into another set of equations which are linear \nin source position coordinates and an extra variable. The \nweighted linear LS gives an initial solution. A second weighted \nLS, which makes use of the known constraint between source \ncoordinates and the extra variable, gives an improved position \nestimate. Expression for location variance is derived. Section \nI11 compares the estimator’s localization accuracy with the \nCRLB. Performance comparison with those found in the \nliterature is presented in Section IV. Section V is a simulation \nstudy on accuracy of the proposed and the other methods. \nConclusions are given in Section VI."}, "S015": {"id": "pdf-473e344b1814e453-p1-b14", "page": 1, "quote": "11. HYPERBOLIC \nPOSITION FIXING SOLUTION"}, "S016": {"id": "pdf-473e344b1814e453-p1-b15", "page": 1, "quote": "The development is in a 2-D plane for ease of illustration. \nExtension to three dimensions is straightforward. Assume that \nthere are M sensors distributed arbitrarily in a 2-D plane as \nshown in Fig. 1. Let the sampled observations at sensor z be"}, "S017": {"id": "pdf-473e344b1814e453-p1-b16", "page": 1, "quote": "U i ( k ) = s(k - di) + 7)i(k), \n2 = 1,2,. . . , M \n(1)"}, "S018": {"id": "pdf-473e344b1814e453-p1-b18", "page": 1, "quote": "1053-587X/94$04.00 0 1994 IEEE"}, "S019": {"id": "pdf-473e344b1814e453-p2-b0", "page": 2, "quote": "1906 \nIEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 42, NO. 8, AUGUST 1994"}, "S020": {"id": "pdf-473e344b1814e453-p2-b1", "page": 2, "quote": "where s(k) is the signal radiating from the source, d; the time \ndelay associated with receiver i and 71;(k) the additive noise. \nThe signal and noises are assumed to be mutually independent, \nzero mean stationary Gaussian random processes. To localize \nthe source, we first estimate TDOA of the signal received \nby sensors i and j by Hahn and Tretter's method [2]-[3]. It \nis an optimum estimator in the sense that the CRLB can be \nattained. The technique consists of measuring TDOA's for all \npossible receiver pairs by generalized cross-conelation [ 131 \nand then calculating the Gauss-Markov (weighted) estimate of \nthe TDOA's with respect to the first receiver, d;,l = d; - dl \nfor i = 2 , 3 , . . . , M. TDOA between receivers i and j are \ncomputed from"}, "S021": {"id": "pdf-473e344b1814e453-p2-b2", "page": 2, "quote": "Let d = [dz,~, \nd3,1, . . . dh,i,1jT be the estimated TDOA vector. \nThe covariance matrix Q of d is given by [2]-[31"}, "S022": {"id": "pdf-473e344b1814e453-p2-b3", "page": 2, "quote": "s(w)2 \n' \n= { I\" 1 + S(w)tr(N(w)-l) \n. \n-1 \nx [tr(N(w)-l)N,(w)-' - N , ( ~ ) - ' l l ~ N p ( w ) - ~ ] \ndw"}, "S023": {"id": "pdf-473e344b1814e453-p2-b4", "page": 2, "quote": "where 0 to R is the frequency band processed and T \nis the observation time. tr(*) is the trace of the ma- \ntrix *. S(w) is the signal power spectrum, N(w) = \ndiag{Nl(w), N2(w), . . . Nh,i(w)} is the noise power spectral \nmatrix, Np(w) is the lower right M-1 by M-1 partition of \nthe matrix N(w) and 1 is a vector of unity which has the \nsame size as Np(w)."}, "S024": {"id": "pdf-473e344b1814e453-p2-b5", "page": 2, "quote": "Denote the noise free value of {*} as {*}O. TDOA d;,j will \nthen be"}, "S025": {"id": "pdf-473e344b1814e453-p2-b6", "page": 2, "quote": "with ni,j representing the noise (delay estimation error) com- \nponent. Define the noise vector as n = [nz,~, \nTL3,1, . . . , nM,1] . \nSince the TDOA estimator is unbiased, the mean of n is zero \nand its covariance matrix is the same as Q. Notice from (2) \nthat ni,j = n i , ~ - nj.1."}, "S026": {"id": "pdf-473e344b1814e453-p2-b7", "page": 2, "quote": "For simplicity, the index i is presumed to run from 2 to M \nin the sequel unless otherwise specified. Let the source be at"}, "S027": {"id": "pdf-473e344b1814e453-p2-b11", "page": 2, "quote": ": sensors \nA : source"}, "S028": {"id": "pdf-473e344b1814e453-p2-b12", "page": 2, "quote": "Fig. 1. Localization in a 2-D plane."}, "S029": {"id": "pdf-473e344b1814e453-p2-b13", "page": 2, "quote": "unknown position (z,y) and the sensors at known locations \n(z;, y;). The squared distance between the source and sensor"}, "S030": {"id": "pdf-473e344b1814e453-p2-b15", "page": 2, "quote": "7-f = (Xi - z)2 + (y; - y y \n= K; - 2 2 ; ~ \n- 2y;y + x2 + y2, i = 1,2,. . . , M"}, "S031": {"id": "pdf-473e344b1814e453-p2-b18", "page": 2, "quote": "K; = zs + yp."}, "S032": {"id": "pdf-473e344b1814e453-p2-b19", "page": 2, "quote": "If c is the signal propagation speed, then"}, "S033": {"id": "pdf-473e344b1814e453-p2-b20", "page": 2, "quote": "define a set of nonlinear equations whose solution gives (z, y)."}, "S034": {"id": "pdf-473e344b1814e453-p2-b21", "page": 2, "quote": "Solving those nonlinear equations is difficult. Linearizing \n(6) by Taylor-series expansion and then solving iteratively is \none possible way [11]-[12]. With a set of TDOA estimates \nd;,~, the method starts with an initial position guess (20, \nyo) \nand computes position deviations"}, "S035": {"id": "pdf-473e344b1814e453-p2-b23", "page": 2, "quote": "where (see (7), at the bottom of this page). The values"}, "S036": {"id": "pdf-473e344b1814e453-p2-b24", "page": 2, "quote": "7-; = 1,2,..., M are computed from (5) with z = 20 and"}, "S037": {"id": "pdf-473e344b1814e453-p3-b0", "page": 3, "quote": "CHAN AND HO: A SIMPLE AND EFFICIENT ESTIMATOR FOR HYPERBOLIC LOCATION SYSTEM \n1907"}, "S038": {"id": "pdf-473e344b1814e453-p3-b1", "page": 3, "quote": "y = yo. In the next iteration, xo and yo are then set to xo +Ax \nand yo + Ay. The whole process is repeated again until Ax and \nAy are sufficiently small. This method has the difficulties of \nrequiring a close enough starting point and large computations. \nMoreover, convergence is not guaranteed."}, "S039": {"id": "pdf-473e344b1814e453-p3-b2", "page": 3, "quote": "An altemative [6]-[9] is to first transform (6) into another \nset of equations. From (6), r: = (\n~\ni\n,\n~\n \n+ TI)' so that (5) can \nbe rewritten as"}, "S040": {"id": "pdf-473e344b1814e453-p3-b3", "page": 3, "quote": "Subtracting (5) at i = 1 from (8), we obtain"}, "S041": {"id": "pdf-473e344b1814e453-p3-b4", "page": 3, "quote": "The symbols x ; , ~ and y i , ~ stand for xi - x1 and yi - y1 \nrespectively. Note that (9) is a set of linear equations with \nunknowns x, y and T I . To solve for x and y, [6] eliminates r1 \nfrom (9) and produces (M-2) linear equations in x and y. The \nsource position is then computed by LS. On the other hand, \n[8] first solves x and y in terms of TI. The intermediate result \nis inserted back to (9) to generate equations in the unknown r1 \nonly. Substituting the computed r1 value that minimizes the LS \nequation error to the intermediate result gives the final solution. \nThis is termed the spherical-interpolation (SI) method [8]. \nThe preceding two solutions are shown to be mathematically \nequivalent [6]. They are, however, not optimum and the \nweighting matrices required in LS are not easy to determine. A \nnew estimator for position fixing which is capable of achieving \noptimum performance is next given."}, "S042": {"id": "pdf-473e344b1814e453-p3-b5", "page": 3, "quote": "A. Arbitrary Array"}, "S043": {"id": "pdf-473e344b1814e453-p3-b6", "page": 3, "quote": "1) Three Sensors ( M = 3) : With three sensors, x and y can"}, "S044": {"id": "pdf-473e344b1814e453-p3-b7", "page": 3, "quote": "be solved in terms of r1 from (9). That is"}, "S045": {"id": "pdf-473e344b1814e453-p3-b8", "page": 3, "quote": "Inserting this intermediate result into (5) at i = 1 gives a \nquadratic in r1. Substitution of the positive root back into (10) \nproduces the solution. On some occasions, there may be two \npositive roots that produce two different answers. The solution \nambiguity can be resolved by restricting the transmitter to lie \nwithin the region of interest. This answer is equivalent to the \none in [7]."}, "S046": {"id": "pdf-473e344b1814e453-p3-b9", "page": 3, "quote": "2) Four or More Sensors ( M 2 4): The system is overde- \ntermined as the number of measurements is greater than the \nnumber of unknowns. In the presence of noise, the set of \nequations in (9) will not meet at the same point and the \nproper answer is the (x,y) that best fit these equations. Let \nz, = [z;,q] \nbe the unknown vector, where zp = [x,ylT. \nWith TDOA noise, the error vector derived from (9) is"}, "S047": {"id": "pdf-473e344b1814e453-p3-b11", "page": 3, "quote": "$J = h - G,z:"}, "S048": {"id": "pdf-473e344b1814e453-p3-b13", "page": 3, "quote": "G, = - [ \"\".' \nyqil \n' q y ' ] \n. \n(11)"}, "S049": {"id": "pdf-473e344b1814e453-p3-b14", "page": 3, "quote": "x2,1 \nYZ,l \nT2,l"}, "S050": {"id": "pdf-473e344b1814e453-p3-b15", "page": 3, "quote": "xM,1 \nYM,1 \nrM,1"}, "S051": {"id": "pdf-473e344b1814e453-p3-b16", "page": 3, "quote": "When (4) is used to express ri,l as rtl + m,,1 and noting \nfrom (6) that r: = T : , ~ + r!, $J is found to be"}, "S052": {"id": "pdf-473e344b1814e453-p3-b17", "page": 3, "quote": "$J = cBn + 0.5c2n 0 n \nB =diag{r~,r~;.-,r&}. \n(12)"}, "S053": {"id": "pdf-473e344b1814e453-p3-b18", "page": 3, "quote": "The symbol 0 represents the Schur product (element-by- \nelement product). The TDOA found by generalized cross- \ncorrelation with Gaussian data is asymptotically normally \ndistributed when the signal-to-noise ratio (SNR) is high [l]. \nIt follows that the noise vector n in Hahn and Tretter's [2] \nestimator is also asymptotically normal. The covariance matrix \nof $J can therefore be evaluated. In practice, the condition"}, "S054": {"id": "pdf-473e344b1814e453-p3-b19", "page": 3, "quote": "cn;,~ \u003c\u003c r: is usually satisfied. When ignoring the second \nterm on the right of (12), \nbecomes a Gaussian random vector \nwith covariance matrix given by"}, "S055": {"id": "pdf-473e344b1814e453-p3-b20", "page": 3, "quote": "Q = E[$$T] = c2BQB. \n(13)"}, "S056": {"id": "pdf-473e344b1814e453-p3-b21", "page": 3, "quote": "The elements of z, are related by (3, \nwhich means that (1 1) \nis still a set of nonlinear equations in two variables x and y. \nThe approach to solve the nonlinear problem is to first assume \nthat there is no relationship among x, y and r1. They can then \nbe solved by LS. The final solution is obtained by imposing \nthe known relationship (5) to the computed result via another \nLS computation. This two step procedure is an approximation \nof a true ML estimator for emitter location. By considering \nthe elements of z, independent, the ML estimate of z, is"}, "S057": {"id": "pdf-473e344b1814e453-p3-b22", "page": 3, "quote": "z, = arg min{(h - G,z,)T9-1(h - G,z,)}"}, "S058": {"id": "pdf-473e344b1814e453-p3-b23", "page": 3, "quote": "= (GzQ-1G,)-1Gz9-1h \n(144"}, "S059": {"id": "pdf-473e344b1814e453-p3-b24", "page": 3, "quote": "which is also readily recognized as the generalized LS solution \nof (11). 9 is not known in practice as B contains the true \ndistances between source and receivers. Further approximation \nis necessary in order to make the problem solvable. When the \nsource is far from array, each r: is close to ro so that B x roI, \nwhere ro designates the range and I is an identity matrix of \nsize M - 1. Since scaling of 9 does not affect the answer, an \napproximation of (14a) is"}, "S060": {"id": "pdf-473e344b1814e453-p3-b25", "page": 3, "quote": "z, M (GzQ-lGa)-lGzQ-lh. \n(14b)"}, "S061": {"id": "pdf-473e344b1814e453-p3-b26", "page": 3, "quote": "If, on the other hand, the source is close, we can first use (14b) \nto obtain an initial solution to estimate B. The final answer is \nthen computed from (14a). Although (14a) can be iterated to \nprovide an even better answer, simulations show that applying \n(14a) once is sufficient to give an accurate result."}, "S062": {"id": "pdf-473e344b1814e453-p3-b27", "page": 3, "quote": "The covariance matrix of z, is obtained by evaluating the \nexpectations of z, and z,zz from (14a). The calculation"}, "S063": {"id": "pdf-473e344b1814e453-p4-b0", "page": 4, "quote": "1908 \nIEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 42, NO. 8, AUGUST 1994"}, "S064": {"id": "pdf-473e344b1814e453-p4-b1", "page": 4, "quote": "is quite involved because the matrix G, contains random \nquantities r;,1. We compute the covariance matrix by using \nthe perturbation approach. In the presence of noise, r;,l = \nrr,l + c n ; , ~ . G, and h can be expressed as G, = G: + AG, \nand h = ho + Ah. Since G:z: \n= ho, (1 1) implies that"}, "S065": {"id": "pdf-473e344b1814e453-p4-b2", "page": 4, "quote": "(15) \n$ = A h - AG,zO,."}, "S066": {"id": "pdf-473e344b1814e453-p4-b3", "page": 4, "quote": "Let z, = z: + Az,. Then from (14a)"}, "S067": {"id": "pdf-473e344b1814e453-p4-b4", "page": 4, "quote": "(GtT + AGT)@-’(G: + AG,)(z: + Az,)"}, "S068": {"id": "pdf-473e344b1814e453-p4-b5", "page": 4, "quote": "= (GO,T + AGT)W’(h + Ah). (16)"}, "S069": {"id": "pdf-473e344b1814e453-p4-b6", "page": 4, "quote": "Retaining only the linear perturbation terms and then using \n(12) and (15), Az, and its covariance matrix is"}, "S070": {"id": "pdf-473e344b1814e453-p4-b7", "page": 4, "quote": "Az, = c(G0,T91-1G0,)-1G~T9-1Bn,"}, "S071": {"id": "pdf-473e344b1814e453-p4-b8", "page": 4, "quote": "COV(Z,) = E[Az,Az:] \n= (G:T9-1G0,)-1 \n(17)"}, "S072": {"id": "pdf-473e344b1814e453-p4-b9", "page": 4, "quote": "where the square error term in (1 2) has been ignored and ( 13) \nhas been used to give cov(z,)."}, "S073": {"id": "pdf-473e344b1814e453-p4-b10", "page": 4, "quote": "The solution of z, assumes that x, \ny and r1 are independent. \nBut they are related by (5) at i = 1. The remaining question \nis how to incorporate this relationship to give an improved \nestimate. When bias is ignored (this is justified when the noises \nin the TDOA’s are small), the vector z, is a random vector \nwith its mean centred at the true value and covariance matrix \ngiven by (17). Hence the elements of z, can be expressed as"}, "S074": {"id": "pdf-473e344b1814e453-p4-b11", "page": 4, "quote": "Za,1 = 2’ + el, Z,,2 = yo + e2, z,,3 = ry + e3"}, "S075": {"id": "pdf-473e344b1814e453-p4-b12", "page": 4, "quote": "where el, e2 and e3 are estimation errors of z,. Subtracting \nthe first two components of z, by 2 1 and y1, and then squaring \nthe elements gives another set of equations"}, "S076": {"id": "pdf-473e344b1814e453-p4-b13", "page": 4, "quote": "$’ = h’ - G’ ’0 \naza"}, "S077": {"id": "pdf-473e344b1814e453-p4-b15", "page": 4, "quote": "(Y - Y d 2 \nz:, = [‘ \n]"}, "S078": {"id": "pdf-473e344b1814e453-p4-b16", "page": 4, "quote": "x - x1)2"}, "S079": {"id": "pdf-473e344b1814e453-p4-b17", "page": 4, "quote": "where $‘ is a vector denoting inaccuracies in z,. Substituting \n(18) into (19) gives"}, "S080": {"id": "pdf-473e344b1814e453-p4-b18", "page": 4, "quote": "T / I ~ = 2(x0 - x1)el+ e2 M 2(x0 - x1)el \n$; = 2(Y0 - Y1).2 + e; M 2(Y0 - Y l k 2"}, "S081": {"id": "pdf-473e344b1814e453-p4-b19", "page": 4, "quote": "= 2rye3 + e; M 2r:eS. \n(20)"}, "S082": {"id": "pdf-473e344b1814e453-p4-b20", "page": 4, "quote": "The approximation is valid as the errors ei, i = 1,2,3 are \nsmall. This is another approximation to the true maximum \nlikelihood procedure. The covariance matrix of $’ is therefore"}, "S083": {"id": "pdf-473e344b1814e453-p4-b21", "page": 4, "quote": "9’ = [$,“J”] = ~B’cov(z,)B’ \nB’ = diag{xO - 2 1 , yo - y1, r:}. \n(21)"}, "S084": {"id": "pdf-473e344b1814e453-p4-b22", "page": 4, "quote": "Since $ is Gaussian, it follows that $’ is also Gaussian. Thus \nthe ML estimate of zh is"}, "S085": {"id": "pdf-473e344b1814e453-p4-b23", "page": 4, "quote": "Z; = (G;T@’-lG;)-lG~T@’-lh’. \n(224"}, "S086": {"id": "pdf-473e344b1814e453-p4-b24", "page": 4, "quote": "The matrix 9’ \nis not known since it contains the true values. \nNevertheless, B’ can be approximated by using the values \nin z,, G: \nin (17) approximated by G,, and B in (13) \napproximated by the values computed from (14b). If the source \nis distant, then cov(z,) M C~T-~~(G:~Q-~G:)-’ \nand (22a) \nreduces to \n.; \nM ( G:,~B’-~ \nG,Q-~ G,B’-~ G;) -"}, "S087": {"id": "pdf-473e344b1814e453-p4-b25", "page": 4, "quote": "( GLTB’-l G, Q-’G,B’-’)h’. \n(22b)"}, "S088": {"id": "pdf-473e344b1814e453-p4-b26", "page": 4, "quote": "Notice that the matrix Gh is constant. By taking expectations \nof z’, and zhziT, the covariance matrix of zb is"}, "S089": {"id": "pdf-473e344b1814e453-p4-b27", "page": 4, "quote": "cov(z;) = ( G ; ~ @ ~ - ~ G ; ) - ~ . \n(23)"}, "S090": {"id": "pdf-473e344b1814e453-p4-b28", "page": 4, "quote": "The final position estimate is then obtained from z i as"}, "S091": {"id": "pdf-473e344b1814e453-p4-b29", "page": 4, "quote": "ZP = &+ [;:I"}, "S092": {"id": "pdf-473e344b1814e453-p4-b32", "page": 4, "quote": "The proper solution is selected to be the one which lies in the \nregion of interest. If one of the coordinates of zh is close to \nzero, the square root in (24) may become imaginary. In such \na case, the imaginary component is set to zero. To find the \ncovariance matrix of position estimate, we express our final \nsolution in the form x = xo + e, and y = yo + ey. From the \ndefinition of z i in (19), it follows that"}, "S093": {"id": "pdf-473e344b1814e453-p4-b34", "page": 4, "quote": "The errors e, and ey are relatively small compared with xo \nand yo. Ignoring e: and e:, \nand upon using (13), (17), (21) \nand (23), the covariance matrix of zp is found to be"}, "S094": {"id": "pdf-473e344b1814e453-p4-b36", "page": 4, "quote": "In summary, (14a), (22a), and (24) are the solution equa- \ntions. Since the weighting matrices in (14a) and (22a) are \nunknown, proper approximation is necessary to find the an- \nswer. When the source is far from array, (14b), (22b), and \n(24) are used. For a near-field source, (14b) is first used to \ngive an approximation of B. Equations (14a), (22a), and (24) \nthen give the solution. Position accuracy is assessed through \nthe covariance matrix in (26)."}, "S095": {"id": "pdf-473e344b1814e453-p5-b0", "page": 5, "quote": "CHAN AND H O A SIMPLE AND EFFICIENT ESTIMATOR FOR HYPERBOLIC LOCATION SYSTEM \n1909"}, "S096": {"id": "pdf-473e344b1814e453-p5-b1", "page": 5, "quote": "B. Linear Array \ncan be replaced by a matrix of diagonal elements 1 and 0.5"}, "S097": {"id": "pdf-473e344b1814e453-p5-b2", "page": 5, "quote": "The above formulas (lo), (14), and (22) are valid if the \nmatrices involved are full rank. When sensors are arranged \nlinearly, the matrices containing xi and y; will be singular \nbecause the sensor positions satisfy yi = axi + b, i ="}, "S098": {"id": "pdf-473e344b1814e453-p5-b3", "page": 5, "quote": "1 , 2 , + . . , M, where a and b are some constants. Rewrite (9) as"}, "S099": {"id": "pdf-473e344b1814e453-p5-b4", "page": 5, "quote": "Equation (27) is linear in w = (x + ay) and T I . Using the first \nstage procedure illustrated in Section 11-A gives a solution \nsimilar to (14a)"}, "S100": {"id": "pdf-473e344b1814e453-p5-b5", "page": 5, "quote": "The vector h is defined in (1 1). A second stage is unnecessary"}, "S101": {"id": "pdf-473e344b1814e453-p5-b6", "page": 5, "quote": "since T I and x + ay are two independent variables. To obtain \nthe position estimate, substitute the computed TI and x = \nw - ay into (5) at i = 1 to produce a quadratic in y. The \nlocation estimate is"}, "S102": {"id": "pdf-473e344b1814e453-p5-b7", "page": 5, "quote": "-E f dE2 - 4AC , \nx = w - a y \n2A \nY ="}, "S103": {"id": "pdf-473e344b1814e453-p5-b9", "page": 5, "quote": "If the array is on the x-axis and if ($1, y1) is at the origin, \na = b = x1 = K1 = 0 and (28) reduces to the simple form \ny = k d v \nand x = w. This solution is identical to the \none given in [4]."}, "S104": {"id": "pdf-473e344b1814e453-p5-b10", "page": 5, "quote": "To calculate the covariance matrix, we perturb the random \nquantities in (28) and proceed as before to obtain"}, "S105": {"id": "pdf-473e344b1814e453-p5-b11", "page": 5, "quote": "According to (5), Ax, Ay and AT, are related by AT, ="}, "S106": {"id": "pdf-473e344b1814e453-p5-b12", "page": 5, "quote": "-{(XI - xo)Ax + (y1 - yo)Ay}/~y. Hence"}, "S107": {"id": "pdf-473e344b1814e453-p5-b13", "page": 5, "quote": "T1 \nA z ~ = TAz, = [+"}, "S108": {"id": "pdf-473e344b1814e453-p5-b14", "page": 5, "quote": "and the required covariance matrix is"}, "S109": {"id": "pdf-473e344b1814e453-p5-b15", "page": 5, "quote": "Thus \na = T - ~ ( G ~ T Q - ~ G O - ~ T - T"}, "S110": {"id": "pdf-473e344b1814e453-p5-b16", "page": 5, "quote": "1 ) \n= C 2 ( ~ T ~ ~ . T ~ - 1 ~ - 1 ~ - 1 ~ y ~ ) - 1 . \n(32)"}, "S111": {"id": "pdf-473e344b1814e453-p5-b17", "page": 5, "quote": "The proposed solution requires the knowledge of TDOA \ncovariance matrix Q which may not be known in practice. \nIf the noise power spectral densities are similar at sensors, it"}, "S112": {"id": "pdf-473e344b1814e453-p5-b18", "page": 5, "quote": "for all other elements (see (44) below). If the sensor positions \nhave significant uncertainties, we can also incorporate these \nuncertainties to the matrix so that more weights are given \nto the equation containing the more reliable sensor position"}, "S113": {"id": "pdf-473e344b1814e453-p5-b19", "page": 5, "quote": "(xi, Yi)."}, "S114": {"id": "pdf-473e344b1814e453-p5-b20", "page": 5, "quote": "The covariance matrix of position estimate contains the \nuncertainty information in localization. In particular, the po- \nsition mean-square error (MSE) is equal to the sum of the \ndiagonal elements of a. Another commonly used measure of \nlocalization accuracy is the circular error probable (CEP) [12]. \nIt is defined as the radius of the circle that has its centre at the \nmean and contains half the realizations of the random position \nestimate. Recall that since the noise vector n is Gaussian, Az, \nis also Gaussian distributed. The CEP is thus related to a. \nDetails of its computation from @ can be found in [ 1 1 I-[ 12 1."}, "S115": {"id": "pdf-473e344b1814e453-p5-b21", "page": 5, "quote": "111. COMPARISON WITH THE CRLB"}, "S116": {"id": "pdf-473e344b1814e453-p5-b22", "page": 5, "quote": "The Cram&-Rao inequality [14] sets a lower bound for the \nvariance of any unbiased parameter estimators. Hence it is of \ninterest to compare the estimator with the optimum."}, "S117": {"id": "pdf-473e344b1814e453-p5-b23", "page": 5, "quote": "The CFUB of the localization problem is derived in the \nAppendix. It is given by"}, "S118": {"id": "pdf-473e344b1814e453-p5-b24", "page": 5, "quote": "ao = C 2 ( ~ : T ~ - 1 ~ y ) - 1 \n(33)"}, "S119": {"id": "pdf-473e344b1814e453-p5-b25", "page": 5, "quote": "where the matrix G! \nis defined in (7) with ( x , y , ~ ; ) ="}, "S120": {"id": "pdf-473e344b1814e453-p5-b26", "page": 5, "quote": "bo, \nYO, TP)."}, "S121": {"id": "pdf-473e344b1814e453-p5-b27", "page": 5, "quote": "We shall first consider the arbitrarily distributed array case. \nThe corresponding position covariance matrix is given in (26). \nDenote the (i, j)th element of a matrix R as [R]i,J. Then from \n(II), (12) and (21)"}, "S122": {"id": "pdf-473e344b1814e453-p5-b29", "page": 5, "quote": "Hence from the definition of G’, and B” in (19) and (26), and \nnoting that  xi,^ = xi - x1 and T : , ~ = rp - T?"}, "S123": {"id": "pdf-473e344b1814e453-p5-b30", "page": 5, "quote": "[B-lGO,B‘-lG’,B”]i-l,~"}, "S124": {"id": "pdf-473e344b1814e453-p5-b31", "page": 5, "quote": "Comparison between (26) and (33) reveals that the position \nestimate with arbitrary array can achieve the optimum perfor- \nmance and is therefore efficient, when the measurement errors \nin TDOA’s are small."}, "S125": {"id": "pdf-473e344b1814e453-p5-b32", "page": 5, "quote": "Similarly \n1"}, "S126": {"id": "pdf-473e344b1814e453-p6-b0", "page": 6, "quote": "1910 \nIEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 42, NO. 8, AUGUST 1994"}, "S127": {"id": "pdf-473e344b1814e453-p6-b1", "page": 6, "quote": "In the linear array case, using the definitions of B, GY and \nT in (12), (28) and (31), it can be verified that"}, "S128": {"id": "pdf-473e344b1814e453-p6-b2", "page": 6, "quote": "B-lGYT = G,O. \n(37)"}, "S129": {"id": "pdf-473e344b1814e453-p6-b3", "page": 6, "quote": "It is evident from (32) that the covariance matrix \nis identical \nto Q0 of (33). As a consequence, our estimator is also efficient \nfor linearly distributed sensors. This is consistent with the \nresults given in [4]."}, "S130": {"id": "pdf-473e344b1814e453-p6-b4", "page": 6, "quote": "Iv. COMPARISON WITH PREVIOUS WORK"}, "S131": {"id": "pdf-473e344b1814e453-p6-b5", "page": 6, "quote": "We shall next compare our technique with those in the \nliterature."}, "S132": {"id": "pdf-473e344b1814e453-p6-b6", "page": 6, "quote": "A. Linear Array"}, "S133": {"id": "pdf-473e344b1814e453-p6-b7", "page": 6, "quote": "In the special case of a linear array of three sensors, Carter \n[ 13 has derived an exact formula for source range and bearing. \nWe next show that the solution of Section 11-B will give the \nsame answer."}, "S134": {"id": "pdf-473e344b1814e453-p6-b8", "page": 6, "quote": "The localization geometry is shown in Fig. 2. The sensor \npositions are numbered as (xl = 0, y1 = 0), ( x ~ \n= -L1, \nyz = \n0) and (13 = L2,y3 = 0) so that TI corresponds to the range"}, "S135": {"id": "pdf-473e344b1814e453-p6-b9", "page": 6, "quote": "T of the object. Substituting a = 0, x 2 , ~ = -L1, x3,1 = La, \nK1 = 0, K2 = L! and K3 = Li into (27) yields"}, "S136": {"id": "pdf-473e344b1814e453-p6-b10", "page": 6, "quote": "Solving (38) for x and T gives"}, "S137": {"id": "pdf-473e344b1814e453-p6-b11", "page": 6, "quote": "L \n- '3 \n(39) \nL1"}, "S138": {"id": "pdf-473e344b1814e453-p6-b12", "page": 6, "quote": "2 ( 2 + 2)"}, "S139": {"id": "pdf-473e344b1814e453-p6-b13", "page": 6, "quote": "and the bearing angle"}, "S140": {"id": "pdf-473e344b1814e453-p6-b14", "page": 6, "quote": "They are identical to the results given in [ 11 (where the sensors \nare numbered as (xl = O,yl = 0), (xZ = L1,y2 = 0) and"}, "S141": {"id": "pdf-473e344b1814e453-p6-b15", "page": 6, "quote": "( 2 3 = L1 + L2,y3 = 0). Accordingly, our T Z , ~ and T3,l are \nequal to -TZJ and ~ 3 , 2 in [l]). x is equal to"}, "S142": {"id": "pdf-473e344b1814e453-p6-b16", "page": 6, "quote": "and y is obtained from d\nn\n.\n \nWith three or more sensors, a traditional method is the \nfocused beamforming derived by Carter [ 13, [ 151. The sensor \noutputs are prefiltered and time shifted according to de- \nlays chosen by some hypothesized range and bearing. The \nprocessed sensor outputs are summed, filtered, squared and \naveraged to give a final output. The source range and bearing \nestimate is the pair which maximizes the final output. This \ntechnique requires an extensive search in the 2-D range and \nbearing space. Another approach is by Hahn [2]-[3] in which \nthe TDOA vector d is first estimated. The source range and \nbearing are deduced from the weighted sum of ranges and \nbearings obtained from the associated TDOA's for every \ntriplet {(xl,yl), (xi,yi), (xj,yj)},z # j. The selection of"}, "S143": {"id": "pdf-473e344b1814e453-p6-b17", "page": 6, "quote": "8 \ne \n- \n---i"}, "S144": {"id": "pdf-473e344b1814e453-p6-b19", "page": 6, "quote": ": sensor \nA : source \nr : range \n8 : bearing"}, "S145": {"id": "pdf-473e344b1814e453-p6-b20", "page": 6, "quote": "Fig. 2. Localization with a linear three sensor array."}, "S146": {"id": "pdf-473e344b1814e453-p6-b21", "page": 6, "quote": "the weights is crucial to achieve optimum performance but \nexpressions for the weights are, in general, very complicated"}, "S147": {"id": "pdf-473e344b1814e453-p6-b22", "page": 6, "quote": "[3]. Moreover, the solution is correct only for distant source. \nRecently, Abel and Smith [4] deduced an explicit closed- \nform solution for the problem which is simple to compute \nand achieves CRLB around small error region. In addition, \nno distant source assumption is required. Our result is indeed \nidentical to theirs when the coordinate axes are chosen to be \nthe same."}, "S148": {"id": "pdf-473e344b1814e453-p6-b23", "page": 6, "quote": "In sonar, the quantities of interest are often range and \nbearing instead of the x and y coordinates of the emitter. \nThe optimum bounds for range and bearing variances have \nbeen derived by Bangs and Schultheiss [16]. They assume \nspatially incoherent noise fields and a distant source. It is \nalso possible to derive the variances of range and bearing \nfor our estimator. As the estimator has already been shown \nto be efficient around small error region, the corresponding \nvariances will be the CRLB. It will then be shown that with \nthe two assumptions made in [16], we shall come to Bangs \nand Schultheiss's solution."}, "S149": {"id": "pdf-473e344b1814e453-p6-b24", "page": 6, "quote": "Without loss of generality, let the y-coordinate of all sensors \nbe zero. In terms of range T and bearing 8, x is equal to T cos 8 \nand hence Ax = -TO sin BOA0 + cos Boar. We arrange the \nsensors so that T I is the source range. Then"}, "S150": {"id": "pdf-473e344b1814e453-p6-b25", "page": 6, "quote": "From (30), we have"}, "S151": {"id": "pdf-473e344b1814e453-p6-b26", "page": 6, "quote": "5 = E [ [i:] \n[Ad AT]] = (HTGYT@I-lGyH)-l (43)"}, "S152": {"id": "pdf-473e344b1814e453-p6-b27", "page": 6, "quote": "which is a general formula for arbitrary source and noise fields. \nIn spatially incoherent noise fields of identical receiver noise \npower spectra, the vector TDOA covariance matrix Q in (3)"}, "S153": {"id": "pdf-473e344b1814e453-p7-b0", "page": 7, "quote": "CHAN AND H O A SIMPLE AND EFFICIENT ESTIMATOR FOR HYPERBOLIC LOCATION SYSTEM \n1911"}, "S154": {"id": "pdf-473e344b1814e453-p7-b1", "page": 7, "quote": "A+ \ncan be simplified to"}, "S155": {"id": "pdf-473e344b1814e453-p7-b2", "page": 7, "quote": "When the definitions of H, GY and 9 given in (42), (28) and \n(13) are substituted into (43), we have (45), at the bottom of \nthe next page. If the distant source assumption is imposed, \nthen"}, "S156": {"id": "pdf-473e344b1814e453-p7-b4", "page": 7, "quote": "and as illustrated in Fig. 3"}, "S157": {"id": "pdf-473e344b1814e453-p7-b5", "page": 7, "quote": "zi,l cos eo + T ! , ~ hi \n= - = (1 - cosffyi)"}, "S158": {"id": "pdf-473e344b1814e453-p7-b7", "page": 7, "quote": "xi,1 sin eo \n= 2sin2- x 2 \n~ \n2 \n( 2T9 )'"}, "S159": {"id": "pdf-473e344b1814e453-p7-b8", "page": 7, "quote": "where cr; and c: denote the variances of source bearing \nand range. They are identical to those given by Bangs and \nSchultheiss [ 151-[ 161."}, "S160": {"id": "pdf-473e344b1814e453-p7-b9", "page": 7, "quote": "[ ~ - l ] ~ , ~ \n= [\u003c-111,2 = -gc2rosine0"}, "S161": {"id": "pdf-473e344b1814e453-p7-b10", "page": 7, "quote": ": sensor \nA : source \nr : range \n8: \nbearing"}, "S162": {"id": "pdf-473e344b1814e453-p7-b11", "page": 7, "quote": "Sensors and source geometry."}, "S163": {"id": "pdf-473e344b1814e453-p7-b13", "page": 7, "quote": "B. Localization with Arbitrary Array"}, "S164": {"id": "pdf-473e344b1814e453-p7-b14", "page": 7, "quote": "For arbitrarily distributed sensors, spherical-intersection \n(SX) 171, spherical-interpolation (SI) 161, [8]-[91, penalty \nfunction SI [9], DAC [lo], and Taylor-series [11]-[12] \nare commonly used methods. Although the first four have \ncomputational advantage over the last, their solution is less"}, "S165": {"id": "pdf-473e344b1814e453-p7-b15", "page": 7, "quote": "(46) \naccurate."}, "S166": {"id": "pdf-473e344b1814e453-p7-b16", "page": 7, "quote": "SX assumes known T I and solves z and y in terms of T I \nfrom (9). (5) is then used to find T I and hence z,y. Since"}, "S167": {"id": "pdf-473e344b1814e453-p7-b17", "page": 7, "quote": "T I is assumed to be constant in the first step, the degree of \nfreedom to minimize the second norm of ?,h is reduced. The \nsolution obtained is therefore nonoptimum as demonstrated \nin [8]. SI assumes the three variables z, y and TI in (9) to \nbe independent, and eliminates \nfrom those equations. The \nanswer obtained is of course nonoptimum as the relationship"}, "S168": {"id": "pdf-473e344b1814e453-p7-b18", "page": 7, "quote": "(47) \n. ,"}, "S169": {"id": "pdf-473e344b1814e453-p7-b19", "page": 7, "quote": "(5) among z, y and TI is ignored, Penalty function SI is an \nimprovement on SI by incorporating (5), but a suitable choice \nof the parameter a which controls the contributions of (5) \nto the error criterion is unknown. Our method, on the other \nhand, incorporates this constraint to the solution by using a"}, "S170": {"id": "pdf-473e344b1814e453-p8-b0", "page": 8, "quote": "1912 \nIEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 42, NO. 8, AUGUST 1994"}, "S171": {"id": "pdf-473e344b1814e453-p8-b1", "page": 8, "quote": "TABLE I \nCOMPARISON OF MSE FOR THE SI, TAYLOR-SERIES AND PROPOSED METHODS; \nARBITRARY \nARRAY AND NEAR SOURCE"}, "S172": {"id": "pdf-473e344b1814e453-p8-b2", "page": 8, "quote": "MSE \nM = 3 \nM = 4 \nM = 5 \nM = 6 \nM = 7 \nM = 8 \nM = 9 \nM = 10"}, "S173": {"id": "pdf-473e344b1814e453-p8-b3", "page": 8, "quote": "A \nno sol. \n1.5768 \n0.1597 \n0.1480 \n0.1229 \n0.1164 \n0.1148 \n0.1103 \nB \n2.1726 \n0.7061 \n0.1460 \n0.1341 \n0.1144 \n0.1057 \n0.1034 \n0.09462 \nC \n2.1726 \n0.7282 \n0.1456 \n0.1359 \n0,1159 \n0.1077 \n0.1055 \n0.09697 \nD \n2.1726 \n0.6986 \n0.1451 \n0.1337 \n0,1141 \n0.1055 \n0.1034 \n0.09480 \nE \n1.9794 \n0.6884 \n0.1451 \n0.1334 \n0,1143 \n0.1054 \n0.1032 \n0.09432"}, "S174": {"id": "pdf-473e344b1814e453-p8-b4", "page": 8, "quote": "LS computation with appropriate weighting. It follows that \nthe optimum estimate is obtained."}, "S175": {"id": "pdf-473e344b1814e453-p8-b5", "page": 8, "quote": "DAC consists of dividing the sensor measurements \n(TDOA’s in our case) into groups, each having a size equal \nto the number of unknowns. The unknown parameters are \ncomputed from each group and then appropriately combined \nto give the final answer. The solution uses stochastic approx- \nimation and requires the Fisher information in each group to \nbe sufficiently large. As a consequence, optimum performance \ncan be achieved only when the noise is small enough. This \nimplies a low noise threshold before performance deviates \nfrom the C U B . Another difficulty is that if the number of \nsensors is not equal to an integral multiple of the number of \nunknowns plus one, the TDOA estimates from those remaining \nsensors cannot be utilized to improve solution accuracy. \nOur estimator has no such restriction. Moreover, it does not \nrequire stochastic approximation and hence has a larger noise \nthreshold. This is verified by simulations in Section V."}, "S176": {"id": "pdf-473e344b1814e453-p8-b6", "page": 8, "quote": "While the Taylor-series method can give an accurate posi- \ntion estimate at reasonable noise levels, the major drawback is \nthat it is iterative, and there is no guarantee for convergence. \nOur approach does not require iteration. If the source is far \nfrom the array, we compute first the intermediate solution z, \nby (14b) and the final solution by (22b) followed by (24). It \ndoes not require the computation of 1/r, for i = 1,2, . . , M , \nwhich is most costly for large M as square root and division \noperations are required. Although computing 1/r, is necessary \nfor a near source, it is needed only once. In the Taylor-series \nmethod, calculation of 1/r, is a must for each iteration as can \nbe seen in (7). Finally, no special procedure is required to \ndetect divergence."}, "S177": {"id": "pdf-473e344b1814e453-p8-b7", "page": 8, "quote": "Under the condition that the Taylor-series method is prop- \nerly converged, it is of interest to compare the accuracy of \nthe two techniques. The Taylor-series method assumes that \nthe linearization error is small. It has been illustrated in [17] \nthat the higher order terms are significant in determining \nthe solution in bad geometric dilution of precision (GDOP) \nsituations. Even through the noise power is relatively small, \nthere is no guarantee that the obtained solution is accurate. It is \nexpected that our method works better in cases where GDOP \nis poor. In fact, our method guarantees optimum performance \naround small TDOA noise region and thus is always be \nsuperior."}, "S178": {"id": "pdf-473e344b1814e453-p8-b8", "page": 8, "quote": "V. SIMULATION \nRESULTS"}, "S179": {"id": "pdf-473e344b1814e453-p8-b9", "page": 8, "quote": "Simulations are performed to corroborate the theoretical \ndevelopment and to compare the relative localization accuracy"}, "S180": {"id": "pdf-473e344b1814e453-p8-b10", "page": 8, "quote": "for different methods. For simplicity, we assume that the signal \nand noises in (1) are white random processes and that the SNR \nof all sensor inputs are identical. Consequently, the covariance \nmatrix Q is found from (3) to be \nfor diagonal elements and \n0.5 02 for all other elements, where gi is the TDOA variance. \nThe TDOA estimates are simulated by adding to the actual \nTDOA’s correlated Gaussian random noises with covariance \nmatrix given by Q."}, "S181": {"id": "pdf-473e344b1814e453-p8-b11", "page": 8, "quote": "Table I compares the localization accuracy of the SI, Taylor- \nseries and the new estimator for an arbitrary array with a \ndifferent number of sensors. The sensor positions are ( 2 1 = \n0,yi = O), (zz = -5,Yz = 8), (z3 = 4,y3 = 6),"}, "S182": {"id": "pdf-473e344b1814e453-p8-b12", "page": 8, "quote": "( 5 4 = -2,y4 = 4), (25 = 7,y5 = 3), (26 = -7,yfj = 5), \n(z7 = 2,y7 = 5), (zs = -4,y8 = a), (29 = 37y9 = 3) \nand (210 = l,y10 = 8). The source is at (zo = 8,y0 = 22). \nThe TDOA noise power is set to 0.001/c2 and the MSE = \nE[(z - \n+ (y - yo)’] are obtained from the average of \n100000 independent runs. The weighting matrices W and V \nin the SI method [8, eq. (12)] are both set to Q-l. The initial \nposition guess in the Taylor-series method is chosen to be \nthe true solution to allow for convergence. Simulations show \nthat at least three iterations are required for convergence. Two \nways are used to compute the solution in the new method. One \nuses (14b), (22b), and (24). The other first employs (14b) to \ndeduce an estimate of B and then uses (14a) to calculate the \nintermediate solution z,. The final result is obtained from (22a) \nfollowed by (24). The matrix GO, is replaced by G , and the \ntrue values in B’ is substituted by the values in z, in (22). The \ndifferences between the two results are small. This indicates \nthat in most cases, the simplified formulae (14b) and (22b) are \nsufficient. Among the three methods, SI performs worst and \nour solution method gives a slightly smaller MSE than the \nTaylor-series method. Note that the proposed method with the \nsimplified formulae still performs better than the SI method. \nAdditionally, the SI method cannot produce a position estimate \nfor the three sensor situation when the number of independent \nequations equals the number of unknowns. The error for SI is \nmost significant when there are four sensors. The theoretical \nMSE given by the sum of the diagonal elements of \nin (26), \nwhich is identical to the CRLB, is also computed. Notice that \nthere is a close match between the predicted and the simulated \nvalues and the validity of (26) is confirmed. This also confirms \nthat our estimator achieves the CRLB and that replacing the \ntrue values in B, GO, and B’ by their noisy versions does not \naffect the result much."}, "S183": {"id": "pdf-473e344b1814e453-p8-b13", "page": 8, "quote": "In the case of a linear array, the results are given in \nTable 11. Only the proposed and Taylor-series method are"}, "S184": {"id": "pdf-473e344b1814e453-p8-b14", "page": 8, "quote": "A: SI method. B: Taylor series method. C: proposed method, [ (14b). (22b), (24) 1. D: proposed method, 1 (14b), \n( l k ) , (22a), (24) 1. E: theoretical MSE of the new method = C U B ."}, "S185": {"id": "pdf-473e344b1814e453-p9-b0", "page": 9, "quote": "CHAN AND HO: A SIMPLE AND EFFICIENT ESTIMATOR FOR HYPERBOLIC LOCATION SYSTEM \n1913"}, "S186": {"id": "pdf-473e344b1814e453-p9-b1", "page": 9, "quote": "TABLE I1 \nCOMPARISON OF MSE FOR THE PROPOSED AND TAYLOR-SERIES \nMETHODS; \nLINEAR \nARRAY AND NEAR SOURCE"}, "S187": {"id": "pdf-473e344b1814e453-p9-b2", "page": 9, "quote": "MSE \nM = 3 \nM = 4 \nM = 5 \nM = 6 \nM = 7 \nM = 8 \nM = 9 \nM = 10"}, "S188": {"id": "pdf-473e344b1814e453-p9-b3", "page": 9, "quote": "B \n8.2574 \n1.2836 \n0.3566 \n0.1222 \n0.06155 \n0.02854 \n0.01746 \n0.009540 \nC \n8.2574 \n1.1131 \n0.3556 \n0.1225 \n0.06199 \n0.02884 \n0.01772 \n0.009726 \nD \n8.2574 \n1.1117 \n0.3545 \n0.1219 \n0.06148 \n0.02852 \n0.01746 \n0.009541 \nE \n7.2819 \n1.1OOO \n0.3548 \n0.1219 \n0.06123 \n0.02840 \n0.01750 \n0.009599"}, "S189": {"id": "pdf-473e344b1814e453-p9-b4", "page": 9, "quote": "compared because SI fails due to singularity problem. The \nsensor coordinates are (xi = -(i - I), y; = 0) when z is odd \nand (xi = i,yi = 0) when i is even, i = 1,2,...,10 . The \nsource position is the same as before. The TDOA variance is \nset to 0.0001/c2. The solution is computed by (28), (29). The \nlocalization MSE decreases as the number of sensor increases. \nAgain, the differences in the results by using the approximation \n9 = Q in (28) and the actual equations by first estimating 9 \nare small. The theoretical MSE, which is the same as CRLB, \nare also evaluated from (32). They are in close agreement with"}, "S190": {"id": "pdf-473e344b1814e453-p9-b5", "page": 9, "quote": "8 the simulated values. Again, the Taylor-series method gives \nalmost identical results as the new method."}, "S191": {"id": "pdf-473e344b1814e453-p9-b6", "page": 9, "quote": "When the source is far away at position (xo = -50,y0 = \n250), the MSE for random and linear arrays are given in Tables \nI11 and IV respectively. The sensor positions are the same \nas before and the TDOA noise power is 02 = 0.000Q1/c2 \nin both cases. Since the source range is large, the results \nobtained from the simplified and actual formulae are found \nto be identical. The source position cannot be estimated if \nthere are only three sensors due to large position variations. \nAs shown in Table 111, the proposed method performs much \nbetter than SI and slightly better than Taylor-series. Indeed, \nthe new method attains the CRLB for both the random and \nlinear array scenarios. In the case of a linear may, there are \nsome interesting observations. When M is small (4 or 5), the \nproposed method has significantly less MSE than the Taylor- \nseries method. The larger MSE in the Taylor-series method is \ndue to linearization errors. With a distant source, this error is \nsignificant when the array base line is small, which is the \nsituation when M is small. As M increases the base line \nalso increases, reducing the linearization errors. Consequently \ncomparable performance is observed. It must be emphasized \nthat the Taylor-series method has been given a most favorable \ninitial guess, namely, the true position. In practice, this is not \npossible and solution divergence may occur."}, "S192": {"id": "pdf-473e344b1814e453-p9-b7", "page": 9, "quote": "It has been shown in [lo] that DAC is an optimum estimator \naround small error region. The method was tested in an \narbitrary array in the same conditions as before. We found that \nDAC perform equally well with our method in the near-field \ncase. In the far-field situation, DAC gives an MSE in the order \nof lo6, even through the noise in the second case is smaller. \nThis is because DAC requires a stochastic approximation \nwhich is only valid when the transmitter position variance is \nsmall. It can be seen from (33) and the definition of Gt in \n(7) that transmitter position variance is roughly proportional \nto the squared range of the object. Hence a far-field emitter"}, "S193": {"id": "pdf-473e344b1814e453-p9-b8", "page": 9, "quote": "TABLE III \nCOMPARISON \nOF MSE FOR THE SI, TAYLOR-SERIES \nAND PROPOSED \nMETHODS; \nARBITRARY &Y \nAND DISTANT \nSOURCE"}, "S194": {"id": "pdf-473e344b1814e453-p9-b9", "page": 9, "quote": "MSE \nM = 4 M = 5 M = 6 M = 7 \nM = 8 M = 9 M = l O"}, "S195": {"id": "pdf-473e344b1814e453-p9-b10", "page": 9, "quote": "A \n101881 213.93 \n48.12 \n40.40 \n41.87 \n40.11 \n37.23 \nB \n346.86 \n147.57 \n44.38 \n38.64 \n38.63 \n36.55 \n33.80 \nC \n348.74 \n144.84 \n44.06 \n38.41 \n38.47 \n36.50 \n33.87 \nE \n328.82 \n143.94 \n44.06 \n38.54 \n38.53 \n36.47 \n33.73"}, "S196": {"id": "pdf-473e344b1814e453-p9-b11", "page": 9, "quote": "A. SI method. B: Taylor series method. C proposed method, {(14b), (226). \n(24)). E theoretical MSE of the new method = CRLB."}, "S197": {"id": "pdf-473e344b1814e453-p9-b12", "page": 9, "quote": "TABLE IV"}, "S198": {"id": "pdf-473e344b1814e453-p9-b13", "page": 9, "quote": "COMPARISON \nOF MSE FOR THE PROPOSED AND TAYLOR-SERIES"}, "S199": {"id": "pdf-473e344b1814e453-p9-b14", "page": 9, "quote": "METHODS; \nLINEAR \nARRAY AND DISTANT SOURCE"}, "S200": {"id": "pdf-473e344b1814e453-p9-b15", "page": 9, "quote": "MSE \nM = 4 M = 5 M = 6 M = 7 M = 8 M = 9 M = l O"}, "S201": {"id": "pdf-473e344b1814e453-p9-b16", "page": 9, "quote": "B \n1797.13 432.68 \n159.50 \n69.16 \n34.56 \n18.56 \n10.85 \nC \n1588.31 409.66 \n153.92 \n68.41 \n34.44 \n18.56 \n10.86 \nE \n1437.25 408.17 \n154.05 .68.06 \n34.25 \n18.57 \n10.90"}, "S202": {"id": "pdf-473e344b1814e453-p9-b17", "page": 9, "quote": "B: Taylor series method. C: proposed method, ((28) with @ = Q, (29)). E \ntheoretical MSE of the new method = CRLB."}, "S203": {"id": "pdf-473e344b1814e453-p9-b18", "page": 9, "quote": "requires an extremely low noise power to make the stochastic \napproximation valid. The result is that DAC has a low noise \nthreshold."}, "S204": {"id": "pdf-473e344b1814e453-p9-b19", "page": 9, "quote": "To give a comparison of the thresholding effect between \nDAC and our method, the MSE for a fixed array configuration \nis studied by varying the TDOA noise power. The previous \narbitrary array configuration is chosen with M = 9. The \nsource is located at (zo = -50,y0 = 250). The result \nis illustrated in Fig. 4. Both methods perform well at low \nnoise level. Thresholding effect occurs in DAC when 0; = \n0.000016. On the other hand, our method follows closely \nwith the C U B until 0; = 0.0001 (six times larger then \nthat in DAC). It is also interesting to see that although \ndeviation from CRLB starts at high noise level, the MSE \ndoes not jump to a large value as compared to DAC. It \nis mentioned in [18] that the Bhattachayya bound is tighter \nthan CRLB for nonlinear parameter estimation. Hence it is \nmore realistic to compare our estimator's performance with \nthe Bhattachayya bound at low SNR. It can be seen in Fig. 4 \nthat our method performs only a little worse than the second- \norder Bhattachayya bound (BHB2). This difference is probably \ndue to the fact that we have neglected second order error \nterms in our algorithm. It is expected that our estimator"}, "S205": {"id": "pdf-473e344b1814e453-p9-b21", "page": 9, "quote": "B: Taylor series method. C: proposed method, ((28) with q = Q, (29)). D: proposed method, ((28) with Q = Q, \n(28), (29)). E: theoretical MSE of the new method = CRLB."}, "S206": {"id": "pdf-473e344b1814e453-p10-b0", "page": 10, "quote": "IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 42, NO. 8. AUGUST 1994 \n1914"}, "S207": {"id": "pdf-473e344b1814e453-p10-b2", "page": 10, "quote": "c \n40 \nfn"}, "S208": {"id": "pdf-473e344b1814e453-p10-b5", "page": 10, "quote": "__ \nnew method \nDAC \n- \nCRLB \n- BHB2"}, "S209": {"id": "pdf-473e344b1814e453-p10-b8", "page": 10, "quote": "-26 \n-22 \n-18 \n-1 4 \n10 Iog(c0,J"}, "S210": {"id": "pdf-473e344b1814e453-p10-b9", "page": 10, "quote": "Fig. 4. Comparison of threshold effect between the new method and DAC."}, "S211": {"id": "pdf-473e344b1814e453-p10-b10", "page": 10, "quote": "will approach BHB2 if those second order error terms are \ntaken into account. Many simulations has been tried with \ndifferent array geometry and source locations (near-field and \nfar-field). They all verify that our estimator enters its large \nerror region at a smaller SNR than DAC and follows closely \nthe BHB2."}, "S212": {"id": "pdf-473e344b1814e453-p10-b11", "page": 10, "quote": "VI. CONCLUSION"}, "S213": {"id": "pdf-473e344b1814e453-p10-b12", "page": 10, "quote": "A new approach for localizing a source from a set of \nhyperbolic curves defined by TDOA measurements is pro- \nposed. By introducing an intermediate variable, the nonlinear \nequations relating TDOA estimates and source position can \nbe transformed into a set of equations which are linear \nin the unknown parameters and the intermediate variable. \nA LS then gives their solution. By exploiting the known \nrelation between the intermediate variable and the position \ncoordinates, a second weighted LS gives the final solution \nfor the position coordinates. The covariance matrix of the \nposition estimate was derived and found to meet the CRLB. \nThe estimator is asymptotically efficient for arbitrary or linear \narray configurations. Indeed, it is an approximation of the ML \nestimator for hyperbolic position fix when the TDOA error is \nsmall. In the case of a linear array, the solution reduces to \nthat of [4]. A comparison with other localization methods was \nconducted. The proposed method has the same simplicity as \nthe SI method but performs significantly better, particularly \nwhen the number of sensors is small. It has a higher noise \nthreshold than the DAC method and provides an explicit \nsolution form which is not available in existing optimum \nestimators. Finally, the new technique offers a computational \nadvantage over the Taylor-series technique and eliminates the \nconvergence problem."}, "S214": {"id": "pdf-473e344b1814e453-p10-b13", "page": 10, "quote": "In this paper, we have only considered TDOA estimation \nerror. In practical localization system, sensor position un- \ncertainty is often encountered [19]. If the variances of the \nuncertainties of individual sensors are known, it will not \nbe difficult to incorporate the reciprocal of the variances as \nweights in the weighted LS to give an ML estimator (see \ndiscussion after (32))."}, "S215": {"id": "pdf-473e344b1814e453-p10-b14", "page": 10, "quote": "APPENDIX"}, "S216": {"id": "pdf-473e344b1814e453-p10-b15", "page": 10, "quote": "Hahn and Tretter’s [2] estimator is an implementation \nof the ML estimator for a vector of TDOA known to be \nasymptotically Gaussian with covariance matrix given by Q. \nHence the conditional probability density function of d is"}, "S217": {"id": "pdf-473e344b1814e453-p10-b16", "page": 10, "quote": "x exp { -;,(d \n- :r)TQ-l(d \n- ir)} \n(Al)"}, "S218": {"id": "pdf-473e344b1814e453-p10-b17", "page": 10, "quote": "where r = [ ~ 2 , 1 , ~ 3 , 1 , . . . , ~ ~ , ~ ] ~ \nis a function of zP:The \ntransmitter position can be expressed as a nonlinear function \nof d, i.e., z = fi(d) and y = f2(d). Using Taylor-series \nexpansion of z and y around the true TDOA vector, it can \nbe verified that both the bias and variance of transmitter \nposition are proportional to the TDOA covariance matrix Q. \nIf variations in TDOA’s are small so that the bias square is \ninsignificant compared with the variance, the CRLB of zp is \ngiven by [14]"}, "S219": {"id": "pdf-473e344b1814e453-p10-b18", "page": 10, "quote": "The partial derivative of lnp(d I zP) with respect to zp is"}, "S220": {"id": "pdf-473e344b1814e453-p10-b19", "page": 10, "quote": "- \nd lnp(d I zP) = 1 drT Q-l (d - F ) . \n(A3) \ndZP \naz,"}, "S221": {"id": "pdf-473e344b1814e453-p10-b21", "page": 10, "quote": "where drT/dzp is found from the definition of r to be Gt."}, "S222": {"id": "pdf-473e344b1814e453-p10-b22", "page": 10, "quote": "ACKNOWLEDGMENT"}, "S223": {"id": "pdf-473e344b1814e453-p10-b23", "page": 10, "quote": "The authors thank the anonymous reviewers for their helpful \ncomments and suggestions."}, "S224": {"id": "pdf-473e344b1814e453-p10-b24", "page": 10, "quote": "REFERENCES"}, "S225": {"id": "pdf-473e344b1814e453-p10-b25", "page": 10, "quote": "[l] G. C. Carter, “Time delay estimation for passive sonar signal process-"}, "S226": {"id": "pdf-473e344b1814e453-p10-b26", "page": 10, "quote": "ing,’’ IEEE Trans. Acoust., Speech, Signal Processing, vol. ASSP-29, \npp. 463470, June 1981. \n[2] W. R. Hahn and S. A. Tretter, “Optimum processing for delay-vector"}, "S227": {"id": "pdf-473e344b1814e453-p10-b27", "page": 10, "quote": "estimation in passive signal arrays,” IEEE Trans. Inform. Theory, vol. \nIT-19, pp. 608-614, Sept. 1973. \n[3] W. R. Hahn, “Optimum signal processing for passive sonar range and"}, "S228": {"id": "pdf-473e344b1814e453-p10-b28", "page": 10, "quote": "bearing estimation,” J. Acoust. Soc. Am., vol. 58, pp. 201-207, July"}, "S229": {"id": "pdf-473e344b1814e453-p10-b29", "page": 10, "quote": "1975. \n[4] J. S. Abel and J. 0. Smith, “Source range and depth estimation from"}, "S230": {"id": "pdf-473e344b1814e453-p10-b30", "page": 10, "quote": "multipath range difference measurements,” IEEE Trans. Acoust., Speech, \nSignal Processing, vol. 37, pp. 1157-1 165, Aug. 1989. \n[5] B. T. Fang, “Simple solutions for hyperbolic and related position fixes,”"}, "S231": {"id": "pdf-473e344b1814e453-p10-b31", "page": 10, "quote": "IEEE Trans. Aerosp. Electron. Syst., vol. 26, pp. 748-753, Sept. 1990."}, "S232": {"id": "pdf-473e344b1814e453-p11-b0", "page": 11, "quote": "CHAN AND HO: A SIMPLE AND EFF’ICIENT ESTIMATOR FOR HYPERBOLIC LOCATION SYSTEM \n1915"}, "S233": {"id": "pdf-473e344b1814e453-p11-b1", "page": 11, "quote": "[6] B. Friedlander, “A passive localization algorithm and its accuracy"}, "S234": {"id": "pdf-473e344b1814e453-p11-b2", "page": 11, "quote": "analysis,” IEEE J . Ocean. Eng., vol. OE-12, pp. 234-245, Jan. 1987. \n[7] H. C. Schau and A. Z. Robinson, “Passive source localization em-"}, "S235": {"id": "pdf-473e344b1814e453-p11-b3", "page": 11, "quote": "ploying intersecting spherical surfaces from time-of-arrival differences,” \nIEEE Trans. Acoust., Speech, Signal Processing, vol. ASSP-35, pp."}, "S236": {"id": "pdf-473e344b1814e453-p11-b4", "page": 11, "quote": "1223-1225, Aug. 1987. \n[8] J. 0. Smith and J. S. Abel, “Closed-form least-squares source location"}, "S237": {"id": "pdf-473e344b1814e453-p11-b5", "page": 11, "quote": "estimation from range-difference measurements,” IEEE Trans. Acoust., \nSpeech, Signal Processing, vol. ASSP-35, pp. 1661-1669, Dec. 1987. \n[9] J. S. Abel and J. 0. Smith, “The spherical interpolation method for"}, "S238": {"id": "pdf-473e344b1814e453-p11-b6", "page": 11, "quote": "closed-form passive source localization using range difference measure- \nments,” in Proc. ICASSP-87 (Dallas, TX), pp. 471-474. \n[lo] J. S. Abel, “A divide and conquer approach to least-squares estimation,”"}, "S239": {"id": "pdf-473e344b1814e453-p11-b7", "page": 11, "quote": "IEEE Trans. Aerosp. Electron. Syst., vol. 26, pp. 423-427, Mar. 1990. \n[ 1 11 W. H. Foy, “Position-location solutions by Taylor-series estimation,”"}, "S240": {"id": "pdf-473e344b1814e453-p11-b8", "page": 11, "quote": "IEEE Trans. Aerosp. Electron. Syst., vol. AES-12, pp. 187-194, Mar."}, "S241": {"id": "pdf-473e344b1814e453-p11-b9", "page": 11, "quote": "1976. \n[12] D. J. Tonieri, “Statistical theory of passive location systems,” IEEE"}, "S242": {"id": "pdf-473e344b1814e453-p11-b10", "page": 11, "quote": "Trans. Aerosp. Electron. Syst., vol. AES-20, pp. 183-198, Mar. 1984. \n[13] C. H. Knapp and G. C. Carter, “The generalized correlation method"}, "S243": {"id": "pdf-473e344b1814e453-p11-b11", "page": 11, "quote": "for estimation of time delay,” IEEE Trans, Acoust.. Speech, Signal \nProcessing, vol. ASSP-24, pp. 32e327, Apr. 1976. \n[14] J. M. Mendel, Lessons in Digital Estimation Theory. Englewood Cliffs,"}, "S244": {"id": "pdf-473e344b1814e453-p11-b12", "page": 11, "quote": "NJ: Prentice-Hall, 1987. \n[15] G. C. Carter, “Variance.bounds for passively locating an acoustic source"}, "S245": {"id": "pdf-473e344b1814e453-p11-b13", "page": 11, "quote": "with a symmetric lirle array,” J. Acoust. Soc. Am., vol. 62, pp. 922-926, \nOct. 1977. \n[16] W. J. Bangs and P. M. Schultheiss, “Space-time processing for optimal"}, "S246": {"id": "pdf-473e344b1814e453-p11-b14", "page": 11, "quote": "parameter estimation,” in Signal Processing, J. W. R. Griffiths, P. L. \nStocklin, and C. Van Schooneveld, Eds. New York Academic, 1973,"}, "S247": {"id": "pdf-473e344b1814e453-p11-b15", "page": 11, "quote": "pp. 577-590."}, "S248": {"id": "pdf-473e344b1814e453-p11-b16", "page": 11, "quote": "[17] S. Bancroft, “An algebraic solution of the GPS equations,” IEEE Trans."}, "S249": {"id": "pdf-473e344b1814e453-p11-b17", "page": 11, "quote": "Aerosp. Electron. Syst., vol. AES-21, pp. 56-59, Jan. 1985. \n[18] H. L. Van Trees, Detection, Estimation and Modulation Theory, Part I."}, "S250": {"id": "pdf-473e344b1814e453-p11-b18", "page": 11, "quote": "New York Wiley, 1968. \n[19] G. C. Carter, “Passive ranging errors due to receiving hydrophone"}, "S251": {"id": "pdf-473e344b1814e453-p11-b19", "page": 11, "quote": "position uncertainty,” J. Acoust. Soc. Am., vol. 65, pp. 528-530, Feb."}, "S252": {"id": "pdf-473e344b1814e453-p11-b21", "page": 11, "quote": "Y. T. Chan (SM’80) was bom in Hong Kong. He \nreceived the B.Sc. and M.Sc. degrees from Queen’s \nUniversity, Kingston, Ontario, Canada, in 1963 and"}, "S253": {"id": "pdf-473e344b1814e453-p11-b22", "page": 11, "quote": "1967, and the Ph.D. degree from the University of \nNew Bmswick, Fredericton, Canada, in 1973, all \nin electrical engineering."}, "S254": {"id": "pdf-473e344b1814e453-p11-b23", "page": 11, "quote": "He has worked with Northem Telecom Ltd. and \nBell-Northem Research. Since 1973 he has been \nat the Royal Military College of Canada, where \nhe is presently a Professor. He has also spent two \nsabbatical terms at the Chinese University of Hong \nKong, during 1985-1986 and 1993. His research interests are in sonar signal \nprocessing and passive localization and tracking techniques. He has served as \na consultant on sonar systems."}, "S255": {"id": "pdf-473e344b1814e453-p11-b24", "page": 11, "quote": "Dr. Chan was an Associate Editor (1980-1982) of the IEEE TRANSACTIONS \nON SIGNAL \nPRWESSING \nand was the Technical Program Chairman of the \n1984 Intemational Conference on Acoustics, Speech, and Signal Processing \n(ICASSP-84). He directed a NATO Advanced Study Institute on Underwater \nAcoustic Data Processing in 1988 and was the General Chairman of ICASSP- \n91 held in Toronto, Canada."}, "S256": {"id": "pdf-473e344b1814e453-p11-b25", "page": 11, "quote": "K. C. Ho (S’89-M’91) was bom in Hong Kong. He \nreceived the B.Sc. degree with First Class Honours \nin electronics and the Ph.D. degree in electronic \nengineering from the Chinese University of Hong \nKong, in 1988 and 1991, respectively."}, "S257": {"id": "pdf-473e344b1814e453-p11-b26", "page": 11, "quote": "From August to November 1991, he was a Re- \nsearch Associate at the Chinese University of Hong \nKong. He is currently a Research Fellow in the \nDepartment of Electrical and Computer Engineer- \ning at the Royal Military College of Canada. His \nresearch interests are in digital signal processing, \ngeolocation, and developing efficient adaptive signal processing algorithms \nfor various applications including time delay estimation, noise cancelation, \nand system idenhfication."}, "S258": {"id": "pdf-473e344b1814e453-p11-b27", "page": 11, "quote": "Dr. Ho was the recipient of the Croucher Foundation Studentship from \n1988 to 1991."}}, "nodes": [{"id": "problem-def", "title": "问题定义与现有方法的局限", "concepts": ["concept-9a990bb86d44abbb", "concept-6be8148cccc8a7dd"]}, {"id": "model-formulation", "title": "数学建模与噪声统计特性", "concepts": ["concept-e3f1e953ec8ce0b5"]}, {"id": "linearization-transform", "title": "方程线性化变换机制", "concepts": ["concept-5065db45e0c0e40f"]}, {"id": "step1-estimator", "title": "第一步：无约束加权最小二乘估计", "concepts": ["concept-630d317fb340bff0", "concept-d0c771c6dba3aef5"]}, {"id": "constraint-exploitation", "title": "第二步：几何约束强化", "concepts": ["concept-d4149720e42aee2c", "concept-af756ac3830a63b0"]}, {"id": "covariance-derivation", "title": "方差分析与 CRLB 对比", "concepts": ["concept-24a6cd90586b093a", "concept-0dadd288194b58db"]}, {"id": "special-case-linear", "title": "特殊情况：线性阵列几何中的奇异性处理", "concepts": ["concept-0b33124a677620e0", "concept-54097ff1f2aecb88"]}, {"id": "sim-validation-near", "title": "仿真验证：近场源定位性能对比", "concepts": ["concept-df4a1a095f136f3a", "concept-3b0dc71e718672f0"]}, {"id": "sim-validation-far", "title": "仿真验证：远场源性能与阈值效应", "concepts": ["concept-0a2d9f8117c000b1", "concept-90dee8e705d5f5d5"]}, {"id": "computational-complexity", "title": "计算复杂度与显式解优势", "concepts": ["concept-24a6cd90586b093a", "concept-43ecf72f3b1419bd"]}], "concepts": {"concept-9a990bb86d44abbb": {"id": "concept-9a990bb86d44abbb", "title": "到达时间差 (TDOA)", "layer": "Signal Measurement", "lead": "定位系统的核心观测值", "text": "信号到达不同传感器的时间差异。通过广义互相关等方法估计，用于构建描述源位置的双曲线方程。", "why": "TDOA 是将几何距离差转化为可测量时间的关键，其估计误差直接影响定位精度。", "source_ids": ["pdf-473e344b1814e453-p1-b6", "pdf-473e344b1814e453-p2-b1"], "next": null, "domain": "Signal Processing / Passive Localization", "document_id": "pdf-473e344b1814e453", "node_id": "problem-def"}, "concept-6be8148cccc8a7dd": {"id": "concept-6be8148cccc8a7dd", "title": "克拉美 - 罗下界 (CRLB)", "layer": "Statistical Bound", "lead": "无偏估计量的方差下限", "text": "理论上任何无偏估计器所能达到的最小方差。本文提出的方法在 small error region（小误差区域）被证明能逼近此下界。", "why": "作为评估定位算法性能的理论基准，用于判断算法是否达到了统计最优。", "source_ids": ["pdf-473e344b1814e453-p1-b4", "pdf-473e344b1814e453-p1-b7"], "next": null, "domain": "Signal Processing / Passive Localization", "document_id": "pdf-473e344b1814e453", "node_id": "problem-def"}, "concept-e3f1e953ec8ce0b5": {"id": "concept-e3f1e953ec8ce0b5", "title": "协方差矩阵 Q", "layer": "Statistical Model", "lead": "描述 TDOA 测量误差的相关性与方差", "text": "一个 (M-1)×(M-1) 的矩阵，描述了相对于参考传感器的 TDOA 估计误差的统计特性。它取决于信号功率谱 S(w) 和噪声功率谱 N(w)。", "why": "在加权最小二乘（WLS）求解中，Q 矩阵用于给不同精度的测量值分配权重，是实现最优估计的关键。", "source_ids": ["pdf-473e344b1814e453-p2-b2", "pdf-473e344b1814e453-p2-b3", "pdf-473e344b1814e453-p2-b4"], "next": null, "domain": "Signal Processing / Passive Localization", "document_id": "pdf-473e344b1814e453", "node_id": "model-formulation"}, "concept-5065db45e0c0e40f": {"id": "concept-5065db45e0c0e40f", "title": "中间变量 r1", "layer": "Algebraic Transformation", "lead": "线性化过程中的关键辅助变量", "text": "指源到参考传感器（通常为传感器 1）的真实距离。在变换后的线性方程组中，它被视为一个独立的未知数参与求解，最后在第二步中通过几何约束还原其物理意义。", "why": "引入 r1 是将非线性问题转化为线性问题的桥梁，使得可以直接使用线性代数工具求解，而无需迭代。", "source_ids": ["pdf-473e344b1814e453-p3-b4", "pdf-473e344b1814e453-p3-b9"], "next": null, "domain": "Signal Processing / Passive Localization", "document_id": "pdf-473e344b1814e453", "node_id": "linearization-transform"}, "concept-630d317fb340bff0": {"id": "concept-630d317fb340bff0", "title": "TDOA 噪声模型", "layer": "信号处理基础", "lead": "到达时间差测量中的随机误差建模", "text": "文中假设 TDOA 测量误差在高信噪比下服从渐近正态分布，其协方差结构影响加权最小二乘的权重矩阵设计（R00017）。", "why": "理解噪声统计特性是构建最优估计器的基础，直接影响协方差矩阵 Ψ 的形式。", "source_ids": ["pdf-473e344b1814e453-p3-b18"], "next": null, "domain": "Signal Processing / Passive Localization", "document_id": "pdf-473e344b1814e453", "node_id": "step1-estimator"}, "concept-d0c771c6dba3aef5": {"id": "concept-d0c771c6dba3aef5", "title": "广义最小二乘法", "layer": "参数估计理论", "lead": "处理异方差或相关误差的线性回归方法", "text": "当误差项不满足独立同分布时，GLS 通过引入逆协方差矩阵作为权重，使估计量达到最小方差无偏（R00022）。", "why": "本文第一步的核心数学工具，用于在非理想噪声条件下获得更优的初始解。", "source_ids": ["pdf-473e344b1814e453-p3-b23"], "next": null, "domain": "Signal Processing / Passive Localization", "document_id": "pdf-473e344b1814e453", "node_id": "step1-estimator"}, "concept-d4149720e42aee2c": {"id": "concept-d4149720e42aee2c", "title": "扰动分析", "layer": "误差传播理论", "lead": "通过线性化研究输入误差对输出估计的影响", "text": "文中对第一步的估计误差进行一阶泰勒展开，忽略二次及以上项，从而推导第二步误差的统计特性（R00044-R00046）。", "why": "这是连接两步估计误差协方差的关键数学手段，确保第二步权重矩阵的正确性。", "source_ids": ["pdf-473e344b1814e453-p4-b18", "pdf-473e344b1814e453-p4-b20"], "next": null, "domain": "Signal Processing / Passive Localization", "document_id": "pdf-473e344b1814e453", "node_id": "constraint-exploitation"}, "concept-af756ac3830a63b0": {"id": "concept-af756ac3830a63b0", "title": "最大似然近似", "layer": "统计推断", "lead": "通过分步优化逼近全局最优解", "text": "作者明确指出两步法是对真实 ML 估计器的近似，因完全联合优化难以解析求解（R00046）。", "why": "阐明方法本质，避免误认为其为精确最优解。", "source_ids": ["pdf-473e344b1814e453-p4-b20"], "next": null, "domain": "Signal Processing / Passive Localization", "document_id": "pdf-473e344b1814e453", "node_id": "constraint-exploitation"}, "concept-24a6cd90586b093a": {"id": "concept-24a6cd90586b093a", "title": "克拉美 - 罗下界 (CRLB)", "layer": "统计估计理论", "lead": "衡量无偏估计量方差下限的理论基准", "text": "克拉美 - 罗下界（Cramer-Rao Lower Bound, CRLB）是统计学中用于评估参数估计精度的理论极限。任何无偏估计量的方差都不可能低于 CRLB。若一个估计器的方差达到 CRLB，则称其为有效估计量（efficient estimator）。", "why": "文中多次提到所提方法在小误差区域能达到 CRLB，表明其在理论上具有最优的估计精度，这是评价该算法性能优越性的核心指标。", "source_ids": ["pdf-473e344b1814e453-p1-b4", "pdf-473e344b1814e453-p1-b7", "pdf-473e344b1814e453-p8-b12", "pdf-473e344b1814e453-p10-b12"], "next": null, "domain": "Signal Processing / Passive Localization", "document_id": "pdf-473e344b1814e453", "node_id": "computational-complexity"}, "concept-0dadd288194b58db": {"id": "concept-0dadd288194b58db", "title": "统计有效性", "layer": "参数估计评价", "lead": "估计器方差达到 CRLB 的性质", "text": "文中证明在小误差条件下，所提估计器的协方差矩阵与 CRLB 一致，故在该区域具有统计有效性（R00088, R00093）。", "why": "表明该方法在理想条件下是最优的，为其“高效”标题提供理论支撑。", "source_ids": ["pdf-473e344b1814e453-p5-b31", "pdf-473e344b1814e453-p6-b3"], "next": null, "domain": "Signal Processing / Passive Localization", "document_id": "pdf-473e344b1814e453", "node_id": "covariance-derivation"}, "concept-0b33124a677620e0": {"id": "concept-0b33124a677620e0", "title": "矩阵奇异性 (Matrix Singularity)", "layer": "Linear Algebra / Geometry", "lead": "在线性阵列中，传感器位置共线导致几何矩阵秩亏。", "text": "当所有传感器位于同一直线上时，描述位置关系的矩阵行列式为零，不可逆。这会导致最小二乘解无法唯一确定或数值不稳定。", "why": "理解为何通用公式在线性阵列下失效，以及为何需要专门的代数变换。", "source_ids": ["pdf-473e344b1814e453-p5-b2"], "next": null, "domain": "Signal Processing / Passive Localization", "document_id": "pdf-473e344b1814e453", "node_id": "special-case-linear"}, "concept-54097ff1f2aecb88": {"id": "concept-54097ff1f2aecb88", "title": "闭式解 (Closed-Form Solution)", "layer": "Estimation Theory", "lead": "无需迭代即可直接通过公式计算出的解析解。", "text": "本文在线性阵列情况下导出的解是显式的（explicit），不需要像泰勒级数法那样进行迭代搜索，避免了收敛性问题。", "why": "强调该方法相对于迭代算法在计算稳定性和速度上的优势。", "source_ids": ["pdf-473e344b1814e453-p5-b9", "pdf-473e344b1814e453-p6-b22"], "next": null, "domain": "Signal Processing / Passive Localization", "document_id": "pdf-473e344b1814e453", "node_id": "special-case-linear"}, "concept-df4a1a095f136f3a": {"id": "concept-df4a1a095f136f3a", "title": "蒙特卡洛仿真 (Monte Carlo Simulation)", "layer": "Statistical Method", "lead": "通过大量重复实验统计评估算法性能的方法。", "text": "文中进行了 100,000 次独立运行，每次添加不同的高斯噪声，计算平均 MSE 以消除随机波动，从而可靠地评估估计器的准确性。", "why": "解释数据来源的可靠性及 MSE 指标的计算方式。", "source_ids": ["pdf-473e344b1814e453-p8-b12"], "next": null, "domain": "Signal Processing / Passive Localization", "document_id": "pdf-473e344b1814e453", "node_id": "sim-validation-near"}, "concept-3b0dc71e718672f0": {"id": "concept-3b0dc71e718672f0", "title": "达到 CRLB (CRLB Attainment)", "layer": "Estimation Theory", "lead": "估计量的方差达到了理论下限，表示其为有效估计量。", "text": "仿真结果显示本文方法的 MSE 与理论计算的 CRLB（表中标记为 E）非常接近，证明该估计量在小误差区域是渐进有效的。", "why": "确认算法在统计学意义上的最优性。", "source_ids": ["pdf-473e344b1814e453-p8-b12", "pdf-473e344b1814e453-p9-b4"], "next": null, "domain": "Signal Processing / Passive Localization", "document_id": "pdf-473e344b1814e453", "node_id": "sim-validation-near"}, "concept-0a2d9f8117c000b1": {"id": "concept-0a2d9f8117c000b1", "title": "阈值效应 (Threshold Effect)", "layer": "Signal Processing", "lead": "当噪声超过某一临界值时，估计器性能突然急剧恶化的现象。", "text": "DAC 方法由于依赖随机近似，仅在发射机位置方差较小时有效。远场源导致位置方差大，因此需要极低的噪声功率才能工作，否则会出现阈值效应。本文方法无此限制。", "why": "解释为何 DAC 方法在远场或高噪声下失效，而本文方法更稳健。", "source_ids": ["pdf-473e344b1814e453-p9-b7", "pdf-473e344b1814e453-p9-b19"], "next": null, "domain": "Signal Processing / Passive Localization", "document_id": "pdf-473e344b1814e453", "node_id": "sim-validation-far"}, "concept-90dee8e705d5f5d5": {"id": "concept-90dee8e705d5f5d5", "title": "Bhattacharyya 界 (Bhattacharyya Bound)", "layer": "Estimation Theory", "lead": "比 CRLB 更紧的理论下界，适用于非线性参数估计和低信噪比情况。", "text": "在低 SNR 下，CRLB 可能过于乐观。Bhattacharyya 界考虑了高阶项，提供了更现实的性能极限。本文方法在低 SNR 下接近 BHB2，表明其接近理论极限。", "why": "提供评估低信噪比下算法性能的更准确基准。", "source_ids": ["pdf-473e344b1814e453-p9-b19", "pdf-473e344b1814e453-p10-b10"], "next": null, "domain": "Signal Processing / Passive Localization", "document_id": "pdf-473e344b1814e453", "node_id": "sim-validation-far"}, "concept-43ecf72f3b1419bd": {"id": "concept-43ecf72f3b1419bd", "title": "显式闭式解 (Closed-Form Solution)", "layer": "数值计算方法", "lead": "无需迭代即可直接计算的解析表达式", "text": "闭式解是指可以通过有限次标准数学运算（如加减乘除、开方等）直接得出的解，而不需要借助数值迭代或近似算法。在定位问题中，拥有闭式解意味着可以直接从测量数据计算出目标位置，避免了迭代初值选择和收敛性判断的复杂性。", "why": "本文方法的核心优势之一就是提供了闭式解，这使得它在计算效率和稳定性上优于需要迭代的泰勒级数法，也优于某些无法处理冗余测量的早期闭式解方法。", "source_ids": ["pdf-473e344b1814e453-p1-b4", "pdf-473e344b1814e453-p1-b7", "pdf-473e344b1814e453-p1-b12", "pdf-473e344b1814e453-p1-b13", "pdf-473e344b1814e453-p10-b12"], "next": null, "domain": "Signal Processing / Passive Localization", "document_id": "pdf-473e344b1814e453", "node_id": "computational-complexity"}}}};/* Trusted host bridge. Authors only access read-only evidence and local DOM. */
+(()=>{
+ const C=PM_CONFIG;
+ const deepFreeze=o=>{if(o&&typeof o==='object'){Object.values(o).forEach(deepFreeze);Object.freeze(o);}return o;};
+ Object.defineProperty(window,'paperMindData',{value:deepFreeze(C.data),writable:false,configurable:false});
+ const nodes=new Set(C.data.nodes.map(n=>n.id)),concepts=new Set(C.data.nodes.flatMap(n=>n.concepts));
+ let initialized=false,height=0,scheduled=false;
+ function emit(type,payload={}){if(parent!==window)parent.postMessage({type,edition:C.edition,document:C.document,channel:C.channel,...payload},'*');}
+ function measure(){if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;const h=Math.ceil(document.documentElement.scrollHeight);if(h!==height){height=h;emit('resize',{height:h});}});}
+ function source(id){const s=C.data.sources[id];if(!s)return;if(parent!==window){emit('cite',{id:s.id});return;}document.getElementById('pm-local-source')?.remove();const box=document.createElement('aside');box.id='pm-local-source';box.setAttribute('role','dialog');box.setAttribute('aria-label','原文出处');const title=document.createElement('strong');title.textContent='原文 · 第 '+s.page+' 页';const quote=document.createElement('blockquote');quote.textContent=s.quote;const close=document.createElement('button');close.textContent='返回讲解';close.addEventListener('click',()=>box.remove());box.append(title,quote,close);document.body.append(box);close.focus();}
+ function nodeOf(el){return el.closest('[data-node]')?.dataset.node||C.data.nodes[0]?.id;}
+ function readingTools(){for(const b of document.querySelectorAll('button[data-source]')){const s=C.data.sources[b.dataset.source];if(s)b.textContent='原文 · p.'+s.page;}if(parent===window){for(const b of document.querySelectorAll('[data-ask],[data-concept],[data-undo]'))b.hidden=true;return;}for(const n of C.data.nodes){const anchor=document.getElementById(n.id);if(!anchor||anchor.querySelector('button[data-ask]'))continue;const tools=document.createElement('div');tools.className='pm-reading-tools';tools.dataset.node=n.id;const ask=document.createElement('button');ask.dataset.ask='请解释'+n.title+'的原理、推导与成立条件';ask.textContent='沿着这里继续问';tools.append(ask);for(const id of n.concepts||[]){const b=document.createElement('button');b.dataset.concept=id;b.textContent=C.data.concepts?.[id]?.title||'查阅相关概念';tools.append(b);}anchor.append(tools);}}
+ document.addEventListener('click',event=>{
+  const button=event.target.closest('button,a');if(!button)return;
+  if(button.dataset.source){event.preventDefault();source(button.dataset.source);}
+  else if(button.dataset.concept&&concepts.has(button.dataset.concept))emit('concept',{id:button.dataset.concept,node:nodeOf(button)});
+  else if(button.dataset.ask&&event.isTrusted)emit('ask',{text:button.dataset.ask.slice(0,2000),node:nodeOf(button)});
+  else if(button.dataset.undo&&event.isTrusted)emit('undo',{id:button.dataset.undo});
+  else if(button.matches('a[href^="#"]')){event.preventDefault();const el=document.getElementById(button.getAttribute('href').slice(1));if(el){if(parent===window)el.scrollIntoView();else emit('scroll',{top:el.getBoundingClientRect().top+scrollY});}}
+ });
+ document.addEventListener('mouseup',()=>{const text=window.getSelection()?.toString().trim();if(text&&text.length>=4&&text.length<=2000)emit('selection',{text,node:nodeOf(window.getSelection()?.anchorNode?.parentElement||document.body)});});
+ function supplements(items){document.querySelectorAll('.pm-user-note').forEach(n=>n.remove());for(const item of items){if(!nodes.has(item.node_id))continue;const anchor=document.getElementById(item.node_id);if(!anchor)continue;const note=document.createElement('aside');note.className='pm-user-note';note.dataset.node=item.node_id;const h=document.createElement('h4');h.textContent='我的讲解补充';const p=document.createElement('p');p.textContent=item.text;note.append(h,p);for(const id of item.source_ids||[]){const alias=Object.keys(C.data.sources).find(k=>C.data.sources[k].id===id);if(alias){const b=document.createElement('button');b.dataset.source=alias;b.textContent='原文 · p.'+C.data.sources[alias].page;note.append(b);}}if(item.can_undo){const b=document.createElement('button');b.dataset.undo=item.id;b.textContent='撤回补充';note.append(b);}anchor.append(note);}measure();}
+ window.addEventListener('message',event=>{const d=event.data;if(event.source!==parent||!d||d.channel!==C.channel)return;
+  if(d.type==='navigate'&&nodes.has(d.node)){const el=document.getElementById(d.node);if(el){for(let p=el.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;emit('scroll',{top:el.getBoundingClientRect().top+scrollY});}}
+  if(d.type==='viewport'&&Number.isFinite(d.top)){let chosen=C.data.nodes[0]?.id;for(const n of C.data.nodes){const el=document.getElementById(n.id);if(el&&el.getBoundingClientRect().top+scrollY<=d.top+160)chosen=n.id;}if(chosen)emit('active',{node:chosen});}
+  if(d.type==='supplements'&&Array.isArray(d.items))supplements(d.items.slice(0,100));
+ });
+ window.addEventListener('pm-initialized',()=>{readingTools();initialized=true;document.body.dataset.pmReady='true';emit('ready');measure();});
+ window.addEventListener('error',event=>{document.body.dataset.pmError=String(event.message);emit('error',{message:String(event.message).slice(0,300)});});
+ new ResizeObserver(measure).observe(document.body);measure();
+})();
+</script><script nonce="8aQDWUZyvm_dJuFBW6MhlY6mjcvtZxJT">try{(()=>{const root=document.getElementById("chapter-chap-problem");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("chap-problem--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  const scope = document.currentScript.closest('.chapter-scope');
+  if (!scope) return;
+
+  // Data Source: Table I (Arbitrary Array, Near Source)
+  // Values parsed from runtime_data.tables where id='p8-Table_1'
+  const tableData = {
+    "4": { "A": 1.5768, "B": 0.7061, "C": 0.7282, "E": 0.6884 },
+    "5": { "A": 0.1597, "B": 0.1460, "C": 0.1456, "E": 0.1451 },
+    "6": { "A": 0.1480, "B": 0.1341, "C": 0.1359, "E": 0.1334 },
+    "7": { "A": 0.1229, "B": 0.1144, "C": 0.1159, "E": 0.1143 },
+    "8": { "A": 0.1164, "B": 0.1057, "C": 0.1077, "E": 0.1054 },
+    "9": { "A": 0.1148, "B": 0.1034, "C": 0.1055, "E": 0.1032 },
+    "10": { "A": 0.1103, "B": 0.09462, "C": 0.09697, "E": 0.09432 }
+  };
+
+  const chartContainer = scope.querySelector('#chap-problem--mse-chart');
+  const selectEl = scope.querySelector('#chap-problem--sensor-select');
+  const readoutEl = scope.querySelector('#chap-problem--data-readout');
+  const resetBtn = scope.querySelector('#chap-problem--reset-chart');
+
+  // Colors matching CSS variables
+  const colors = {
+    "A": "var(--si-color)",
+    "B": "var(--taylor-color)",
+    "C": "var(--proposed-color)",
+    "E": "var(--crlb-color)"
+  };
+
+  const labels = {
+    "A": "SI",
+    "B": "Taylor",
+    "C": "Proposed",
+    "E": "CRLB"
+  };
+
+  function renderChart(mCount) {
+    chartContainer.innerHTML = '';
+    const data = tableData[mCount];
+    if (!data) return;
+
+    // Find max for scaling (SI at M=4 is huge outlier, cap for visual clarity or use log? 
+    // Paper text says SI performs worst. Let's use linear scale but note the outlier.
+    // Max value in this set is 1.5768. 
+    const maxVal = Math.max(...Object.values(data)) * 1.1;
+
+    Object.keys(data).forEach(key => {
+      const val = data[key];
+      const heightPct = (val / maxVal) * 100;
+      
+      const group = document.createElement('div');
+      group.className = 'bar-group';
+      
+      const bar = document.createElement('div');
+      bar.className = 'bar';
+      bar.style.height = `${heightPct * 1.8}px`;
+      bar.style.backgroundColor = colors[key];
+      if (key === 'E') {
+        bar.style.background = 'transparent';
+        bar.style.borderTop = `3px dashed ${colors[key]}`;
+        bar.style.height = `${Math.max(heightPct, 5) * 1.8}px`; // Ensure visible
+      }
+      bar.setAttribute('data-val', val.toFixed(4));
+      
+      const label = document.createElement('div');
+      label.className = 'bar-label';
+      label.textContent = labels[key];
+      
+      group.appendChild(bar);
+      group.appendChild(label);
+      chartContainer.appendChild(group);
+    });
+
+    readoutEl.textContent = `M=${mCount}: SI=${data.A.toFixed(4)}, Taylor=${data.B.toFixed(4)}, Proposed=${data.C.toFixed(4)}`;
+  }
+
+  function init() {
+    renderChart(selectEl.value);
+  }
+
+  selectEl.addEventListener('change', (e) => {
+    renderChart(e.target.value);
+  });
+
+  resetBtn.addEventListener('click', () => {
+    selectEl.value = "4";
+    renderChart("4");
+  });
+
+  init();
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-chap-model");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("chap-model--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  const scope = document.currentScript.closest('.chapter-container') || document;
+  
+  // Elements
+  const btnNoise = scope.querySelector('#chap-model--btn-noise');
+  const btnGeometry = scope.querySelector('#chap-model--btn-geometry');
+  const modal = scope.querySelector('#chap-model--noise-modal');
+  const closeBtn = modal.querySelector('.close-btn');
+  const expansionText = scope.querySelector('#chap-model--expansion-text');
+  const noiseStatus = scope.querySelector('#chap-model--noise-status');
+  
+  // State
+  let isModalOpen = false;
+  
+  // Functions
+  function openModal() {
+    if (!modal) return;
+    modal.setAttribute('aria-hidden', 'false');
+    isModalOpen = true;
+    // Focus trap could be added here for full a11y
+    closeBtn.focus();
+  }
+  
+  function closeModal() {
+    if (!modal) return;
+    modal.setAttribute('aria-hidden', 'true');
+    isModalOpen = false;
+    if (btnNoise) btnNoise.focus();
+  }
+  
+  function toggleEquationExpansion() {
+    if (!expansionText) return;
+    const isExpanded = expansionText.style.opacity === '0';
+    expansionText.style.transition = 'opacity 0.3s';
+    expansionText.style.opacity = isExpanded ? '1' : '0';
+    expansionText.textContent = isExpanded ? '= K_i - 2x_i x - 2y_i y + x^2 + y^2' : '';
+  }
+  
+  // Event Listeners
+  if (btnNoise) {
+    btnNoise.addEventListener('click', function(e) {
+      e.preventDefault();
+      openModal();
+      // In a real environment, this would trigger the source viewer via data-source
+      console.log('Source request:', this.getAttribute('data-source'));
+    });
+  }
+  
+  if (btnGeometry) {
+    btnGeometry.addEventListener('click', function(e) {
+      e.preventDefault();
+      toggleEquationExpansion();
+      console.log('Source request:', this.getAttribute('data-source'));
+    });
+  }
+  
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeModal);
+  }
+  
+  // Close modal on outside click
+  if (modal) {
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+  }
+  
+  // Keyboard accessibility
+  document.addEventListener('keydown', function(e) {
+    if (isModalOpen && e.key === 'Escape') {
+      closeModal();
+    }
+  });
+  
+  // Initialize
+  if (expansionText) {
+    expansionText.style.opacity = '1';
+  }
+  
+  // Concept button handler (delegated)
+  scope.addEventListener('click', function(e) {
+    const conceptBtn = e.target.closest('[data-concept]');
+    if (conceptBtn) {
+      const conceptId = conceptBtn.getAttribute('data-concept');
+      console.log('Concept request:', conceptId);
+      // In real env, this would open concept viewer
+    }
+  });
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-chap-transform");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("chap-transform--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+  const stepper = document.getElementById('chap-transform--stepper-transform');
+  if (!stepper) return;
+  const buttons = stepper.querySelectorAll('.step-btn');
+  const contents = stepper.querySelectorAll('.step-content');
+  
+  function showStep(index) {
+    buttons.forEach((btn, i) => {
+      btn.classList.toggle('active', i === index);
+    });
+    contents.forEach((content, i) => {
+      content.classList.toggle('active', i === index);
+    });
+  }
+  
+  buttons.forEach((btn, i) => {
+    btn.addEventListener('click', () => showStep(i));
+  });
+  showStep(0);
+  
+  const tableBody = document.querySelector('#chap-transform--table-mse-near tbody');
+  if (tableBody && window.paperMindData && window.paperMindData.tables) {
+    const tableData = window.paperMindData.tables.find(t => t.id === 'p8-Table_1');
+    if (tableData && tableData.rows) {
+      tableData.rows.forEach(row => {
+        const tr = document.createElement('tr');
+        const labelCell = document.createElement('td');
+        labelCell.textContent = row.label;
+        tr.appendChild(labelCell);
+        const cols = ['M = 3', 'M = 4', 'M = 5', 'M = 6', 'M = 7', 'M = 8', 'M = 9', 'M = 10'];
+        cols.forEach(col => {
+          const td = document.createElement('td');
+          const val = row.values[col];
+          td.textContent = val !== null && val !== undefined ? val : '-';
+          if (row.label === 'E') {
+            td.style.fontWeight = 'bold';
+            td.style.color = '#e67e22';
+          }
+          tr.appendChild(td);
+        });
+        tableBody.appendChild(tr);
+      });
+    }
+  }
+  
+  const sourceButtons = document.querySelectorAll('button[data-source]');
+  sourceButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const sourceId = btn.getAttribute('data-source');
+      if (window.paperMindData && window.paperMindData.sources && window.paperMindData.sources[sourceId]) {
+        const source = window.paperMindData.sources[sourceId];
+        const msg = `来源 ID: ${sourceId}\n页码：${source.page}\n原文：${source.quote}`;
+        alert(msg);
+      }
+    });
+  });
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-chap-special");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("chap-special--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+
+  // 状态管理
+  const state = {
+    isLinear: false,
+    sensors: [],
+    a: 0, // 线性斜率
+    b: 0  // 线性截距
+  };
+
+  // 初始化传感器位置
+  function initSensors() {
+    // 任意分布示例
+    state.sensors = [
+      {x: 0, y: 0},
+      {x: -5, y: 8},
+      {x: 4, y: 6},
+      {x: -2, y: 4},
+      {x: 7, y: 3}
+    ];
+    state.isLinear = false;
+    state.a = 0;
+    state.b = 0;
+  }
+
+  // 切换为线性排列
+  function setLinearArray() {
+    // 线性排列示例：y = 0 (x 轴)
+    state.sensors = [
+      {x: 0, y: 0},
+      {x: -5, y: 0},
+      {x: 4, y: 0},
+      {x: -2, y: 0},
+      {x: 7, y: 0}
+    ];
+    state.isLinear = true;
+    state.a = 0;
+    state.b = 0;
+  }
+
+  // 绘制几何图形
+  function drawGeometry() {
+    const canvas = document.getElementById('chap-special--geo-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width;
+    const h = canvas.height;
+
+    // 清空画布
+    ctx.clearRect(0, 0, w, h);
+
+    // 设置坐标系变换
+    const padding = 40;
+    const scaleX = (w - 2 * padding) / 20; // 假设 x 范围 -10 到 10
+    const scaleY = (h - 2 * padding) / 20; // 假设 y 范围 -10 到 10
+    const originX = padding;
+    const originY = h - padding;
+
+    // 绘制坐标轴
+    ctx.strokeStyle = '#ccc';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(originX, originY);
+    ctx.lineTo(w - padding, originY);
+    ctx.moveTo(originX, originY);
+    ctx.lineTo(originX, padding);
+    ctx.stroke();
+
+    // 绘制传感器
+    ctx.fillStyle = '#2c3e50';
+    state.sensors.forEach((s, i) => {
+      const sx = originX + s.x * scaleX;
+      const sy = originY - s.y * scaleY;
+      ctx.beginPath();
+      ctx.arc(sx, sy, 6, 0, Math.PI * 2);
+      ctx.fill();
+      // 标注编号
+      ctx.fillStyle = '#666';
+      ctx.font = '12px sans-serif';
+      ctx.fillText(`S${i+1}`, sx + 10, sy - 10);
+      ctx.fillStyle = '#2c3e50';
+    });
+
+    // 如果是线性排列，绘制连线
+    if (state.isLinear) {
+      ctx.strokeStyle = '#e74c3c';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([5, 5]);
+      ctx.beginPath();
+      const first = state.sensors[0];
+      const last = state.sensors[state.sensors.length - 1];
+      ctx.moveTo(originX + first.x * scaleX, originY - first.y * scaleY);
+      ctx.lineTo(originX + last.x * scaleX, originY - last.y * scaleY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+  }
+
+  // 渲染表格数据
+  function renderTable() {
+    const tbody = document.getElementById('chap-special--mse-table-body');
+    if (!tbody) return;
+
+    const tables = window.paperMindData?.tables || [];
+    const tableData = tables.find(t => t.id === 'p9-TABLE_II');
+
+    if (!tableData) {
+      tbody.innerHTML = '<tr><td colspan="9">数据加载失败</td></tr>';
+      return;
+    }
+
+    let html = '';
+    tableData.rows.forEach(row => {
+      html += `<tr>`;
+      html += `<td><strong>${row.label}</strong></td>`;
+      for (let m = 3; m <= 10; m++) {
+        const val = row.values[`M = ${m}`];
+        // 处理 null 或 非数字
+        const displayVal = (val === null || val === undefined) ? '-' : val;
+        html += `<td>${displayVal}</td>`;
+      }
+      html += `</tr>`;
+    });
+    tbody.innerHTML = html;
+  }
+
+  // 二次方程求解器
+  function solveQuadratic() {
+    const aInput = document.getElementById('chap-special--coef-a');
+    const eInput = document.getElementById('chap-special--coef-e');
+    const cInput = document.getElementById('chap-special--coef-c');
+    const resultBox = document.getElementById('chap-special--solver-result');
+
+    if (!aInput || !eInput || !cInput || !resultBox) return;
+
+    const A = parseFloat(aInput.value);
+    const E = parseFloat(eInput.value);
+    const C = parseFloat(cInput.value);
+
+    if (isNaN(A) || isNaN(E) || isNaN(C)) {
+      resultBox.textContent = '请输入有效的数字';
+      return;
+    }
+
+    if (A === 0) {
+      resultBox.textContent = 'A 不能为 0（否则不是二次方程）';
+      return;
+    }
+
+    const discriminant = E * E - 4 * A * C;
+    if (discriminant < 0) {
+      resultBox.textContent = `判别式 Δ = ${discriminant.toFixed(4)} < 0，无实数解`;
+      return;
+    }
+
+    const sqrtD = Math.sqrt(discriminant);
+    const y1 = (-E + sqrtD) / (2 * A);
+    const y2 = (-E - sqrtD) / (2 * A);
+
+    resultBox.innerHTML = `
+      Δ = ${discriminant.toFixed(4)}<br>
+      y₁ = ${y1.toFixed(4)}<br>
+      y₂ = ${y2.toFixed(4)}
+    `;
+  }
+
+  // 事件绑定
+  function bindEvents() {
+    const toggleBtn = document.getElementById('chap-special--geo-toggle');
+    const warningBox = document.getElementById('chap-special--singular-warning');
+    const solveBtn = document.getElementById('chap-special--solve-btn');
+    const resetBtn = document.getElementById('chap-special--reset-solver');
+    const aInput = document.getElementById('chap-special--coef-a');
+    const eInput = document.getElementById('chap-special--coef-e');
+    const cInput = document.getElementById('chap-special--coef-c');
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        if (state.isLinear) {
+          initSensors();
+          toggleBtn.textContent = '切换为线性排列';
+          if (warningBox) warningBox.hidden = true;
+        } else {
+          setLinearArray();
+          toggleBtn.textContent = '切换为任意分布';
+          if (warningBox) warningBox.hidden = false;
+        }
+        drawGeometry();
+      });
+    }
+
+    if (solveBtn) {
+      solveBtn.addEventListener('click', solveQuadratic);
+    }
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        if (aInput) aInput.value = 1;
+        if (eInput) eInput.value = -2;
+        if (cInput) cInput.value = -3;
+        solveQuadratic();
+      });
+    }
+
+    // 键盘支持
+    if (aInput) aInput.addEventListener('change', solveQuadratic);
+    if (eInput) eInput.addEventListener('change', solveQuadratic);
+    if (cInput) cInput.addEventListener('change', solveQuadratic);
+  }
+
+  // 初始化
+  function init() {
+    initSensors();
+    drawGeometry();
+    renderTable();
+    bindEvents();
+    solveQuadratic(); // 初始计算
+  }
+
+  // 等待 DOM 加载
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-chap-validation");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("chap-validation--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  const tables = window.paperMindData.tables;
+  const sources = window.paperMindData.sources;
+
+  // 近场仿真数据映射
+  const nearArbitraryTable = tables.find(t => t.id === 'p8-Table_1');
+  const nearLinearTable = tables.find(t => t.id === 'p9-TABLE_II');
+  const farArbitraryTable = tables.find(t => t.id === 'p9-TABLE_III');
+  const farLinearTable = tables.find(t => t.id === 'p9-TABLE_IV');
+
+  // 颜色映射
+  const colors = {
+    A: '#95a5a6', // SI
+    B: '#3498db', // Taylor
+    C: '#2ecc71', // Proposed (simplified)
+    D: '#27ae60', // Proposed (full)
+    E: '#e74c3c'  // CRLB
+  };
+
+  const labels = {
+    A: 'SI 法',
+    B: '泰勒级数法',
+    C: '本文方案 C',
+    D: '本文方案 D',
+    E: 'CRLB (理论)'
+  };
+
+  // 近场交互逻辑
+  const scenarioSelect = document.getElementById('chap-validation--scenario-select');
+  const sensorCountInput = document.getElementById('chap-validation--sensor-count');
+  const sensorCountDisplay = document.getElementById('chap-validation--sensor-count-display');
+  const mseChart = document.getElementById('chap-validation--mse-chart');
+  const mseTableBody = document.querySelector('#chap-validation--mse-table tbody');
+  const chartLegend = document.getElementById('chap-validation--chart-legend');
+  const resetNearBtn = document.getElementById('chap-validation--reset-near');
+
+  let currentScenario = 'near-arbitrary';
+  let currentM = 5;
+
+  function getTableForScenario(scenario) {
+    if (scenario === 'near-arbitrary') return nearArbitraryTable;
+    if (scenario === 'near-linear') return nearLinearTable;
+    if (scenario === 'far-arbitrary') return farArbitraryTable;
+    if (scenario === 'far-linear') return farLinearTable;
+    return null;
+  }
+
+  function renderChart(scenario, m) {
+    const table = getTableForScenario(scenario);
+    if (!table) return;
+
+    const ctx = mseChart.getContext('2d');
+    ctx.clearRect(0, 0, mseChart.width, mseChart.height);
+
+    const methods = ['A', 'B', 'C', 'D', 'E'];
+    const mKey = `M = ${m}`;
+    sensorCountInput.min = scenario.startsWith('far') ? '4' : '3';
+    if(m < Number(sensorCountInput.min)){sensorCountInput.value=sensorCountInput.min;updateNearDisplay();return;}
+    const data = [];
+
+    methods.forEach(method => {
+      const row = table.rows.find(r => r.label === method);
+      if (row && row.values[mKey]) {
+        const val = row.values[mKey];
+        data.push({
+          method,
+          value: val === 'no sol.' ? null : parseFloat(val),
+          label: labels[method]
+        });
+      }
+    });
+
+    // 绘制柱状图
+    const barWidth = 40;
+    const gap = 20;
+    const startX = 50;
+    const maxY = Math.max(...data.filter(d => d.value !== null).map(d => d.value), 1);
+    const chartHeight = 250;
+    const scaleY = chartHeight / maxY;
+
+    data.forEach((d, i) => {
+      if (d.value === null) {
+        ctx.fillStyle = '#ccc';
+        ctx.font = '12px sans-serif';
+        ctx.fillText('无解', startX + i * (barWidth + gap), 150);
+        return;
+      }
+      const barHeight = d.value * scaleY;
+      ctx.fillStyle = colors[d.method];
+      ctx.fillRect(startX + i * (barWidth + gap), chartHeight - barHeight, barWidth, barHeight);
+      ctx.fillStyle = '#000';
+      ctx.fillText(d.value.toPrecision(6), startX + i * (barWidth + gap), chartHeight - barHeight - 5);
+    });
+
+    // 更新图例
+    chartLegend.innerHTML = '';
+    methods.forEach(method => {
+      const item = document.createElement('div');
+      item.className = 'legend-item';
+      item.innerHTML = `<span class="legend-color" style="background:${colors[method]}"></span>${labels[method]}`;
+      chartLegend.appendChild(item);
+    });
+
+    // 更新表格
+    mseTableBody.innerHTML = '';
+    data.forEach(d => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${d.label}</td><td>${d.value === null ? '无解' : d.value.toPrecision(6)}</td><td>${d.value === null ? '失效' : '有效'}</td>`;
+      mseTableBody.appendChild(tr);
+    });
+  }
+
+  function updateNearDisplay() {
+    currentScenario = scenarioSelect.value;
+    currentM = parseInt(sensorCountInput.value);
+    sensorCountDisplay.textContent = currentM;
+    renderChart(currentScenario, currentM);
+  }
+
+  scenarioSelect.addEventListener('change', updateNearDisplay);
+  sensorCountInput.addEventListener('input', updateNearDisplay);
+  resetNearBtn.addEventListener('click', () => {
+    scenarioSelect.value = 'near-arbitrary';
+    sensorCountInput.value = 5;
+    updateNearDisplay();
+  });
+
+
+  updateNearDisplay();
+})();})(d);})();;const pmDone=()=>{if(document.body.dataset.pmError)return;document.body.dataset.pmInitialized="true";window.dispatchEvent(new Event("pm-initialized"));};if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",pmDone,{once:true});else pmDone();}catch(error){document.body.dataset.pmError=error.message;window.dispatchEvent(new ErrorEvent("error",{message:error.message}));}</script></body></html>

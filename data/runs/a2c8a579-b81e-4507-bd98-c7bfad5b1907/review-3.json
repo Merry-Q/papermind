@@ -1,0 +1,1 @@
+{"items": [{"node_id": "step1-estimator", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "constraint-exploitation", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "covariance-derivation", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}]}

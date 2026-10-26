@@ -1,0 +1,1 @@
+{"items": [{"node_id": "source-entropy-def", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "noiseless-coding-theorem", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "noisy-channel-capacity", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}]}

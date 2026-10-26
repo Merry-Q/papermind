@@ -1,0 +1,1 @@
+{"items": [{"node_id": "linear-array-special", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "performance-comparison", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}, {"node_id": "simulation-validation", "verdict": "supported", "issues": [], "unsupported_claim_ids": []}]}

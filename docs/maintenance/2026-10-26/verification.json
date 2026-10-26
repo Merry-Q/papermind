@@ -1,0 +1,22 @@
+{
+  "database_tables_unchanged": true,
+  "protected_runtime_files_checked": 2432,
+  "protected_runtime_files_changed": [],
+  "cleanup_executed": false,
+  "planned_files_still_present": 1817,
+  "automation_block": "Deletion commands rejected: blocked by policy",
+  "/api/health": {
+    "http": 200,
+    "proxy_disabled": true
+  },
+  "/api/documents/pdf-bdfaa68d8984f0dc/reading-v2/default": {
+    "http": 200,
+    "edition": "079275a4-bac5-4953-b1ff-e449a44ef573",
+    "proxy_disabled": true
+  },
+  "backend_tests": {
+    "passed": 63,
+    "failed": 0,
+    "command": "C:/Python311/python.exe -m unittest discover -s backend/tests -v"
+  }
+}

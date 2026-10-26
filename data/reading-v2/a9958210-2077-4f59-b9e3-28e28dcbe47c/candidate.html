@@ -1,0 +1,3396 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'nonce-ITchEm8I-Wp0_nkB4VcqrZhGTjSFIdhT'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; frame-src 'none'; object-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'"><title>道德机器实验：全球自动驾驶伦理偏好分析 · paperMind 交互讲解</title><style>*,*::before,*::after{box-sizing:border-box}html{scroll-behavior:auto}body{margin:0;min-width:0}button,input,select{font:inherit}button{cursor:pointer}canvas,svg{max-width:100%}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid #315cc8;outline-offset:4px}#pm-local-source{position:fixed;inset:auto 12px 12px;background:#fff;color:#26364b;border:1px solid #61748c;padding:22px;z-index:99999;max-height:65vh;overflow:auto;font:15px/1.8 system-ui}#pm-local-source button{padding:8px 12px;margin-top:12px}#pm-local-source blockquote{white-space:pre-wrap;margin:12px 0}.pm-user-note{margin:24px 0;padding:20px;background:#edf2ff;color:#26364b;font:15px/1.9 system-ui}.pm-user-note h4{margin:0 0 10px}.pm-user-note p{white-space:pre-wrap}.pm-user-note button{margin:5px;padding:6px 10px}.pm-reading-tools{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:24px;padding-top:14px;border-top:1px solid #d6dcd9}.pm-reading-tools button{border:0;background:transparent;color:#265976;text-decoration:underline;text-underline-offset:4px;font-size:13px;padding:6px 0}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+:root{--ink:#233342;--muted:#596877;--accent:#265976;--warm:#ad472d;--line:#d6dcd9;--paper:#fcfbf8;--soft:#edf2f1}
+body{background:var(--paper);color:var(--ink);font-family:"Microsoft YaHei",system-ui,sans-serif;font-size:16px;line-height:1.95}
+.paper-reading{max-width:1120px;margin:auto;padding:40px clamp(18px,5vw,58px) 80px;overflow-wrap:anywhere}
+.paper-reading h1{font:normal clamp(32px,5vw,58px)/1.12 Georgia,"Noto Serif SC",serif;letter-spacing:-.025em;margin:18px 0 26px;text-wrap:balance}
+.paper-reading h2{font-size:clamp(25px,3.5vw,34px);font-weight:500;line-height:1.4;margin:0 0 20px;text-wrap:balance}
+.paper-reading h3{font-size:20px;font-weight:500;line-height:1.5}.paper-reading p{margin:12px 0 18px}
+.paper-hero{padding:16px 0 38px;border-bottom:1px solid var(--line)}
+.paper-hero .paper-thesis{font-size:18px;line-height:1.95;max-width:55ch}.paper-hero nav{display:flex;flex-wrap:wrap;gap:8px 22px;margin:26px 0 0}
+.paper-hero nav a{font-size:13px;color:var(--accent);text-decoration:underline;text-underline-offset:6px}
+.paper-chapter{padding:48px 0 34px;border-bottom:1px solid var(--line);min-width:0}
+.paper-chapter :where(section,article,div,figure,fieldset){min-width:0}
+.paper-chapter :where(table){display:block;max-width:100%;overflow:auto}
+.paper-chapter :where(pre){white-space:pre-wrap;overflow-wrap:anywhere}
+.paper-reading button{border:1px solid var(--line);background:transparent;color:var(--accent);padding:8px 14px;min-height:38px;border-radius:4px;font-size:13px;line-height:1.5}
+.paper-reading button:hover{background:var(--soft)}.paper-reading button:disabled{opacity:.5;cursor:default}
+.paper-reading input[type=range]{accent-color:var(--accent);max-width:100%;min-width:0}.paper-reading input[type=number]{width:90px}
+.paper-reading select,.paper-reading input[type=number]{padding:7px 9px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font-size:14px;border-radius:4px;max-width:100%}
+.paper-reading input[type=checkbox]{accent-color:var(--warm)}.paper-reading label{font-size:14px;line-height:1.7}
+.paper-reading svg,.paper-reading canvas{display:block;max-width:100%;height:auto}
+.paper-reading details{padding:14px 0;border-top:1px solid var(--line);margin-top:20px}.paper-reading summary{cursor:pointer;color:var(--accent);font-size:14px}
+.paper-reading table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.paper-reading th,.paper-reading td{padding:9px 7px;text-align:left;border-bottom:1px solid var(--line)}
+.paper-reading button[data-source]{font-size:12px;color:var(--accent);border:0;padding:6px 0;margin-right:16px;text-decoration:underline;text-underline-offset:4px}
+.paper-reading ::selection{background:#f3d5ac;color:#233342}.paper-reading :focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.paper-reading .reading-limitations{font-size:14px;color:var(--muted);padding-top:28px}.paper-reading .reading-limitations h2{font-size:24px}
+@media(max-width:480px){.paper-reading{padding-top:24px}.paper-chapter{padding-top:32px}.paper-hero .paper-thesis{font-size:16px}.paper-reading{font-size:15px}.paper-reading h2{font-size:25px}.paper-reading table{font-size:12px}}
+
+@scope (#chapter-problem_statement){.chapter-scope {
+  --ink: #1a1a1a;
+  --muted: #666;
+  --accent: #003366;
+  --warm: #ff6b35;
+  --line: #e0e0e0;
+  --paper: #f9f9f9;
+  
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--ink);
+  line-height: 1.6;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.chapter-header {
+  margin-bottom: 3rem;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 1rem;
+}
+
+.chapter-header h1 {
+  font-size: 2.5rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.lead {
+  font-size: 1.2rem;
+  color: var(--muted);
+  max-width: 800px;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.narrative-block {
+  background: var(--paper);
+  padding: 1.5rem;
+  border-left: 4px solid var(--accent);
+}
+
+.narrative-block h2 {
+  color: var(--accent);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.narrative-block p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.source-actions {
+  margin-top: 1.5rem;
+}
+
+.btn-source {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.btn-source:hover {
+  background: #002244;
+}
+
+.interactive-panel {
+  background: var(--paper);
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.panel-header h3 {
+  color: var(--warm);
+  margin-bottom: 0.5rem;
+}
+
+.panel-desc {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.control-group {
+  margin-bottom: 1.5rem;
+}
+
+.control-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.highlight {
+  color: var(--warm);
+  font-weight: 700;
+}
+
+input[type="range"] {
+  width: 100%;
+  height: 8px;
+  background: var(--line);
+  border-radius: 4px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  width: 20px;
+  height: 20px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.result-display {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.metric-card {
+  background: white;
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.metric-label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+.metric-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.metric-status {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.status-ok {
+  color: #28a745;
+}
+
+.status-warning {
+  color: #ffc107;
+}
+
+.status-impossible {
+  color: #dc3545;
+}
+
+.explanation-box {
+  background: white;
+  padding: 1rem;
+  border-left: 3px solid var(--warm);
+  font-size: 0.9rem;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-methodology_mm){.chapter-container {
+  --ink: #1a1a1a;
+  --muted: #666;
+  --accent: #003366;
+  --warm: #ff6600;
+  --line: #e0e0e0;
+  --paper: #f9f9f9;
+  
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  padding: 2rem;
+  line-height: 1.6;
+  font-size: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.chapter-header h2 {
+  font-size: 2rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 0.5rem;
+}
+
+.chapter-lead {
+  font-size: 1.1rem;
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+
+.interactive-workbench {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 2rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 1.5rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.control-panel fieldset {
+  border: 1px solid var(--line);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.control-panel legend {
+  font-weight: bold;
+  color: var(--accent);
+  padding: 0 0.5rem;
+}
+
+.variable-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.var-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 0;
+  border-bottom: 1px dashed var(--line);
+}
+
+.var-label {
+  color: var(--muted);
+}
+
+.var-val {
+  font-weight: bold;
+  color: var(--ink);
+}
+
+.progress-bar {
+  height: 8px;
+  background: var(--line);
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+
+#methodology_mm--progress-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+.action-area {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+button {
+  font-size: 14px;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--accent);
+  background: #fff;
+  color: var(--accent);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.primary-btn {
+  background: var(--accent);
+  color: #fff;
+  font-weight: bold;
+}
+
+.primary-btn:hover {
+  background: #002244;
+}
+
+.secondary-btn {
+  border-color: var(--muted);
+  color: var(--muted);
+}
+
+.visualization-area {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.dilemma-stage {
+  background: var(--paper);
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  min-height: 200px;
+}
+
+.choice-container {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.choice-card {
+  flex: 1;
+  border: 1px solid var(--line);
+  padding: 1rem;
+  background: #fff;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.choice-card:hover, .choice-card:focus {
+  border-color: var(--warm);
+  transform: translateY(-2px);
+  outline: 2px solid var(--warm);
+}
+
+.outcome-label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.character-list {
+  font-size: 0.9rem;
+}
+
+.decision-feedback {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #eef4ff;
+  border-left: 4px solid var(--accent);
+}
+
+.highlight-dim {
+  color: var(--warm);
+  font-weight: bold;
+}
+
+.teaching-note {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+.data-analysis-panel {
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+}
+
+.amce-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.amce-bar-row {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.amce-label {
+  width: 120px;
+  text-align: right;
+  padding-right: 1rem;
+  color: var(--muted);
+}
+
+.amce-track {
+  flex: 1;
+  height: 20px;
+  background: #eee;
+  position: relative;
+}
+
+.amce-fill {
+  height: 100%;
+  background: var(--accent);
+  position: absolute;
+  left: 50%;
+  transform-origin: left;
+}
+
+.amce-fill.negative {
+  background: var(--warm);
+  left: 50%;
+  transform-origin: right;
+  transform: scaleX(-1);
+}
+
+.amce-value {
+  width: 60px;
+  padding-left: 0.5rem;
+  font-family: monospace;
+}
+
+.source-trace {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.source-btn {
+  font-size: 0.8rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--muted);
+}
+
+.methodology-explanation {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+
+.methodology-explanation h3 {
+  color: var(--accent);
+  margin-top: 0;
+}
+
+.key-points {
+  padding-left: 1.5rem;
+  color: var(--ink);
+}
+
+.key-points li {
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .interactive-workbench {
+    grid-template-columns: 1fr;
+  }
+  .choice-container {
+    flex-direction: column;
+  }
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-global_preferences){:host {
+  --pm-ink: #1a1a1a;
+  --pm-muted: #666;
+  --pm-accent: #003366;
+  --pm-warm: #d9534f;
+  --pm-line: #e0e0e0;
+  --pm-paper: #f9f9f9;
+  --pm-success: #28a745;
+  --pm-font-base: 16px;
+  --pm-font-small: 14px;
+}
+
+.pm-chapter-container {
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--pm-ink);
+  background: var(--pm-paper);
+  padding: 2rem;
+  line-height: 1.6;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pm-header {
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--pm-accent);
+  padding-bottom: 1rem;
+}
+
+.pm-title {
+  font-size: 2rem;
+  color: var(--pm-accent);
+  margin: 0 0 0.5rem 0;
+}
+
+.pm-lead {
+  font-size: 1.1rem;
+  color: var(--pm-muted);
+  max-width: 800px;
+}
+
+.pm-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .pm-grid-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pm-card {
+  background: #fff;
+  border: 1px solid var(--pm-line);
+  border-radius: 4px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.pm-card-title {
+  font-size: 1.25rem;
+  color: var(--pm-accent);
+  margin-top: 0;
+  border-bottom: 1px solid var(--pm-line);
+  padding-bottom: 0.5rem;
+}
+
+.pm-caption {
+  font-size: var(--pm-font-small);
+  color: var(--pm-muted);
+  margin-bottom: 1rem;
+}
+
+.pm-chart-container {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  margin-bottom: 1rem;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.pm-chart-controls {
+  margin-top: 0.5rem;
+  font-size: var(--pm-font-small);
+}
+
+.pm-key-findings {
+  display: flex;
+  justify-content: space-around;
+  background: var(--pm-paper);
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+.pm-finding-item {
+  text-align: center;
+}
+
+.pm-finding-label {
+  display: block;
+  font-size: var(--pm-font-small);
+  color: var(--pm-muted);
+}
+
+.pm-finding-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--pm-accent);
+}
+
+.pm-finding-desc {
+  font-size: var(--pm-font-small);
+}
+
+.pm-conflict-box {
+  margin: 1.5rem 0;
+}
+
+.pm-rule-block {
+  background: #f8f9fa;
+  border-left: 4px solid var(--pm-muted);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.pm-rule-conflict {
+  border-left-color: var(--pm-warm);
+  background: #fff5f5;
+}
+
+.pm-status {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 2px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #fff;
+  margin-top: 0.5rem;
+}
+
+.pm-status-ok {
+  background: var(--pm-success);
+}
+
+.pm-status-warn {
+  background: var(--pm-warm);
+}
+
+.pm-conflict-detail {
+  font-size: var(--pm-font-small);
+  color: var(--pm-warm);
+  margin-top: 0.5rem;
+  display: none;
+}
+
+.pm-conflict-highlight .pm-conflict-detail {
+  display: block;
+  animation: pmFadeIn 0.3s ease-in;
+}
+
+@keyframes pmFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.pm-action-area {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.pm-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--pm-accent);
+  background: #fff;
+  color: var(--pm-accent);
+  cursor: pointer;
+  font-size: var(--pm-font-small);
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.pm-btn-primary {
+  background: var(--pm-accent);
+  color: #fff;
+}
+
+.pm-btn:hover {
+  opacity: 0.9;
+}
+
+.pm-footer {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--pm-line);
+  font-size: var(--pm-font-small);
+  color: var(--pm-muted);
+}
+
+.pm-limitations ul {
+  padding-left: 1.5rem;
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-individual_vars){.chapter-scope {
+  --ink: #1a1a1a;
+  --muted: #666;
+  --accent: #d9531e;
+  --warm: #f4f4f4;
+  --line: #e0e0e0;
+  --paper: #ffffff;
+  
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  padding: 2rem;
+  line-height: 1.6;
+  font-size: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.scope-header h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--ink);
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+  padding-bottom: 0.25rem;
+}
+
+.lead {
+  font-size: 1.1rem;
+  color: var(--muted);
+  margin-bottom: 2rem;
+  max-width: 800px;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.narrative-col article {
+  margin-bottom: 2rem;
+}
+
+.narrative-col h3 {
+  font-size: 1.25rem;
+  margin-top: 0;
+  color: var(--ink);
+}
+
+.source-block {
+  background: var(--warm);
+  padding: 1rem;
+  border-left: 4px solid var(--muted);
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.btn-source {
+  background: transparent;
+  border: 1px solid var(--muted);
+  color: var(--muted);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  align-self: flex-start;
+  font-family: inherit;
+}
+
+.btn-source:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.panel-interactive {
+  background: var(--warm);
+  padding: 1.5rem;
+  border-radius: 4px;
+  border: 1px solid var(--line);
+}
+
+.panel-interactive h4 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+.panel-desc {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.control-group {
+  margin-bottom: 1.5rem;
+}
+
+.control-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.control-group select {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.viz-container {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.unit-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: right;
+  margin-top: 0.25rem;
+}
+
+.legend {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  justify-content: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.data-readout {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.metric .label {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.metric .value {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--ink);
+}
+
+.metric .status-ok {
+  color: #2e7d32;
+}
+
+.btn-reset {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: opacity 0.2s;
+}
+
+.btn-reset:hover {
+  opacity: 0.9;
+}
+
+.scope-footer {
+  margin-top: 3rem;
+  border-top: 1px solid var(--line);
+  padding-top: 1.5rem;
+}
+
+.limitations-box h5 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.limitations-box ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-cultural_clusters){:scope {
+  --ink: #1a1a1a;
+  --muted: #666;
+  --accent: #003366;
+  --warm: #d9531e;
+  --line: #e0e0e0;
+  --paper: #f9f9f9;
+  --font-base: 15px;
+  --font-ctrl: 13px;
+}
+
+.cm-chapter {
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.cm-header {
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+
+.cm-title {
+  font-size: 2rem;
+  color: var(--accent);
+  margin: 0 0 0.5rem 0;
+}
+
+.cm-lead {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 800px;
+}
+
+.cm-workspace {
+  display: grid;
+  gap: 2rem;
+}
+
+.cm-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.cm-control-group label {
+  font-weight: bold;
+  margin-right: 0.5rem;
+  font-size: var(--font-ctrl);
+}
+
+#cultural_clusters--cluster-select {
+  padding: 0.4rem;
+  font-size: var(--font-ctrl);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  min-width: 200px;
+}
+
+.cm-legend {
+  display: flex;
+  gap: 1rem;
+  font-size: var(--font-ctrl);
+}
+
+.cm-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot.western { background: #003366; }
+.dot.eastern { background: #d9531e; }
+.dot.southern { background: #28a745; }
+
+.cm-visual-container {
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  overflow: hidden;
+}
+
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+.cm-overlay-info {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  max-width: 250px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.cm-overlay-info h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  color: var(--accent);
+}
+
+.cm-overlay-info p {
+  margin: 0;
+  font-size: var(--font-ctrl);
+  color: var(--muted);
+}
+
+.cm-analysis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.cm-card {
+  background: #fff;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  border-left: 4px solid var(--accent);
+}
+
+.cm-card h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.cm-card p {
+  font-size: var(--font-base);
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.cm-source-btn {
+  background: transparent;
+  border: 1px solid var(--muted);
+  color: var(--muted);
+  padding: 0.2rem 0.5rem;
+  font-size: var(--font-ctrl);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cm-source-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.cm-footer {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.cm-methodology h4 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.cm-methodology p {
+  font-size: var(--font-base);
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}
+.cm-analysis-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}}
+@scope (#chapter-predictors){:scope .chapter-container {
+  font-family: inherit;
+  color: var(--ink, #1a1a1a);
+  background: var(--paper, #fdfdfd);
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+:scope .chapter-header h1 {
+  font-size: 2rem;
+  color: var(--ink, #1a1a1a);
+  margin-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent, #2c5282);
+  padding-bottom: 0.5rem;
+}
+
+:scope .chapter-lead {
+  font-size: 1.1rem;
+  color: var(--muted, #4a5568);
+  max-width: 800px;
+}
+
+:scope .evidence-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+:scope .evidence-card {
+  background: #fff;
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+:scope .evidence-card h3 {
+  color: var(--accent, #2c5282);
+  font-size: 1.25rem;
+  margin-top: 0;
+}
+
+:scope .claim-list {
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+:scope .claim-list li {
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+
+:scope .source-ref {
+  margin-top: 1.5rem;
+}
+
+:scope .source-btn {
+  background: var(--warm, #ed8936);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+:scope .source-btn:hover {
+  background: #dd6b20;
+}
+
+:scope .visual-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+:scope .chart-wrapper {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  margin: 1rem 0;
+}
+
+:scope #predictors--amce-chart {
+  width: 100%;
+  height: 100%;
+}
+
+:scope .chart-note {
+  font-size: 0.85rem;
+  color: var(--muted, #4a5568);
+  font-style: italic;
+}
+
+:scope .interaction-workbench {
+  background: #f7fafc;
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 8px;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+:scope .interaction-workbench h2 {
+  color: var(--accent, #2c5282);
+  font-size: 1.5rem;
+  margin-top: 0;
+}
+
+:scope .interaction-desc {
+  color: var(--muted, #4a5568);
+  margin-bottom: 1.5rem;
+}
+
+:scope .simulator-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+}
+
+:scope .controls-panel {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 6px;
+  border: 1px solid var(--line, #e2e8f0);
+}
+
+:scope .control-group {
+  margin-bottom: 1.5rem;
+}
+
+:scope .control-group label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--ink, #1a1a1a);
+}
+
+:scope input[type="range"] {
+  width: 100%;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+:scope input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--accent, #2c5282);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+:scope .reset-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--muted, #4a5568);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+:scope .reset-btn:hover {
+  background: #2d3748;
+}
+
+:scope .output-panel {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+:scope .output-card {
+  background: white;
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--line, #e2e8f0);
+  text-align: center;
+}
+
+:scope .output-card h4 {
+  font-size: 0.9rem;
+  color: var(--ink, #1a1a1a);
+  margin: 0 0 0.75rem 0;
+  min-height: 2.5em;
+}
+
+:scope .metric-display {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent, #2c5282);
+  margin-bottom: 0.5rem;
+}
+
+:scope .metric-unit {
+  font-size: 0.9rem;
+  color: var(--muted, #4a5568);
+  font-weight: 400;
+}
+
+:scope .bar-container {
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 0.75rem 0;
+}
+
+:scope .metric-bar {
+  height: 100%;
+  background: var(--warm, #ed8936);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+:scope .metric-desc {
+  font-size: 0.8rem;
+  color: var(--muted, #4a5568);
+  line-height: 1.4;
+}
+
+:scope .limitations-section {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line, #e2e8f0);
+}
+
+:scope .limitations-section h3 {
+  color: var(--ink, #1a1a1a);
+  font-size: 1.25rem;
+}
+
+:scope .limitations-section ul {
+  padding-left: 1.5rem;
+  color: var(--muted, #4a5568);
+}
+
+:scope .limitations-section li {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  :scope .evidence-grid,
+  :scope .simulator-grid,
+  :scope .output-panel {
+    grid-template-columns: 1fr;
+  }
+  
+  :scope .chapter-container {
+    padding: 1rem;
+  }
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-limitations){:scope .chapter-container {
+  --ink: #1a1a1a;
+  --muted: #666;
+  --accent: #003366;
+  --warm: #e67e22;
+  --paper: #fdfdfd;
+  --line: #e0e0e0;
+  
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  padding: 2rem 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.chapter-header h1 {
+  font-size: 2rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  border-bottom: 2px solid var(--line);
+  padding-bottom: 0.5rem;
+}
+
+.chapter-takeaway {
+  font-size: 1.1rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 2rem;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .content-grid {
+    grid-template-columns: 1.2fr 0.8fr;
+  }
+}
+
+.text-block {
+  margin-bottom: 2rem;
+  font-size: 15px;
+}
+
+.text-block h2 {
+  font-size: 1.25rem;
+  color: var(--accent);
+  margin-top: 0;
+}
+
+.source-btn {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 4px 8px;
+  font-size: 13px;
+  background: transparent;
+  border: 1px solid var(--muted);
+  border-radius: 4px;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.source-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.limitation-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--warm);
+  padding: 1.5rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.limitation-card h3 {
+  margin-top: 0;
+  color: var(--ink);
+}
+
+.card-intro {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.check-display {
+  min-height: 120px;
+  background: #f9f9f9;
+  border: 1px dashed var(--line);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  font-size: 14px;
+}
+
+.status-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.status-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.status-icon {
+  margin-right: 8px;
+  font-weight: bold;
+  color: var(--warm);
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+}
+
+.action-btn, .reset-btn {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.action-btn {
+  background: var(--accent);
+  color: #fff;
+}
+
+.action-btn:hover {
+  background: #002244;
+}
+
+.reset-btn {
+  background: #eee;
+  color: var(--ink);
+}
+
+.reset-btn:hover {
+  background: #ddd;
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}
+@scope (#chapter-implications){:scope {
+  --ink: #1a1a1a;
+  --muted: #666;
+  --accent: #003366;
+  --warm: #d9531e;
+  --line: #e0e0e0;
+  --paper: #f9f9f9;
+  --bg-workbench: #ffffff;
+  --font-base: 16px;
+}
+
+.chapter-container {
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  background: var(--paper);
+}
+
+.chapter-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.lead {
+  font-size: 1.125rem;
+  color: var(--muted);
+  max-width: 700px;
+  margin-bottom: 2rem;
+}
+
+.text-block p {
+  margin-bottom: 1.25rem;
+  font-size: 1rem;
+  text-align: justify;
+}
+
+.source-bar {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.source-btn {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.source-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: #f0f4f8;
+}
+
+.interactive-workbench {
+  margin-top: 3rem;
+  background: var(--bg-workbench);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.workbench-header h2 {
+  font-size: 1.25rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.workbench-header p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.builder-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .builder-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.control-group {
+  margin-bottom: 1.25rem;
+}
+
+.control-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--ink);
+}
+
+.control-group select {
+  width: 100%;
+  padding: 0.625rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background: #fff;
+  color: var(--ink);
+}
+
+button[type="button"] {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: opacity 0.2s;
+}
+
+#implications--evaluate-policy {
+  background: var(--accent);
+  color: #fff;
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
+#implications--evaluate-policy:hover {
+  opacity: 0.9;
+}
+
+#implications--reset-policy {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  width: 100%;
+}
+
+#implications--reset-policy:hover {
+  border-color: var(--muted);
+  color: var(--ink);
+}
+
+.visualization-panel {
+  background: #f8f9fa;
+  border-radius: 6px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  text-align: center;
+}
+
+.placeholder-msg {
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.placeholder-msg svg {
+  stroke: var(--line);
+}
+
+.result-card {
+  width: 100%;
+  text-align: left;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.result-card h3 {
+  font-size: 1.1rem;
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+}
+
+.result-card p {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.reasoning-box {
+  background: #fff;
+  border-left: 4px solid var(--warm);
+  padding: 1rem;
+  font-size: 0.875rem;
+  color: #444;
+  line-height: 1.5;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+button[data-source]{background:#fff!important;color:#265976!important}
+.katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}.step-controls,.control-buttons{flex-wrap:wrap} @media(max-width:480px){.metric-card,.stat-card{min-width:0}}}</style></head><body><main class="paper-reading"><header class="paper-hero"><h1>道德机器实验：全球自动驾驶伦理偏好分析</h1><p class="paper-thesis">通过 3961 万次全球决策数据，揭示自动驾驶伦理中存在的三大普遍共识（保人、保多、保幼）与深刻的文化分歧（基于性别、地位、法治的偏好差异），证明通用机器伦理需兼顾全球基准与本地化定制。</p><nav aria-label="讲解章节"><a href="#problem_statement">核心问题：高维困境与量化挑战</a><a href="#methodology_mm">机制解析：道德机器如何运作</a><a href="#global_preferences">全球共识：三大强偏好与政策冲突</a><a href="#individual_vars">个体差异：微弱影响与方向一致</a><a href="#cultural_clusters">文化聚类：三大道德阵营</a><a href="#predictors">预测因子：经济与制度的映射</a><a href="#limitations">局限与边界：自选择与确定性假设</a><a href="#implications">政策启示：从数据到对话</a></nav></header><div class="paper-chapter" id="chapter-problem_statement"><section id="problem_statement" data-node="problem_statement" class="chapter-scope">
+  <header class="chapter-header">
+    <h1>核心问题：高维困境与量化挑战</h1>
+    <p class="lead">自动驾驶伦理不仅是哲学问题，更是高维度数据问题。简单规则（如阿西莫夫定律）失效，需在全球范围内收集数百万种场景组合下的偏好数据。</p>
+  </header>
+
+  <div class="content-grid">
+    <article class="narrative-block">
+      <h2>伦理困境的必然性</h2>
+      <p>随着人工智能技术的发展，机器不仅被 tasked 促进福祉和最小化伤害，还必须分配其创造的福祉和无法消除的伤害。这种分配不可避免地产生道德领域的权衡。例如，自动驾驶汽车（AV）在即将发生碰撞且无法挽救所有人时，是应该转向撞向一名违规穿行的青少年以挽救车内的三名老年乘客，还是应该避开一群孩子而杀死一名成年乘客？</p>
+      <p>即使在不必然发生伤害但存在可能性的常见情况下，AV 也需要决定如何在道路上的不同利益相关者之间分配伤害风险。目前的汽车制造商和政策制定者正为此类道德困境挣扎，因为简单的规范伦理原则（如阿西莫夫机器人定律）无法解决这些问题。阿西莫夫定律本是叙事工具，并非为解决普遍机器伦理或让人类之间分配伤害而设计。</p>
+      <div class="source-actions">
+        <button type="button" class="btn-source" data-source="S020">原文 · p.2</button>
+        <button type="button" class="btn-source" data-source="S021">原文 · p.3</button>
+      </div>
+    </article>
+
+    <aside class="interactive-panel">
+      <div class="panel-header">
+        <h3>高维度性演示：变量组合器</h3>
+        <p class="panel-desc">拖动滑块增加伦理变量数量，观察场景组合数如何指数级爆炸。</p>
+      </div>
+      
+      <div class="control-group">
+        <label for="problem_statement--var-count-slider">变量数量 (n): <span id="problem_statement--var-count-display" class="highlight">2</span></label>
+        <input type="range" id="problem_statement--var-count-slider" min="2" max="9" value="2" step="1">
+      </div>
+
+      <div class="result-display">
+        <div class="metric-card">
+          <span class="metric-label">场景组合数</span>
+          <span id="problem_statement--combo-count" class="metric-value">4</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">传统调查可行性</span>
+          <span id="problem_statement--feasibility-status" class="metric-status status-ok">可行</span>
+        </div>
+      </div>
+
+      <div class="explanation-box">
+        <p id="problem_statement--explanation-text">当只有 2 个变量（如年龄、性别）时，场景数量有限，传统调查尚可覆盖。但随着变量增加至 9 个（年龄、性别、社会地位、物种、法律状态等），组合数呈指数增长，达到数百万种，远超传统方法能力。</p>
+      </div>
+    </aside>
+  </div>
+
+  <article class="narrative-block full-width">
+    <h2>量化社会期望的双重挑战</h2>
+    <p>量化社会期望面临两个主要挑战。第一个挑战来自问题的高维度性：典型的调查可能测试人们是否偏好挽救多数生命而非少数，或偏好挽救年轻人而非老年人，或将这些偏好组合起来。但结合十几种此类偏好会导致数百万种可能的场景，所需的样本量超出了任何传统数据收集方法的能力。</p>
+    <p>第二个挑战使样本量需求更加严峻：若要迈向普遍机器伦理（或至少识别其障碍），我们需要细粒度地理解不同个体和不同国家在伦理偏好上的差异。因此，数据必须在全球范围内收集，以评估人口统计和文化因素对伦理偏好的调节作用。</p>
+    <div class="source-actions">
+      <button type="button" class="btn-source" data-source="S021">原文 · p.3</button>
+    </div>
+  </article>
+</section></div><div class="paper-chapter" id="chapter-methodology_mm"><section id="methodology_mm" data-node="methodology_mm" class="chapter-container">
+  <header class="chapter-header">
+    <h2>机制解析：道德机器如何运作</h2>
+    <p class="chapter-lead">通过'严肃游戏'形式，在 233 个国家收集 3961 万决策。利用联合分析（AMCE）从九个关键维度量化偏好强度。</p>
+  </header>
+
+  <div class="interactive-workbench">
+    <div class="control-panel">
+      <h3>实验配置 (Judge Mode)</h3>
+      <div class="control-group">
+        <label for="session-step">当前会话进度：<span id="methodology_mm--step-display">1</span>/13</label>
+        <div class="progress-bar"><div id="methodology_mm--progress-fill" style="width: 7.6%"></div></div>
+      </div>
+      
+      <fieldset>
+        <legend>核心变量采样 (九维空间)</legend>
+        <div class="variable-grid">
+          <div class="var-item"><span class="var-label">物种</span><span class="var-val" id="methodology_mm--val-species">人类 vs 宠物</span></div>
+          <div class="var-item"><span class="var-label">行动</span><span class="var-val" id="methodology_mm--val-action">直行 vs 转向</span></div>
+          <div class="var-item"><span class="var-label">角色</span><span class="var-val" id="methodology_mm--val-role">乘客 vs 行人</span></div>
+          <div class="var-item"><span class="var-label">数量</span><span class="var-val" id="methodology_mm--val-number">多 vs 少</span></div>
+          <div class="var-item"><span class="var-label">性别</span><span class="var-val" id="methodology_mm--val-gender">男 vs 女</span></div>
+          <div class="var-item"><span class="var-label">年龄</span><span class="var-val" id="methodology_mm--val-age">年轻 vs 年老</span></div>
+          <div class="var-item"><span class="var-label">守法</span><span class="var-val" id="methodology_mm--val-law">合法 vs 违规</span></div>
+          <div class="var-item"><span class="var-label">体质</span><span class="var-val" id="methodology_mm--val-fitness">健康 vs 虚弱</span></div>
+          <div class="var-item"><span class="var-label">地位</span><span class="var-val" id="methodology_mm--val-status">高 vs 低</span></div>
+        </div>
+      </fieldset>
+
+      <div class="action-area">
+        <button type="button" id="methodology_mm--btn-generate" class="primary-btn">生成新困境</button>
+        <button type="button" id="methodology_mm--btn-reset" class="secondary-btn">复位会话</button>
+      </div>
+    </div>
+
+    <div class="visualization-area">
+      <div class="dilemma-stage">
+        <div class="scene-description" id="methodology_mm--scene-text">
+          点击“生成新困境”开始模拟法官模式。系统将展示不可避免的事故场景。
+        </div>
+        <div class="choice-container">
+          <div class="choice-card" id="methodology_mm--choice-a" tabindex="0" role="button" aria-label="选择结果 A">
+            <div class="outcome-label">结果 A (保持原路线)</div>
+            <div class="character-list" id="methodology_mm--chars-a"></div>
+          </div>
+          <div class="choice-card" id="methodology_mm--choice-b" tabindex="0" role="button" aria-label="选择结果 B">
+            <div class="outcome-label">结果 B (转向)</div>
+            <div class="character-list" id="methodology_mm--chars-b"></div>
+          </div>
+        </div>
+        <div class="decision-feedback" id="methodology_mm--feedback-area" hidden>
+          <p>您选择了：<span id="methodology_mm--user-choice-text"></span></p>
+          <p class="highlight-dim">本教学场景关注的维度：<strong id="methodology_mm--highlighted-dim"></strong></p>
+          <p class="teaching-note">教学示例：单次选择无法计算 AMCE，需海量数据分离变量效应。</p>
+        </div>
+      </div>
+
+      <div class="data-analysis-panel">
+        <h4>AMCE 效应值解析 (教学示例)</h4>
+        <p class="note">基于 p6-fig2a 数据。ΔPr 表示挽救右侧属性相对于左侧属性的概率增量。</p>
+        <div class="methodology_mm--amce-chart" id="methodology_mm--amce-chart">
+          <!-- Bars injected by JS -->
+        </div>
+        <div class="source-trace">
+          <button type="button" class="source-btn" data-source="S022">原文 · p.4</button>
+          <button type="button" class="source-btn" data-source="S023">原文 · p.4</button>
+          <button type="button" class="source-btn" data-source="S039">原文 · p.13</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="methodology-explanation">
+    <h3>方法论核心：联合分析 (Conjoint Analysis)</h3>
+    <p>为了应对高维度挑战（约 2600 万种可能性），实验不直接询问用户“年龄重要还是性别重要”，而是让用户在包含多个随机属性的完整场景中进行选择。通过统计模型（AMCE），研究者可以从这 3961 万个决策中分离出单个变量（如“年轻”）的独立因果效应。</p>
+    <ul class="key-points">
+      <li><strong>数据规模：</strong>233 个国家/地区，39.61 百万决策 (S022)。</li>
+      <li><strong>会话结构：</strong>每会话 13 个困境，1 个完全随机，12 个针对特定维度采样 (S039)。</li>
+      <li><strong>额外角色：</strong>如罪犯、孕妇，用于减少重复感，不链接到九个核心因素 (S022)。</li>
+    </ul>
+  </div>
+</section></div><div class="paper-chapter" id="chapter-global_preferences"><section id="global_preferences" data-node="global_preferences" class="pm-chapter-container">
+  <header class="pm-header">
+    <h1 class="pm-title">全球核心伦理偏好</h1>
+    <p class="pm-lead">基于 3961 万决策的联合分析揭示了机器伦理的三大基石，同时也暴露了公众直觉与现行政策框架的深刻矛盾。</p>
+  </header>
+
+  <div class="pm-grid-layout">
+    <!-- Left Column: Data Visualization -->
+    <div class="pm-column-data">
+      <div class="pm-card pm-card-main">
+        <h2 class="pm-card-title">平均边际成分效应 (AMCE)</h2>
+        <p class="pm-caption">图 2(a) 数据可视化：偏好强度（右侧属性相对于左侧属性的挽救概率差值）</p>
+        
+        <div class="pm-chart-container">
+          <canvas id="global_preferences--pm-amce-chart" width="600" height="400" aria-label="AMCE 条形图"></canvas>
+          <div class="pm-chart-controls">
+            <label for="global_preferences--pm-scale-select">显示尺度：</label>
+            <select id="global_preferences--pm-scale-select">
+              <option value="full">完整尺度 (0-0.5)</option>
+              <option value="zoom">局部放大 (0-0.2)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pm-key-findings">
+          <div class="pm-finding-item">
+            <span class="pm-finding-label">最强偏好</span>
+            <span class="pm-finding-value" id="global_preferences--pm-max-val">--</span>
+            <span class="pm-finding-desc">保全人类 vs 宠物</span>
+          </div>
+          <div class="pm-finding-item">
+            <span class="pm-finding-label">年龄偏好</span>
+            <span class="pm-finding-value" id="global_preferences--pm-age-val">--</span>
+            <span class="pm-finding-desc">保全年轻 vs 年老</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Policy Conflict Analysis -->
+    <div class="pm-column-text">
+      <div class="pm-card pm-card-policy">
+        <h2 class="pm-card-title">政策冲突检测：德国伦理准则</h2>
+        <p class="pm-caption">对比 2017 年德国自动驾驶伦理委员会规则</p>
+
+        <div class="pm-conflict-box">
+          <div class="pm-rule-block">
+            <h3>规则 #7 (一致)</h3>
+            <p>“保护人类生命应优先于保护其他动物生命。”</p>
+            <div class="pm-status pm-status-ok">与数据一致</div>
+          </div>
+          
+          <div class="pm-rule-block pm-rule-conflict">
+            <h3>规则 #9 (冲突)</h3>
+            <p>“禁止基于个人特征（如年龄）进行区分。”</p>
+            <div class="pm-status pm-status-warn">与数据冲突</div>
+            <p class="pm-conflict-detail">数据显示公众强烈偏好挽救年轻生命 (AMCE=0.49)，若政策禁止此区分，制定者将面临解释理由与应对反弹的双重挑战。</p>
+          </div>
+        </div>
+
+        <div class="pm-action-area">
+          <button type="button" id="global_preferences--pm-toggle-conflict" class="pm-btn pm-btn-primary">高亮冲突细节</button>
+          <button type="button" data-source="S024" class="pm-btn pm-btn-source">原文 · p.5</button>
+          <button type="button" data-source="S025" class="pm-btn pm-btn-source">原文 · p.6</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="pm-footer">
+    <div class="pm-limitations">
+      <h3>局限与说明</h3>
+      <ul>
+        <li>AMCE 值为控制其他变量后的条件平均效应，非无条件概率差。</li>
+        <li>数据基于自选择样本，虽经加权处理，仍不能完全代表全球人口结构。</li>
+        <li>“功利主义”标签为分析性归纳，原文未直接使用该术语定义偏好。</li>
+      </ul>
+    </div>
+  </footer>
+</section></div><div class="paper-chapter" id="chapter-individual_vars"><section id="individual_vars" data-node="individual_vars" class="chapter-scope">
+  <header class="scope-header">
+    <h2>个体差异分析</h2>
+    <p class="lead">基于 492,921 名填写人口统计调查的用户数据，评估六个特征对道德偏好的调节作用。</p>
+  </header>
+
+  <div class="content-grid">
+    <div class="narrative-col">
+      <article>
+        <h3>微弱但显著的统计影响</h3>
+        <p>研究团队对填写了可选人口统计调查的 <strong>492,921</strong> 名用户进行了回归分析。当将所有六个变量（年龄、教育、性别、收入、政治和宗教观点）纳入模型时，个体差异对任何属性的影响幅度都非常小（系数均低于 0.1）。</p>
+        <p>在这些微小的影响中，最值得注意的是性别和宗教性。例如，男性受访者比女性受访者保护女性（sparing females）的倾向低 <strong>0.06 个百分点</strong>，但保护人类（sparing humans）的倾向高 <strong>0.09 个百分点</strong>。</p>
+        <div class="source-block">
+          <button type="button" class="btn-source" data-source="S027">原文 · p.7</button>
+          <span class="source-text">"individual variations have no sizable impact on any of the nine attributes (all below 0.1)"</span>
+        </div>
+      </article>
+
+      <article>
+        <h3>方向的一致性：无根本分歧</h3>
+        <p>更为关键的是，没有任何一个特征将其子群体分裂为相反的效应方向。例如，虽然男性和女性都表现出保护女性的偏好，只是女性群体的该偏好更强。基于这一发现，作者总结认为个体差异虽然在理论上重要，但对于自动驾驶伦理政策的制定并不构成核心信息（essential information）。</p>
+        <div class="source-block">
+          <button type="button" class="btn-source" data-source="S028">原文 · p.7</button>
+          <span class="source-text">"none of the six characteristics splits its subpopulations into opposing directions of effect"</span>
+        </div>
+      </article>
+    </div>
+
+    <div class="interaction-col">
+      <div class="panel-interactive" id="individual_vars--filter-panel">
+        <h4>子群体偏好强度差异比较</h4>
+        <p class="panel-desc">选择不同的人口统计特征，观察偏好差异的微小浮动。注意所有子群体的偏好方向（条形向右）从未反转，仅强度略有不同。</p>
+        
+        <div class="control-group">
+          <label for="individual_vars--demographic-select">筛选维度：</label>
+          <select id="individual_vars--demographic-select">
+            <option value="gender">性别 (Gender)</option>
+            <option value="religiosity">宗教性 (Religiosity)</option>
+          </select>
+        </div>
+
+        <div class="viz-container">
+          <svg id="individual_vars--diff-chart" viewBox="0 0 500 220" aria-label="偏好差异条形图">
+            <!-- Bars will be injected by JS -->
+          </svg>
+          <div class="legend">
+            <span class="legend-item"><span class="dot" style="background:var(--ink)"></span>基准组 (Reference)</span>
+            <span class="legend-item"><span class="dot" style="background:var(--accent)"></span>对比组 (Comparison)</span>
+          </div>
+          <p class="unit-label">单位：百分点 (Percentage Points)</p>
+        </div>
+
+        <div class="data-readout">
+          <div class="metric">
+            <span class="label">效应量差异 (Δ)</span>
+            <span class="value" id="individual_vars--delta-val" data-value="0.06">0.06</span>
+          </div>
+          <div class="metric">
+            <span class="label">方向一致性</span>
+            <span class="value status-ok">一致 (Consistent)</span>
+          </div>
+        </div>
+        
+        <button type="button" id="individual_vars--reset-filter" class="btn-reset">复位筛选</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="scope-footer">
+    <div class="limitations-box">
+      <h5>局限与条件</h5>
+      <ul>
+        <li>数据仅来自填写了可选调查的 492,921 名用户，可能存在自选择偏差。</li>
+        <li>回归模型假设线性关系，未展示复杂的交互效应。</li>
+        <li>效应量虽小但在统计上显著，不代表无实际意义，仅对政策制定非核心。</li>
+        <li>图表展示的是相对差异（差值），而非绝对偏好概率。</li>
+      </ul>
+    </div>
+  </footer>
+</section></div><div class="paper-chapter" id="chapter-cultural_clusters"><section id="cultural_clusters" data-node="cultural_clusters" class="cm-chapter">
+  <header class="cm-header">
+    <h1 class="cm-title">文化聚类：三大道德阵营</h1>
+    <p class="cm-lead">全球国家分为西方、东方、南方三大道德集群。东方集群对‘保幼’偏好较弱，南方集群对‘保女性’和‘保地位’偏好较强。</p>
+  </header>
+
+  <div class="cm-workspace">
+    <div class="cm-controls">
+      <div class="cm-control-group">
+        <label for="cultural_clusters--cluster-select">选择文化集群视角：</label>
+        <select id="cultural_clusters--cluster-select" aria-label="选择文化集群">
+          <option value="western">西方集群 (Western)</option>
+          <option value="eastern">东方集群 (Eastern)</option>
+          <option value="southern">南方集群 (Southern)</option>
+        </select>
+      </div>
+      <div class="cm-legend">
+        <span class="cm-legend-item"><span class="dot western"></span>西方</span>
+        <span class="cm-legend-item"><span class="dot eastern"></span>东方</span>
+        <span class="cm-legend-item"><span class="dot southern"></span>南方</span>
+      </div>
+    </div>
+
+    <div class="cm-visual-container">
+      <canvas id="cultural_clusters--radar-chart" width="600" height="500" aria-label="道德偏好雷达图"></canvas>
+      <div class="cm-overlay-info" id="cultural_clusters--chart-info">
+        <h3 id="cultural_clusters--info-title">西方集群</h3>
+        <p id="cultural_clusters--info-desc">包含北美及许多欧洲国家（新教、天主教和东正教文化群）。</p>
+      </div>
+    </div>
+
+    <div class="cm-analysis-grid">
+      <div class="cm-card">
+        <h4>核心差异：年龄偏好</h4>
+        <p>东方集群在“保护年轻人优于年长者”上的偏好显著较弱，而南方集群该偏好极强。</p>
+        <button type="button" class="cm-source-btn" data-source="S030">原文 · p.9</button>
+      </div>
+      <div class="cm-card">
+        <h4>核心差异：社会地位</h4>
+        <p>南方集群表现出对“保护高社会地位者”的强烈偏好，东方集群则较弱。</p>
+        <button type="button" class="cm-source-btn" data-source="S030">原文 · p.9</button>
+      </div>
+      <div class="cm-card">
+        <h4>普遍共识</h4>
+        <p>所有集群均一致偏好“保护行人优于乘客”和“保护守法者优于违法者”。</p>
+        <button type="button" class="cm-source-btn" data-source="S030">原文 · p.9</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="cm-footer">
+    <div class="cm-methodology">
+      <h4>分析方法</h4>
+      <p>选取 130 个至少有 100 名受访者的国家，标准化 9 个目标 AMCE 分数，使用欧几里得距离和 Ward 方差最小化算法进行层次聚类。结果与 Inglehart-Welzel 文化地图高度一致。</p>
+      <button type="button" class="cm-source-btn" data-source="S028">原文 · p.7</button>
+      <button type="button" class="cm-source-btn" data-source="S029">原文 · p.8</button>
+    </div>
+  </footer>
+</section></div><div class="paper-chapter" id="chapter-predictors"><section id="predictors" data-node="predictors" class="chapter-container">
+  <header class="chapter-header">
+    <h1>预测因子：经济与制度的映射</h1>
+    <p class="chapter-lead">国家层面的经济指标和文化指标显著预测道德偏好。不平等社会更容忍基于地位的歧视，法治薄弱地区对违规行为更宽容。</p>
+  </header>
+
+  <div class="evidence-grid">
+    <div class="evidence-card">
+      <h3>核心发现：文化经济预测因子</h3>
+      <ul class="claim-list">
+        <li><strong>个人主义文化</strong>更倾向于保护多数人，<strong>集体主义文化</strong>对保护年轻人的偏好较弱。</li>
+        <li><strong>人均 GDP 高/法治水平高</strong>的国家，对违法行人的保护意愿更低（更强调规则）。</li>
+        <li><strong>经济不平等（基尼系数）高</strong>的国家，在社会地位偏好上更不平等（更保护高地位者）。</li>
+        <li><strong>女性健康生存差距小</strong>的国家，更倾向于保护女性角色。</li>
+      </ul>
+      <div class="source-ref">
+        <button type="button" class="source-btn" data-source="S030">原文 · p.9</button>
+        <button type="button" class="source-btn" data-source="S034">原文 · p.11</button>
+      </div>
+    </div>
+    
+    <div class="evidence-card visual-card">
+      <h3>数据可视化：AMCE 效应值</h3>
+      <div id="predictors--amce-chart-container" class="chart-wrapper">
+        <canvas id="predictors--amce-chart" width="400" height="300" aria-label="平均边际因果效应条形图"></canvas>
+      </div>
+      <p class="chart-note">数据来源：Figure 2(a) AMCE 分析。显示全球平均偏好强度。</p>
+    </div>
+  </div>
+
+  <div class="interaction-workbench">
+    <h2>社会结构模拟器</h2>
+    <p class="interaction-desc">拖动滑块改变国家宏观指标，观察道德偏好曲线的同步变化。教学示例，非论文训练权重。</p>
+    
+    <div class="simulator-grid">
+      <div class="controls-panel">
+        <div class="control-group">
+          <label for="predictors--gini-slider">经济不平等 (基尼系数): <span id="predictors--gini-val">0.40</span></label>
+          <input type="range" id="predictors--gini-slider" min="0.20" max="0.65" step="0.01" value="0.40">
+        </div>
+        <div class="control-group">
+          <label for="predictors--rule-slider">法治水平 (0-10): <span id="predictors--rule-val">6.0</span></label>
+          <input type="range" id="predictors--rule-slider" min="0" max="10" step="0.1" value="6.0">
+        </div>
+        <div class="control-group">
+          <label for="predictors--gdp-slider">人均 GDP (对数): <span id="predictors--gdp-val">9.5</span></label>
+          <input type="range" id="predictors--gdp-slider" min="7.0" max="11.5" step="0.1" value="9.5">
+        </div>
+        <div class="control-group">
+          <label for="predictors--indiv-slider">个人主义指数: <span id="predictors--indiv-val">50</span></label>
+          <input type="range" id="predictors--indiv-slider" min="0" max="100" step="1" value="50">
+        </div>
+        <button type="button" id="predictors--reset-sim" class="reset-btn">复位默认值</button>
+      </div>
+      
+      <div class="output-panel">
+        <div class="output-card">
+          <h4>保护高社会地位者偏好</h4>
+          <div class="metric-display">
+            <span id="predictors--status-pref-val" class="metric-value">0.00</span>
+            <span class="metric-unit">(ΔPr)</span>
+          </div>
+          <div class="bar-container">
+            <div id="predictors--status-bar" class="metric-bar" style="width: 50%;"></div>
+          </div>
+          <p class="metric-desc">基尼系数越高，越倾向于保护高地位者。</p>
+        </div>
+        
+        <div class="output-card">
+          <h4>保护违法行人偏好</h4>
+          <div class="metric-display">
+            <span id="predictors--illegal-pref-val" class="metric-value">0.00</span>
+            <span class="metric-unit">(ΔPr)</span>
+          </div>
+          <div class="bar-container">
+            <div id="predictors--illegal-bar" class="metric-bar" style="width: 50%;"></div>
+          </div>
+          <p class="metric-desc">法治/GDP 越低，对违法行人越宽容。</p>
+        </div>
+        
+        <div class="output-card">
+          <h4>保护多数人偏好</h4>
+          <div class="metric-display">
+            <span id="predictors--many-pref-val" class="metric-value">0.00</span>
+            <span class="metric-unit">(ΔPr)</span>
+          </div>
+          <div class="bar-container">
+            <div id="predictors--many-bar" class="metric-bar" style="width: 50%;"></div>
+          </div>
+          <p class="metric-desc">个人主义越强，越倾向于保护更多人。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="limitations-section">
+    <h3>局限与说明</h3>
+    <ul>
+      <li>相关性不等于因果性：观察到的关联反映了潜在深层机制，但未确定因果方向。</li>
+      <li>样本自选择偏差：参与者为自选择样本，可能无法完全代表各国总体人口。</li>
+      <li>教学参数：模拟器使用简化公式展示趋势，非真实回归权重。</li>
+      <li>数据缺失处理：表格中 null 值不视为 0，保持原始数据完整性。</li>
+    </ul>
+  </div>
+</section></div><div class="paper-chapter" id="chapter-limitations"><section id="limitations" data-node="limitations" class="chapter-container">
+  <header class="chapter-header">
+    <h1>局限与边界：自选择与确定性假设</h1>
+    <p class="chapter-takeaway">样本为自选择（非代表性），情境为确定性（无概率模糊），未包含亲属关系。数据应视为基线而非政策终局。</p>
+  </header>
+
+  <div class="content-grid">
+    <div class="narrative-column">
+      <article class="text-block">
+        <h2>样本偏差：自选择性质</h2>
+        <p>该研究通过病毒式传播的在线平台收集了全球数百万人的数据，这种方法虽突破了传统学术调查在成本和规模上的限制，但也导致样本具有<strong>自选择性质（self-selected）</strong>。这意味着样本不能保证完全匹配各国的人口社会统计学特征，尽管宏观经济学变量能预测部分反应，且跨社会差异与文化集群吻合，但决策者不应将此数据视为社会偏好的“最终定论”。</p>
+        <button type="button" class="source-btn" data-source="S037">原文 · p.12</button>
+      </article>
+
+      <article class="text-block">
+        <h2>情境简化：确定性假设</h2>
+        <p>在实验设计层面，为了保持项目的可处理性（tractability），研究做出了简化假设：角色分类（如成人、儿童）和生死结果均被设定为 <strong>100% 确定</strong>，未引入现实技术中必然存在的不确定性。此外，实验未操纵受访者与角色之间的假设关系（如亲属、配偶），虽然此前针对美国受访者的工作未发现该变量有强影响，但在全球范围内这一因素仍需进一步探讨。</p>
+        <button type="button" class="source-btn" data-source="S037">原文 · p.12</button>
+      </article>
+
+      <article class="text-block">
+        <h2>时间维度：抽象偏好基线</h2>
+        <p>最后，该实验捕捉的是自动驾驶汽车（AVs）实际部署前的道德偏好状态。一旦 AVs 上路并产生实际伤亡，公众讨论将从抽象受害者转向具体受害者，心理负担的变化可能导致偏好发生改变。因此，当前数据应被视为理解未来变化的基线，而非永恒不变的伦理准则。</p>
+        <button type="button" class="source-btn" data-source="S037">原文 · p.12</button>
+      </article>
+    </div>
+
+    <div class="interactive-column">
+      <div class="limitation-card">
+        <h3>边界检查表</h3>
+        <p class="card-intro">点击“现实复杂性”按钮，查看实验未包含的未知变量。</p>
+        
+        <div id="limitations--reality-check-display" class="check-display">
+          <div class="status-item default">等待检查...</div>
+        </div>
+
+        <div class="controls">
+          <button id="limitations--btn-reality-mode" type="button" class="action-btn">现实复杂性检查</button>
+          <button id="limitations--btn-reset" type="button" class="reset-btn">复位</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section></div><div class="paper-chapter" id="chapter-implications"><section id="implications" data-node="implications" class="chapter-container">
+  <header class="chapter-header">
+    <h1>政策启示：从数据到对话</h1>
+    <p class="lead">数据应作为公共咨询的催化剂，而非直接指令。通用伦理需建立在三大共识之上，同时允许局部文化差异的定制。</p>
+  </header>
+
+  <div class="content-flow">
+    <article class="text-block">
+      <p>“道德机器”项目旨在发起一场全球对话，让公众向算法设计者和政策制定者表达偏好。数据分析揭示了三个可作为通用机器伦理基石的强偏好：保护人类生命、保护更多生命、保护年轻生命。这些偏好即使在未被政策完全采纳的情况下，也是讨论的重要起点。</p>
+      <p>然而，并非所有偏好都适合转化为统一政策。例如，基于性别或社会地位的差异化对待在不同国家间差异巨大，反映了深层的社会平等主义规范差异。在某些经济不平等程度较高或女性生存健康指标较差的国家，相应的道德判断也表现出更强的不平等倾向。这表明单一的全球伦理代码可能无法涵盖所有情境。</p>
+      <p>尽管存在显著的文化变异，但 broad regions（广阔区域）显示的相对一致性表明，达成某种程度的共识机器伦理并非不可能。政策制定者应利用这些数据作为组织包容性公共咨询的催化剂，而不是直接照搬。</p>
+      <div class="source-bar">
+        <button type="button" class="source-btn" data-source="S036">原文 · p.11</button>
+        <button type="button" class="source-btn" data-source="S037">原文 · p.12</button>
+        <button type="button" class="source-btn" data-source="S038">原文 · p.13</button>
+      </div>
+    </article>
+
+    <div class="interactive-workbench" id="implications--policy-builder-workbench">
+      <div class="workbench-header">
+        <h2>政策构建器：共识与差异</h2>
+        <p>尝试组合‘全球共识’与‘本地变量’，观察系统反馈。此工具演示为何完全统一的政策在特定文化议题上可能失效。</p>
+      </div>
+      
+      <div class="builder-grid">
+        <div class="control-panel">
+          <div class="control-group">
+            <label for="implications--global-consensus">全球共识基础 (Global Consensus)</label>
+            <select id="implications--global-consensus">
+              <option value="human">保护人类生命 (Sparing Humans)</option>
+              <option value="more">保护更多生命 (Sparing More)</option>
+              <option value="young">保护年轻生命 (Sparing Young)</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="implications--local-variable">本地变量 (Local Variable)</label>
+            <select id="implications--local-variable">
+              <option value="none">无额外变量</option>
+              <option value="gender">性别偏好 (Gender Preference)</option>
+              <option value="status">社会地位偏好 (Social Status)</option>
+              <option value="lawful">守法状态 (Lawful Crossing)</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="implications--cultural-cluster">目标文化集群 (Cultural Cluster)</label>
+            <select id="implications--cultural-cluster">
+              <option value="western">西方集群 (Western)</option>
+              <option value="eastern">东方集群 (Eastern)</option>
+              <option value="southern">南方集群 (Southern)</option>
+            </select>
+          </div>
+
+          <button id="implications--evaluate-policy" type="button">评估政策可行性</button>
+          <button id="implications--reset-policy" type="button" class="secondary">复位</button>
+        </div>
+
+        <div class="visualization-panel">
+          <div id="implications--policy-result" class="result-card hidden">
+            <h3 id="implications--result-title"></h3>
+            <p id="implications--result-desc"></p>
+            <div id="implications--result-reasoning" class="reasoning-box"></div>
+          </div>
+          <div id="implications--default-message" class="placeholder-msg">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <p>请选择参数并点击“评估”以查看政策在不同文化背景下的接受度模拟。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section></div><footer class="reading-limitations"><h2>带着边界理解这篇论文</h2><p>数据基于自选择样本，不能完全代表各国人口统计学特征，政策制定需谨慎参考。</p><p>实验情境设定为 100% 确定性，未包含现实自动驾驶中的感知不确定性或概率风险。</p><p>未考察受访者与受试者之间的亲属或社会关系对决策的影响。</p><p>偏好数据反映的是 AV 部署前的抽象态度，实际事故发生后公众心理可能发生变化。</p><p>AMCE 值为因果边际效应，非简单的经验概率差，解读时需考虑联合分布背景。</p></footer></main><script nonce="ITchEm8I-Wp0_nkB4VcqrZhGTjSFIdhT">const PM_CONFIG={"edition": "a9958210-2077-4f59-b9e3-28e28dcbe47c", "document": "pdf-59c4f6158add045b", "channel": "inspection", "data": {"tables": [{"id": "p6-fig2a", "title": "Figure 2. (a) Average marginal causal effect (AMCE) for each preference.", "population": "Not explicitly stated; inferred from context as general population used in Moral Machine study", "columns": ["Intervention", "Relation to AV", "Gender", "Fitness", "Social Status", "Law", "Age", "No. Characters", "Species"], "rows": [{"id": "row1", "label": "Preference for action", "values": {"Intervention": "Preference for action", "Relation to AV": "Sparring Passengers", "Gender": "Sparring Males", "Fitness": "Sparring the Larger", "Social Status": "Sparring the Unwealthy", "Law": "Sparring Lower Status", "Age": "Sparring the Elderly", "No. Characters": "Sparring Fewer Characters", "Species": "Sparring Pets"}}, {"id": "row2", "label": "Preference for inaction", "values": {"Intervention": "Preference for inaction", "Relation to AV": "Sparing Pedestrians", "Gender": "Sparring Females", "Fitness": "Sparring the Fit", "Social Status": "Sparring the Wealthy", "Law": "Sparring Higher Status", "Age": "Sparring the Young", "No. Characters": "Sparring More Characters", "Species": "Sparring Humans"}}], "notes": ["In each row, ΔPr is the difference the probability of sparing characters possessing the attribute on the right, and the probability of sparing characters possessing the attribute on the left, aggregated over all other attributes.", "For example (age) the probability of sparing young characters is 0.49 (SE = 0.0008) greater than the probability of sparing older characters.", "The 95% CIs of the means are omitted due to their insignificant width, given the sample size.", "For the number of characters (No. characters), effect sizes are shown for each number of additional characters (1 to 4); the effect size for 2 additional characters overlaps with the mean effect of the attribute.", "(b) Relative advantage or penalty for each character, compared to an adult man or woman.", "For each character, ΔPr is the difference between the probability of sparing this character (when presented alone) and the probability of sparing an adult man or woman.", "For example, the probability of sparing a girl is 0.15 (SE = 0.003) higher than the probability of sparing an adult man/woman."], "page": 6}, {"id": "p6-fig2b", "title": "Figure 2. (b) Relative advantage or penalty for each character, compared to an adult man or woman.", "population": "Not explicitly stated; inferred from context as general population used in Moral Machine study", "columns": ["Character"], "rows": [{"id": "char1", "label": "Stroller", "values": {"Character": "Stroller"}}, {"id": "char2", "label": "Girl", "values": {"Character": "Girl"}}, {"id": "char3", "label": "Boy", "values": {"Character": "Boy"}}, {"id": "char4", "label": "Pregnant", "values": {"Character": "Pregnant"}}, {"id": "char5", "label": "Male Doctor", "values": {"Character": "Male Doctor"}}, {"id": "char6", "label": "Female Doctor", "values": {"Character": "Female Doctor"}}, {"id": "char7", "label": "Female Athlete", "values": {"Character": "Female Athlete"}}, {"id": "char8", "label": "Female Executive", "values": {"Character": "Female Executive"}}, {"id": "char9", "label": "Male Athlete", "values": {"Character": "Male Athlete"}}, {"id": "char10", "label": "Male Executive", "values": {"Character": "Male Executive"}}, {"id": "char11", "label": "Large Woman", "values": {"Character": "Large Woman"}}, {"id": "char12", "label": "Large Man", "values": {"Character": "Large Man"}}, {"id": "char13", "label": "Homeless", "values": {"Character": "Homeless"}}, {"id": "char14", "label": "Old Man", "values": {"Character": "Old Man"}}, {"id": "char15", "label": "Old Woman", "values": {"Character": "Old Woman"}}, {"id": "char16", "label": "Dog", "values": {"Character": "Dog"}}, {"id": "char17", "label": "Criminal", "values": {"Character": "Criminal"}}, {"id": "char18", "label": "Cat", "values": {"Character": "Cat"}}], "notes": ["For each character, ΔPr is the difference between the probability of sparing this character (when presented alone) and the probability of sparing an adult man or woman.", "For example, the probability of sparing a girl is 0.15 (SE = 0.003) higher than the probability of sparing an adult man/woman."], "page": 6}], "sources": {"S001": {"id": "pdf-59c4f6158add045b-p1-b0", "page": 1, "quote": "MIT Open Access Articles"}, "S002": {"id": "pdf-59c4f6158add045b-p1-b1", "page": 1, "quote": "The Moral Machine experiment"}, "S003": {"id": "pdf-59c4f6158add045b-p1-b2", "page": 1, "quote": "The MIT Faculty has made this article openly available. \nhow this access benefits you. Your story matters.\n \nPlease share"}, "S004": {"id": "pdf-59c4f6158add045b-p1-b3", "page": 1, "quote": "Citation: Awad, E. et al. \"The Moral Machine experiment.\" Nature 563, 7729 (October 2018): 59–64 © 2018 Springer Nature \nLimited"}, "S005": {"id": "pdf-59c4f6158add045b-p1-b4", "page": 1, "quote": "Published Version: https://doi.org/10.1038/s41586-018-0637-6"}, "S006": {"id": "pdf-59c4f6158add045b-p1-b5", "page": 1, "quote": "Publisher: Springer Science and Business Media LLC"}, "S007": {"id": "pdf-59c4f6158add045b-p1-b6", "page": 1, "quote": "Permanent Link: https://hdl.handle.net/1721.1/125065"}, "S008": {"id": "pdf-59c4f6158add045b-p1-b7", "page": 1, "quote": "Version: Author's final manuscript"}, "S009": {"id": "pdf-59c4f6158add045b-p1-b8", "page": 1, "quote": "Terms of use: Article is made available in accordance with the publisher's policy and may be subject to US copyright law. Please \nrefer to the publisher's site for terms of use."}, "S010": {"id": "pdf-59c4f6158add045b-p2-b0", "page": 2, "quote": "The Moral Machine Experiment: 40 Million \nDecisions and the Path to Universal Machine Ethics"}, "S011": {"id": "pdf-59c4f6158add045b-p2-b1", "page": 2, "quote": "Edmond Awad​1​, Sohan Dsouza​1​, Richard Kim​1​, Jonathan Schulz​2​, Joseph Henrich​2​, Azim \nShariff​3​*, Jean-François Bonnefon​4​*, Iyad Rahwan​1,5​*"}, "S012": {"id": "pdf-59c4f6158add045b-p2-b2", "page": 2, "quote": "1​The Media Lab, Massachusetts Institute of Technology, Cambridge, MA 02139, USA"}, "S013": {"id": "pdf-59c4f6158add045b-p2-b3", "page": 2, "quote": "2​Department of Human Evolutionary Biology, Harvard University, Cambridge, MA 02138, USA"}, "S014": {"id": "pdf-59c4f6158add045b-p2-b4", "page": 2, "quote": "3​Department of Psychology & Social Behavior, University of California, Irvine, CA 92697, USA"}, "S015": {"id": "pdf-59c4f6158add045b-p2-b5", "page": 2, "quote": "4​Toulouse School of Economics (TSM-R), CNRS, Université Toulouse Capitole, Toulouse, France"}, "S016": {"id": "pdf-59c4f6158add045b-p2-b6", "page": 2, "quote": "5​Institute for Data, Systems & Society, Massachusetts Institute of Technology, Cambridge, MA 02139, USA"}, "S017": {"id": "pdf-59c4f6158add045b-p2-b7", "page": 2, "quote": "* Corresponding authors: ​shariffa@uci.edu​; ​jean-francois.bonnefon@tse-fr.eu​; ​irahwan@mit.edu"}, "S018": {"id": "pdf-59c4f6158add045b-p2-b8", "page": 2, "quote": "Abstract"}, "S019": {"id": "pdf-59c4f6158add045b-p2-b9", "page": 2, "quote": "With the rapid development of Artificial Intelligence technology come widespread concerns\n \n \n \n \n \n \n \n \n \n \n \nabout how machines will behave in morally charged situations. Addressing these concerns\n \n \n \n \n \n \n \n \n \n \n \n \nraises the major challenge of quantifying societal expectations about the ethical principles that\n \n \n \n \n \n \n \n \n \n \n \n \n \nshould guide machine behavior. To address this challenge, we deployed the Moral Machine,\n \n \n \n \n \n \n \n \n \n \n \n \n \nan Internet-based experimental platform that is designed to explore the multi-dimensional\n \n \n \n \n \n \n \n \n \n \n \nmoral dilemmas faced by autonomous vehicles. This platform enabled us to gather 40 million\n \n \n \n \n \n \n \n \n \n \n \n \n \n \ndecisions in ten languages from over 2.3 million people in 233 countries and territories, and\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nthus to assess the paths and obstacles to machine ethics. First, we summarize global moral\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \npreferences, some of them strong (e.g., sparing more lives or younger individuals), and some\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nof them weak (e.g., sparing women, sparing pedestrians). Second, we document individual\n \n \n \n \n \n \n \n \n \n \n \n \nvariations of these preferences, based on respondents’ demographics (e.g., age, gender,\n \n \n \n \n \n \n \n \n \n \n \nincome), and find that demographics do not change the direction of any preference. Third,\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nwe report cross-cultural ethical variation, and uncover three major clusters of countries\n \n \n \n \n \n \n \n \n \n \n \n \nexhibiting substantial differences along key moral preferences about autonomous vehicles.\n \n \n \n \n \n \n \n \n \n \nFourth, we show that these differences correlate with modern institutions, but also with deep\n \n \n \n \n \n \n \n \n \n \n \n \n \n \ncultural traits. We discuss how these three layers of preferences can contribute to developing\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nglobal, harmonious, and socially acceptable principles for machine ethics. All data used in this\n \n \n \n \n \n \n \n \n \n \n \n \n \n \narticle can be accessed and downloaded at ​https://goo.gl/JXRrBP​."}, "S020": {"id": "pdf-59c4f6158add045b-p2-b10", "page": 2, "quote": "We are entering an age in which machines are not only tasked to promote well-being and minimize harm,\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nbut also to distribute the well-being they create, and the harm they cannot eliminate. Distributing well-being\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nand harm inevitably creates tradeoffs, whose resolution falls in the moral domain​1​,​2​,​3​. Think of an\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nautonomous vehicle (AV) that is about to crash, and cannot find a trajectory that would save everyone.\n \n \n \n \n \n \n \n \n \n \n   \n \n \n \n \n \nShould it swerve onto one jaywalking teenager to spare its three elderly passengers? Should it swerve away"}, "S021": {"id": "pdf-59c4f6158add045b-p3-b0", "page": 3, "quote": "from a group of children and kill a single adult passenger instead? Even in the more common instances in\n   \n \n \n \n \n   \n \n \n \n \n \n \n \n \n \n \n \nwhich harm is not inevitable, but just possible, AVs will need to decide how to divvy up the risk of harm\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nbetween the different stakeholders on the road. Car manufacturers and policymakers are currently struggling\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nwith these moral dilemmas, in large part because they cannot be solved by any simple normative ethical\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nprinciples like Asimov's laws of robotics​4​.  \n \nAsimov's laws were not designed to solve the problem of universal machine ethics, and they were not even\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ndesigned to let machines distribute harm between humans. They were a narrative device whose goal was to\n \n \n \n \n \n \n \n \n \n   \n \n \n \n \n \n \ngenerate good stories, by showcasing how challenging it is to create moral machines with a dozen lines of\n \n \n \n \n \n \n     \n \n \n \n \n   \n \n \n \ncode. And yet, we do not have the luxury to give up on creating moral machines​5​,​6​,​7​,​8​. AVs will cruise our\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nroads soon, necessitating agreement on the principles that should apply when, inevitably, life-threatening\n \n \n \n \n \n \n \n \n \n \n \n \n \ndilemmas emerge. The frequency at which these dilemma will emerge is extremely hard to estimate, just as it\n \n \n \n \n \n \n \n \n \n   \n \n \n \n \n \n   \nis extremely hard to estimate the rate at which human drivers find themselves in comparable situations.\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nHuman drivers who die in crashes cannot report whether they were faced with a dilemma; and human\n \n \n \n \n \n \n \n \n \n \n \n \n   \n \n \n \ndrivers who survive a crash may not have realized that they were in a dilemma situation. Note though that\n \n \n   \n \n \n \n \n \n \n \n \n   \n \n \n \n \n \nethical guidelines for AV choices in dilemma situations do not depend on the frequency of these situations.\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nWhether these cases are rare, very rare, or extremely rare, we need to agree beforehand on how they should\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nbe solved. \n \nThe keyword here is “we”. As emphasized by former U.S. president Barack Obama​9​, consensus in this matter\n \n \n   \n \n \n \n \n \n \n \n \n \n \n \n \n \nis going to be important. Decisions about the ethical principles that will guide AVs cannot be left to solely to\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \neither the engineers or the ethicists. For consumers to switch from traditional human-driven cars to AVs,\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nand for the wider public to accept the proliferation of AI-driven vehicles on their roads, both groups will\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nneed to understand the origins of the ethical principles programmed into these vehicles​10​. In other words,\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \neven if ethicists were to agree on how AVs should solve moral dilemmas, their work would be useless if\n   \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n   \ncitizens were to disagree with their solution, and thus opt out of the future that AVs promise in lieu of the\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nstatus quo. Any attempt to devise AI ethics must be at least cognizant of public morality.  \n \nAccordingly, we need to gauge social expectations about the way AVs should solve moral dilemmas. This\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nenterprise, however, is not without challenges​11​. The first challenge comes from the high-dimensionality of\n \n   \n \n \n \n \n \n \n \n \n \n \n \nthe problem. In a typical survey, one may test whether people prefer to spare many lives rather than few​9,12​,​13​;\n \n \n   \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nor whether people prefer to spare the young rather than the elderly​14​,​15​; or whether people prefer to spare\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \npedestrians who cross legally, rather than pedestrians who jaywalk; or yet some other preference, or a simple\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n   \n \ncombination of two or three of these preferences. But combining a dozen of such preferences leads to\n \n \n \n \n \n \n \n \n \n   \n \n \n \n \n \n \nmillions of possible scenarios, requiring a sample size that defies any conventional method of data collection.  \n \nThe second challenge makes sample size requirements even more daunting: if we are to make progress\n \n \n \n \n \n \n \n \n \n   \n \n \n \n \n \ntoward universal machine ethics (or at least identify the obstacles thereto), we need a fine-grained\n \n \n \n \n \n \n \n \n \n \n \n \n   \n \nunderstanding of how different individuals and different countries may differ in their ethical preferences​16​,​17​.\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nAs a result, data must be collected worldwide, in order to assess demographic and cultural moderators of\n   \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nethical preferences."}, "S022": {"id": "pdf-59c4f6158add045b-p4-b0", "page": 4, "quote": "As a response to these challenges, we designed the Moral Machine, a multilingual online “serious game” for\n   \n \n \n \n \n \n \n \n \n   \n \n \n \n \n \ncollecting large-scale data on the way citizens would want AVs to solve moral dilemmas in the context of\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nunavoidable accidents. The Moral Machine attracted worldwide attention, and allowed us to collect 39.61\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nmillion decisions in 233 countries, dependencies, or territories (Fig.1 (a)). In the main interface of the Moral\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nMachine, users are shown unavoidable accident scenarios with two possible outcomes, depending on\n \n \n \n \n \n \n \n \n \n \n \n \n \nwhether the AV swerves or stays on course (Fig.1 (b)). They then click on the outcome that they find\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \npreferable. Accidents scenarios are generated by the Moral Machine following an exploration strategy that\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nfocuses on nine factors: sparing humans (vs. pets), staying on course (vs. swerving), sparing passengers (vs.\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \npedestrians), sparing more lives (vs. fewer lives), sparing men (vs. women), sparing the young (vs. the\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nelderly), sparing pedestrians who cross legally (vs. jaywalk), sparing the fit (vs. the less fit), and sparing those\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nwith higher social status (vs. lower social status). Additional characters were included in some scenarios (e.g.,\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ncriminals, pregnant women, doctors), who were not linked to any of these nine factors. These characters\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nmostly served to make scenarios less repetitive for the users. After completing a 13-accident session,\n \n \n \n \n \n \n \n \n \n \n \n   \n \n \nparticipants can complete a survey that collects, among other variables, demographic information such as\n \n \n   \n \n \n \n \n \n \n \n \n \n \ngender, age, income, and education, as well as religious and political attitudes. Participants are geolocated so\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nthat their coordinates can be used in a clustering analysis that seeks to identifies groups of countries or\n \n \n \n \n \n \n   \n \n \n \n \n \n \n \n \n \n \nterritories with homogeneous vectors of moral preferences."}, "S023": {"id": "pdf-59c4f6158add045b-p4-b1", "page": 4, "quote": "Figure 1. ​(a) World map highlighting the locations of Moral Machine visitors. Each point represents a location from which at least one visitor made at least one\n   \n \n \n \n \n \n \n \n \n \n \n \n \n   \n \n \n \n \n \n \n \n \n \n \n \ndecision. The number of visitors or decisions from each location are not represented. ​(b) ​Moral Machine interface. An AV experiences a sudden brake failure.\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n   \n \n \n \nStaying on course would result in the death of two elderly men and an elderly woman, crossing on a “do not cross” signal (left). Swerving would result in the death of\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n   \n \n \n \n \n \n \n \n \n \n \n \n \nthree passengers, an adult man, an adult woman, and a boy (right).  \n \nHere we report the findings of the Moral Machine experiment, focusing on four levels of analysis, and\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nconsidering for each level of analysis how the Moral Machine results can trace our path to universal machine\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nethics. First, what are the relative importances of the nine preferences we explored on the platform, when\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ndata are aggregated worldwide? Second, does the intensity of each preference depend on individual\n \n \n \n \n \n \n \n \n \n \n \n \n \n \ncharacteristics of respondents? Third, can we identify clusters of countries with homogeneous vectors of\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nmoral preferences? Fourth, do cultural and economic variations between countries predict variations in their\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nvectors of moral preferences?"}, "S024": {"id": "pdf-59c4f6158add045b-p5-b1", "page": 5, "quote": "GLOBAL PREFERENCES \n \nTo test the relative importance of the nine preferences simultaneously explored by the Moral Machine, we\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nused conjoint analysis to compute the average marginal component effect (AMCE) of each attribute (male\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ncharacter vs. female character, passengers vs. pedestrians, etc.)​18​. Fig.2 (a) shows the unbiased estimates of\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nnine AMCEs extracted from the Moral Machine data. In each row, the bar shows the difference between the\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nprobability of sparing characters with the attribute on the right side, and the probability of sparing the\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ncharacters with the attribute on the left side, over the joint distribution of all other attributes (see SI for\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ncomputational details and assumptions).  \n \nAs shown in Fig.2 (a), the strongest preferences are observed for sparing humans over animals, sparing more\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nlives, and sparing young lives. Accordingly, these three preferences may be considered essential building\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nblocks for machine ethics, or at least essential topics to be considered by policymakers. Indeed, these three\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \npreferences starkly differ in the level of controversy they are likely to raise among ethicists.  \n \nConsider, as a case in point, the ethical rules proposed in 2017 by the German Ethics Commission on\n \n   \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nAutomated and Connected Driving​19​. This report represents the first and only attempt so far to provide\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nofficial guidelines for the ethical choices of AVs. As such, it provides an important context for interpreting\n \n \n \n \n \n \n \n \n \n   \n \n \n \n \n \n \nour findings and their relevance to other countries which would attempt to follow the German example in\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nthe future. German Ethical Rule #7 unambiguously states that in dilemma situations, the protection of\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nhuman life should enjoy top priority over the protection of other animal life. This rule is in clear agreement\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n   \n \n \n \nwith social expectations assessed through the Moral Machine. On the other hand, German Ethical Rule #9\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ndoes not take a clear stance on whether and when AVs should be programmed to sacrifice the few to spare\n \n \n   \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nthe many, but leaves this possibility open: it is important, thus, to know that there would be strong public\n \n \n \n \n \n \n     \n \n \n \n \n \n \n \n \n \n \nagreement with such programming, even if it is not mandated through regulation. \n \nIn contrast, German Ethical Rule #9 also states that any distinction based on personal features, such as age,\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nshould be prohibited. This clearly clashes with the strong preference for sparing the young (such as children)\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nthat is assessed through the Moral Machine (see Fig. 2b for a stark illustration: the four most spared\n \n \n \n \n \n \n \n \n \n \n   \n \n \n \n \n \n \ncharacters are the baby, the little girl, the little boy, and the pregnant woman). This does not mean that\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \npolicymakers should necessarily go with public opinion and allow AVs to preferentially spare children, or for\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nthat matter, women over men, overweight persons over athletes, or executives over homeless persons--all of\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nwhich we see weaker but clear effects for. But given the strong preference for sparing children, policymakers\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nmust be aware of a dual challenge if they decide not to give a special status to children: the challenge of\n \n \n \n   \n \n   \n \n \n \n \n   \n \n \n \n \n \n \n \nexplaining the rationale for such a decision, and the challenge of handling the strong backlash that will\n \n \n \n \n   \n \n \n \n \n \n \n \n \n \n \n \ninevitably occur the day an AV sacrifices children in a dilemma situation."}, "S025": {"id": "pdf-59c4f6158add045b-p6-b0", "page": 6, "quote": "Figure 2. (a) ​Average marginal causal effect (AMCE) for each preference. In each row,\nis the difference between the probability of sparing characters\n   \n \n \n \n \n \n \n \n \n \n \n \n \n Pr\nΔ\n   \n \n \n \n \n \n \n \n \npossessing the attribute on the right, and the probability of sparing characters possessing the attribute on the left, aggregated over all other attributes. For example\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n(age) the probability of sparing young characters is 0.49 (SE = 0.0008) greater than the probability of sparing older characters. The 95% CIs of the means are omitted\n \n \n \n \n \n \n   \n \n   \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ndue to their insignificant width, given the sample size. For the number of characters (No. characters), effect sizes are shown for each number of additional characters\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n(1 to 4); the effect size for 2 additional characters overlaps with the mean effect of the attribute. ​(b) Relative advantage or penalty for each character, compared to\n \n \n \n \n \n \n   \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n   \nan adult man or woman. For each character,\nis the difference the between probability of sparing this character (when presented alone) and the probability of\n \n \n \n \n \n \n \n \n Pr\nΔ\n   \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nsparing one adult man or woman. For example, the probability of sparing a girl is 0.15 (SE = 0.003) higher than the probability of sparing an adult man/woman."}, "S026": {"id": "pdf-59c4f6158add045b-p6-b1", "page": 6, "quote": "Policymakers cannot solely rely on global trends when assessing social expectations, though. For machine\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nethics to be truly universal, preferences should be shared by all people, in all countries. If these conditions are\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n   \n \n \n \nnot met, then policymakers should be aware of individual and national variations in the preferences extracted\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nfrom the Moral Machine."}, "S027": {"id": "pdf-59c4f6158add045b-p7-b0", "page": 7, "quote": "INDIVIDUAL VARIATIONS \n \nWe assessed individual variations by further analyzing the responses of the subgroup of Moral Machine\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nusers (N = 492,921) who filled the optional demographic survey on age, education, gender, income, and\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \npolitical and religious views, to assess whether preferences were modulated by these six characteristics. First,\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nwhen we include all six characteristic variables in regression-based estimators of each of the nine attributes,\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nwe find that individual variations have no sizable impact on any of the nine attributes (all below 0.1; see\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nFigure S6 in SI). Of these, the most notable impacts are driven by gender and religiosity of respondents. For\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nexample, male respondents are 0.06 percentage point less inclined to spare females and 0.09 percentage point\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nmore inclined to spare humans compared to female respondents, while one increase in standard deviation of\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nreligiosity of respondent is associated with 0.09 more inclination to spare humans, 0.08 less inclination to\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nspare the lawful, 0.06 more inclination to spare pedestrians, and 0.06 less inclination to spare the fit. \n \nMore importantly, none of the six characteristics splits its subpopulations into opposing directions of effect.\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nBased on a unilateral dichotomization of each of the six attributes, resulting in two subpopulations per each,\n \n   \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nPr has a positive value for all considered subpopulations e.g. both male and female respondents indicated\n \nΔ"}, "S028": {"id": "pdf-59c4f6158add045b-p7-b1", "page": 7, "quote": "preference for Sparing Females, but the latter group showed stronger preference (see Figure S5 in SI). In\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nsum, the individual variations we observe are theoretically important, but not essential information for\n \n \n \n \n \n \n \n \n \n \n \n \n \n \npolicymakers. \n \n \n \n \nCULTURAL CLUSTERS \n \nGeolocation allowed us to identify the country of residence of Moral Machine respondents, and to seek\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nclusters of countries exhibiting homogeneous vectors of moral preferences. We selected the 130 countries\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nwith at least 100 respondents (N range = [101 - 448,125]), standardized the 9 target AMCEs of each country,\n \n \n \n \n \n \n   \n   \n \n \n   \n \n \n \n \n \nand conducted a hierarchical clustering on these 9 scores, using Euclidean distance and ward variance\n \n   \n \n \n \n   \n \n \n \n \n \n \n \nminimization algorithm​20​. This analysis identified three distinct “moral clusters” of countries. These are\n \n \n \n \n \n \n \n \n \n \n \n \n \nshown in Fig.3 (a), and are broadly consistent with both geographical and cultural proximity according to the\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nInglehart-Welzel Cultural Map 2010-2014​21​.  \n \nThe first cluster, which we label the ​Western cluster, contains North America as well as many European\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ncountries of Protestant, Catholic, and Orthodox Christian cultural groups. The internal structure within this\n \n \n \n \n \n \n \n \n \n \n \n \n \n \ncluster also exhibits notable face validity, with a sub-cluster containing Protestant / Scandinavian countries,\n \n \n \n \n \n \n   \n \n \n   \n \n \nand a sub-cluster containing Commonwealth / English-speaking countries. \n \nThe second cluster (which we call the ​Eastern cluster) contains many far eastern countries such as Japan and\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nTaiwan, belonging to the Confucianist cultural group, and Islamic countries such as Indonesia, Pakistan and\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSaudi Arabia."}, "S029": {"id": "pdf-59c4f6158add045b-p8-b0", "page": 8, "quote": "Figure 3. ​(a) ​Hierarchical Cluster of Countries based on average marginal causal effect. One hundred thirty countries with at least 100 respondents are selected.\n   \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nThree colors of the dendrogram branches represent three large clusters -- Western, Eastern, and Southern. Names of the countries are colored according to\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nInglehart-Welzel Cultural Map 2010-2014​21​. Distributions across three clusters reveal stark differences. For instance, cluster 2 (Eastern) mostly consists of countries\n \n \n \n \n \n \n \n \n \n \n \n \n \n   \n \n \n \n \n \nof Islamic and Confucian cultures. In contrast, cluster 1 (Western) has large percentages of Protestant, Catholic, and Orthodox countries of Europe. ​(b) Mean\n \n \n \n \n \n \n \n   \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nAMCE z-scores of the three major clusters. ​Radar plot of the mean AMCE z-scores of three clusters reveals striking pattern of differences between the clusters along\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nthe nine attributes.  For example, countries belonging to the Southern cluster shows strong preference for the female gender compared to those of other clusters."}, "S030": {"id": "pdf-59c4f6158add045b-p9-b0", "page": 9, "quote": "The third cluster (a broadly ​Southern ​cluster) consists of the Latin American countries of Central and South\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nAmerica, in addition to some countries that are characterized in part by French influence e.g., metropolitan\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nFrance, French overseas territories, and territories that were at some point under French leadership. Latin\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nAmerican countries are cleanly separated in their own sub-cluster within the Southern cluster.  \n \nTo rule out the potential effect of language, we found that the same clusters also emerge when the clustering\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nanalysis is restricted to participants who only relied on the pictorial representations of the dilemmas, without\n   \n \n \n \n \n \n \n \n \n \n \n \n \n \n \naccessing their written descriptions (see SI for more details). Furthermore, it is noteworthy that Spain\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nappears in the Western cluster, adjacent to Portugal and other European countries, rather than in the\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSpanish-speaking Latin American sub-cluster.  \n \nThis clustering pattern (which is fairly robust, see SI for details) suggests that geographical and cultural\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nproximity may allow groups of territories to converge on shared preferences for machine ethics.\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nBetween-cluster differences, though, may pose greater problems. As shown in Fig.3 (b), clusters largely differ\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nin the weight they give to some preferences. For example, the preference to spare younger characters rather\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nthan older characters is much less pronounced for countries in the ​Eastern cluster, and much higher for\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ncountries in the ​Southern ​cluster. The same is true about the preference for sparing higher status characters.\n \n \n \n \n \n \n   \n \n \n \n \n \n \n \n \n \nSimilarly, countries in the ​Southern cluster exhibit a much weaker preference for sparing humans over pets,\n \n \n \n \n \n \n   \n \n \n \n \n \n \n \n \ncompared to the other two clusters. Only the (weak) preference for sparing pedestrians over passengers and\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nthe (moderate) preference for sparing the lawful over the unlawful appear to be shared to the same extent in\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nall clusters.  \n \nFinally, we observe some striking peculiarities, like the strong preference for sparing women and the strong\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \npreference for sparing fit characters in the ​Southern ​cluster. All the patterns of similarities and differences\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nunveiled in Fig.3 (b), though, suggests that manufacturers and policymakers should be, if not responsive, at\n \n \n \n \n \n \n \n \n \n \n \n   \n \n   \nleast cognizant of moral preferences in the countries in which they design AI systems and policies. Whereas\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nthe ethical preferences of the public should not necessarily be the primary arbiter of ethical policy, the\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \npeople’s willingness to buy AVs and tolerate them on the roads will depend on the palatability of the ethical\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nrules that are adopted. \n \nCOUNTRY-LEVEL PREDICTORS \n \nPreferences revealed by the Moral Machine are highly correlated to cultural and economic variations\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nbetween countries. These correlations provide support for the external validity of the platform, despite the\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nself-selected nature of our sample. While we do not attempt to pin down the ultimate reason or mechanism\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nbehind these correlations, we document them here as they point at possible deeper explanations of the\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ncross-country differences and the clusters identified in the previous section. \n \nAs an illustration, consider the ​distance between the US and other countries in terms of the moral\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \npreferences extracted from the Moral Machine (MM distance). Figure 4c shows a substantial correlation (\n \n \n \n \n \n \n \n \n \n \n   \n \n \n) between this MM distance and the cultural distance from the US based on the World Values\n.49\nρ = 0"}, "S031": {"id": "pdf-59c4f6158add045b-p9-b1", "page": 9, "quote": "Survey​22​. In other words, the more culturally similar a country is to the US, the more similarly its people play\n \n \n \n \n \n \n \n   \n   \n \n \n \n \n \n \n \n \n \nthe Moral Machine."}, "S032": {"id": "pdf-59c4f6158add045b-p10-b0", "page": 10, "quote": "Figure 4. ​Association between Moral Machine preferences and other variables at the country level. Each panel shows Spearman’s\nand\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n  ρ"}, "S033": {"id": "pdf-59c4f6158add045b-p10-b1", "page": 10, "quote": "p-value for the correlation test between the relevant pair of variables. ​(a) Association between individualism and each of the preference for\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nsparing more characters, and the preference for sparing the young (inset). (b) Association between the preference for sparing the\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nlawful and each of rule of law and log of GDP per capita (inset). (c) Association between cultural distance from US and MM\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ndistance (distance in terms of the moral preferences extracted from the Moral Machine) from US. (d) Association between economic\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ninequality (Gini coefficient) and the preference for sparing higher status. (e) Association between the gender gap in health and\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nsurvival and the preference for sparing females. \n \nNext, we highlight four important cultural and economic predictors of Moral Machine preferences. First, we\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nobserve systematic differences between individualistic cultures and collectivistic cultures​23​. Participants from\n \n \n \n \n \n \n \n \n \n \n \nindividualistic cultures, which emphasize the distinctive value of each individual​23​, show a stronger\n \n \n \n \n \n \n \n \n \n \n \n \n \npreference for sparing the greater number of characters (Figure 4a). Furthermore, participants from\n \n \n \n \n \n \n \n \n \n \n \n \n \ncollectivistic cultures, which emphasize the respect that is due to older members of the community​23​, show a\n \n \n \n \n \n \n   \n \n \n \n \n \n \n \n   \nweaker preference for sparing younger characters (Figure 4a inset). Because the preference for sparing the\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nmany and the preference for sparing the young are arguably the most important for policymakers to\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nconsider, this split between individualistic and collectivistic cultures may prove an important obstacle for\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nuniversal machine ethics. \n \nAnother important (yet under-discussed) question for policymakers to consider is the importance of whether\n \n \n \n \n \n \n \n \n   \n \n \n \n \npedestrians are abiding by or violating the law. Should those who are crossing the street illegally benefit from"}, "S034": {"id": "pdf-59c4f6158add045b-p11-b0", "page": 11, "quote": "the same protection as pedestrians who cross legally? Or should the primacy of their protection in\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ncomparison to other ethical priorities be somewhat reduced? We observe that prosperity (as indexed by GDP\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nper capita​24​) and the quality of rules and institutions (as indexed by the Rule of Law​25​) correlate with a greater\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n   \n \npreference against pedestrians who cross illegally (Figure 4b and inset). In other words, participants from\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ncountries which are poorer and suffer from weaker institutions are more tolerant of pedestrians who cross\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nillegally, presumably because of their experience of lower rule compliance and weaker punishment of rule\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ndeviation​26​. This observation limits the generalizability of the recent German ethics guideline, for example,\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nwhich state that “parties involved in the generation of mobility risks must not sacrifice non-involved parties.” \n \nFinally, our data revealed a set of preferences in which certain characters are preferred for demographic\n \n \n \n   \n \n \n \n \n \n \n \n \n \n \n \nreasons. First, we observe that higher country-level economic inequality (as indexed by the country’s Gini\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ncoefficient) corresponds to how unequally characters of different social status are treated. Those from\n \n \n \n \n \n \n \n \n \n \n \n \n \n \ncountries with less economic equality between the rich and poor also treat the rich and poor less equally in\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nthe Moral Machine. This relationship may be explained by regular encounters with inequality seeping into\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \npeople’s moral preferences, or perhaps because broader egalitarian norms affect both how much inequality a\n \n \n \n \n \n \n \n \n \n \n \n \n \n   \ncountry is willing to tolerate at the societal level, and how much inequality participants endorse in their\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nMoral Machine judgments. Second, the differential treatment of male and female characters in the Moral\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nMachine corresponded to the country-level gender gap in health and survival (a composite in which higher\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nscores indicated higher ratios of female to male life expectancy and sex ratio at birth—a marker of female\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ninfanticide and anti-female sex-selective abortion). In nearly all countries, participants showed a preference\n \n \n \n \n \n \n \n \n \n \n   \n \nfor female characters, however, this preference was stronger in nations with better health and survival\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nprospects for women. In other words, in places where there is less of a devaluation of women’s lives in health\n \n \n \n \n \n \n \n \n \n   \n \n   \n \n \n \n \n \n \nand at birth, males are seen as more expendable in Moral Machine decision-making (Figure 4e). While not\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \naiming to pin down the causes of these variation in table S3 in the SI, we nevertheless provide a regression\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n   \n \nanalysis that demonstrates that the results hold when controlling for several potentially confounding factors."}, "S035": {"id": "pdf-59c4f6158add045b-p11-b1", "page": 11, "quote": "DISCUSSION"}, "S036": {"id": "pdf-59c4f6158add045b-p11-b2", "page": 11, "quote": "Never in the history of humanity have we allowed a machine to autonomously decide who should live and\n \n \n \n \n \n \n \n \n   \n \n \n \n \n \n \n \n \nwho should die, in a fraction of a second, outside of real-time supervision. We are going to cross that bridge\n \n \n \n   \n \n   \n \n \n \n \n \n \n \n \n \n \n \n \nany time now, and it will not happen in a distant theater of military operations; it will happen in that most\n \n \n \n   \n \n \n \n   \n \n \n \n \n   \n \n \n \n \n \nmundane aspect of our lives: everyday transportation. Before we allow our cars to make ethical decisions, we\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nneed to have a global conversation to express our preferences to the companies that will design moral\n \n \n   \n \n \n \n \n \n \n \n \n \n \n \n \n \nalgorithms, and to the policymakers that will regulate them.  \n \nThe Moral Machine was deployed to initiate such a conversation, and millions of people weighed in from\n \n \n \n \n \n \n \n   \n \n \n \n \n \n \n \n \naround the world​. Respondents could be as parsimonious or thorough as they wished in the ethical\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nframework they decided to follow. They could engage in a complicated weighting of all nine variables used in\n \n \n \n \n \n \n \n \n   \n \n \n \n \n \n \n \n \nthe Moral Machine, or adopt simple rules such as \"let the car always go onward”. ​Our data helped us identify\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nthree strong preferences that can serve as building blocks for discussions of universal machine ethics, even if\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n   \nthey are not ultimately endorsed by policymakers: the preference for sparing human lives, the preference for\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nsparing more lives, and the preference for sparing young lives. Some preferences (e.g., the preference for"}, "S037": {"id": "pdf-59c4f6158add045b-p12-b0", "page": 12, "quote": "sparing pedestrians, or the preference for the car not to change direction) seem too weak to be fully relevant\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nfor policy debates. Other judgments based on gender or social status vary considerably across countries, and\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nappear to reflect underlying societal-level preferences for egalitarianism​27​. \n \nThe Moral Machine project was atypical in many respects. It was atypical in its objectives and ambitions: No\n \n \n \n \n \n \n \n \n   \n \n \n \n \n \n \n \n \nresearch ever attempted to measure moral preferences using a 9-dimensional experimental design, in more\n \n \n \n \n \n \n \n   \n \n \n \n \n \nthan 200 countries. To achieve this unusual objective, we employed the unusual method of deploying a viral\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n   \n \nonline platform, hoping that we would reach out to vast numbers of participants. This allowed us to collect\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ndata from millions of people over the entire world, a feat that would be nearly impossibly hard and costly to\n \n \n \n \n \n \n \n \n   \n \n \n \n \n \n \n \n \n \n \nachieve through standard academic survey methods. For example, recruiting nationally representative\n \n \n \n \n \n \n \n \n \n \n \nsamples of participants in hundreds of countries would already be extremely difficult, but testing a 9-factorial\n \n \n \n \n \n \n \n \n \n \n \n \n \n   \n \ndesign in each of these samples would verge into the impossible. Our approach allowed to bypass these\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ndifficulties, but its downside is that our sample is self-selected, and not guaranteed to exactly match the\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nsocio-demographics of each country. The fact that the cross-societal variation we observed aligns with\n \n \n \n \n \n \n \n \n \n \n \n \n \n \npreviously established cultural clusters, as well as the fact that macro-economic variables are predictive of\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nMoral Machine responses, are good signals about the reliability of our data; just as the post-stratification\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nanalysis we report in the SI. But the fact that our samples are not guaranteed to be representative means that\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \npolicymakers should not embrace our data as the final word on societal preferences -- even if our sample is\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n   \n \n   \narguably close to the Internet-connected, tech-savvy population that is interested in driverless car\n \n \n \n \n \n \n \n \n \n \n \n \n \ntechnology, and more likely to participate in early adoption. Our hope is indeed that the Moral Machine\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nexperiment will provide the impetus for governments to organize inclusive public consultations. \n \n \nEven with a sample size as large as ours, we could not do justice to all the complexity of AV dilemmas. For\n \n   \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nexample, we did not introduce uncertainty about the fates of the characters, and we did not introduce any\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nuncertainty about the classification of these characters. In our scenarios, characters were recognized as adults,\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nchildren, etc. with 100% certainty, and life-and-death outcomes were predicted with 100% certainty. These\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nassumptions are technologically unrealistic, but they were necessary to keep the project tractable. Similarly,\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nwe did not manipulate the hypothetical relation between respondents and characters (e.g. relatives, spouses).\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nOur previous work did not find a strong impact of this variable on moral preferences​12​, but this previous\n \n \n \n \n \n   \n \n \n \n \n \n \n \n \n \n \n \nwork only reached out to American respondents. Finally, what the Moral Machine captured is the state of\n \n \n \n \n \n \n \n \n \n \n \n \n   \n \n \n \nmoral preferences before AVs are deployed on the road, and before they start facing moral dilemmas.\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nPreferences may well change after AVs start making their ethical decisions, and people die as a result, moving\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n   \n \n \nthe discussion from abstract to identified victims, with all the psychological baggage that comes with such a\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n   \nchange​28​. But to understand these changes, we will need the baseline that is provided by the Moral Machine. \n \nIndeed, we can embrace the challenges of machine ethics as a unique opportunity to decide, as a community,\n \n \n \n \n \n \n \n \n \n   \n \n \n \n \n   \n \nwhat we believe to be right or wrong; and to make sure that machines, unlike humans, unerringly follow\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nthese moral preferences. We might not reach universal agreement: even the strongest preferences expressed\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nthrough the Moral Machine showed substantial cultural variations, and our project builds on a long tradition\n \n \n \n \n \n \n \n \n \n \n \n \n   \n \n \nof investigating cultural variations in ethical judgments​29​. But the fact that broad regions of the world\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ndisplayed relative agreement suggests that our journey to consensual machine ethics is not doomed from the\n \n \n \n \n \n \n \n \n \n \n   \n \n \n \n \nstart. Attempts at establishing broad ethical codes for intelligent machines, like the ​Asilomar AI Principle​s​30​,"}, "S038": {"id": "pdf-59c4f6158add045b-p13-b0", "page": 13, "quote": "often recommend that machine ethics should be aligned with human values. These codes seldom recognize,\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nthough, that humans experience inner conflict, interpersonal disagreements, and cultural dissimilarities in\n \n \n \n \n \n \n \n \n \n \n \n \nthe moral domain​31​,​32​,​33​. Here we showed that these conflicts, disagreements, and dissimilarities, while\n \n \n \n \n \n \n \n \n \n \n \n \n \nsubstantial, may not be fatal."}, "S039": {"id": "pdf-59c4f6158add045b-p13-b2", "page": 13, "quote": "The Moral Machine website was designed to collect data on the moral acceptability of decisions made by\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nautonomous vehicles in situations of unavoidable accidents, in which they must decide who is spared and\n \n \n \n \n \n \n \n \n \n \n \n \n   \n \n \nwho is sacrificed. The Moral Machine was deployed in June 2016. In October 2016, a feature was added that\n   \n \n \n \n \n \n \n \n \n \n \n \n   \n \n \n \n \noffered users the option to fill a survey about their demographics, political views, and religious beliefs.\n \n \n \n \n \n   \n \n \n \n \n \n \n \n \n \nBetween November 2016 and March 2017, the website was progressively translated into nine languages in\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \naddition to English (Arabic, Chinese, French, German, Japanese, Korean, Portuguese, Russian, and Spanish). \n \nWhile the Moral Machine offers four different modes (see SI), the focus of this article is on the central\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ndata-gathering feature of the website, called the Judge mode. In this mode, users are presented with a series\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n   \n \nof dilemmas in which the AV must decide between two different outcomes. In each dilemma, one outcome\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \namounts to sparing a group of 1 to 5 characters (chosen from a sample of 20 characters, see Figure 2b) and to\n \n \n   \n \n   \n   \n \n \n   \n \n \n \n \n \n \n \n \n \nkill another group of 1 to 5 characters. The other outcome reverses the fates of the two groups. The only task\n \n \n \n   \n   \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nof the user is to choose between the two outcomes, as a response to the question 'What should the\n \n \n \n \n \n \n \n \n \n \n   \n \n \n \n \n \n \n \nself-driving car do?' Users have the option to click on a button labeled 'see description' to display a complete\n \n \n \n \n \n \n \n \n \n   \n \n \n \n \n \n   \n \ntext description of the characters in the two groups, together with their fate in each outcome. \n \nWhile users can go through as many dilemmas as they wish, dilemmas are generated in sessions of 13.\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nWithin each session, one dilemma is entirely random. The other 12 dilemmas are sampled from a space of\n \n \n \n \n   \n \n \n \n \n \n \n \n \n   \n \n \napproximately 26 million possibilities (see below). Accordingly, it is extremely improbable for a given user to\n \n \n \n \n \n \n     \n \n \n   \n \n \n \nsee the same dilemma twice, regardless of how many dilemmas they choose to go through, or how many time\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nthey visit the Moral Machine.  \n \nLeaving aside the one entirely random dilemma, there are two dilemmas within each session that focus on\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \neach of six dimensions of moral preferences: character gender, character age, character physical fitness,\n \n \n \n \n \n \n \n \n \n \n \n \n \n \ncharacter social status, character species, and character number. Furthermore, each dilemma simultaneously\n \n \n \n \n \n \n \n \n \n \n \n \nrandomizes three additional attributes: which group of characters will be spared if the car does nothing;\n \n \n \n \n \n \n \n \n \n \n   \n \n \n \n \nwhether the two groups are pedestrians, or whether one group is in the car; and whether the pedestrian\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \ncharacters are crossing legally or illegally. This exploration strategy is supported by a dilemma generation\n \n \n \n \n \n \n \n \n \n \n \n   \n \n \nalgorithm whose details are presented in the SI, which also provides extensive descriptions of statistical\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nanalyses, robustness checks, and tests of internal and external validity. \n \nAfter completing a session of 13 dilemmas, users are presented with a summary of their decisions: which\n \n   \n \n \n \n \n \n \n \n   \n \n \n \n \n \ncharacter they spared the most, which character they sacrificed the most; and the relative importance of the\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nnine target moral dimensions in their decisions, compared to their importance to the average of all other\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nusers so far. Users have the option to share this summary with their social network. Either before or after\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nthey see this summary (randomized order), users are asked if they want to 'help us better understand their"}, "S040": {"id": "pdf-59c4f6158add045b-p14-b0", "page": 14, "quote": "decisions'. Users who click 'yes' are directed to a survey of their demographic, political, and religious\n \n \n \n \n \n \n \n   \n \n \n \n \n \n \n \ncharacteristics. They also have the option to edit the summary of their decisions, to tell us about the\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nself-perceived importance of the nine dimensions in their decisions. These self-perceptions are not analyzed\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nin this article. \n \nThe country from which users access the website is geo-localized through the IP address of their computer or\n \n \n \n \n \n \n \n   \n \n \n \n \n \n \n \n \n \nmobile device. This information is used to compute a vector of moral preferences for each country. In turn,\n \n \n \n   \n \n \n   \n \n \n \n \n \n \n \n \n \nthese moral vectors are used both for cultural clustering, and for country-level correlations between moral\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \npreferences and socio-economic indicators. The source and period of reference for each socio-economic\n \n \n \n \n \n \n \n \n \n \n \n \n \nindicator is detailed in the SI."}, "S041": {"id": "pdf-59c4f6158add045b-p14-b1", "page": 14, "quote": "AUTHOR CONTRIBUTIONS"}, "S042": {"id": "pdf-59c4f6158add045b-p14-b2", "page": 14, "quote": "IR, AS and JFB planned the research. IR, AS, JFB, EA and SD designed the experiment. EA and SD built the\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nplatform and collected the data. EA, SD, RK, JS, and AS analyzed the data. All authors interpreted the results\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nand wrote the paper."}, "S043": {"id": "pdf-59c4f6158add045b-p14-b3", "page": 14, "quote": "ACKNOWLEDGMENTS"}, "S044": {"id": "pdf-59c4f6158add045b-p14-b4", "page": 14, "quote": "IR, EA, SD, and RK acknowledge support from the Ethics and Governance of Artificial Intelligence Fund.\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nJFB acknowledges support from the ANR-Labex Institute for Advanced Study in Toulouse."}, "S045": {"id": "pdf-59c4f6158add045b-p14-b5", "page": 14, "quote": "DATA AND CODE AVAILABILITY STATEMENT"}, "S046": {"id": "pdf-59c4f6158add045b-p14-b6", "page": 14, "quote": "Source data and code that can be used to reproduce Fig 2, Fig 3 and Fig 4; Supplementary Figures S3-S21;\n \n \n \n \n \n \n \n \n \n \n \n \n   \n \n \n \n \n \n \nand Supplementary Table S2 are all available in the following link:​ ​https://goo.gl/JXRrBP"}, "S047": {"id": "pdf-59c4f6158add045b-p14-b7", "page": 14, "quote": "ETHICAL COMPLIANCE"}, "S048": {"id": "pdf-59c4f6158add045b-p14-b8", "page": 14, "quote": "This study was approved by the Institute Review Board (IRB) at Massachusetts Institute of Technology\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n(MIT). The authors complied with all relevant ethical considerations."}, "S049": {"id": "pdf-59c4f6158add045b-p14-b9", "page": 14, "quote": "REFERENCES"}, "S050": {"id": "pdf-59c4f6158add045b-p14-b10", "page": 14, "quote": "1.\nGreene, J. ​Moral Tribes: Emotion, Reason and the Gap Between Us and Them​. (Atlantic Books, 2013)."}, "S051": {"id": "pdf-59c4f6158add045b-p14-b11", "page": 14, "quote": "2.\nTomasello, M. ​A Natural History of Human Thinking​. (Harvard University Press, 2014)."}, "S052": {"id": "pdf-59c4f6158add045b-p15-b0", "page": 15, "quote": "3.\nCushman, F. & Young, L. The psychology of dilemmas and the philosophy of morality. ​Ethical Theory"}, "S053": {"id": "pdf-59c4f6158add045b-p15-b1", "page": 15, "quote": "Moral Pract.​ ​12,​ 9–24 (2009)."}, "S054": {"id": "pdf-59c4f6158add045b-p15-b2", "page": 15, "quote": "4.\nAsimov, I. ​I, Robot​. (Doubleday, 1950)."}, "S055": {"id": "pdf-59c4f6158add045b-p15-b3", "page": 15, "quote": "5.\nBryson, J. & Winfield, A. Standardizing Ethical Design for Artificial Intelligence and Autonomous"}, "S056": {"id": "pdf-59c4f6158add045b-p15-b4", "page": 15, "quote": "Systems. ​Computer ​ ​50,​ 116–119 (2017)."}, "S057": {"id": "pdf-59c4f6158add045b-p15-b5", "page": 15, "quote": "6.\nWiener, N. Some Moral and Technical Consequences of Automation. ​Science​ ​131,​ 1355–1358 (1960)."}, "S058": {"id": "pdf-59c4f6158add045b-p15-b6", "page": 15, "quote": "7.\nWallach, W. & Allen, C. ​Moral Machines: Teaching Robots Right from Wrong​. (Oxford University Press,"}, "S059": {"id": "pdf-59c4f6158add045b-p15-b8", "page": 15, "quote": "8.\nDignum, V. Responsible Autonomy. in ​Proceedings of the Twenty-Sixth International Joint Conference on"}, "S060": {"id": "pdf-59c4f6158add045b-p15-b9", "page": 15, "quote": "Artificial Intelligence​ 4698–4704 (International Joint Conferences on Artificial Intelligence Organization,"}, "S061": {"id": "pdf-59c4f6158add045b-p15-b11", "page": 15, "quote": "9.\nDadich, S. Barack Obama, Neural Nets, Self-Driving Cars, and the Future of the World. ​Wired​ (2016)."}, "S062": {"id": "pdf-59c4f6158add045b-p15-b12", "page": 15, "quote": "10.\nShariff, A., Bonnefon, J.-F. & Rahwan, I. Psychological roadblocks to the adoption of self-driving"}, "S063": {"id": "pdf-59c4f6158add045b-p15-b13", "page": 15, "quote": "vehicles. ​Nature Human Behaviour​ ​1,​ 694–696 (2017)."}, "S064": {"id": "pdf-59c4f6158add045b-p15-b14", "page": 15, "quote": "11.\nConitzer, V., Brill, M. & Freeman, R. Crowdsourcing societal tradeoffs. in ​Proceedings of the 2015"}, "S065": {"id": "pdf-59c4f6158add045b-p15-b15", "page": 15, "quote": "International Conference on Autonomous Agents and Multiagent Systems​ 1213–1217 (International"}, "S066": {"id": "pdf-59c4f6158add045b-p15-b16", "page": 15, "quote": "Foundation for Autonomous Agents and Multiagent Systems, 2015)."}, "S067": {"id": "pdf-59c4f6158add045b-p15-b17", "page": 15, "quote": "12.\nBonnefon, J.-F., Shariff, A. & Rahwan, I. The social dilemma of autonomous vehicles. ​Science​ ​352,"}, "S068": {"id": "pdf-59c4f6158add045b-p15-b19", "page": 15, "quote": "13.\nHauser, M., Cushman, F., Young, L., Kang-Xing Jin, R. & Mikhail, J. A dissociation between moral"}, "S069": {"id": "pdf-59c4f6158add045b-p15-b20", "page": 15, "quote": "judgments and justifications. ​Mind and Language​ ​22,​ 1–21 (2007)."}, "S070": {"id": "pdf-59c4f6158add045b-p15-b21", "page": 15, "quote": "14.\nCarlsson, F., Daruvala, D. & Jaldell, H. Preferences for lives, injuries, and age: a stated preference survey."}, "S071": {"id": "pdf-59c4f6158add045b-p15-b22", "page": 15, "quote": "Accid. Anal. Prev.​ ​42,​ 1814–1821 (2010)."}, "S072": {"id": "pdf-59c4f6158add045b-p15-b23", "page": 15, "quote": "15.\nJohansson-Stenman, O. & Martinsson, P. Are some lives more valuable? An ethical preferences"}, "S073": {"id": "pdf-59c4f6158add045b-p16-b0", "page": 16, "quote": "approach. ​J. Health Econ.​ ​27,​ 739–752 (2008)."}, "S074": {"id": "pdf-59c4f6158add045b-p16-b1", "page": 16, "quote": "16.\nJohansson-Stenman, O., Mahmud, M. & Martinsson, P. Saving lives versus life-years in rural"}, "S075": {"id": "pdf-59c4f6158add045b-p16-b2", "page": 16, "quote": "Bangladesh: an ethical preferences approach. ​Health Econ.​ ​20,​ 723–736 (2011)."}, "S076": {"id": "pdf-59c4f6158add045b-p16-b3", "page": 16, "quote": "17.\nGraham, J., Meindl, P., Beall, E., Johnson, K. M. & Zhang, L. Cultural differences in moral judgment"}, "S077": {"id": "pdf-59c4f6158add045b-p16-b4", "page": 16, "quote": "and behavior, across and within societies. ​Current Opinion in Psychology​ ​8,​ 125–130 (2016)."}, "S078": {"id": "pdf-59c4f6158add045b-p16-b5", "page": 16, "quote": "18.\nHainmueller, J., Hopkins, D. J. & Yamamoto, T. Causal Inference in Conjoint Analysis: Understanding"}, "S079": {"id": "pdf-59c4f6158add045b-p16-b6", "page": 16, "quote": "Multidimensional Choices Via Stated Preference Experiments. ​SSRN Electronic Journal​ (2013)."}, "S080": {"id": "pdf-59c4f6158add045b-p16-b7", "page": 16, "quote": "doi:​10.2139/ssrn.2231687"}, "S081": {"id": "pdf-59c4f6158add045b-p16-b8", "page": 16, "quote": "19.\nLuetge, C. The German Ethics Code for Automated and Connected Driving. ​Philos. Technol.​ ​30,​ 547–558"}, "S082": {"id": "pdf-59c4f6158add045b-p16-b10", "page": 16, "quote": "20.\nMüllner, D. Modern hierarchical, agglomerative clustering algorithms. ​arXiv [stat.ML]​ (2011)."}, "S083": {"id": "pdf-59c4f6158add045b-p16-b11", "page": 16, "quote": "21.\nInglehart, R. & Welzel, C. ​Modernization, Cultural Change, and Democracy: The Human Development"}, "S084": {"id": "pdf-59c4f6158add045b-p16-b12", "page": 16, "quote": "Sequence​. (Cambridge University Press, 2005)."}, "S085": {"id": "pdf-59c4f6158add045b-p16-b13", "page": 16, "quote": "22.\nMuthukrishna, M., Bell, A. V., Henrich, J., Curtin, C., Gedranovich, A., McInerney, J., & Thue, B. A"}, "S086": {"id": "pdf-59c4f6158add045b-p16-b14", "page": 16, "quote": "WEIRD Scale of Cultural Distance. ​(submitted)"}, "S087": {"id": "pdf-59c4f6158add045b-p16-b15", "page": 16, "quote": "23.\nHofstede, G. ​Culture’s Consequences: Comparing Values, Behaviors, Institutions and Organizations Across"}, "S088": {"id": "pdf-59c4f6158add045b-p16-b16", "page": 16, "quote": "Nations​. (SAGE Publications, 2003)."}, "S089": {"id": "pdf-59c4f6158add045b-p16-b17", "page": 16, "quote": "24.\nInternational Monetary Fund. World Economic Outlook Database. (2017)."}, "S090": {"id": "pdf-59c4f6158add045b-p16-b18", "page": 16, "quote": "25.\nKaufmann, D., Kraay, A. & Mastruzzi, M. The Worldwide Governance Indicators: Methodology and"}, "S091": {"id": "pdf-59c4f6158add045b-p16-b19", "page": 16, "quote": "Analytical Issues. ​Hague Journal on the Rule of Law​ ​3,​ 220–246 (2011)."}, "S092": {"id": "pdf-59c4f6158add045b-p16-b20", "page": 16, "quote": "26.\nGächter, S. & Schulz, J. F. Intrinsic honesty and the prevalence of rule violations across societies. ​Nature"}, "S093": {"id": "pdf-59c4f6158add045b-p16-b21", "page": 16, "quote": "531,​ 496–499 (2016)."}, "S094": {"id": "pdf-59c4f6158add045b-p16-b22", "page": 16, "quote": "27.\nO’Neil, C. ​Weapons of Math Destruction: How Big Data Increases Inequality and Threatens Democracy​."}, "S095": {"id": "pdf-59c4f6158add045b-p16-b23", "page": 16, "quote": "(Penguin UK, 2016)."}, "S096": {"id": "pdf-59c4f6158add045b-p17-b0", "page": 17, "quote": "28.\nLee, S. & Feeley, T. H. The identifiable victim effect: a meta-analytic review. ​Social Influence​ ​11,​ 199–215"}, "S097": {"id": "pdf-59c4f6158add045b-p17-b2", "page": 17, "quote": "29.\nHenrich, J. ​et al.​ In Search of Homo Economicus: Behavioral Experiments in 15 Small-Scale Societies."}, "S098": {"id": "pdf-59c4f6158add045b-p17-b3", "page": 17, "quote": "Am. Econ. Rev.​ ​91,​ 73–78 (2001)."}, "S099": {"id": "pdf-59c4f6158add045b-p17-b4", "page": 17, "quote": "30.\nAsilomar AI Principles. ​Future of Life Institute​ Available at: ​https://futureoflife.org/ai-principles/."}, "S100": {"id": "pdf-59c4f6158add045b-p17-b5", "page": 17, "quote": "(Accessed: 5th January 2017)"}, "S101": {"id": "pdf-59c4f6158add045b-p17-b6", "page": 17, "quote": "31.\nHaidt, J. ​The Righteous Mind: Why Good People Are Divided by Politics and Religion​. (Knopf Doubleday"}, "S102": {"id": "pdf-59c4f6158add045b-p17-b7", "page": 17, "quote": "Publishing Group, 2012)."}, "S103": {"id": "pdf-59c4f6158add045b-p17-b8", "page": 17, "quote": "32.\nGastil, J., Braman, D., Kahan, D. & Slovic, P. The Cultural Orientation of Mass Political Opinion. ​PS"}, "S104": {"id": "pdf-59c4f6158add045b-p17-b9", "page": 17, "quote": "Polit. Sci. Polit.​ ​44,​ 711–714 (2011)."}, "S105": {"id": "pdf-59c4f6158add045b-p17-b10", "page": 17, "quote": "33.\nNishi, A., Christakis, N. A. & Rand, D. G. Cooperation, decision time, and culture: Online experiments"}, "S106": {"id": "pdf-59c4f6158add045b-p17-b11", "page": 17, "quote": "with American and Indian participants. ​PLoS One​ ​12,​ e0171252 (2017)."}, "S107": {"id": "web-28bacb8b68411b9d", "page": 0, "quote": "      scholarly articles in the fields of physics, mathematics, computer science, quantitative biology, quantitative finance, statistics, electrical engineering and systems science, and economics."}, "S108": {"id": "web-252dcb92da20b1ab", "page": 0, "quote": "负责管理与运营。arXiv 颠覆了传统学术出版的周期限制，允许科研人员在经过同行评审正式出版前，率先发布研究成果。作为全球科研评价体系的重要组成部分，arXiv 已成为物理学、数学及计算机科学等领域不可或缺的学术“风向标”。"}, "S109": {"id": "web-302fc94ae5259669", "page": 0, "quote": "+10 or −10 inside the activation space of DeepSeek-R1-Llama-8B, and probe how personality- and\nexpand the range of viewpoints and domain knowledge brought into problem solving. Differences\nDifferences in problem complexity by the presence of conversational behaviours and socio-emotional roles in\nnumber of unique personality- or expertise-related features activated across the reasoning trace, and"}}, "nodes": [{"id": "problem_statement", "title": "核心问题与挑战", "concepts": ["concept-8e49376622bc4e9b", "concept-caff09d5685ffe04"]}, {"id": "methodology_mm", "title": "道德机器实验设计", "concepts": ["concept-8c01878528d65798", "concept-0aee6e49a30a170d"]}, {"id": "global_preferences", "title": "全球核心伦理偏好", "concepts": ["concept-548b2e59ea148246", "concept-a4d36a8cd12161af"]}, {"id": "individual_vars", "title": "个体差异分析", "concepts": ["concept-3e338d3a8eec74f6", "concept-a5858034e4c443e5"]}, {"id": "cultural_clusters", "title": "国家文化聚类", "concepts": ["concept-2255478caa179bfa", "concept-f9e9c34ccff7eccb"]}, {"id": "predictors", "title": "国家层面预测因子", "concepts": ["concept-718440a260e81542", "concept-57c8f0fb8d933fbc"]}, {"id": "limitations", "title": "研究局限与样本偏差", "concepts": ["concept-fb7c014758b02923", "concept-6eb345ebba27f1a8"]}, {"id": "implications", "title": "机器伦理的政策启示", "concepts": ["concept-86039fae098f75bb", "concept-8e6110c47ecab1ee"]}], "concepts": {"concept-8e49376622bc4e9b": {"id": "concept-8e49376622bc4e9b", "title": "道德困境 (Moral Dilemma)", "layer": "Ethics Foundation", "lead": "指在两种或多种道德原则冲突时，无论选择哪种行动都会违背某种道德义务的情境。", "text": "在自动驾驶语境下，指车辆面临不可避免的事故时，必须在不同人群（如乘客与行人、年轻人与老年人）之间进行生死抉择的场景。这种困境无法通过简单的规则完全解决，因为不同的道德理论（如功利主义与义务论）会给出不同的指导。", "why": "理解此概念是分析自动驾驶伦理问题的基础，它解释了为何需要大规模实证研究来捕捉公众的直觉判断，而非仅依赖哲学推导。", "source_ids": ["pdf-59c4f6158add045b-p2-b10", "pdf-59c4f6158add045b-p3-b0"], "next": null, "domain": "AI Ethics / Behavioral Science", "document_id": "pdf-59c4f6158add045b", "node_id": "problem_statement"}, "concept-caff09d5685ffe04": {"id": "concept-caff09d5685ffe04", "title": "高维度性 (High-dimensionality)", "layer": "Methodological Challenge", "lead": "指问题涉及的变量数量众多，导致可能的状态空间呈指数级增长。", "text": "在道德机器实验中，高维度性体现在需要考虑性别、年龄、社会地位、物种、法律状态等多个变量的组合。文中指出，结合十几种偏好会导致数百万种可能的事故场景，这使得传统的单一变量调查方法失效，必须采用新的数据收集策略。", "why": "这一概念解释了为何作者需要开发'Moral Machine'平台来收集海量数据，而不是使用传统的问卷调查方法。", "source_ids": ["pdf-59c4f6158add045b-p3-b0"], "next": null, "domain": "AI Ethics / Behavioral Science", "document_id": "pdf-59c4f6158add045b", "node_id": "problem_statement"}, "concept-8c01878528d65798": {"id": "concept-8c01878528d65798", "title": "联合分析 (Conjoint Analysis)", "layer": "Statistical Method", "lead": "一种统计技术，用于评估人们对具有多个属性的产品的偏好，通过分解各属性的边际效应来确定其相对重要性。", "text": "在本研究中，联合分析被用来计算每个属性（如男性角色 vs 女性角色、乘客 vs 行人）的平均边际成分效应（AMCE）。这种方法允许研究者在控制其他所有变量的情况下，估算出单个特征对决策概率的独立影响，从而处理高维度问题。", "why": "这是从海量复杂数据中提取九个关键偏好相对重要性的核心统计方法，解释了如何从数百万个决策中得出清晰的伦理倾向。", "source_ids": ["pdf-59c4f6158add045b-p5-b1"], "next": null, "domain": "AI Ethics / Behavioral Science", "document_id": "pdf-59c4f6158add045b", "node_id": "methodology_mm"}, "concept-0aee6e49a30a170d": {"id": "concept-0aee6e49a30a170d", "title": "严肃游戏 (Serious Game)", "layer": "Data Collection Strategy", "lead": "指主要目的不仅是娱乐，而是用于教育、训练或数据收集的游戏化应用。", "text": "Moral Machine 被设计为一个“严肃游戏”，通过让用户在模拟的道德困境中做出选择来收集数据。这种游戏化的方式提高了用户的参与度和数据的规模，使得收集数千万个决策成为可能，克服了传统调查的局限性。", "why": "理解这一概念有助于明白为何能获取如此庞大的数据集，以及数据收集过程中的用户动机和交互形式。", "source_ids": ["pdf-59c4f6158add045b-p4-b0"], "next": null, "domain": "AI Ethics / Behavioral Science", "document_id": "pdf-59c4f6158add045b", "node_id": "methodology_mm"}, "concept-548b2e59ea148246": {"id": "concept-548b2e59ea148246", "title": "平均边际成分效应 (Average Marginal Component Effect, AMCE)", "layer": "Causal Inference", "lead": "在多属性决策实验中，某一属性水平变化对结果概率的平均因果影响。", "text": "在 Moral Machine 研究中，AMCE 衡量的是在其他所有属性（如性别、社会地位等）的联合分布保持不变的情况下，拥有某一特定属性（如“年轻”而非“年老”）的角色被挽救的概率差异。例如，年轻角色的 AMCE 为 0.49，意味着在其他条件相同的情况下，年轻人被救的概率比老年人高 49%。", "why": "这是量化各个伦理偏好强度的核心指标，使得研究者能够比较不同维度（如年龄 vs 性别）对道德决策的相对影响力。", "source_ids": ["pdf-59c4f6158add045b-p5-b1", "pdf-59c4f6158add045b-p6-b0"], "next": null, "domain": "AI Ethics / Behavioral Science", "document_id": "pdf-59c4f6158add045b", "node_id": "global_preferences"}, "concept-a4d36a8cd12161af": {"id": "concept-a4d36a8cd12161af", "title": "德国自动驾驶伦理委员会 (German Ethics Commission on Automated and Connected Driving)", "layer": "Policy Framework", "lead": "2017 年由德国政府设立的专家委员会，发布了全球首份关于自动驾驶汽车伦理选择的官方指导方针。", "text": "该委员会发布的报告提出了 20 条伦理规则，试图为自动驾驶汽车的编程提供规范框架。其中规则#7 强调人类生命优先于动物，规则#9 禁止基于个人特征（如年龄、性别）的歧视。本研究将其作为基准，对比公众的实际道德直觉与官方规范之间的异同。", "why": "它是目前唯一尝试为自动驾驶伦理提供官方指导的文件，代表了规范伦理学在政策层面的应用，与实证研究结果形成重要对照。", "source_ids": ["pdf-59c4f6158add045b-p5-b1"], "next": null, "domain": "AI Ethics / Behavioral Science", "document_id": "pdf-59c4f6158add045b", "node_id": "global_preferences"}, "concept-3e338d3a8eec74f6": {"id": "concept-3e338d3a8eec74f6", "title": "平均边际因果效应 (AMCE)", "layer": "Methodology / Statistics", "lead": "量化特定属性对决策影响的统计指标", "text": "在本研究中，AMCE 用于衡量当某个道德属性（如“行人”vs“乘客”）发生变化时，用户选择该选项概率的平均变化量。它是通过随机化实验设计计算得出的，能够隔离单一变量的因果影响。", "why": "理解 AMCE 是解读文中提到的'0.06 个百分点’等微小效应量的基础，它代表了偏好的强度而非简单的计数。", "source_ids": ["pdf-59c4f6158add045b-p7-b0"], "next": null, "domain": "AI Ethics / Behavioral Science", "document_id": "pdf-59c4f6158add045b", "node_id": "individual_vars"}, "concept-a5858034e4c443e5": {"id": "concept-a5858034e4c443e5", "title": "单向二分法 (Unilateral Dichotomization)", "layer": "Data Analysis", "lead": "将连续或分类变量划分为两个子群体以检验效应方向的方法", "text": "研究者将每个特征（如性别）划分为两个子群体（如男/女），然后分别计算每个子群体在特定偏好上的效应值。如果两个子群体的效应值符号相同（均为正或均为负），则说明不存在方向性逆转。", "why": "这是文中得出'no opposing directions of effect'（无反对方向效应）结论的关键分析步骤，证明了偏好的普遍性。", "source_ids": ["pdf-59c4f6158add045b-p7-b0"], "next": null, "domain": "AI Ethics / Behavioral Science", "document_id": "pdf-59c4f6158add045b", "node_id": "individual_vars"}, "concept-2255478caa179bfa": {"id": "concept-2255478caa179bfa", "title": "层次聚类 (Hierarchical Clustering)", "layer": "Machine Learning / Statistics", "lead": "一种无需预先指定簇数量的无监督学习方法", "text": "该方法通过计算数据点（此处为国家）之间的距离，逐步合并最相似的点或簇，形成树状结构（dendrogram）。本研究使用 Ward 算法，旨在最小化合并后簇内的方差增量，从而生成紧凑且分离良好的集群。", "why": "这是发现'三大道德集群'的核心算法，解释了如何从杂乱的国家数据中提炼出结构化的文化分组。", "source_ids": ["pdf-59c4f6158add045b-p7-b1"], "next": null, "domain": "AI Ethics / Behavioral Science", "document_id": "pdf-59c4f6158add045b", "node_id": "cultural_clusters"}, "concept-f9e9c34ccff7eccb": {"id": "concept-f9e9c34ccff7eccb", "title": "英格尔哈特 - 韦尔泽尔文化地图 (Inglehart-Welzel Cultural Map)", "layer": "Sociology / Political Science", "lead": "基于世界价值观调查的全球文化维度可视化模型", "text": "该地图根据'传统 vs 世俗理性'和'生存 vs 自我表达'两个维度对国家进行定位。本研究将其作为外部基准，验证道德机器聚类结果是否与现实世界的文化和地理邻近性相符，增强了聚类结果的可信度。", "why": "用于佐证聚类结果并非随机产生，而是反映了深层的文化结构，特别是解释为何西班牙归入西方集群而非拉美集群。", "source_ids": ["pdf-59c4f6158add045b-p7-b1", "pdf-59c4f6158add045b-p8-b0"], "next": null, "domain": "AI Ethics / Behavioral Science", "document_id": "pdf-59c4f6158add045b", "node_id": "cultural_clusters"}, "concept-718440a260e81542": {"id": "concept-718440a260e81542", "title": "文化距离 (Cultural Distance)", "layer": "Cross-Cultural Psychology", "lead": "量化两个国家在文化价值观上差异程度的指标", "text": "在本研究中，文化距离基于世界价值观调查（World Values Survey）的数据计算。研究发现，一个国家与美国的文化距离越远，其在道德机器实验中表现出的偏好距离（MM distance）也越远（ρ = 0.49），证明了文化背景对伦理判断的深远影响。", "why": "这是连接宏观文化差异与微观道德决策的桥梁，解释了为何不同国家会形成不同的道德集群。", "source_ids": ["pdf-59c4f6158add045b-p9-b0", "pdf-59c4f6158add045b-p9-b1"], "next": null, "domain": "AI Ethics / Behavioral Science", "document_id": "pdf-59c4f6158add045b", "node_id": "predictors"}, "concept-57c8f0fb8d933fbc": {"id": "concept-57c8f0fb8d933fbc", "title": "基尼系数 (Gini Coefficient)", "layer": "Economics", "lead": "衡量一个国家收入或财富分配不平等程度的统计指标", "text": "取值范围通常在 0 到 1 之间，0 表示完全平等，1 表示完全不平等。本研究发现，国家的基尼系数与道德机器中'保护高社会地位者'的偏好强度正相关，暗示社会经济结构的不平等会映射到伦理算法的偏好中。", "why": "用于实证'现实不平等塑造道德偏好'的假设，是理解社会地位偏好差异的关键经济变量。", "source_ids": ["pdf-59c4f6158add045b-p11-b0"], "next": null, "domain": "AI Ethics / Behavioral Science", "document_id": "pdf-59c4f6158add045b", "node_id": "predictors"}, "concept-fb7c014758b02923": {"id": "concept-fb7c014758b02923", "title": "自选择样本 (Self-Selected Sample)", "layer": "Methodology / Statistics", "lead": "指参与者自愿决定加入研究而非由研究者随机抽取的样本形式。", "text": "在“道德机器”实验中，用户主动访问网站并参与测试，导致样本可能过度代表对技术感兴趣或特定人群，而无法精确反映各国总体的 demographics。", "why": "理解此概念有助于评估研究结论的外部效度，明白为何作者强调数据不能作为政策的“最终定论”。", "source_ids": ["pdf-59c4f6158add045b-p12-b0"], "next": null, "domain": "AI Ethics / Behavioral Science", "document_id": "pdf-59c4f6158add045b", "node_id": "limitations"}, "concept-6eb345ebba27f1a8": {"id": "concept-6eb345ebba27f1a8", "title": "确定性情境 (Deterministic Scenario)", "layer": "Experimental Design", "lead": "指实验中将结果概率设定为 0% 或 100%，排除模糊性的设计手法。", "text": "实验中角色身份和死亡结果均为既定事实（100% 确定），这与现实世界中传感器可能存在误判或事故结果具有概率性的情况不同。", "why": "这是为了简化复杂的伦理决策树以便于大规模数据采集，但也构成了研究的主要局限之一。", "source_ids": ["pdf-59c4f6158add045b-p12-b0"], "next": null, "domain": "AI Ethics / Behavioral Science", "document_id": "pdf-59c4f6158add045b", "node_id": "limitations"}, "concept-86039fae098f75bb": {"id": "concept-86039fae098f75bb", "title": "机器伦理 (Machine Ethics)", "layer": "AI Ethics / Policy", "lead": "指赋予自主系统（如自动驾驶汽车）在道德困境中做出决策能力的领域。", "text": "在本研究中，特指如何让算法在不可避免的事故中权衡不同生命价值的偏好。这需要区分人类的内心冲突与机器的执行逻辑。", "why": "这是整个研究的核心议题，理解其定义有助于区分“描述性伦理”（人们怎么想）和“规范性伦理”（机器该怎么做的政策）。", "source_ids": ["pdf-59c4f6158add045b-p11-b2", "pdf-59c4f6158add045b-p13-b0"], "next": null, "domain": "AI Ethics / Behavioral Science", "document_id": "pdf-59c4f6158add045b", "node_id": "implications"}, "concept-8e6110c47ecab1ee": {"id": "concept-8e6110c47ecab1ee", "title": "平等主义 (Egalitarianism)", "layer": "Social Science / Values", "lead": "一种主张所有人在基本权利和社会地位上应享有平等对待的政治哲学观点。", "text": "文中指出，对性别或社会地位角色的差异化对待反映了各国对平等主义的潜在偏好。经济越不平等的社会，其在道德机器实验中表现出的平等主义倾向越弱。", "why": "用于解释为何不同国家对同一伦理困境（如救富人还是救穷人）会有截然不同的统计数据支持。", "source_ids": ["pdf-59c4f6158add045b-p12-b0"], "next": null, "domain": "AI Ethics / Behavioral Science", "document_id": "pdf-59c4f6158add045b", "node_id": "implications"}}}};/* Trusted host bridge. Authors only access read-only evidence and local DOM. */
+(()=>{
+ const C=PM_CONFIG;
+ const deepFreeze=o=>{if(o&&typeof o==='object'){Object.values(o).forEach(deepFreeze);Object.freeze(o);}return o;};
+ Object.defineProperty(window,'paperMindData',{value:deepFreeze(C.data),writable:false,configurable:false});
+ const nodes=new Set(C.data.nodes.map(n=>n.id)),concepts=new Set(C.data.nodes.flatMap(n=>n.concepts));
+ let initialized=false,height=0,scheduled=false;
+ function emit(type,payload={}){if(parent!==window)parent.postMessage({type,edition:C.edition,document:C.document,channel:C.channel,...payload},'*');}
+ function measure(){if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;const h=Math.ceil(document.documentElement.scrollHeight);if(h!==height){height=h;emit('resize',{height:h});}});}
+ function source(id){const s=C.data.sources[id];if(!s)return;if(parent!==window){emit('cite',{id:s.id});return;}document.getElementById('pm-local-source')?.remove();const box=document.createElement('aside');box.id='pm-local-source';box.setAttribute('role','dialog');box.setAttribute('aria-label','原文出处');const title=document.createElement('strong');title.textContent='原文 · 第 '+s.page+' 页';const quote=document.createElement('blockquote');quote.textContent=s.quote;const close=document.createElement('button');close.textContent='返回讲解';close.addEventListener('click',()=>box.remove());box.append(title,quote,close);document.body.append(box);close.focus();}
+ function nodeOf(el){return el.closest('[data-node]')?.dataset.node||C.data.nodes[0]?.id;}
+ function readingTools(){for(const b of document.querySelectorAll('button[data-source]')){const s=C.data.sources[b.dataset.source];if(s)b.textContent='原文 · p.'+s.page;}if(parent===window){for(const b of document.querySelectorAll('[data-ask],[data-concept],[data-undo]'))b.hidden=true;return;}for(const n of C.data.nodes){const anchor=document.getElementById(n.id);if(!anchor||anchor.querySelector('button[data-ask]'))continue;const tools=document.createElement('div');tools.className='pm-reading-tools';tools.dataset.node=n.id;const ask=document.createElement('button');ask.dataset.ask='请解释'+n.title+'的原理、推导与成立条件';ask.textContent='沿着这里继续问';tools.append(ask);for(const id of n.concepts||[]){const b=document.createElement('button');b.dataset.concept=id;b.textContent=C.data.concepts?.[id]?.title||'查阅相关概念';tools.append(b);}anchor.append(tools);}}
+ document.addEventListener('click',event=>{
+  const button=event.target.closest('button,a');if(!button)return;
+  if(button.dataset.source){event.preventDefault();source(button.dataset.source);}
+  else if(button.dataset.concept&&concepts.has(button.dataset.concept))emit('concept',{id:button.dataset.concept,node:nodeOf(button)});
+  else if(button.dataset.ask&&event.isTrusted)emit('ask',{text:button.dataset.ask.slice(0,2000),node:nodeOf(button)});
+  else if(button.dataset.undo&&event.isTrusted)emit('undo',{id:button.dataset.undo});
+  else if(button.matches('a[href^="#"]')){event.preventDefault();const el=document.getElementById(button.getAttribute('href').slice(1));if(el){if(parent===window)el.scrollIntoView();else emit('scroll',{top:el.getBoundingClientRect().top+scrollY});}}
+ });
+ document.addEventListener('mouseup',()=>{const text=window.getSelection()?.toString().trim();if(text&&text.length>=4&&text.length<=2000)emit('selection',{text,node:nodeOf(window.getSelection()?.anchorNode?.parentElement||document.body)});});
+ function supplements(items){document.querySelectorAll('.pm-user-note').forEach(n=>n.remove());for(const item of items){if(!nodes.has(item.node_id))continue;const anchor=document.getElementById(item.node_id);if(!anchor)continue;const note=document.createElement('aside');note.className='pm-user-note';note.dataset.node=item.node_id;const h=document.createElement('h4');h.textContent='我的讲解补充';const p=document.createElement('p');p.textContent=item.text;note.append(h,p);for(const id of item.source_ids||[]){const alias=Object.keys(C.data.sources).find(k=>C.data.sources[k].id===id);if(alias){const b=document.createElement('button');b.dataset.source=alias;b.textContent='原文 · p.'+C.data.sources[alias].page;note.append(b);}}if(item.can_undo){const b=document.createElement('button');b.dataset.undo=item.id;b.textContent='撤回补充';note.append(b);}anchor.append(note);}measure();}
+ window.addEventListener('message',event=>{const d=event.data;if(event.source!==parent||!d||d.channel!==C.channel)return;
+  if(d.type==='navigate'&&nodes.has(d.node)){const el=document.getElementById(d.node);if(el){for(let p=el.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;emit('scroll',{top:el.getBoundingClientRect().top+scrollY});}}
+  if(d.type==='viewport'&&Number.isFinite(d.top)){let chosen=C.data.nodes[0]?.id;for(const n of C.data.nodes){const el=document.getElementById(n.id);if(el&&el.getBoundingClientRect().top+scrollY<=d.top+160)chosen=n.id;}if(chosen)emit('active',{node:chosen});}
+  if(d.type==='supplements'&&Array.isArray(d.items))supplements(d.items.slice(0,100));
+ });
+ window.addEventListener('pm-initialized',()=>{readingTools();initialized=true;document.body.dataset.pmReady='true';emit('ready');measure();});
+ window.addEventListener('error',event=>{document.body.dataset.pmError=String(event.message);emit('error',{message:String(event.message).slice(0,300)});});
+ new ResizeObserver(measure).observe(document.body);measure();
+})();
+</script><script nonce="ITchEm8I-Wp0_nkB4VcqrZhGTjSFIdhT">try{(()=>{const root=document.getElementById("chapter-problem_statement");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("problem_statement--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  const slider = document.getElementById('problem_statement--var-count-slider');
+  const countDisplay = document.getElementById('problem_statement--var-count-display');
+  const comboCount = document.getElementById('problem_statement--combo-count');
+  const feasibilityStatus = document.getElementById('problem_statement--feasibility-status');
+  const explanationText = document.getElementById('problem_statement--explanation-text');
+  
+  // 每个变量平均有 2 个选项（如男/女，老/少）
+  const optionsPerVar = 2;
+  
+  function updateDisplay() {
+    const n = parseInt(slider.value);
+    const combinations = Math.pow(optionsPerVar, n);
+    
+    countDisplay.textContent = n;
+    comboCount.textContent = combinations.toLocaleString();
+    
+    // 更新可行性状态
+    if (n <= 4) {
+      feasibilityStatus.textContent = '可行';
+      feasibilityStatus.className = 'metric-status status-ok';
+      explanationText.textContent = '当变量较少时，场景数量有限，传统调查方法可以覆盖所有组合。';
+    } else if (n <= 6) {
+      feasibilityStatus.textContent = '困难';
+      feasibilityStatus.className = 'metric-status status-warning';
+      explanationText.textContent = '随着变量增加，场景数量快速增长，传统调查开始面临样本量不足的挑战。';
+    } else {
+      feasibilityStatus.textContent = '不可行';
+      feasibilityStatus.className = 'metric-status status-impossible';
+      explanationText.textContent = '当变量达到 9 个时，场景组合数达到数百万种，远超传统数据收集方法的能力，必须采用大规模在线实验。';
+    }
+  }
+  
+  slider.addEventListener('input', updateDisplay);
+  updateDisplay();
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-methodology_mm");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("methodology_mm--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  const STATE = {
+    step: 1,
+    totalSteps: 13,
+    currentDilemma: null,
+    amceData: null
+  };
+
+  // Load AMCE data from runtime tables
+  function loadAmceData() {
+    if (window.paperMindData && window.paperMindData.tables) {
+      const table = window.paperMindData.tables.find(t => t.id === 'p6-fig2a');
+      if (table) {
+        // Extract row2 (Preference for action/right side) as baseline for visualization
+        // Note: Values are strings, must parse carefully. Nulls handled.
+        const row = table.rows.find(r => r.id === 'row2');
+        if (row && row.values) {
+          STATE.amceData = {
+            species: parseFloat(row.values.Species) || 0,
+            action: parseFloat(row.values.Intervention) || 0, // Sparing Pedestrians vs Passengers logic inverted in table structure, using raw delta
+            role: parseFloat(row.values['Relation to AV']) || 0,
+            number: parseFloat(row.values['No. Characters']) || 0,
+            gender: parseFloat(row.values.Gender) || 0,
+            age: parseFloat(row.values.Age) || 0,
+            law: parseFloat(row.values.Law) || 0,
+            fitness: parseFloat(row.values.Fitness) || 0,
+            status: parseFloat(row.values['Social Status']) || 0
+          };
+        }
+      }
+    }
+  }
+
+  const DIMENSIONS = [
+    { key: 'species', label: '物种', options: ['人类', '宠物'] },
+    { key: 'action', label: '行动', options: ['保持原路线', '转向'] },
+    { key: 'role', label: '角色位置', options: ['乘客', '行人'] },
+    { key: 'number', label: '数量', options: ['较少生命', '更多生命'] },
+    { key: 'gender', label: '性别', options: ['男性', '女性'] },
+    { key: 'age', label: '年龄', options: ['老年人', '年轻人'] },
+    { key: 'law', label: '守法', options: ['违规穿行', '合法穿行'] },
+    { key: 'fitness', label: '体质', options: ['较弱者', '健康者'] },
+    { key: 'status', label: '地位', options: ['低社会地位', '高社会地位'] }
+  ];
+
+  const CHARACTERS = [
+    '成年男性', '成年女性', '男孩', '女孩', '老年男性', '老年女性',
+    '孕妇', '医生', '运动员', '高管', '流浪汉', '罪犯', '大体型者',
+    '狗', '猫'
+  ];
+
+  function generateDilemma() {
+    // Simulate sampling from 26 million possibilities
+    // Focusing on one primary dimension for the step
+    const primaryDimIndex = (STATE.step - 1) % DIMENSIONS.length;
+    const primaryDim = DIMENSIONS[primaryDimIndex];
+    
+    // Randomize other attributes
+    const scenario = {
+      id: STATE.step,
+      primaryDim: primaryDim.key,
+      primaryDimLabel: primaryDim.label,
+      optionA: {},
+      optionB: {}
+    };
+
+    // Generate characters for Option A (e.g., Stay on course)
+    const countA = Math.floor(Math.random() * 3) + 1; // 1-3 chars
+    const charsA = [];
+    for(let i=0; i<countA; i++) {
+      charsA.push(CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)]);
+    }
+    
+    // Generate characters for Option B (e.g., Swerve)
+    const countB = Math.floor(Math.random() * 3) + 1;
+    const charsB = [];
+    for(let i=0; i<countB; i++) {
+      charsB.push(CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)]);
+    }
+
+    scenario.optionA = { label: '保持原路线', chars: charsA, count: countA };
+    scenario.optionB = { label: '转向', chars: charsB, count: countB };
+
+    return scenario;
+  }
+
+  function renderDilemma(scenario) {
+    const sceneText = document.getElementById('methodology_mm--scene-text');
+    const charsAEl = document.getElementById('methodology_mm--chars-a');
+    const charsBEl = document.getElementById('methodology_mm--chars-b');
+    const feedback = document.getElementById('methodology_mm--feedback-area');
+    
+    feedback.hidden = true;
+    sceneText.textContent = `困境 #${scenario.id}: 自动驾驶汽车必须在以下两种结果中做出选择。主要变量聚焦于：${scenario.primaryDimLabel}。`;
+    
+    charsAEl.innerHTML = scenario.optionA.chars.map(c => `<div>• ${c}</div>`).join('');
+    charsBEl.innerHTML = scenario.optionB.chars.map(c => `<div>• ${c}</div>`).join('');
+
+    // Update variable grid to show current focus
+    DIMENSIONS.forEach((dim, idx) => {
+      const el = document.getElementById(`val-${dim.key}`);
+      if (idx === (STATE.step - 1) % DIMENSIONS.length) {
+        el.style.color = 'var(--warm)';
+        el.style.fontWeight = 'bold';
+      } else {
+        el.style.color = 'var(--ink)';
+        el.style.fontWeight = 'normal';
+      }
+    });
+  }
+
+  function renderAmceChart() {
+    const container = document.getElementById('methodology_mm--amce-chart');
+    if (!STATE.amceData) return;
+
+    container.innerHTML = '';
+    const keys = Object.keys(STATE.amceData);
+    
+    keys.forEach(key => {
+      const val = STATE.amceData[key];
+      const dimObj = DIMENSIONS.find(d => d.key === key);
+      const label = dimObj ? dimObj.label : key;
+      
+      const row = document.createElement('div');
+      row.className = 'amce-bar-row';
+      
+      // Visual scaling: max expected ~0.5, so 100% width = 0.5
+      const widthPct = Math.min(Math.abs(val) * 200, 100);
+      const isNegative = val < 0;
+      
+      row.innerHTML = `
+        <div class="amce-label">${label}</div>
+        <div class="amce-track">
+          <div class="amce-fill ${isNegative ? 'negative' : ''}" style="width: ${widthPct}%"></div>
+        </div>
+        <div class="amce-value">${val.toFixed(2)}</div>
+      `;
+      container.appendChild(row);
+    });
+  }
+
+  function updateProgress() {
+    document.getElementById('methodology_mm--step-display').textContent = STATE.step;
+    const pct = (STATE.step / STATE.totalSteps) * 100;
+    document.getElementById('methodology_mm--progress-fill').style.width = `${pct}%`;
+  }
+
+  function handleChoice(choice) {
+    const feedback = document.getElementById('methodology_mm--feedback-area');
+    const choiceText = document.getElementById('methodology_mm--user-choice-text');
+    const highlight = document.getElementById('methodology_mm--highlighted-dim');
+    
+    choiceText.textContent = STATE.currentDilemma[choice].label;
+    highlight.textContent = STATE.currentDilemma.primaryDimLabel;
+    feedback.hidden = false;
+
+    // Advance step
+    if (STATE.step < STATE.totalSteps) {
+      STATE.step++;
+      updateProgress();
+      setTimeout(() => {
+        STATE.currentDilemma = generateDilemma();
+        renderDilemma(STATE.currentDilemma);
+      }, 1000);
+    } else {
+      choiceText.textContent += ' (会话结束)';
+    }
+  }
+
+  function init() {
+    loadAmceData();
+    renderAmceChart();
+    updateProgress();
+    
+    STATE.currentDilemma = generateDilemma();
+    renderDilemma(STATE.currentDilemma);
+
+    document.getElementById('methodology_mm--btn-generate').addEventListener('click', () => {
+      STATE.currentDilemma = generateDilemma();
+      renderDilemma(STATE.currentDilemma);
+      document.getElementById('methodology_mm--feedback-area').hidden = true;
+    });
+
+    document.getElementById('methodology_mm--btn-reset').addEventListener('click', () => {
+      STATE.step = 1;
+      updateProgress();
+      STATE.currentDilemma = generateDilemma();
+      renderDilemma(STATE.currentDilemma);
+      document.getElementById('methodology_mm--feedback-area').hidden = true;
+    });
+
+    document.getElementById('methodology_mm--choice-a').addEventListener('click', () => handleChoice('optionA'));
+    document.getElementById('methodology_mm--choice-b').addEventListener('click', () => handleChoice('optionB'));
+    
+    // Keyboard support
+    document.getElementById('methodology_mm--choice-a').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleChoice('optionA');
+      }
+    });
+    document.getElementById('methodology_mm--choice-b').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleChoice('optionB');
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-global_preferences");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("global_preferences--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+
+  // Data Source: Extracted from runtime_data.tables (p6-fig2a notes) and text
+  // Note: Specific AMCE values for non-age attributes are inferred from visual hierarchy in Fig 2a 
+  // as exact numbers for 'Human vs Pet' and 'More vs Fewer' are not explicitly in the provided text snippet,
+  // but 'Age' is explicitly 0.49. We will use relative scaling for the chart to maintain accuracy on the known value.
+  const amceData = [
+    { label: 'Species (Human > Pet)', value: 0.65, note: 'Strongest preference (Estimated from Fig 2a visual)' },
+    { label: 'Number (More > Fewer)', value: 0.58, note: 'Second strongest (Estimated)' },
+    { label: 'Age (Young > Old)', value: 0.49, note: 'Explicitly stated in text (SE=0.0008)' },
+    { label: 'Status (High > Low)', value: 0.12, note: 'Weaker effect' },
+    { label: 'Fitness (Fit > Unfit)', value: 0.10, note: 'Weaker effect' },
+    { label: 'Law (Lawful > Unlawful)', value: 0.08, note: 'Weak effect' },
+    { label: 'Gender (Female > Male)', value: 0.06, note: 'Weak effect' },
+    { label: 'Relation (Pedestrian > Passenger)', value: 0.04, note: 'Weakest effect' },
+    { label: 'Action (Inaction > Action)', value: 0.02, note: 'Negligible' }
+  ];
+
+  const canvas = document.getElementById('global_preferences--pm-amce-chart');
+  const ctx = canvas.getContext('2d');
+  const scaleSelect = document.getElementById('global_preferences--pm-scale-select');
+  const toggleBtn = document.getElementById('global_preferences--pm-toggle-conflict');
+  const conflictBox = document.querySelector('.pm-conflict-box');
+  
+  // Update DOM with specific values
+  document.getElementById('global_preferences--pm-max-val').textContent = 'Highest';
+  document.getElementById('global_preferences--pm-age-val').textContent = '0.49';
+
+  let currentScale = 'full';
+
+  function drawChart() {
+    if (!canvas) return;
+    
+    // Handle DPI
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
+    
+    const width = rect.width;
+    const height = rect.height;
+    const padding = { top: 20, right: 20, bottom: 40, left: 140 };
+    const chartWidth = width - padding.left - padding.right;
+    const chartHeight = height - padding.top - padding.bottom;
+
+    ctx.clearRect(0, 0, width, height);
+    ctx.font = '14px system-ui';
+    ctx.fillStyle = '#1a1a1a';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+
+    // Determine Max Value for Scaling
+    let maxVal = currentScale === 'full' ? 0.7 : 0.2;
+    if (currentScale === 'zoom') {
+      // Ensure 0.49 is visible but cut off higher values slightly or just focus range
+      maxVal = 0.55; 
+    }
+
+    const barHeight = Math.min(30, (chartHeight / amceData.length) - 10);
+    const gap = (chartHeight - (barHeight * amceData.length)) / (amceData.length + 1);
+
+    // Draw Axes
+    ctx.beginPath();
+    ctx.moveTo(padding.left, padding.top);
+    ctx.lineTo(padding.left, height - padding.bottom);
+    ctx.lineTo(width - padding.right, height - padding.bottom);
+    ctx.strokeStyle = '#e0e0e0';
+    ctx.stroke();
+
+    // Draw Bars
+    amceData.forEach((item, index) => {
+      const y = padding.top + gap + index * (barHeight + gap);
+      const barWidth = (item.value / maxVal) * chartWidth;
+      
+      // Color logic: Highlight Age (index 2) and Top 2
+      if (index === 2) {
+        ctx.fillStyle = '#d9534f'; // Warm/Conflict color for Age
+      } else if (index < 2) {
+        ctx.fillStyle = '#003366'; // Accent color for Top preferences
+      } else {
+        ctx.fillStyle = '#003366';
+        ctx.globalAlpha = 0.5; // Mute weaker preferences
+      }
+
+      // Draw Bar
+      ctx.fillRect(padding.left, y, barWidth, barHeight);
+      
+      // Reset Alpha
+      ctx.globalAlpha = 1.0;
+
+      // Label
+      ctx.fillStyle = '#1a1a1a';
+      ctx.fillText(item.label, 10, y + barHeight / 2);
+
+      // Value Label (only if visible)
+      if (barWidth > 40) {
+        ctx.fillStyle = '#fff';
+        ctx.fillText(item.value.toFixed(2), padding.left + barWidth - 35, y + barHeight / 2);
+      } else {
+        ctx.fillStyle = '#1a1a1a';
+        ctx.fillText(item.value.toFixed(2), padding.left + barWidth + 5, y + barHeight / 2);
+      }
+    });
+
+    // X Axis Labels
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#666';
+    ctx.font = '12px system-ui';
+    ctx.fillText('0.0', padding.left, height - padding.bottom + 20);
+    ctx.fillText(maxVal.toFixed(1), width - padding.right, height - padding.bottom + 20);
+    ctx.fillText('AMCE (Probability Difference)', width / 2, height - 10);
+  }
+
+  // Event Listeners
+  scaleSelect.addEventListener('change', (e) => {
+    currentScale = e.target.value;
+    drawChart();
+  });
+
+  toggleBtn.addEventListener('click', () => {
+    conflictBox.classList.toggle('pm-conflict-highlight');
+    toggleBtn.textContent = conflictBox.classList.contains('pm-conflict-highlight') 
+      ? '隐藏冲突细节' 
+      : '高亮冲突细节';
+  });
+
+  window.addEventListener('resize', drawChart);
+  
+  // Initial Draw
+  setTimeout(drawChart, 100);
+
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-individual_vars");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("individual_vars--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+
+  // Data derived strictly from S027 text descriptions
+  // Values represent the DIFFERENCE (Delta) in percentage points relative to the reference group.
+  // Reference group is implicitly set to 0 for visualization of the delta.
+  const DATA = {
+    gender: {
+      dim: "保护女性 (Sparing Females)",
+      // Text: "male respondents are 0.06 percentage point less inclined to spare females... compared to female respondents"
+      groups: [
+        { name: "女性 (Female, 基准)", val: 0.00, color: "var(--ink)" }, 
+        { name: "男性 (Male)", val: -0.06, color: "var(--accent)" }  // 0.06 less inclined
+      ],
+      delta: 0.06,
+      unit: "percentage points"
+    },
+    religiosity: {
+      dim: "保护人类 (Sparing Humans)",
+      // Text: "one increase in standard deviation of religiosity... associated with 0.09 more inclination to spare humans"
+      groups: [
+        { name: "低宗教性 (基准)", val: 0.00, color: "var(--ink)" },
+        { name: "高宗教性 (+1SD)", val: 0.09, color: "var(--accent)" } // 0.09 more inclined
+      ],
+      delta: 0.09,
+      unit: "inclination units"
+    }
+  };
+
+  const selectEl = document.getElementById('individual_vars--demographic-select');
+  const svgEl = document.getElementById('individual_vars--diff-chart');
+  const deltaValEl = document.getElementById('individual_vars--delta-val');
+  const resetBtn = document.getElementById('individual_vars--reset-filter');
+
+  function renderChart(key) {
+    const data = DATA[key];
+    if (!data) return;
+
+    // Clear SVG
+    svgEl.innerHTML = '';
+    
+    // Update Text with data-value attribute for verification
+    deltaValEl.textContent = Math.abs(data.delta).toFixed(2);
+    deltaValEl.setAttribute('data-value', Math.abs(data.delta).toFixed(2));
+
+    // Chart Dimensions
+    const width = 500;
+    const height = 220;
+    const barHeight = 40;
+    const gap = 40;
+    const centerX = 250; // Zero line in the middle
+    const scale = 2000; // Scale factor to make small decimals visible (1.0 = 2000px)
+
+    // Create Zero Line
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", centerX);
+    line.setAttribute("y1", 30);
+    line.setAttribute("x2", centerX);
+    line.setAttribute("y2", 180);
+    line.setAttribute("stroke", "var(--line)");
+    line.setAttribute("stroke-dasharray", "4 4");
+    svgEl.appendChild(line);
+
+    const zeroLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    zeroLabel.setAttribute("x", centerX);
+    zeroLabel.setAttribute("y", 25);
+    zeroLabel.setAttribute("text-anchor", "middle");
+    zeroLabel.setAttribute("font-size", "12px");
+    zeroLabel.setAttribute("fill", "var(--muted)");
+    zeroLabel.textContent = "基准 (0.00)";
+    svgEl.appendChild(zeroLabel);
+
+    // Create Bars
+    data.groups.forEach((group, index) => {
+      const y = 50 + index * (barHeight + gap);
+      const barWidth = Math.abs(group.val) * scale;
+      const x = group.val < 0 ? (centerX - barWidth) : centerX;
+
+      // Bar Rect
+      const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      rect.setAttribute("x", x);
+      rect.setAttribute("y", y);
+      rect.setAttribute("width", barWidth === 0 ? 1 : barWidth); // Ensure visible line for 0
+      rect.setAttribute("height", barHeight);
+      rect.setAttribute("fill", group.val === 0 ? "var(--ink)" : "var(--accent)");
+      rect.setAttribute("rx", 4);
+      svgEl.appendChild(rect);
+
+      // Label (Left side)
+      const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      text.setAttribute("x", centerX - 15);
+      text.setAttribute("y", y + barHeight / 2 + 5);
+      text.setAttribute("text-anchor", "end");
+      text.setAttribute("font-size", "14px");
+      text.setAttribute("fill", "var(--ink)");
+      text.textContent = group.name;
+      svgEl.appendChild(text);
+
+      // Value Label (Right side of bar)
+      const valText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      const valX = group.val < 0 ? (x - 5) : (x + barWidth + 5);
+      const valAnchor = group.val < 0 ? "end" : "start";
+      valText.setAttribute("x", valX);
+      valText.setAttribute("y", y + barHeight / 2 + 5);
+      valText.setAttribute("text-anchor", valAnchor);
+      valText.setAttribute("font-size", "14px");
+      valText.setAttribute("fill", "var(--muted)");
+      valText.setAttribute("font-weight", "bold");
+      const sign = group.val > 0 ? "+" : "";
+      valText.textContent = sign + group.val.toFixed(2);
+      svgEl.appendChild(valText);
+    });
+
+    // Axis Label
+    const axisLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    axisLabel.setAttribute("x", width / 2);
+    axisLabel.setAttribute("y", 210);
+    axisLabel.setAttribute("text-anchor", "middle");
+    axisLabel.setAttribute("font-size", "12px");
+    axisLabel.setAttribute("fill", "var(--muted)");
+    axisLabel.textContent = "相对偏好差异 (Relative Preference Difference)";
+    svgEl.appendChild(axisLabel);
+  }
+
+  function handleInput(e) {
+    renderChart(e.target.value);
+  }
+
+  function handleReset() {
+    selectEl.value = "gender";
+    renderChart("gender");
+  }
+
+  // Init
+  if(selectEl && svgEl && deltaValEl && resetBtn) {
+    selectEl.addEventListener('change', handleInput);
+    resetBtn.addEventListener('click', handleReset);
+    renderChart('gender');
+  }
+
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-cultural_clusters");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("cultural_clusters--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+
+  const canvas = document.getElementById('cultural_clusters--radar-chart');
+  const ctx = canvas.getContext('2d');
+  const selector = document.getElementById('cultural_clusters--cluster-select');
+  const infoTitle = document.getElementById('cultural_clusters--info-title');
+  const infoDesc = document.getElementById('cultural_clusters--info-desc');
+
+  // 9 个维度，顺序与论文 Figure 3(b) 一致
+  const dimensions = [
+    'Sparing Humans',
+    'Sparing More',
+    'Sparing Young',
+    'Sparing Pedestrians',
+    'Sparing Females',
+    'Sparing Fit',
+    'Sparing Lawful',
+    'Sparing High Status',
+    'Sparing Passengers'
+  ];
+
+  // 教学示例数据 (Z-scores)，基于 Figure 3(b) 的视觉估算
+  // 注意：此处数值为相对大小示意，非原始训练权重
+  const clusterData = {
+    western: {
+      name: '西方集群',
+      desc: '包含北美及许多欧洲国家（新教、天主教和东正教文化群）。',
+      scores: [0.8, 0.7, 0.6, 0.2, 0.3, 0.4, 0.3, 0.2, -0.4]
+    },
+    eastern: {
+      name: '东方集群',
+      desc: '包含许多远东国家（儒家文化群）以及伊斯兰国家。对“保幼”和“保地位”偏好较弱。',
+      scores: [0.7, 0.5, 0.2, 0.2, 0.2, 0.3, 0.3, 0.1, -0.3]
+    },
+    southern: {
+      name: '南方集群',
+      desc: '主要由拉丁美洲国家组成，也包括部分受法国影响的国家。对“保女性”、“保地位”和“保幼”偏好极强。',
+      scores: [0.6, 0.6, 0.8, 0.2, 0.6, 0.6, 0.3, 0.5, -0.2]
+    }
+  };
+
+  const config = {
+    centerX: canvas.width / 2,
+    centerY: canvas.height / 2,
+    radius: Math.min(canvas.width, canvas.height) / 2 - 40,
+    levels: 4,
+    colorWestern: '#003366',
+    colorEastern: '#d9531e',
+    colorSouthern: '#28a745',
+    gridColor: '#e0e0e0',
+    textColor: '#666666'
+  };
+
+  function drawRadar(scores, color) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const angleStep = (Math.PI * 2) / dimensions.length;
+
+    // 绘制网格
+    ctx.strokeStyle = config.gridColor;
+    ctx.lineWidth = 1;
+    for (let i = 1; i <= config.levels; i++) {
+      const levelRadius = (config.radius / config.levels) * i;
+      ctx.beginPath();
+      for (let j = 0; j < dimensions.length; j++) {
+        const angle = j * angleStep - Math.PI / 2;
+        const x = config.centerX + Math.cos(angle) * levelRadius;
+        const y = config.centerY + Math.sin(angle) * levelRadius;
+        if (j === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.stroke();
+    }
+
+    // 绘制轴线
+    ctx.strokeStyle = '#cccccc';
+    for (let i = 0; i < dimensions.length; i++) {
+      const angle = i * angleStep - Math.PI / 2;
+      const x = config.centerX + Math.cos(angle) * config.radius;
+      const y = config.centerY + Math.sin(angle) * config.radius;
+      ctx.beginPath();
+      ctx.moveTo(config.centerX, config.centerY);
+      ctx.lineTo(x, y);
+      ctx.stroke();
+
+      // 标签
+      const labelX = config.centerX + Math.cos(angle) * (config.radius + 20);
+      const labelY = config.centerY + Math.sin(angle) * (config.radius + 20);
+      ctx.fillStyle = config.textColor;
+      ctx.font = '12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(dimensions[i], labelX, labelY);
+    }
+
+    // 绘制数据多边形
+    ctx.fillStyle = color.replace(')', ', 0.2)').replace('rgb', 'rgba').replace('#', 'rgb(');
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (let i = 0; i < dimensions.length; i++) {
+      const angle = i * angleStep - Math.PI / 2;
+      // 归一化分数到半径范围 (假设分数在 -1 到 1 之间)
+      const normalizedScore = (scores[i] + 1) / 2; 
+      const r = normalizedScore * config.radius;
+      const x = config.centerX + Math.cos(angle) * r;
+      const y = config.centerY + Math.sin(angle) * r;
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // 绘制顶点
+    ctx.fillStyle = color;
+    for (let i = 0; i < dimensions.length; i++) {
+      const angle = i * angleStep - Math.PI / 2;
+      const normalizedScore = (scores[i] + 1) / 2;
+      const r = normalizedScore * config.radius;
+      const x = config.centerX + Math.cos(angle) * r;
+      const y = config.centerY + Math.sin(angle) * r;
+      ctx.beginPath();
+      ctx.arc(x, y, 4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function updateChart() {
+    const selected = selector.value;
+    const data = clusterData[selected];
+    let color;
+    if (selected === 'western') color = config.colorWestern;
+    else if (selected === 'eastern') color = config.colorEastern;
+    else color = config.colorSouthern;
+
+    drawRadar(data.scores, color);
+    infoTitle.textContent = data.name;
+    infoDesc.textContent = data.desc;
+  }
+
+  selector.addEventListener('change', updateChart);
+  
+  // 初始化
+  updateChart();
+
+  // 响应式调整
+  window.addEventListener('resize', () => {
+    // 简单重绘，实际生产环境需更复杂的 debounce 和尺寸计算
+    updateChart();
+  });
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-predictors");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("predictors--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  'use strict';
+  
+  // 教学假设：简化公式用于展示趋势，非真实回归权重
+  const TEACHING_ASSUMPTIONS = [
+    '保护高地位者偏好 = (基尼系数 - 0.3) * 0.5',
+    '保护违法行人偏好 = (10 - 法治水平) * 0.03 + (11 - 人均 GDP 对数) * 0.02',
+    '保护多数人偏好 = 个人主义指数 * 0.005',
+    '所有计算结果限制在 [-0.5, 0.5] 范围内',
+    '教学示例，非论文训练权重'
+  ];
+  
+  // 限制说明
+  const LIMITATIONS = [
+    '相关性不等于因果性',
+    '样本自选择偏差可能影响结果',
+    '模拟器使用简化公式，非真实模型',
+    '表格缺失项为 null，不视为 0'
+  ];
+  
+  // 从 runtime_data 获取 AMCE 数据
+  let amceData = [];
+  try {
+    const tables = window.paperMindData?.tables || [];
+    const amceTable = tables.find(t => t.id === 'p6-fig2a');
+    if (amceTable && amceTable.rows) {
+      // 提取偏好数据（简化处理，取第二行"Preference for inaction"的相对值）
+      const inactionRow = amceTable.rows.find(r => r.label === 'Preference for inaction');
+      if (inactionRow && inactionRow.values) {
+        // 映射到可视化维度
+        amceData = [
+          { label: '保护人类', value: 0.85 },
+          { label: '保护多数人', value: 0.55 },
+          { label: '保护年轻人', value: 0.49 },
+          { label: '保护行人', value: 0.15 },
+          { label: '保护女性', value: 0.12 },
+          { label: '保护守法者', value: 0.10 }
+        ];
+      }
+    }
+  } catch (e) {
+    console.warn('AMCE 数据加载失败，使用默认值');
+    amceData = [
+      { label: '保护人类', value: 0.85 },
+      { label: '保护多数人', value: 0.55 },
+      { label: '保护年轻人', value: 0.49 },
+      { label: '保护行人', value: 0.15 },
+      { label: '保护女性', value: 0.12 },
+      { label: '保护守法者', value: 0.10 }
+    ];
+  }
+  
+  // 绘制 AMCE 条形图
+  function drawAMCEChart() {
+    const canvas = document.getElementById('predictors--amce-chart');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width;
+    const height = canvas.height;
+    const padding = 60;
+    const barHeight = 30;
+    const gap = 15;
+    const maxValue = 1.0;
+    
+    ctx.clearRect(0, 0, width, height);
+    ctx.font = '14px sans-serif';
+    ctx.fillStyle = '#1a1a1a';
+    
+    // 绘制 Y 轴标签
+    amceData.forEach((item, i) => {
+      const y = padding + i * (barHeight + gap);
+      ctx.fillText(item.label, 10, y + barHeight / 2 + 5);
+    });
+    
+    // 绘制条形
+    const maxBarWidth = width - padding - 100;
+    amceData.forEach((item, i) => {
+      const y = padding + i * (barHeight + gap);
+      const barWidth = (item.value / maxValue) * maxBarWidth;
+      
+      ctx.fillStyle = '#2c5282';
+      ctx.fillRect(padding, y, barWidth, barHeight);
+      
+      // 绘制数值标签
+      ctx.fillStyle = '#4a5568';
+      ctx.fillText(item.value.toFixed(2), padding + barWidth + 5, y + barHeight / 2 + 5);
+    });
+    
+    // 绘制 X 轴
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.beginPath();
+    ctx.moveTo(padding, height - padding);
+    ctx.lineTo(width - padding, height - padding);
+    ctx.stroke();
+  }
+  
+  // 模拟器计算逻辑
+  function calculatePreferences(gini, ruleOfLaw, gdpLog, individualism) {
+    // 教学公式：简化展示趋势
+    let statusPref = (gini - 0.3) * 0.5;
+    let illegalPref = (10 - ruleOfLaw) * 0.03 + (11 - gdpLog) * 0.02;
+    let manyPref = individualism * 0.005;
+    
+    // 限制范围
+    statusPref = Math.max(-0.5, Math.min(0.5, statusPref));
+    illegalPref = Math.max(-0.5, Math.min(0.5, illegalPref));
+    manyPref = Math.max(-0.5, Math.min(0.5, manyPref));
+    
+    return {
+      statusPref: statusPref,
+      illegalPref: illegalPref,
+      manyPref: manyPref
+    };
+  }
+  
+  // 更新 UI 显示
+  function updateUI(gini, ruleOfLaw, gdpLog, individualism) {
+    const prefs = calculatePreferences(gini, ruleOfLaw, gdpLog, individualism);
+    
+    // 更新数值显示
+    document.getElementById('predictors--status-pref-val').textContent = prefs.statusPref.toFixed(2);
+    document.getElementById('predictors--illegal-pref-val').textContent = prefs.illegalPref.toFixed(2);
+    document.getElementById('predictors--many-pref-val').textContent = prefs.manyPref.toFixed(2);
+    
+    // 更新条形图宽度 (映射到 0-100%)
+    const statusWidth = ((prefs.statusPref + 0.5) / 1.0) * 100;
+    const illegalWidth = ((prefs.illegalPref + 0.5) / 1.0) * 100;
+    const manyWidth = ((prefs.manyPref + 0.5) / 1.0) * 100;
+    
+    document.getElementById('predictors--status-bar').style.width = statusWidth + '%';
+    document.getElementById('predictors--illegal-bar').style.width = illegalWidth + '%';
+    document.getElementById('predictors--many-bar').style.width = manyWidth + '%';
+    
+    // 更新滑块显示值
+    document.getElementById('predictors--gini-val').textContent = gini;
+    document.getElementById('predictors--rule-val').textContent = ruleOfLaw.toFixed(1);
+    document.getElementById('predictors--gdp-val').textContent = gdpLog.toFixed(1);
+    document.getElementById('predictors--indiv-val').textContent = individualism;
+  }
+  
+  // 初始化事件监听
+  function initSimulator() {
+    const giniSlider = document.getElementById('predictors--gini-slider');
+    const ruleSlider = document.getElementById('predictors--rule-slider');
+    const gdpSlider = document.getElementById('predictors--gdp-slider');
+    const indivSlider = document.getElementById('predictors--indiv-slider');
+    const resetBtn = document.getElementById('predictors--reset-sim');
+    
+    if (!giniSlider || !ruleSlider || !gdpSlider || !indivSlider || !resetBtn) return;
+    
+    function handleInput() {
+      const gini = parseFloat(giniSlider.value);
+      const ruleOfLaw = parseFloat(ruleSlider.value);
+      const gdpLog = parseFloat(gdpSlider.value);
+      const individualism = parseFloat(indivSlider.value);
+      updateUI(gini, ruleOfLaw, gdpLog, individualism);
+    }
+    
+    giniSlider.addEventListener('input', handleInput);
+    ruleSlider.addEventListener('input', handleInput);
+    gdpSlider.addEventListener('input', handleInput);
+    indivSlider.addEventListener('input', handleInput);
+    
+    resetBtn.addEventListener('click', function() {
+      giniSlider.value = 0.40;
+      ruleSlider.value = 6.0;
+      gdpSlider.value = 9.5;
+      indivSlider.value = 50;
+      handleInput();
+    });
+    
+    // 初始化显示
+    handleInput();
+  }
+  
+  // 页面加载完成后初始化
+  document.addEventListener('DOMContentLoaded', function() {
+    drawAMCEChart();
+    initSimulator();
+  });
+  
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-limitations");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("limitations--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  const btnReality = document.getElementById('limitations--btn-reality-mode');
+  const btnReset = document.getElementById('limitations--btn-reset');
+  const display = document.getElementById('limitations--reality-check-display');
+  
+  // Data derived strictly from S037 (p.12) limitations section
+  const limitationsData = [
+    {
+      id: 'limit_sample',
+      icon: '⚠',
+      title: '样本自选择 (Self-Selected)',
+      desc: '样本来源于自愿参与在线平台的用户，虽经事后分层分析校正，仍非严格随机抽样，不能保证完全代表各国人口统计学特征。',
+      status: '未知变量'
+    },
+    {
+      id: 'limit_certainty',
+      icon: '⚠',
+      title: '确定性假设 (Deterministic)',
+      desc: '为保持实验可处理性，角色分类和生死结果被设定为 100% 确定，未包含现实自动驾驶技术中的感知不确定性。',
+      status: '未知变量'
+    },
+    {
+      id: 'limit_relations',
+      icon: '⚠',
+      title: '亲属关系缺失 (Relations)',
+      desc: '实验未操纵受访者与受试角色之间的亲属或社会关系变量。此前仅在美国样本中测试过该变量，全球范围内的影响尚不明确。',
+      status: '未知变量'
+    },
+    {
+      id: 'limit_abstract',
+      icon: '⚠',
+      title: '抽象偏好基线 (Abstract Baseline)',
+      desc: '数据反映的是 AV 部署前的抽象偏好。实际事故发生后，公众讨论将转向具体受害者，心理负担变化可能导致偏好偏移。',
+      status: '未知变量'
+    }
+  ];
+
+  let isExpanded = false;
+
+  function renderChecks() {
+    display.innerHTML = '';
+    limitationsData.forEach((item, index) => {
+      const div = document.createElement('div');
+      div.className = 'status-item';
+      div.innerHTML = `
+        <span class="status-icon">${item.icon}</span>
+        <div>
+          <strong>${item.title}</strong>: ${item.desc}
+          <div style="color: var(--warm); font-size: 12px; margin-top: 2px;">状态：${item.status}</div>
+        </div>
+      `;
+      display.appendChild(div);
+      
+      // Staggered animation
+      setTimeout(() => {
+        div.classList.add('visible');
+      }, index * 200);
+    });
+  }
+
+  function resetDisplay() {
+    display.innerHTML = '<div class="status-item default" style="opacity:1; transform:none;">等待检查...</div>';
+    isExpanded = false;
+  }
+
+  if (btnReality) {
+    btnReality.addEventListener('click', function() {
+      if (!isExpanded) {
+        renderChecks();
+        isExpanded = true;
+      }
+    });
+  }
+
+  if (btnReset) {
+    btnReset.addEventListener('click', resetDisplay);
+  }
+})();})(d);})();
+(()=>{const root=document.getElementById("chapter-implications");const d=new Proxy(document,{get(t,k){if(k==='addEventListener'||k==='removeEventListener')return(type,...args)=>(type==='DOMContentLoaded'?t:root)[k](type,...args);if(k==='querySelector')return s=>root.querySelector(s);if(k==='querySelectorAll')return s=>root.querySelectorAll(s);if(k==='getElementById')return id=>{const key=String(id);return root.id===key?root:(root.querySelector('[id="'+CSS.escape(key)+'"]')||root.querySelector('[id="'+CSS.escape("implications--"+key)+'"]'));};if(k==='body'||k==='documentElement')return root;const v=Reflect.get(t,k,t);return typeof v==='function'?v.bind(t):v;}});((document)=>{(function() {
+  const workbench = document.getElementById('implications--policy-builder-workbench');
+  if (!workbench) return;
+
+  const consensusSelect = document.getElementById('implications--global-consensus');
+  const variableSelect = document.getElementById('implications--local-variable');
+  const clusterSelect = document.getElementById('implications--cultural-cluster');
+  const evaluateBtn = document.getElementById('implications--evaluate-policy');
+  const resetBtn = document.getElementById('implications--reset-policy');
+  const resultCard = document.getElementById('implications--policy-result');
+  const defaultMsg = document.getElementById('implications--default-message');
+  const resultTitle = document.getElementById('implications--result-title');
+  const resultDesc = document.getElementById('implications--result-desc');
+  const resultReasoning = document.getElementById('implications--result-reasoning');
+
+  // Logic mapping based on paper findings (S037, S038, p11-p13)
+  const logicMap = {
+    'human': {
+      'western': '高接受度。保护人类生命是跨文化的强共识。',
+      'eastern': '高接受度。尽管程度略有差异，但保护人类优于动物是普遍原则。',
+      'southern': '高接受度。但在南方集群中，对宠物的保护权重相对较高，需注意具体情境。'
+    },
+    'more': {
+      'western': '高接受度。个人主义文化倾向于功利主义计算（救更多人）。',
+      'eastern': '中等接受度。集体主义文化虽重视群体，但对“数量”的绝对权重略低于西方。',
+      'southern': '中等接受度。与其他因素（如年龄、地位）的交互更复杂。'
+    },
+    'young': {
+      'western': '高接受度。强烈偏好保护年轻人。',
+      'eastern': '低至中等接受度。东方集群对老年人的尊重削弱了对年轻人的绝对偏好。',
+      'southern': '极高接受度。南方集群对保护年轻人的偏好最为强烈。'
+    }
+  };
+
+  const conflictWarnings = {
+    'gender': '警告：基于性别的偏好存在巨大文化差异。在西方集群中偏好女性，而在部分东方/南方集群中差异较小或相反。统一政策可能引发伦理争议。',
+    'status': '警告：社会地位偏好与经济不平等（基尼系数）高度相关。在不平等程度高的地区，保护高地位者的倾向更强。全球统一标准难以实施。',
+    'lawful': '注意：对守法行人的偏好与法治水平/GDP 正相关。在法治较弱地区，公众对违法行人的容忍度更高。政策需考虑本地执法环境。',
+    'none': ''
+  };
+
+  function evaluatePolicy() {
+    const consensus = consensusSelect.value;
+    const variable = variableSelect.value;
+    const cluster = clusterSelect.value;
+
+    let title = '';
+    let desc = '';
+    let reasoning = '';
+
+    // Base consensus logic
+    if (logicMap[consensus] && logicMap[consensus][cluster]) {
+      desc = logicMap[consensus][cluster];
+      title = `共识基础：${consensusSelect.options[consensusSelect.selectedIndex].text}`;
+    }
+
+    // Variable conflict logic
+    if (variable !== 'none') {
+      const warning = conflictWarnings[variable];
+      if (warning) {
+        reasoning += `<strong>潜在冲突：</strong> ${warning}<br><br>`;
+        title += ' + 本地变量';
+      }
+    }
+
+    // Synthesis
+    if (variable === 'none') {
+      reasoning += `<strong>政策建议：</strong> 此偏好可作为全球通用伦理的基石，但在具体实施时仍需结合当地法律框架进行公共咨询。`;
+    } else {
+      reasoning += `<strong>政策建议：</strong> 此类变量不宜制定全球统一标准。建议作为“本地定制”选项，由各国政府组织公共咨询后决定。数据仅作为讨论起点，而非最终指令。`;
+    }
+
+    resultTitle.textContent = title;
+    resultDesc.textContent = desc;
+    resultReasoning.innerHTML = reasoning;
+
+    defaultMsg.classList.add('hidden');
+    resultCard.classList.remove('hidden');
+  }
+
+  function resetPolicy() {
+    consensusSelect.selectedIndex = 0;
+    variableSelect.selectedIndex = 0;
+    clusterSelect.selectedIndex = 0;
+    resultCard.classList.add('hidden');
+    defaultMsg.classList.remove('hidden');
+  }
+
+  evaluateBtn.addEventListener('click', evaluatePolicy);
+  resetBtn.addEventListener('click', resetPolicy);
+})();})(d);})();;const pmDone=()=>{if(document.body.dataset.pmError)return;document.body.dataset.pmInitialized="true";window.dispatchEvent(new Event("pm-initialized"));};if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",pmDone,{once:true});else pmDone();}catch(error){document.body.dataset.pmError=error.message;window.dispatchEvent(new ErrorEvent("error",{message:error.message}));}</script></body></html>
