@@ -6,6 +6,12 @@
 
 当前是本机单用户版本。产品不预置教学文档；导入真实 PDF 后使用配置的模型生成。教学 fixtures 仅用于隔离测试。
 
+## 在线交互阅读
+
+GitHub Pages 地址：https://merry-q.github.io/papermind/ 。在线版提供数据库中默认已发布版本的交互讲解、公式、引用回查和原 PDF，不需要 API 密钥。新生成、OCR、联网与 Copilot 请运行下面的本地完整版；GitHub Pages 不运行 Python 后端。
+
+推送 main 后，`.github/workflows/pages.yml` 自动从已提交数据构建和发布，不调用模型。导出仅包含默认已发布页面及对应 PDF，不包含数据库、聊天记录、个人概念库或服务端配置。可用 `python scripts/build_pages.py` 在本地生成 `.pages/site`，并用静态 HTTP 服务预览该目录。
+
 ## 启动
 
 需要 Python 3.11+、Node.js 22.12+、阿里云百炼密钥和模型权限。在项目根目录 PowerShell 执行：
@@ -111,6 +117,6 @@ python -u scripts/benchmark_live.py --extended --workers 3
 | docs/ | 产品决策、原开发方案、实测及已知问题 |
 | data/ | SQLite、上传文件、解析缓存、任务及测试原始产物 |
 
-默认数据在项目 data/，可用 PAPERMIND_DATA_DIR 更改。PDF 文本、所选页图/区域及提问会发送给配置的阿里模型，联网发送检索词；文件和数据库保存在本机。`.env.local`、data/、artifacts/ 已忽略，不提交密钥和用户文档。
+默认数据在项目 data/，可用 PAPERMIND_DATA_DIR 更改。PDF 文本、所选页图/区域及提问会发送给配置的阿里模型，联网发送检索词。当前仓库按所有者要求提交 data/ 中的 PDF、数据库与生成结果；`.env.local`、artifacts/、数据库 WAL/SHM 与依赖仍忽略。部署所需密钥请仅配置在本地后端环境中。
 
 [原开发方案](docs/DEVELOPMENT-PLAN.md) 保留历史规划。运行时契约以 backend/contracts.py 和 backend/live_contracts.py 为准。

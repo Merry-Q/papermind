@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="paperMind：探索学术论文与专业报告的交互讲解，查看原文与证据。">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./styles.css">
+  <title>paperMind · 交互阅读</title>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./">paper<span>Mind</span></a>
+    <span class="edition">交互阅读 · 在线版</span>
+    <a class="repository" href="https://github.com/Merry-Q/papermind#启动" target="_blank" rel="noopener noreferrer">运行完整版 ↗</a>
+  </header>
+  <div class="workspace">
+    <aside class="library" aria-label="文献库">
+      <div class="library-heading"><h1>从论文到理解</h1><p>沿着论证阅读，动手探索机制。</p></div>
+      <label class="search-label" for="search">查找文献</label>
+      <input id="search" type="search" placeholder="搜索论文或报告…" autocomplete="off">
+      <p id="count" class="count" role="status">正在载入文献…</p>
+      <nav id="documents" aria-label="选择文献"></nav>
+      <p class="scope">此站提供已生成的交互讲解与原 PDF。生成、OCR、联网和 Copilot 需运行完整版。</p>
+    </aside>
+    <main>
+      <div class="reading-toolbar">
+        <div><h2 id="reading-title">正在打开文献…</h2><p id="reading-meta"></p></div>
+        <div class="reading-links"><a id="pdf-link" hidden target="_blank" rel="noopener">原 PDF ↗</a><a id="reading-link" hidden target="_blank" rel="noopener">独立打开 ↗</a></div>
+      </div>
+      <p id="error" role="alert" hidden></p>
+      <iframe id="reading" title="论文交互讲解" sandbox="allow-scripts" hidden></iframe>
+      <noscript>请启用 JavaScript，以浏览文献和操作交互图表。</noscript>
+    </main>
+  </div>
+  <script src="./app.js" type="module"></script>
+</body>
+</html>

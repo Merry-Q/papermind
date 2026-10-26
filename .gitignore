@@ -10,4 +10,5 @@ data/papermind.db-shm
 data/papermind.db-journal
 artifacts/
 .impeccable/
+.pages/
 *.log

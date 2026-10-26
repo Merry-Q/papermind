@@ -205,11 +205,11 @@ def enforce_execution_boundary(artifact):
 
 def safe_json(value):return store.encode(value).replace('<','\\u003c').replace('\u2028','\\u2028').replace('\u2029','\\u2029')
 
-def frame_html(artifact,data,item,channel):
+def frame_html(artifact,data,item,channel,standalone=False):
     from .reading_math import render_math
     nonce=secrets.token_urlsafe(24)
     csp=f"default-src 'none'; script-src 'nonce-{nonce}'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; frame-src 'none'; object-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'"
-    config={'edition':item['id'],'document':item['document_id'],'channel':channel,'data':data}
+    config={'edition':item['id'],'document':item['document_id'],'channel':channel,'data':data,'standalone':standalone}
     kernel=(store.ROOT/'frontend'/'reading-v2-runtime.js').read_text(encoding='utf-8')
     return ('<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             '<meta http-equiv="Content-Security-Policy" content="'+csp+'"><title>'+__import__('html').escape(artifact['title'])+'</title><style>'
