@@ -1,0 +1,16 @@
+/* Keep both controls in the reader toolbar, outside the collapsible panels. */
+.workspace{--outline-width:214px;--companion-width:352px;grid-template-columns:var(--outline-width) minmax(0,1fr) var(--companion-width)}
+.main-pane{grid-column:2;grid-row:1}
+.leftbar{grid-column:1;grid-row:1}
+.rightbar{grid-column:3;grid-row:1}
+.reading-toolbar .sidebar-toggle{display:inline-flex;flex-shrink:0;min-width:32px;min-height:32px;border:1px solid var(--line);border-radius:6px}
+.reading-toolbar .sidebar-toggle:hover{background:#edf2fc;color:var(--blue)}
+.reading-toolbar .sidebar-toggle:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.reading-toolbar .view-switch{margin-left:auto}
+.companion-heading>.icon-button{visibility:visible}
+@media(min-width:1600px){.workspace{--outline-width:238px;--companion-width:385px}}
+@media(max-width:1220px){.workspace{--outline-width:180px;--companion-width:305px}}
+@media(max-width:1020px){.workspace{--outline-width:172px;--companion-width:0px}}
+@media(min-width:681px){.workspace.left-collapsed{--outline-width:0px}.workspace.left-collapsed .leftbar{display:none}}
+@media(min-width:1021px){.workspace.right-collapsed{--companion-width:0px}.workspace.right-collapsed .rightbar{display:none}}
+@media(max-width:680px){.workspace{--outline-width:0px}.reading-toolbar{gap:6px}.reading-toolbar-left>span:not(.demo-tag){display:none}}
