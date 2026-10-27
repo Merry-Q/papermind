@@ -44,6 +44,15 @@ class ReadingV2Tests(unittest.TestCase):
         self.assertIn("connect-src 'none'",a)
         self.assertNotIn('Source <script>',a)
         self.assertIn('Test &lt;title&gt;',a)
+
+    def test_metadata_keeps_published_edition_links_when_document_changes(self):
+        from backend.reading_v2_routes import metadata
+        data={**self.data,'nodes':[{'id':'old-section','title':'旧版章节','concepts':['old-concept']}],
+              'concepts':{'old-concept':{'id':'old-concept','title':'旧版概念'}}}
+        with patch('backend.reading_v2_routes.reading.load_completed',return_value=({'status':'completed'},self.artifact,data)):
+            result=metadata('document','edition')
+        self.assertEqual(result['nodes'],data['nodes'])
+        self.assertEqual(result['concepts'],data['concepts'])
     def test_rejects_unknown_dynamically_created_source(self):
         bad={**self.artifact,'javascript':'const sourceIds=["S0011"]; button.setAttribute("data-source",sourceIds[0]);'}
         with self.assertRaises(ValueError):validate_artifact(bad,self.doc,self.data)

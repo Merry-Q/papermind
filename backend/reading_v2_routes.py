@@ -26,8 +26,9 @@ def cancel(did:str,eid:str):
 @router.get('/documents/{did}/reading-v2/{eid}')
 def metadata(did:str,eid:str,inspection:bool=False):
     try:
-        item,artifact,_=reading.load_completed(eid,did)
-        return {'id':eid,'document_id':did,'status':item['status'],'title':artifact['title'],'description':artifact['description'],'limitations':artifact['limitations']}
+        item,artifact,data=reading.load_completed(eid,did)
+        return {'id':eid,'document_id':did,'status':item['status'],'title':artifact['title'],'description':artifact['description'],'limitations':artifact['limitations'],
+                'nodes':data.get('nodes',[]),'concepts':data.get('concepts',{})}
     except (ValueError,OSError) as e:raise HTTPException(409,str(e))
 
 @router.get('/documents/{did}/reading-v2/{eid}/artifact')
